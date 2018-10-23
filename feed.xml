@@ -5,11 +5,11 @@
     <description>A blog about hacking, software, programming, some books or anything fun that I want to talk about. All the opinions on the website are my  own.
 </description>
     
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <link>http://binholic.com/</link>
+    <atom:link href="http://binholic.com/feed.xml" rel="self" type="application/rss+xml"/>
     
-    <pubDate>Tue, 23 Oct 2018 23:33:30 +0200</pubDate>
-    <lastBuildDate>Tue, 23 Oct 2018 23:33:30 +0200</lastBuildDate>
+    <pubDate>Tue, 23 Oct 2018 23:47:46 +0200</pubDate>
+    <lastBuildDate>Tue, 23 Oct 2018 23:47:46 +0200</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -17,8 +17,8 @@
         
         <pubDate>Sat, 28 Apr 2018 11:33:00 +0200</pubDate>
         
-        <link>http://localhost:4000/2018/04/28/windows-kernel-exploitation-token.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/04/28/windows-kernel-exploitation-token.html</guid>
+        <link>http://binholic.com/2018/04/28/windows-kernel-exploitation-token.html</link>
+        <guid isPermaLink="true">http://binholic.com/2018/04/28/windows-kernel-exploitation-token.html</guid>
         
         
         
@@ -29,8 +29,8 @@
         
         <pubDate>Sat, 28 Apr 2018 11:20:00 +0200</pubDate>
         
-        <link>http://localhost:4000/2018/04/28/yet-another-osce-review.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/04/28/yet-another-osce-review.html</guid>
+        <link>http://binholic.com/2018/04/28/yet-another-osce-review.html</link>
+        <guid isPermaLink="true">http://binholic.com/2018/04/28/yet-another-osce-review.html</guid>
         
         
         
@@ -41,8 +41,8 @@
         
         <pubDate>Thu, 12 Oct 2017 01:39:00 +0200</pubDate>
         
-        <link>http://localhost:4000/2017/10/12/vulnhub-c0m80-boot2root.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/12/vulnhub-c0m80-boot2root.html</guid>
+        <link>http://binholic.com/2017/10/12/vulnhub-c0m80-boot2root.html</link>
+        <guid isPermaLink="true">http://binholic.com/2017/10/12/vulnhub-c0m80-boot2root.html</guid>
         
         
         <category>challenge</category>
@@ -57,8 +57,8 @@
         
         <pubDate>Wed, 30 Aug 2017 00:06:00 +0200</pubDate>
         
-        <link>http://localhost:4000/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</guid>
+        <link>http://binholic.com/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</link>
+        <guid isPermaLink="true">http://binholic.com/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</guid>
         
         
         <category>challenge</category>
@@ -73,8 +73,8 @@
         
         <pubDate>Sat, 20 May 2017 23:08:00 +0200</pubDate>
         
-        <link>http://localhost:4000/2017/05/20/notes-on-abusing-exit-handlers.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/20/notes-on-abusing-exit-handlers.html</guid>
+        <link>http://binholic.com/2017/05/20/notes-on-abusing-exit-handlers.html</link>
+        <guid isPermaLink="true">http://binholic.com/2017/05/20/notes-on-abusing-exit-handlers.html</guid>
         
         
         <category>exploit</category>
@@ -87,8 +87,8 @@
         
         <pubDate>Fri, 31 Mar 2017 13:55:00 +0200</pubDate>
         
-        <link>http://localhost:4000/2017/03/31/yet-another-oscp-review.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/03/31/yet-another-oscp-review.html</guid>
+        <link>http://binholic.com/2017/03/31/yet-another-oscp-review.html</link>
+        <guid isPermaLink="true">http://binholic.com/2017/03/31/yet-another-oscp-review.html</guid>
         
         
         
@@ -99,8 +99,8 @@
         
         <pubDate>Fri, 27 Dec 2013 15:27:00 +0100</pubDate>
         
-        <link>http://localhost:4000/2013/12/27/ivans-amenra-level-1.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2013/12/27/ivans-amenra-level-1.html</guid>
+        <link>http://binholic.com/2013/12/27/ivans-amenra-level-1.html</link>
+        <guid isPermaLink="true">http://binholic.com/2013/12/27/ivans-amenra-level-1.html</guid>
         
         
         <category>challenge</category>
@@ -117,8 +117,8 @@
         
         <pubDate>Wed, 18 Dec 2013 19:09:00 +0100</pubDate>
         
-        <link>http://localhost:4000/2013/12/18/december-hzv-meet-linux-kernel.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2013/12/18/december-hzv-meet-linux-kernel.html</guid>
+        <link>http://binholic.com/2013/12/18/december-hzv-meet-linux-kernel.html</link>
+        <guid isPermaLink="true">http://binholic.com/2013/12/18/december-hzv-meet-linux-kernel.html</guid>
         
         
         
@@ -129,8 +129,8 @@
         
         <pubDate>Fri, 13 Dec 2013 23:06:00 +0100</pubDate>
         
-        <link>http://localhost:4000/2013/12/13/lfi-exploitation-basics-code-execution.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2013/12/13/lfi-exploitation-basics-code-execution.html</guid>
+        <link>http://binholic.com/2013/12/13/lfi-exploitation-basics-code-execution.html</link>
+        <guid isPermaLink="true">http://binholic.com/2013/12/13/lfi-exploitation-basics-code-execution.html</guid>
         
         
         
@@ -141,8 +141,8 @@
         
         <pubDate>Tue, 20 Aug 2013 21:10:00 +0200</pubDate>
         
-        <link>http://localhost:4000/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</guid>
+        <link>http://binholic.com/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</link>
+        <guid isPermaLink="true">http://binholic.com/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</guid>
         
         
         
