@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[EN] NDH 2011 badge hacking part 2 : What is the message?</title>
+  <meta name="description" content="Hello!">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2011/07/06/ndh-2011-badge-hacking-part-2-what.html">
+  <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Binary World for Binary People :)</a>
+
+    <!--
+    <h2 class="site-subtitle">
+        <span class="site-subtitle-quote">"empty
+"</span>
+        <span class="site-subtitle-author">- no_author -</span>
+    </h2>
+    -->
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <a class="page-link" href="/blog/">Blog</a>
+      </div>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[EN] NDH 2011 badge hacking part 2 : What is the message?</h1>
+    <p class="post-meta"><time datetime="2011-07-06T07:57:00+02:00" itemprop="datePublished">Jul 6, 2011</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">m_101</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Hello!</p>
+
+<p>Now you should have a nice working cable.
+Today we are going to get the message.</p>
+
+<h1 id="dumping-the-flash">Dumping the flash</h1>
+
+<p>We can look into the chip memory using avrdude terminal mode:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+</pre></td><td class="code"><pre>$ sudo avrdude -c usbasp -p attiny2313 -t
+
+avrdude: warning: cannot set sck period. please check for usbasp firmware update.
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x1e910a
+avrdude&gt; dump flash 0 512
+&gt;&gt;&gt; dump flash 0 512 
+0000  12 c0 22 c0 21 c0 20 c0  1f c0 1e c0 1d c0 1c c0  |..".!. .........|
+0010  1b c0 1a c0 19 c0 18 c0  17 c0 16 c0 15 c0 14 c0  |................|
+0020  13 c0 12 c0 11 c0 11 24  1f be cf ed cd bf 10 e0  |.......$........|
+0030  a0 e6 b0 e0 e8 e4 f1 e0  02 c0 05 90 0d 92 ac 38  |............ ..8|
+0040  b1 07 d9 f7 3c d0 7e c0  db cf 18 ba 12 ba 98 b3  |....&lt;.~.........|
+0050  3a e2 38 27 43 2f 50 e0  30 fd 02 c0 80 e0 01 c0  |:.8'C/P.0.......|
+0060  82 e0 89 2b 88 bb 28 b3  ca 01 96 95 87 95 81 70  |...+..(........p|
+0070  82 2b 88 bb 92 b3 42 fd  02 c0 80 e0 01 c0 80 e4  |.+....B.........|
+0080  89 2b 82 bb 92 b3 43 fd  02 c0 80 e0 01 c0 80 e2  |.+....C.........|
+0090  89 2b 82 bb 82 b3 30 71  38 2b 32 bb 92 b3 45 fd  |.+....0q8+2...E.|
+00a0  02 c0 80 e0 01 c0 88 e0  89 2b 82 bb 92 b3 46 fd  |.........+....F.|
+00b0  02 c0 80 e0 01 c0 84 e0  89 2b 82 bb 08 95 cf 92  |.........+......|
+00c0  df 92 ef 92 ff 92 1f 93  df 93 cf 93 cd b7 de b7  |................|
+00d0  ab 97 0f b6 f8 94 de bf  0f be cd bf de 01 11 96  |................|
+00e0  e0 e6 f0 e0 84 e1 01 90  0d 92 81 50 e1 f7 9b 81  |........ ..P....|
+00f0  de 01 55 96 e4 e7 f0 e0  87 e1 01 90 0d 92 81 50  |..U......... ..P|
+0100  e1 f7 8f ef 81 bb 87 bb  98 bb 90 e0 75 e1 c7 2e  |............u...|
+0110  d1 2c cc 0e dd 1e 68 ec  e6 2e f1 2c 0a c0 95 df  |.,....h...., ...|
+0120  80 e9 91 e0 f7 01 31 97  f1 f7 01 97 d9 f7 91 2f  |......1......../|
+0130  9f 5f f6 01 e9 0f f1 1d  80 81 19 2f 90 e0 88 23  |._........./...#|
+0140  c1 f3 ed cf f8 94 ff cf  4e 6f 74 68 69 6e 67 20  |........Nothing |
+0150  74 68 65 72 65 20 4e 30  30 62 21 00 62 4f 46 46  |there N00b!.bOFF|
+0160  45 0a 7d 45 58 46 4e 0a  4c 45 58 0a 64 6e 62 18  |E }EXFN LEX dnb.|
+0170  61 1b 1b 00 ff ff ff ff  ff ff ff ff ff ff ff ff  |a...............|
+0180  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+0190  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+01a0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+01b0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+01c0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+01d0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+01e0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+01f0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+
+avrdude&gt;</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We don’t see any “clear” interesting string for our purpose. Maybe it is obfuscated.</p>
+
+<p>We are going to dump it to a file for backup purposes:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+</pre></td><td class="code"><pre>$ sudo avrdude -c usbasp -p attiny2313 -n -U flash:r:dump.hex:i -v
+
+avrdude: Version 5.10, compiled on Jun 29 2010 at 21:09:48
+         Copyright (c) 2000-2005 Brian Dean, http://www.bdmicro.com/
+         Copyright (c) 2007-2009 Joerg Wunsch
+
+         System wide configuration file is "/etc/avrdude.conf"
+         User configuration file is "/home/m_101/.avrduderc"
+         User configuration file does not exist or is not a regular file, skipping
+
+         Using Port                    : /dev/parport0
+         Using Programmer              : usbasp
+         AVR Part                      : ATtiny2313
+         Chip Erase delay              : 9000 us
+         PAGEL                         : PD4
+         BS2                           : PD6
+         RESET disposition             : possible i/o
+         RETRY pulse                   : SCK
+         serial program mode           : yes
+         parallel program mode         : yes
+         Timeout                       : 200
+         StabDelay                     : 100
+         CmdexeDelay                   : 25
+         SyncLoops                     : 32
+         ByteDelay                     : 0
+         PollIndex                     : 3
+         PollValue                     : 0x53
+         Memory Detail                 :
+
+                                  Block Poll               Page                       Polled
+           Memory Type Mode Delay Size  Indx Paged  Size   Size #Pages MinW  MaxW   ReadBack
+           ----------- ---- ----- ----- ---- ------ ------ ---- ------ ----- ----- ---------
+           eeprom        65     6     4    0 no        128    4      0  4000  4500 0xff 0xff
+           flash         65     6    32    0 yes      2048   32     64  4500  4500 0xff 0xff
+           signature      0     0     0    0 no          3    0      0     0     0 0x00 0x00
+           lock           0     0     0    0 no          1    0      0  9000  9000 0x00 0x00
+           lfuse          0     0     0    0 no          1    0      0  9000  9000 0x00 0x00
+           hfuse          0     0     0    0 no          1    0      0  9000  9000 0x00 0x00
+           efuse          0     0     0    0 no          1    0      0  9000  9000 0x00 0x00
+           calibration    0     0     0    0 no          2    0      0     0     0 0x00 0x00
+
+         Programmer Type : usbasp
+         Description     : USBasp, http://www.fischl.de/usbasp/
+
+avrdude: auto set sck period (because given equals null)
+avrdude: warning: cannot set sck period. please check for usbasp firmware update.
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x1e910a
+avrdude: safemode: lfuse reads as 64
+avrdude: safemode: hfuse reads as DF
+avrdude: safemode: efuse reads as FF
+avrdude: reading flash memory:
+
+Reading | ################################################## | 100% 1.10s
+
+
+
+avrdude: writing output file "dump.hex"
+
+avrdude: safemode: lfuse reads as 64
+avrdude: safemode: hfuse reads as DF
+avrdude: safemode: efuse reads as FF
+avrdude: safemode: Fuses OK
+
+avrdude done.  Thank you.</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Now we dumped the flash.</p>
+
+<h1 id="getting-the-message">Getting the message</h1>
+
+<p>In the previous dumped firmware we could see the following strings:</p>
+
+<ul>
+  <li>“Nothing there N00b!”</li>
+  <li>“bOFFE }EXFN LEX dnb\x18a\x1b\x1b”</li>
+</ul>
+
+<p>I wrote a quick hack to see if we got any “usual” obfuscation scheme such as caesar or XOR were used:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+</pre></td><td class="code"><pre><span class="c1">// @author  : m_101</span>
+<span class="c1">// @license : beerware</span>
+<span class="c1">// @year    : 2011</span>
+<span class="c1">// @program : "Bruteforce" caesar and XOR</span>
+<span class="cp">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+</span>
+<span class="c1">// caesar</span>
+<span class="kt">char</span> <span class="o">*</span><span class="nf">caesar</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idxStr</span><span class="p">,</span> <span class="n">rkey</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">cryptext</span><span class="p">;</span>
+
+    <span class="c1">// allocate cryptext</span>
+    <span class="n">cryptext</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">len</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">cryptext</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cryptext</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="c1">//</span>
+    <span class="n">rkey</span> <span class="o">=</span> <span class="n">key</span> <span class="o">%</span> <span class="mi">26</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">idxStr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">idxStr</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">idxStr</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/*
+        if (!isalpha(str[idxStr])) {
+            free(cryptext);
+            return NULL;
+        }
+        //*/</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">toupper</span><span class="p">(</span><span class="n">str</span><span class="p">[</span><span class="n">idxStr</span><span class="p">])</span> <span class="o">+</span> <span class="n">key</span><span class="p">;</span>
+        <span class="cm">/*
+        if (c &gt; 'Z')
+            c -= 26;
+        else if (c &lt; 'A')
+            c += 26;
+        //*/</span>
+        <span class="n">cryptext</span><span class="p">[</span><span class="n">idxStr</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">cryptext</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#define BUFSIZE     1024
+</span>
+<span class="kt">void</span> <span class="nf">bf_caesar</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">key</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">cryptext</span><span class="p">;</span>
+    <span class="c1">//</span>
+    <span class="kt">char</span> <span class="n">filename</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">str</span> <span class="o">||</span> <span class="o">!</span><span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Bad string</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="o">!=</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Bad length</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">key</span> <span class="o">&lt;=</span> <span class="mi">255</span><span class="p">;</span> <span class="n">key</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cryptext</span> <span class="o">=</span> <span class="n">caesar</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">cryptext</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// generate filename</span>
+            <span class="n">snprintf</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">BUFSIZE</span><span class="p">,</span> <span class="s">"%s-%02d"</span><span class="p">,</span> <span class="s">"caesar"</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+            <span class="c1">// write to file</span>
+            <span class="cm">/*
+            fp = fopen(filename, "w");
+            if (fp) {
+                fwrite(cryptext, sizeof(*cryptext), len, fp);
+                fclose(fp);
+            }
+            //*/</span>
+            
+            <span class="c1">// print to console</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">"%02d : %s</span><span class="se">\n\n</span><span class="s">"</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span>  <span class="n">cryptext</span><span class="p">);</span>
+            <span class="n">free</span><span class="p">(</span><span class="n">cryptext</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">bf_xor</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">key</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">idxStr</span><span class="p">;</span>
+    <span class="c1">//</span>
+    <span class="kt">char</span> <span class="n">filename</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">str</span> <span class="o">||</span> <span class="o">!</span><span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Bad string</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="o">!=</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Bad length</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">key</span> <span class="o">&lt;=</span> <span class="mi">255</span><span class="p">;</span> <span class="n">key</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%02d : "</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+        <span class="c1">// generate filename</span>
+        <span class="n">snprintf</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">BUFSIZE</span><span class="p">,</span> <span class="s">"%s-%02d"</span><span class="p">,</span> <span class="s">"xor"</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+        <span class="c1">// fp = fopen(filename, "w");</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">idxStr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">idxStr</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">idxStr</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">str</span><span class="p">[</span><span class="n">idxStr</span><span class="p">]</span> <span class="o">^</span> <span class="n">key</span><span class="p">;</span>
+            <span class="n">putchar</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            <span class="c1">// write to file</span>
+            <span class="cm">/*
+            if (fp)
+                fwrite(&amp;c, sizeof(*str), 1, fp);
+            //*/</span>
+        <span class="p">}</span>
+        <span class="n">putchar</span><span class="p">(</span><span class="sc">'\n'</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">fp</span><span class="p">)</span>            
+            <span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Usage: %s str</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Bruteforce Caesar:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">bf_caesar</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">strlen</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Bruteforce XOR:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">bf_xor</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">strlen</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span> 
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>As you could see, for caesar I did not bother to do a rotating scheme as usual but a stupid and simple shifting.</p>
+
+<p>I managed to get 2 messages:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre>Hello\nWorld\nFor\nNDH
+hELLO*wORLD*FOR*ndh</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Done.</p>
+
+<p>There was another way to get the message using a video camera to capture the leds sequence and decode it manually or using image processing techniques.
+I did not want to do that so I did not do it … have fun for the courageous ones ;).</p>
+
+<p>You could also use IDA Pro (or any compatible disassembler) to reverse the ASM code from the dumped firmware. I did not want to spend too much time on it so I skipped it. If you want to do it, here is the documentation: <a href="http://www.atmel.com/atmel/acrobat/doc0856.pdf">AVR 8-bit Instruction Set</a>.</p>
+
+<p>Next I will show you an example of programming the chip.</p>
+
+<p>Cheers,</p>
+
+<p>m_101</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li><a href="http://www.tixlegeek.com/?2011/06/17/311--ndh2k11-badges-hackable-nui-du-hack-2011-hack-carte-visite-programmable-avr-attiny">[NDH2K11] Badges hackable!</a></li>
+  <li><a href="http://www.tixlegeek.com/?2011/06/21/312-ndh2k11-s-badge-spec-hack-hacker-nuit-du-2011-2k11">NDH2K11’s Badge: Spec. &amp; hackz</a></li>
+  <li><a href="http://www.tixlegeek.com/?2011/06/23/313-ndh2k11-s-badge-spec-hackz-programmation-avrdude-avr-gcc-c-compilation">NDH2K11’s Badge: PROGRAMMATIONNNNNN!!!!</a></li>
+  <li><a href="http://omegav.no/wiki/index.php/AVR/avrdude">Manual of avrdude</a></li>
+  <li><a href="http://www.atmel.com/atmel/acrobat/doc0856.pdf">AVR 8-bit Instruction Set</a></li>
+</ul>
+
+
+  </div>
+
+  <div class="post-navigation">
+    
+    <a class="post-prev" href="/2011/06/30/ndh-2011-badge-hacking-part-1-pinout.html">Previous : [EN] NDH 2011 badge hacking part 1 : Pinout reversing</a>
+    
+
+    
+    <a class="post-next" href="/2011/07/06/ndh-2011-badge-hacking-part-3-programming.html">Next : [EN] NDH 2011 badge hacking part 3 : Let's code!</a>
+    
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "http://localhost:4000/2011/07/06/ndh-2011-badge-hacking-part-2-what.html";
+            this.page.identifier = "/2011/07/06/ndh-2011-badge-hacking-part-2-what";
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//binholic.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <div class="site-footer">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/m101"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/w_levin"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="mailto:m101.sec@gmail.com"><span class="icon icon--email"><?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240.665px" height="250px" viewBox="43.833 205.167 240.665 250" enable-background="new 43.833 205.167 240.665 250" xml:space="preserve">
+<g>
+	<path fill="#323232" d="M221.459,396.62c-8.84,0-15.904-2.21-21.191-6.63c-5.289-4.42-8.449-10.441-9.488-18.07   c-4.855,5.895-10.66,10.965-17.42,15.21c-6.762,4.249-14.561,6.37-23.4,6.37c-6.59,0-12.83-1.256-18.72-3.77   c-5.895-2.512-11.095-6.15-15.6-10.92c-4.509-4.766-8.105-10.571-10.79-17.42c-2.689-6.846-4.03-14.69-4.03-23.531   c0-9.879,1.56-19.064,4.68-27.56c3.12-8.49,7.365-15.86,12.74-22.1c5.371-6.24,11.7-11.136,18.98-14.69   c7.28-3.551,15.08-5.33,23.4-5.33c9.01,0,16.68,1.82,23.01,5.461c6.324,3.639,11.311,8.234,14.949,13.779l2.34-17.42h20.541   l-10.66,85.02c-0.52,3.99-0.781,7.021-0.781,9.101c0,5.029,1.041,8.929,3.121,11.7c2.08,2.774,5.545,4.16,10.4,4.16   c4.504,0,8.84-1.646,13-4.94c4.16-3.29,7.799-7.931,10.92-13.91c3.119-5.979,5.589-13.085,7.41-21.319   c1.82-8.23,2.729-17.291,2.729-27.17c0-11.961-2.123-23.051-6.369-33.281c-4.25-10.225-10.228-19.064-17.939-26.52   c-7.715-7.451-16.859-13.26-27.43-17.42c-10.576-4.16-22.189-6.24-34.842-6.24c-16.119,0-30.464,3.165-43.029,9.49   c-12.57,6.33-23.14,14.605-31.72,24.83c-8.58,10.229-15.08,21.799-19.5,34.71c-4.42,12.915-6.63,26.045-6.63,39.39   c0,15.08,2.34,28.516,7.02,40.301c4.68,11.789,11.18,21.795,19.5,30.029c8.32,8.23,18.11,14.471,29.38,18.721   c11.265,4.244,23.485,6.369,36.661,6.369c13.17,0,24.914-1.561,35.229-4.68c10.311-3.121,20.15-6.936,29.512-11.439l7.539,19.76   c-9.016,4.85-19.891,8.924-32.631,12.219c-12.738,3.291-26.479,4.941-41.209,4.941c-16.64,0-31.98-2.516-46.02-7.541   c-14.04-5.029-26.175-12.439-36.4-22.23c-10.229-9.795-18.2-21.84-23.92-36.139c-5.72-14.301-8.58-30.811-8.58-49.53   c0-17.331,2.99-33.841,8.97-49.53c5.98-15.686,14.471-29.51,25.48-41.47c11.005-11.96,24.266-21.45,39.78-28.47   c15.51-7.02,32.889-10.53,52.129-10.53c16.291,0,31.156,2.645,44.59,7.93c13.432,5.29,24.916,12.524,34.451,21.71   c9.529,9.189,16.898,20.064,22.1,32.63c5.199,12.568,7.799,26.129,7.799,40.689c0,12.48-1.518,23.965-4.549,34.45   c-3.035,10.489-7.195,19.5-12.48,27.04c-5.289,7.54-11.615,13.391-18.98,17.55C238.139,394.54,230.124,396.62,221.459,396.62z    M156.979,374.26c6.76,0,13-1.86,18.721-5.59c5.719-3.725,10.311-7.756,13.779-12.09l6.24-51.48   c-3.469-5.545-7.975-10.051-13.52-13.52c-5.551-3.465-11.875-5.2-18.98-5.2c-5.201,0-10.23,1.17-15.08,3.511   c-4.855,2.34-9.145,5.635-12.87,9.879c-3.729,4.25-6.675,9.32-8.84,15.211c-2.169,5.895-3.25,12.395-3.25,19.5   c0,13.174,3.291,23.1,9.88,29.77C139.645,370.925,147.62,374.26,156.979,374.26z"/>
+</g>
+</svg></span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="http://127.0.0.1:8888/USK@ABR8mm2t1L1G8cBG70cDy4PHFO6LPV~LrA-RIZxgOGI,pnGWUxb7k8~5-ywwqnBakTXx5ZFw6QzzZj7H~45NgE8,AQACAAE/binholic/-1/"><span class="icon icon--freenet"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="79.12"
+   height="52.64">
+  <defs/>
+  <g
+     transform="translate(-47.495719,-111.30691)">
+    <path
+       d="M 80.03,122.66 C 94.49,107.06 104.32,113.99 87.53,124.89 C 82.19,128.36 83.58,129.37 87.17,128.82 C 92.24,128.05 95.01,129.02 96.24,129.98 C 99.18,132.28 100.65,130.57 101.64,128.82 C 103.61,125.35 110.25,129.12 105.39,132.75 C 101.59,135.58 102.12,138.77 105.57,140.61 C 111.96,144.01 126.30,150.75 124.14,157.93 C 123.26,160.86 121.67,163.62 118.07,159.89 C 111.32,152.92 106.83,146.97 91.28,144.54 C 81.24,142.96 71.15,140.33 61.46,145.25 C 56.90,147.67 51.16,149.23 49.94,146.37 C 48.35,142.64 56.47,139.57 64.32,138.82 C 69.42,138.33 73.99,134.99 67.00,133.29 C 58.39,130.64 68.28,123.09 74.50,124.89 C 78.55,126.07 78.95,123.83 80.03,122.66 z"
+       style="fill:#ffffff;stroke:#356ace;stroke-width:1.5;" />
+  </g>
+</svg>
+</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

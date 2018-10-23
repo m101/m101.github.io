@@ -1,0 +1,182 @@
+﻿/* 
+-------------------------------------------------------------------------------
+Title: Changes to the default i-GRasp stylesheet (igBase.css)
+Default filename: igChanges.css
+
+Description:
+
+This file contains all changes to the target HTML template styles and to the
+i-GRasp front end styles so that they match up better.
+
+Do *NOT* modify igBase.css as it is a reference point for all other front ends
+that use it!
+
+If browser-specific changes are required, place them into a seperate file
+and call the file, for example, igChanges_IE.css. Then use a conditional
+comment (for IE) or an ASP ServerVariable request (for other browsers, such
+as Safari) to pull the changes through to the front end.
+-------------------------------------------------------------------------------
+*/
+
+/* Place any styles specific to the front end template below here */
+
+
+/* Place any styles specific to i-GRasp front end sections below here */
+
+
+/* Generic / optional styling for all text and dropdown fields (only enable
+if client settings are adversely affecting the appearance of them) */
+
+/*
+div#igContainer .emailinputobjects,
+#igContainer .inputfield
+#igContainer .inputobjects,
+#igContainer .logininput,
+#igContainer .reginput,
+#igContainer select,
+#igContainer textarea
+{
+	background-color: #fff;
+	border: 1px solid #000;
+	margin: 3px 3px 3px 0
+	padding: 1px
+}
+
+*/
+
+/* Modification to the Previous Page and Next Page links in the Search Results
+page, to stop the bullet images being underlined in Firefox and Safari. */
+
+a.prevlink img,
+a.nextbullet img
+{
+	display: none
+}
+
+a.prevlink
+{
+	background: url(../images/back.gif) no-repeat left center;
+	padding: 0 0 0 20px
+}
+
+a.nextbullet /* As above, but this moves the image to the right of the link. */
+{
+	background: url(../images/bullet.gif) no-repeat right center;
+	padding: 0 20px 0 0
+}
+
+/* Modification to the New Search and Refine Search links at the bottom of the
+Search Results page, for the same reason as the Previous and Next Page
+links. */
+
+div#igsearchresultsnewsearch img,
+div#igsearchresultsrefinesearch img
+{
+	display: none
+}
+
+#igsearchresultsnewsearch a,
+#igsearchresultsrefinesearch a
+{
+	background: url(../images/bullet.gif) no-repeat left center;
+	padding: 0 0 0 20px
+}
+
+/* Offers section - this style sets all the grey description boxes to have
+italic text. This used to be the default, but has now been disabled - however,
+if a client requests that they want it switched back on, please remove the
+comment tags from around the style below. */
+
+/*
+div#offertypeinfosectiondesc
+{
+	font-style: italic
+}
+
+*/
+
+/* Education Columns width fix to make it standard for new FEs*/ 
+span#igedu td.listheading 
+{
+	width:137px;
+}
+span#volumemaindetails td
+{
+	width:64%;
+}
+.feyear
+{
+	width:56px;
+}
+.femonth 
+{
+	width:90px;
+}
+.feday 
+{
+	width:48px;
+}
+#volumemaindetails #HOMEPHONENO, 
+#volumemaindetails #WORKPHONENO, 
+#volumemaindetails #MOBILEPHONENO 
+{
+	width:133px;
+}
+span#volumemaindetails select.reginput 
+{
+	margin:3px 5px 3px 0;
+	width:203px;
+}
+span#logindetails td
+{
+	width:66%;
+}
+td#writedocsfilename input 
+{
+	height:23px;
+}
+table#equalopstable 
+{
+	padding:5px;
+
+}
+#equalopstable select.inputobjects 
+{
+	margin-top:5px;
+	width:205px;
+}
+#alertregdiv .reginput 
+{
+	margin:3px;
+	width:200px;
+}
+#igedu .feyear 
+{
+	margin:5px 0 0 5px;
+}
+.defaultbqchoice label 
+{
+	display:inline-block;
+}
+/*
+span#volumemaindetails input.reginput
+{
+	margin:3px 5px 3px 0;
+	width:230px;
+}
+*/
+#searchtext{
+	width:241px;
+}
+.searchpair input.searchcriteria, .searchpair input.postcode {
+    margin-bottom: 2px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2px;
+    width: 241px;
+}
+#rss{
+	left: 300px;
+    position: relative;
+    top: -28px;
+}

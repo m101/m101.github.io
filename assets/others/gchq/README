@@ -1,0 +1,39 @@
+Hello,
+
+This archive contains the challenges and solutions for GCHQ November-December
+2011 recruitment campaign.
+
+The following files are included:
+* MD5SUMS   : checksums
+* README    : this file
+* valgrind.sh   : valgrind script
+* pages/    : pages of the site
+* part1/    : level1 folder
+    -> cyber.png    : the challenge
+    -> alternative/ : alternative solution found on the net"
+    -> launcher.c   : solution of the challenge
+    -> clean_nasm.sed : ndisasm cleaning utility
+    -> gchq-part1.bin : first visible part of the challenge
+    -> gchq-part1.asm : commented disassembly of part 1
+    -> gchq-part2.bin : second part in png
+    -> gchq.asm : fully commented full disassembly
+    -> gchq.bin : combined part 1 and part 2
+    -> cyber.txt : OCR corrected part 1
+    -> Makefile
+* part2/    : level2 folder
+    -> 15b436de1f9107f3778aad525e5d0b20.js : level2 challenge
+    -> vm.c    :   level2 solution
+    -> Makefile
+* part3/    : level3 folder
+    -> msf payloads: meterpreter_reverse_tcp.bin, regedit.bin, calc.bin
+    -> cygwin1.dll
+    -> cygwin1.idb
+    -> cygcrypt-0.dll
+    -> reversed.c : solution of the challenge
+    -> hash
+    -> exploits: exploit.py, exploit2.py
+    -> Makefile
+    -> da75370fe15c4148bd4ceec861fbdaa5.exe : the challenge
+    -> da75370fe15c4148bd4ceec861fbdaa5.idb : IDA Pro database
+    -> key.txt : the password to go to the recruitment page
+    -> license.txt.original : license file that is awaited by the app

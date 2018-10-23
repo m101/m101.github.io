@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Binary World for Binary People :)</title>
+    <description>A blog about hacking, software, programming, some books or anything fun that I want to talk about. All the opinions on the website are my  own.
+</description>
+    
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    
+    <pubDate>Tue, 23 Oct 2018 23:33:30 +0200</pubDate>
+    <lastBuildDate>Tue, 23 Oct 2018 23:33:30 +0200</lastBuildDate>
+    <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>Windows Kernel Exploitation : Token stealing payload with the reference counter updated</title>
+        
+        <pubDate>Sat, 28 Apr 2018 11:33:00 +0200</pubDate>
+        
+        <link>http://localhost:4000/2018/04/28/windows-kernel-exploitation-token.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/04/28/windows-kernel-exploitation-token.html</guid>
+        
+        
+        
+      </item>
+    
+      <item>
+        <title>Yet Another OSCE Review</title>
+        
+        <pubDate>Sat, 28 Apr 2018 11:20:00 +0200</pubDate>
+        
+        <link>http://localhost:4000/2018/04/28/yet-another-osce-review.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/04/28/yet-another-osce-review.html</guid>
+        
+        
+        
+      </item>
+    
+      <item>
+        <title>VulnHub - c0m80 boot2root</title>
+        
+        <pubDate>Thu, 12 Oct 2017 01:39:00 +0200</pubDate>
+        
+        <link>http://localhost:4000/2017/10/12/vulnhub-c0m80-boot2root.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/10/12/vulnhub-c0m80-boot2root.html</guid>
+        
+        
+        <category>challenge</category>
+        
+        <category>exploit</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>RHMe3 Qualifier - Heap Exploitaiton</title>
+        
+        <pubDate>Wed, 30 Aug 2017 00:06:00 +0200</pubDate>
+        
+        <link>http://localhost:4000/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</guid>
+        
+        
+        <category>challenge</category>
+        
+        <category>exploit</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Notes on abusing exit handlers, bypassing pointer mangling and glibc ptmalloc hooks</title>
+        
+        <pubDate>Sat, 20 May 2017 23:08:00 +0200</pubDate>
+        
+        <link>http://localhost:4000/2017/05/20/notes-on-abusing-exit-handlers.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/20/notes-on-abusing-exit-handlers.html</guid>
+        
+        
+        <category>exploit</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Yet Another OSCP Review</title>
+        
+        <pubDate>Fri, 31 Mar 2017 13:55:00 +0200</pubDate>
+        
+        <link>http://localhost:4000/2017/03/31/yet-another-oscp-review.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/31/yet-another-oscp-review.html</guid>
+        
+        
+        
+      </item>
+    
+      <item>
+        <title>[Wargame] Ivan's Amenra : level 1</title>
+        
+        <pubDate>Fri, 27 Dec 2013 15:27:00 +0100</pubDate>
+        
+        <link>http://localhost:4000/2013/12/27/ivans-amenra-level-1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/12/27/ivans-amenra-level-1.html</guid>
+        
+        
+        <category>challenge</category>
+        
+        <category>exploit</category>
+        
+        <category>wargame</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>December HZV Meet : Linux Kernel Exploitation</title>
+        
+        <pubDate>Wed, 18 Dec 2013 19:09:00 +0100</pubDate>
+        
+        <link>http://localhost:4000/2013/12/18/december-hzv-meet-linux-kernel.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/12/18/december-hzv-meet-linux-kernel.html</guid>
+        
+        
+        
+      </item>
+    
+      <item>
+        <title>LFI Exploitation : Basics, code execution and information leak</title>
+        
+        <pubDate>Fri, 13 Dec 2013 23:06:00 +0100</pubDate>
+        
+        <link>http://localhost:4000/2013/12/13/lfi-exploitation-basics-code-execution.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/12/13/lfi-exploitation-basics-code-execution.html</guid>
+        
+        
+        
+      </item>
+    
+      <item>
+        <title>[Root-Me] Remote Binary 2 - An advanced remote format string example</title>
+        
+        <pubDate>Tue, 20 Aug 2013 21:10:00 +0200</pubDate>
+        
+        <link>http://localhost:4000/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</guid>
+        
+        
+        
+      </item>
+    
+  </channel>
+</rss>
+

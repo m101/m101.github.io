@@ -1,0 +1,124 @@
+@import url('reset.css');
+
+/*================================================================================
+    OVERLAY & CONTAINER
+=================================================================================*/
+#overlay {position:absolute; top:0; left:0; width:100%; z-index:100; height:100%; display:none;}
+
+#container {width:958px; margin:0 auto; font-size:1.1em; background:#fff;}
+
+/*================================================================================
+    HEADER
+=================================================================================*/
+#header {position:relative; clear:both; padding:10px 8px; width:942px;}
+#header img.logo {float:left; margin:7px 0 0 9px; display:inline; position:relative;}
+#header #globals {width:555px; float:right;}
+#header #globals img {float:left; display:inline;}
+#header #globals img.drop {margin:13px 8px 0 0;}
+
+
+/*================================================================================
+    MAIN CONTENT LAYOUT
+=================================================================================*/
+#content {width:940px; padding:0 9px; margin:15px 0 0; font-size:1.1em;background:url('../Images/content-bg.gif') 0 0 repeat-y; }
+
+#leftCol {width:200px; float:left; font-family:Georgia, Times, Arial, Tahoma, Verdana, Helvetica, "Trebuchet MS", sans-serif; font-size:0.9em;}
+#rightCol {width:730px; float:right; margin:0 0 0 10px; padding:0 0 30px 0;}
+
+
+/*================================================================================
+    LEFT HAND NAVIGATION
+=================================================================================*/
+#leftCol ul#leftNav {padding:0; background:#f3f3f3; list-style-type:none;margin:0;}
+#leftCol ul#leftNav li a {display:block; padding:20px 0 20px 10px; color:#515151; background:url('../Images/off.png') 0 0 repeat-x #fff; text-decoration:none; font-weight:bold; text-transform:uppercase;margin:0;height:1%;}
+#leftCol ul#leftNav li a:hover, #leftCol ul#leftNav li a.TopItemCurrent, #leftCol ul#leftNav li a.Expanded {background:url('../Images/on.png') 0 0 repeat-x #fff;}
+#leftCol ul#leftNav ul li a {display:block; padding:5px 0 5px 10px; color:#515151; background:url('../Images/off.png') 0 0 repeat-x #fff; text-decoration:none; font-weight:bold; text-transform:uppercase;margin:0;}
+#leftCol ul#leftNav ul li a:hover, #leftCol ul#leftNav ul li a.subItemCurrent {background:url('../Images/on.png') 0 0 repeat-x #fff;}
+
+#leftCol ul#leftNav ul li ul li a {display:block; padding:5px 0 5px 20px; color:#515151;background:none;text-decoration:none; font-weight:bold; text-transform:none;margin:0;}
+#leftCol ul#leftNav ul li ul li a:hover, #leftCol ul#leftNav ul li ul li a.subItemCurrent, #leftCol ul#leftNav ul li ul li a.Expanded {background:none;color:#c33;}
+
+#leftCol ul#leftNav ul li ul li ul li a {display:block; padding:5px 5px 5px 30px; color:#515151;background:none;text-decoration:none; font-weight:normal; text-transform:none;margin:0;}
+
+
+/*================================================================================
+    HOT JOBS
+=================================================================================*/
+#leftCol .hotjobs  { margin:1em 0 0 0;width:200px;padding:0; }
+#leftCol .hotjobs .header { height:16px; }
+#leftCol .hotjobs .hotjobscopy { width:200px;color:#fff;background:#000 url(../Images/hotjobs-graph.gif) no-repeat;padding:0 0 0.25em 0;margin:0; }
+#leftCol .hotjobs .hotjobscopy img { padding:17px 0 0 13px; }
+#leftCol .hotjobs .hotjobscopy .hotjobsnav { width: 175px; }
+#leftCol .hotjobs .hotjobscopy .hotjobsnav ul {	margin:0 0 0 10px;padding:0;list-style-type:none; }
+#leftCol .hotjobs .hotjobscopy .hotjobsnav a { display:block;padding:3px;width:175px;font-weight:bold;background:#333;opacity:0.5;filter: alpha(opacity = 50);border-bottom: 2px solid #000; }
+#leftCol .hotjobs .hotjobscopy .hotjobsnav a:link, #leftCol .hotjobs .hotjobscopy .hotjobsnav a:visited { color:#fff;text-decoration:none; }
+#leftCol .hotjobs .hotjobscopy .hotjobsnav a:hover { background:#333;color:#fff;opacity:0.85;filter:alpha(opacity = 85); }
+
+
+/*================================================================================
+    I'M INTERESTED IN
+=================================================================================*/
+#leftCol .interestedin { margin:0;width:200px;margin:1em 0;padding: 0; }
+#leftCol .interestedin .header { height:16px; }
+#leftCol .interestedin .interestedincopy { width:200px;color:#fff;background:#fff url(../Images/interested-in.jpg) no-repeat;padding:4px 0 0.25em 0; }
+#leftCol .interestedin .interestedincopy .interestedinhead .interestedhighlight { color:#e2373f; }
+#leftCol .interestedin .interestedincopy p { font-size:1.2em;line-height:1.3em;font-weight:bold;color:#333;padding:0 10px 0.5em 10px;margin:0; }
+
+
+/*================================================================================
+    MAIN CONTENT
+=================================================================================*/
+#rightCol .pageHeaderHome {margin:0 0 8px 0;}
+#rightCol .pageHeaderHome img, #rightCol .pageHeaderHome object, #rightCol .pageHeader img, #rightCol .pageHeader object  {display:block;}
+
+#rightCol .MediaHeaderHome {margin:0 0 8px 0;}
+#rightCol .MediaPromos  {margin:0 0 5px 0;} 
+#rightCol .MediaPromos .promoOne, #rightCol .MediaPromos .promoTwo {float:left; margin:0 7px 0 0;}
+#rightCol .MediaPromos .promoThree { float:left;margin:0;}
+
+
+#rightCol .promos .promoOne, #rightCol .promos .promoTwo {float:left; margin:0 8px 0 0;}
+#rightCol .promos .promoThree { float:left;margin:0;}
+
+#rightCol .contentText { padding:30px; }
+#rightCol .contentText ul, #rightCol .contentText ol { font-weight:normal;list-style-type:none;margin:0 0 20px 0; }
+#rightCol .contentText ul li, #rightCol .contentText ol li { background:url(../Images/list-pointer.gif) 0 0.5em no-repeat;padding:0 0 3px 15px;color:#333;line-height:1.6em; }
+
+#rightCol .contentText #SiteMap ul { font-weight:normal;list-style-type:none;padding:0 0 20px 0; }
+#rightCol .contentText #SiteMap ul li { background:url(../Images/list-pointer.gif) 0 0.5em no-repeat;padding:0 0 10px 15px;color:#333;line-height:1.6em; }
+#rightCol .contentText #SiteMap ul li ul { padding:20px 0 0 0 ; }
+
+#rightCol .contentText table.eventsTable { font-size:1.0em;border-collapse:collapse;color:#333; }
+#rightCol .contentText table.eventsTable th { background:#c33;padding:4px;text-align:left;color:#fff; }
+#rightCol .contentText table.eventsTable td { border-bottom:1px solid #ccc;padding:4px 0; }
+
+#rightCol .altContent .getflashImg { float:left;width:156px; }
+#rightCol .altContent .getflashTxt { float:left;width:400px;margin:0 0 0 15px;text-align:left; }
+
+/*================================================================================
+    FOOTER
+=================================================================================*/
+#footer {border-top:1px solid #999;}
+
+#footer #logos {width:201px; padding:4px 0 0 9px; float:left; text-align:center;}
+
+#footer ul#support {list-style-type:none; text-align:center; width:748px; float:right; padding:14px 0;}
+#footer ul#support li {display:inline; padding:0 20px;}
+#footer ul#support li a { color:#333;text-decoration:none; }
+#footer ul#support li a:hover { color:#c33;text-decoration:none; }
+
+
+
+
+
+
+
+/* ------------ Useful Stuff ------------- */
+.newline {clear:both; overflow:hidden; height:0px;}
+.right {float:right;}
+.left {float:left;}
+
+
+
+
+

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[NDH2k13] Prequals - Meow (misc)</title>
+  <meta name="description" content="Hello there,">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2013/03/10/ndh2k13-prequals-meow-misc.html">
+  <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Binary World for Binary People :)</a>
+
+    <!--
+    <h2 class="site-subtitle">
+        <span class="site-subtitle-quote">"empty
+"</span>
+        <span class="site-subtitle-author">- no_author -</span>
+    </h2>
+    -->
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <a class="page-link" href="/blog/">Blog</a>
+      </div>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">[NDH2k13] Prequals - Meow (misc)</h1>
+    <p class="post-meta"><time datetime="2013-03-10T01:53:00+01:00" itemprop="datePublished">Mar 10, 2013</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">m_101</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Hello there,</p>
+
+<p>For NDH Prequals 2k13, the question for today is:</p>
+
+<p>Can I Haz Flag?
+(sorry, no screens or logs of all original functions …)</p>
+
+<p>In the following article, we’ll see some Python black magic
+that will allow us to escape a restricted shell :).</p>
+
+<h1 id="the-cat-fight-problem">The cat fight problem</h1>
+
+<p>Yeah, cat fighting! meeooow!
+Basically, we had to connect to it through telnet:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>telnet z0b.nuitduhack.com 2323</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Then we’re welcome by a Meow ASCII art.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre>Trying 54.228.228.251...
+Connected to z0b.nuitduhack.com.
+Escape character is <span class="s1">'^]'</span><span class="nb">.</span>
+ _ __ ___   ___  _____      __
+| <span class="s1">'_ ` _ \ / _ \/ _ \ \ /\ / /
+| | | | | |  __/ (_) \ V  V /
+|_| |_| |_|\___|\___/ \_/\_/
+
+Welcome on the only kitten-friendly Python shell.
+Please use auth() to authenticate if you need access to
+the ultimate furry function.
+
+Some available functions:
+ kitty() -- get a kitty
+ auth(password) -- authenticate</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>So we basically are only permitted to use auth() and check() by default.
+Yeah, we’re basically stuck in a “Python Restricted Shell”.</p>
+
+<h1 id="-or-not">… or not</h1>
+
+<p>Digging a bit in builtins, we found out we can use dir():</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="o">()</span>
+<span class="o">[</span><span class="s1">'__builtins__'</span>, <span class="s1">'auth'</span>, <span class="s1">'check'</span>, <span class="s1">'fight'</span>, <span class="s1">'flipacoin'</span>, <span class="s1">'kitty'</span>, <span class="s1">'purr'</span>, <span class="s1">'status'</span>, <span class="s1">'thanks'</span><span class="o">]</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Neat! We can basically list any attributes of  most objects (not the restricted one).</p>
+
+<ul>
+  <li>auth(password), authenticate the user for the second part of
+  the challenge (Meow Meow) and give us a flag.</li>
+  <li>check() is the check function.</li>
+  <li>And thanks() give us this output:</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> thanks<span class="o">()</span>
+Thanks to Guido, Glyph and pyfiglet authors.</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>The rest isn’t really interesting.</p>
+
+<p>With dir(), we can basically look in python intrinsics.</p>
+
+<h1 id="python-intrinsics">Python intrinsics</h1>
+
+<p>We you dir a list for instance, you can see stuffs like that:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="o">([])</span>
+<span class="o">[</span><span class="s1">'__add__'</span>, <span class="s1">'__class__'</span>, <span class="s1">'__contains__'</span>, <span class="s1">'__delattr__'</span>, <span class="s1">'__delitem__'</span>, <span class="s1">'__delslice__'</span>, <span class="s1">'__doc__'</span>, <span class="s1">'__eq__'</span>, <span class="s1">'__format__'</span>, <span class="s1">'__ge__'</span>, <span class="s1">'__getattribute__'</span>, <span class="s1">'__getitem__'</span>, <span class="s1">'__getslice__'</span>, <span class="s1">'__gt__'</span>, <span class="s1">'__hash__'</span>, <span class="s1">'__iadd__'</span>, <span class="s1">'__imul__'</span>, <span class="s1">'__init__'</span>, <span class="s1">'__iter__'</span>, <span class="s1">'__le__'</span>, <span class="s1">'__len__'</span>, <span class="s1">'__lt__'</span>, <span class="s1">'__mul__'</span>, <span class="s1">'__ne__'</span>, <span class="s1">'__new__'</span>, <span class="s1">'__reduce__'</span>, <span class="s1">'__reduce_ex__'</span>, <span class="s1">'__repr__'</span>, <span class="s1">'__reversed__'</span>, <span class="s1">'__rmul__'</span>, <span class="s1">'__setattr__'</span>, <span class="s1">'__setitem__'</span>, <span class="s1">'__setslice__'</span>, <span class="s1">'__sizeof__'</span>, <span class="s1">'__str__'</span>, <span class="s1">'__subclasshook__'</span>, <span class="s1">'append'</span>, <span class="s1">'count'</span>, <span class="s1">'extend'</span>, <span class="s1">'index'</span>, <span class="s1">'insert'</span>, <span class="s1">'pop'</span>, <span class="s1">'remove'</span>, <span class="s1">'reverse'</span>, <span class="s1">'sort'</span><span class="o">]</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>All those <strong>name</strong> things are intrinsics attributes (or methods).
+That’s how you redefined some ops and all.</p>
+
+<p>Our objectives was to get at some code, either by reading a file
+or dumping byte code or whatever!</p>
+
+<p>Let’s test some stuffs first:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">[]</span>.__class__.__name__
+<span class="s1">'list'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="o">[]</span>.__class__.__class__.__name__
+<span class="s1">'type'</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Cool, we can have access to type!</p>
+
+<p>It’s exciting because we can list what python call “Method Resolution Order”
+on objects we don’t have attributes (such as status, etc) as it will
+internally call the mro() of these objects.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">[]</span>.__class__.__class__.mro<span class="o">([]</span>.__class__.__class__.__new__<span class="o">([]</span>.__class__.__class__, status<span class="o">))</span>
+<span class="o">[</span>&lt;class <span class="s1">'__main__.Wrapper'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'object'</span><span class="o">&gt;]</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Now we have the type of status :).</p>
+
+<p><strong>main</strong>.Wrapper … just give us a small idea of software architecture.
+Yeah, but we wanna create objects or stuffs like import?
+For that, we need to see what are the base classes (and maybe go down
+by creating classes). And the object upon which all Python objects descend? object</p>
+
+<h1 id="object-is-a-neat-object">object is a neat object</h1>
+
+<p>We are going to get object and look at its descendants as it gives us
+access to the following:</p>
+
+<ul>
+  <li>__bases__ intrinsic attribute give use the base object that
+  an object herit from.</li>
+  <li>__subclasses__() intrisic method give us the object that descend
+  upon that object.</li>
+</ul>
+
+<p>And how we did it:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">()</span>.__class__.__bases__[0].__subclasses__<span class="o">()</span>
+<span class="o">[</span>&lt;<span class="nb">type</span> <span class="s1">'type'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'weakref'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'weakcallableproxy'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'weakproxy'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'int'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'basestring'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'bytearray'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'list'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'NoneType'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'NotImplementedType'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'traceback'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'super'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'xrange'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'dict'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'set'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'slice'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'staticmethod'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'complex'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'float'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'buffer'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'long'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'frozenset'</span><span class="o">&gt;</span>, 
+&lt;<span class="nb">type</span> <span class="s1">'property'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'tuple'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'enumerate'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'reversed'</span><span class="o">&gt;</span>, 
+&lt;<span class="nb">type</span> <span class="s1">'code'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'frame'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'builtin_function_or_method'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'instancemethod'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'function'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'classobj'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'dictproxy'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'generator'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'getset_descriptor'</span><span class="o">&gt;</span>, 
+&lt;<span class="nb">type</span> <span class="s1">'wrapper_descriptor'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'instance'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'ellipsis'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'member_descriptor'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'sys.floatinfo'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'EncodingMap'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'sys.flags'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'exceptions.BaseException'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'module'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'imp.NullImporter'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'zipimport.zipimporter'</span><span class="o">&gt;</span>, 
+&lt;<span class="nb">type</span> <span class="s1">'posix.stat_result'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'posix.statvfs_result'</span><span class="o">&gt;</span>, 
+&lt;class <span class="s1">'warnings.WarningMessage'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'warnings.catch_warnings'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'_abcoll.Hashable'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'classmethod'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'_abcoll.Iterable'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'_abcoll.Sized'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'_abcoll.Container'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'_abcoll.Callable'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'site._Printer'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'site._Helper'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'file'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'site.Quitter'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'codecs.IncrementalEncoder'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'codecs.IncrementalDecoder'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'_random.Random'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'Struct'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'time.struct_time'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'cStringIO.StringO'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'cStringIO.StringI'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'zipfile.ZipInfo'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'string.Template'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'_sre.SRE_Pattern'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'string.Formatter'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'functools.partial'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'operator.itemgetter'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'operator.attrgetter'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'operator.methodcaller'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'pyfiglet.FigletFont'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'pyfiglet.FigletRenderingEngine'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'pyfiglet.Figlet'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'socket._closedsocket'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'_socket.socket'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'method_descriptor'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'socket._socketobject'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'socket._fileobject'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'twisted.python.compat.tsafe'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.versions._inf'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.versions.Version'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'select.epoll'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'urlparse.ResultMixin'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'collections.deque'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'deque_iterator'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'deque_reverse_iterator'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'pkg_resources.WorkingSet'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'pkg_resources.Environment'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'pkg_resources.EntryPoint'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'pkg_resources.Distribution'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'thread._local'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'datetime.tzinfo'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'datetime.time'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'datetime.timedelta'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'datetime.date'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'OpenSSL.SSL.Connection'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'OpenSSL.SSL.Context'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'NetscapeSPKI'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'PKCS12'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'PKCS7'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'X509Extension'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'OpenSSL.crypto.PKey'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'X509Req'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'X509Store'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'X509Name'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'X509'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.deprecate._DeprecatedAttribute'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.deprecate._ModuleProxy'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.util.SubclassableCStringIO'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'grp.struct_group'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'pwd.struct_passwd'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.declarations.ObjectSpecificationDescriptorPy'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.declarations.ClassProvidesBasePy'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.interface.Element'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.interface.SpecificationBasePy'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.interface.InterfaceBasePy'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'_interface_coptimizations.SpecificationBase'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'_interface_coptimizations.ObjectSpecificationDescriptor'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'_zope_interface_coptimizations.InterfaceBase'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'_zope_interface_coptimizations.LookupBase'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'threading._Verbose'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'twisted.python.threadable.DummyLock'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.threadable.XLock'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.reflect.PropertyAccessor'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.log.PythonLoggingObserver'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.failure._Traceback'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.failure._Frame'</span><span class="o">&gt;</span>, &lt;class <span class="s1">'twisted.python.failure._Code'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.lockfile.FilesystemLock'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.defer._ConcurrencyPrimitive'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.defer.DeferredQueue'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.combinations'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.cycle'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.dropwhile'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.takewhile'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.islice'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.starmap'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.imap'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.chain'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.ifilter'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.ifilterfalse'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.count'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.izip'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.izip_longest'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.permutations'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.product'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.repeat'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.groupby'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools.tee_dataobject'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'itertools.tee'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'itertools._grouper'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.abstract.FileDescriptor'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.base.ThreadedResolver'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.base._ThreePhaseEvent'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.base.ReactorBase'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.base._SignalReactorMixin'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.address.IPv4Address'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.address.UNIXAddress'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.task.LoopingCall'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.task._Timer'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.task.CooperativeTask'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.task.Cooperator'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.task.Clock'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.tcp._TLSDelayed'</span><span class="o">&gt;</span>,
+&lt;<span class="nb">type</span> <span class="s1">'_hashlib.HASH'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet._sslverify.OpenSSLCertificateOptions'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.adapter.BaseAdapterRegistry'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.adapter.LookupBasePy'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'zope.interface.adapter.AdapterLookupBase'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.components._ProxiedClassMethod'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.python.components._ProxyDescriptor'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.process._BaseProcess'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet._signals._Handler'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'twisted.internet.posixbase._FDWaker'</span><span class="o">&gt;</span>,
+&lt;class <span class="s1">'__main__.Wrapper'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'_ast.AST'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'cell'</span><span class="o">&gt;]</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>When I saw that, I was like: Oh My God! <em>_</em> beautiful, I can almost create
+any freaking object I want.</p>
+
+<p>We tried a bunch of stuffs. For instance opening files:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">()</span>.__class__.__bases__[0].__subclasses__<span class="o">()[</span>58]<span class="o">(</span><span class="s1">'meow.py'</span>, <span class="s1">'r'</span><span class="o">)</span>
+Internal error: file<span class="o">()</span> constructor not accessible <span class="k">in </span>restricted mode.</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We even tried looking at the code:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> auth.func_code
+&lt;code object auth at 0x7f9ab195b828, file <span class="s2">"/opt/meow/challenge.py"</span>, line 235&gt;</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Yay! We have the real path of the challenge, spent a loooot of time trying
+to figure out how to read the file. Didn’t manage it.</p>
+
+<p>Hell, let’s dir() it:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="o">(</span>auth.func_code<span class="o">)</span>
+<span class="o">[</span><span class="s1">'__class__'</span>, <span class="s1">'__cmp__'</span>, <span class="s1">'__delattr__'</span>, <span class="s1">'__doc__'</span>, <span class="s1">'__eq__'</span>, <span class="s1">'__format__'</span>,
+ <span class="s1">'__ge__'</span>, <span class="s1">'__getattribute__'</span>, <span class="s1">'__gt__'</span>, <span class="s1">'__hash__'</span>, <span class="s1">'__init__'</span>, <span class="s1">'__le__'</span>,
+ <span class="s1">'__lt__'</span>, <span class="s1">'__ne__'</span>, <span class="s1">'__new__'</span>, <span class="s1">'__reduce__'</span>, <span class="s1">'__reduce_ex__'</span>, <span class="s1">'__repr__'</span>,
+ <span class="s1">'__setattr__'</span>, <span class="s1">'__sizeof__'</span>, <span class="s1">'__str__'</span>, <span class="s1">'__subclasshook__'</span>, <span class="s1">'co_argcount'</span>,
+ <span class="s1">'co_cellvars'</span>, <span class="s1">'co_code'</span>, <span class="s1">'co_consts'</span>, <span class="s1">'co_filename'</span>, <span class="s1">'co_firstlineno'</span>,
+ <span class="s1">'co_flags'</span>, <span class="s1">'co_freevars'</span>, <span class="s1">'co_lnotab'</span>, <span class="s1">'co_name'</span>, <span class="s1">'co_names'</span>,
+ <span class="s1">'co_nlocals'</span>, <span class="s1">'co_stacksize'</span>, <span class="s1">'co_varnames'</span><span class="o">]</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>There is the co_code that seems interesting but we’ll come back to that later.</p>
+
+<p>check() is the same type as auth(), so:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> check.func_code.co_consts
+<span class="o">(</span><span class="s1">' Check a password.\n\n    :param string password: Secret password.\n    '</span>,
+<span class="s1">'G'</span>, <span class="s1">'$'</span>, <span class="s1">'K'</span>, <span class="s1">'!'</span>, <span class="s1">'%'</span>, <span class="s1">'@'</span>, <span class="s1">'S'</span>, <span class="s1">'#'</span>,
+&lt;code object &lt;lambda&gt; at 0x7f9ab195b210, file <span class="s2">"/opt/meow/challenge.py"</span>, line 127&gt;, <span class="s1">''</span>,
+&lt;code object &lt;lambda&gt; at 0x7f9ab195b288, file <span class="s2">"/opt/meow/challenge.py"</span>, line 128&gt;, 14,
+<span class="s1">'\x00'</span>,
+&lt;code object xxx at 0x7f9ab195b378, file <span class="s2">"/opt/meow/challenge.py"</span>, line 131&gt;, 7,
+&lt;code object &lt;lambda&gt; at 0x7f9ab195b3f0, file <span class="s2">"/opt/meow/challenge.py"</span>, line 148&gt;,
+<span class="s1">'%s'</span>, 2, <span class="s1">'916F601F6A625DF351086CBCF25BAECA'</span><span class="o">)</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Oh, nice, we seem to have something that look like some kind of hash!!!
+We tried bruteforce of course (with oclHashcat) but not luck.
+Back to some reversing.</p>
+
+<h1 id="auth-reverse-engineering">auth() reverse engineering</h1>
+
+<p>Ok back to auth().</p>
+
+<p>In auth, we can get the bytecode with auth.func_code.co_code.</p>
+
+<p>You can disassemble it using the <strong>dis</strong> module in python (please note that
+the bytecode change between Python versions). Like so:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">dis</span>
+<span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="s">'some bytecode here'</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>I must say that it was when I got lazy.
+Doing bytecode translation to python by hand …
+And reconstructing a .pyc …
+Was time to eat.
+When I came back, Celelibi came up with something like this:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+ <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="s">'G'</span><span class="p">,</span> <span class="s">'$'</span><span class="p">,</span> <span class="s">'K'</span><span class="p">,</span> <span class="s">'!'</span><span class="p">,</span> <span class="s">'</span><span class="si">%</span><span class="s">'</span><span class="p">,</span> <span class="s">'@'</span><span class="p">,</span> <span class="s">'S'</span><span class="p">,</span> <span class="s">'#'</span><span class="p">]</span>
+ <span class="n">cte</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
+ <span class="n">tmp</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">password</span><span class="p">[:</span><span class="mi">14</span><span class="p">]))</span>
+ <span class="n">tempPass</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">'</span><span class="se">\x00</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">14</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)),</span> <span class="n">tmp</span><span class="p">])</span>
+ <span class="c1">#xxx = lambda: # ci-dessus
+</span> <span class="n">k</span> <span class="o">=</span> <span class="n">xxx</span><span class="p">(</span><span class="n">tempPass</span><span class="p">[:</span><span class="mi">7</span><span class="p">])</span>
+ <span class="n">d</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">DES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
+ <span class="n">obj</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+ <span class="n">h</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">cte</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+ <span class="n">k</span> <span class="o">=</span> <span class="n">xxx</span><span class="p">(</span><span class="n">tempPass</span><span class="p">[</span><span class="mi">7</span><span class="p">:])</span>
+ <span class="n">obj</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+ <span class="n">h</span> <span class="o">+=</span> <span class="n">obj</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">cte</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+ <span class="k">return</span> <span class="s">'</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">hex</span><span class="p">(</span><span class="n">dec</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">dec</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">h</span><span class="p">]])</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">'916F601F6A625DF351086CBCF25BAECA'</span>
+
+<span class="k">def</span> <span class="nf">auth</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+ <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+  <span class="k">print</span> <span class="s">'The first flag is: '</span> <span class="o">+</span> <span class="n">FLAG1</span>
+  <span class="k">print</span> <span class="s">'Also, here is a secret purry function.'</span>
+  <span class="k">return</span> <span class="mi">0</span>
+ <span class="k">else</span><span class="p">:</span>
+  <span class="k">print</span> <span class="s">'Wrong password. Meow shfffff.'</span>
+  <span class="k">return</span> <span class="bp">None</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Huh!
+WTF!
+7 bytes + 7 bytes … sound like LM Hash.</p>
+
+<p>Let’s check our good friend Wikipédia:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="code"><pre>     
+Algorithm
+
+The LM hash is computed as follows:[1][2]
+
+    The user's password is restricted
+        to a maximum of fourteen characters.[Notes 1]
+    The user’s password is converted to uppercase.
+    The user's password is encoded in the System OEM Code page[3]
+    This password is null-padded to 14 bytes.[4]
+    The “fixed-length” password is split into two seven-byte halves.
+    These values are used to create two DES keys, one from each 7-byte half,
+        by converting the seven bytes into a bit stream,
+        and inserting a null bit after every seven bits
+        (so 1010100 becomes 01010100). This generates the 64 bits needed
+        for a DES key. (A DES key ostensibly consists of 64 bits; however,
+        only 56 of these are actually used by the algorithm.
+        The null bits added in this step are later discarded.)
+    Each of the two keys is used to DES-encrypt the constant ASCII
+        string “KGS!@#$%”,[Notes 2] resulting in two 8-byte ciphertext values.
+        The DES CipherMode should be set to ECB, and PaddingMode
+        should be set to NONE.
+    These two ciphertext values are concatenated to form a 16-byte value,
+        which is the LM hash.</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>It basically use the password as two sets of 7 bytes (56 bits) DES keys.
+Perfect for DES since it only uses 56 bits (because of the NSA …).</p>
+
+<p>So, we can now crack the hash and we get:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>LM("SH3|DON'S S0N9") = 916F601F6A625DF351086CBCF25BAECA</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Ok great, let’s try.</p>
+
+<h1 id="onto-the-end-of-the-road">Onto the end of the road</h1>
+
+<p>So we enter the password:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> auth<span class="o">(</span><span class="s2">"SH3|DON'S S0N9"</span><span class="o">)</span>
+The first flag is: Int3rnEt1sm4de0fc47
+Also, here is a secret purry <span class="k">function</span><span class="nb">.</span>
+&lt;<span class="k">function </span>secret at 0x14e8050&gt;</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Yeeeeees!</p>
+
+<p>auth() when authenticated, it prints the flag and return a secret() function.
+Secret function() is “Meow Meow” challenge ;).</p>
+
+<h1 id="bonus-track">Bonus track</h1>
+
+<p>A bug, unintended feature at the beginning (removed during the game):</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">exec</span><span class="o">(</span>os.system<span class="o">(</span><span class="s2">"/bin/sh"</span>, <span class="o">{</span><span class="s1">'__builtins__'</span>: <span class="o">{</span><span class="s1">'__import__'</span>:__builtins__.__import__<span class="o">}})</span>
+Internal error: EOL <span class="k">while </span>scanning string literal <span class="o">(</span><span class="nv">$telnet$,</span> line 1<span class="o">)</span>.</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Variables were not allowed … but well we can still create classes:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>len<span class="o">([</span>c <span class="k">for </span>c <span class="k">in</span> <span class="o">()</span>.__class__.__bases__[0].__subclasses__<span class="o">()</span> <span class="k">if</span> <span class="s1">'classobj'</span> <span class="o">==</span> c.__name__][0]<span class="o">(</span><span class="s1">'Obj'</span>, <span class="o">()</span>, <span class="o">{</span><span class="s1">'__len__'</span> : lambda x: 5<span class="o">})())</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>(we also managed to crushed some variables using list comprehension and such)</p>
+
+<p>Enumeration of dist-packages (found while trying to find a way to import):</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">()</span>.__class__.__bases__[0].__subclasses__<span class="o">()[</span>91]<span class="o">()</span>.find_plugins<span class="o">(()</span>.__class__.__bases__[0].__subclasses__<span class="o">()[</span>92]<span class="o">())</span>
+<span class="o">([</span>pyasn1 0.0.11a <span class="o">(</span>/usr/lib/pymodules/python2.6<span class="o">)</span>,
+wsgiref 0.1.2 <span class="o">(</span>/usr/lib/python2.6<span class="o">)</span>,
+pyfiglet 0.4 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+PAM 0.4.2 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+pyOpenSSL 0.10 <span class="o">(</span>/usr/lib/pymodules/python2.6<span class="o">)</span>,
+pyglet 1.1.4 <span class="o">(</span>/usr/local/lib/python2.6/dist-packages<span class="o">)</span>,
+pycrypto 2.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+pyserial 2.3 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Python 2.6 <span class="o">(</span>/usr/lib/python2.6/lib-dynload<span class="o">)</span>,
+Twisted 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Conch 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Core 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Lore 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Mail 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Names 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-News 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Runner 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Web 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
+Twisted-Words 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)]</span>,
+<span class="o">{</span>zope.interface 3.5.3 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>:
+DistributionNotFound<span class="o">(</span>Requirement.parse<span class="o">(</span><span class="s1">'distribute'</span><span class="o">)</span>,<span class="o">)})</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>And the best for the end: you thought we couldn’t open files, execute or import stuffs? Think again:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="o">[</span>x <span class="k">for </span>x <span class="k">in</span> <span class="o">()</span>.__class__.__base__.__subclasses__<span class="o">()</span> <span class="k">if </span>x.__name__ <span class="o">==</span> <span class="s1">'catch_warnings'</span><span class="o">][</span>0]<span class="o">()</span>._module.__builtins__[<span class="s1">'__import__'</span><span class="o">](</span><span class="s2">"os"</span><span class="o">)</span>.popen<span class="o">(</span><span class="s2">"cat /etc/passwd"</span><span class="o">)</span>.read<span class="o">()</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Got that afterward (with some help). So no, I don’t have the source code of the challenge :(.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Of course, we tried many many more stuffs but well, was repetitive: looking around python intrinsics and reading some docs.</p>
+
+<p>heh, you thought you couldn’t do anything in restricted shell?
+This challenge just proved us wrong.
+We can do prolly almost anything with a bit of python wizardry and if not properly restricted.
+It also shows that it is REALLY hard to have a fully secure thing.</p>
+
+<p>In the end, we had a really good time,</p>
+
+<p>Hope you enjoyed the article,</p>
+
+<p>Cheers,</p>
+
+<p>m_101</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li><a href="http://www.cafepy.com/article/python_types_and_objects/python_types_and_objects.html">Python types and objects</a></li>
+  <li><a href="http://docs.python.org/2/reference/datamodel.html">Python DataModel</a></li>
+  <li><a href="http://docs.python.org/2/library/restricted.html">Python restricted shells 1</a></li>
+  <li><a href="http://grail.sourceforge.net/info/manual/restricted.html">Python restricted shells 2</a></li>
+  <li><a href="http://docs.python.org/2/library/functions.html">Python builtin functions</a></li>
+  <li><a href="http://docs.python.org/2/library/traceback.html">Python traceback</a></li>
+  <li><a href="http://pythonhosted.org/distribute/pkg_resources.html">pkg_resources</a></li>
+  <li><a href="http://stackoverflow.com/questions/1555944/how-to-dereference-a-memory-location-from-python-ctypes">Python pointer dereference method 1</a></li>
+  <li><a href="http://mg.pov.lt/blog/python-object-graphs.html">Python pointer dereference method 2</a></li>
+</ul>
+
+<h1 id="cool-stuffs">Cool stuffs</h1>
+
+<ul>
+  <li><a href="https://github.com/Mysterie/uncompyle2">Mysterie python bytecode decompiler</a></li>
+</ul>
+
+<h1 id="other-cool-write-ups">Other (cool) write-ups:</h1>
+<ul>
+  <li><a href="http://blog.delroth.net/2013/03/escaping-a-python-sandbox-ndh-2013-quals-writeup/">Delroth - Escaping a Python sandbox</a></li>
+</ul>
+
+
+  </div>
+
+  <div class="post-navigation">
+    
+    <a class="post-prev" href="/2013/03/06/hes-2011-abraxas-wargame-level-4.html">Previous : [HES 2011] Abraxas Wargame - Level 4</a>
+    
+
+    
+    <a class="post-next" href="/2013/06/10/vanilla1-write-what-where-exploitation.html">Next : Vanilla1 : write-what-where exploitation (ASLR, Full RELRO, Stack cookie)</a>
+    
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "http://localhost:4000/2013/03/10/ndh2k13-prequals-meow-misc.html";
+            this.page.identifier = "/2013/03/10/ndh2k13-prequals-meow-misc";
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//binholic.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <div class="site-footer">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/m101"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/w_levin"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="mailto:m101.sec@gmail.com"><span class="icon icon--email"><?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240.665px" height="250px" viewBox="43.833 205.167 240.665 250" enable-background="new 43.833 205.167 240.665 250" xml:space="preserve">
+<g>
+	<path fill="#323232" d="M221.459,396.62c-8.84,0-15.904-2.21-21.191-6.63c-5.289-4.42-8.449-10.441-9.488-18.07   c-4.855,5.895-10.66,10.965-17.42,15.21c-6.762,4.249-14.561,6.37-23.4,6.37c-6.59,0-12.83-1.256-18.72-3.77   c-5.895-2.512-11.095-6.15-15.6-10.92c-4.509-4.766-8.105-10.571-10.79-17.42c-2.689-6.846-4.03-14.69-4.03-23.531   c0-9.879,1.56-19.064,4.68-27.56c3.12-8.49,7.365-15.86,12.74-22.1c5.371-6.24,11.7-11.136,18.98-14.69   c7.28-3.551,15.08-5.33,23.4-5.33c9.01,0,16.68,1.82,23.01,5.461c6.324,3.639,11.311,8.234,14.949,13.779l2.34-17.42h20.541   l-10.66,85.02c-0.52,3.99-0.781,7.021-0.781,9.101c0,5.029,1.041,8.929,3.121,11.7c2.08,2.774,5.545,4.16,10.4,4.16   c4.504,0,8.84-1.646,13-4.94c4.16-3.29,7.799-7.931,10.92-13.91c3.119-5.979,5.589-13.085,7.41-21.319   c1.82-8.23,2.729-17.291,2.729-27.17c0-11.961-2.123-23.051-6.369-33.281c-4.25-10.225-10.228-19.064-17.939-26.52   c-7.715-7.451-16.859-13.26-27.43-17.42c-10.576-4.16-22.189-6.24-34.842-6.24c-16.119,0-30.464,3.165-43.029,9.49   c-12.57,6.33-23.14,14.605-31.72,24.83c-8.58,10.229-15.08,21.799-19.5,34.71c-4.42,12.915-6.63,26.045-6.63,39.39   c0,15.08,2.34,28.516,7.02,40.301c4.68,11.789,11.18,21.795,19.5,30.029c8.32,8.23,18.11,14.471,29.38,18.721   c11.265,4.244,23.485,6.369,36.661,6.369c13.17,0,24.914-1.561,35.229-4.68c10.311-3.121,20.15-6.936,29.512-11.439l7.539,19.76   c-9.016,4.85-19.891,8.924-32.631,12.219c-12.738,3.291-26.479,4.941-41.209,4.941c-16.64,0-31.98-2.516-46.02-7.541   c-14.04-5.029-26.175-12.439-36.4-22.23c-10.229-9.795-18.2-21.84-23.92-36.139c-5.72-14.301-8.58-30.811-8.58-49.53   c0-17.331,2.99-33.841,8.97-49.53c5.98-15.686,14.471-29.51,25.48-41.47c11.005-11.96,24.266-21.45,39.78-28.47   c15.51-7.02,32.889-10.53,52.129-10.53c16.291,0,31.156,2.645,44.59,7.93c13.432,5.29,24.916,12.524,34.451,21.71   c9.529,9.189,16.898,20.064,22.1,32.63c5.199,12.568,7.799,26.129,7.799,40.689c0,12.48-1.518,23.965-4.549,34.45   c-3.035,10.489-7.195,19.5-12.48,27.04c-5.289,7.54-11.615,13.391-18.98,17.55C238.139,394.54,230.124,396.62,221.459,396.62z    M156.979,374.26c6.76,0,13-1.86,18.721-5.59c5.719-3.725,10.311-7.756,13.779-12.09l6.24-51.48   c-3.469-5.545-7.975-10.051-13.52-13.52c-5.551-3.465-11.875-5.2-18.98-5.2c-5.201,0-10.23,1.17-15.08,3.511   c-4.855,2.34-9.145,5.635-12.87,9.879c-3.729,4.25-6.675,9.32-8.84,15.211c-2.169,5.895-3.25,12.395-3.25,19.5   c0,13.174,3.291,23.1,9.88,29.77C139.645,370.925,147.62,374.26,156.979,374.26z"/>
+</g>
+</svg></span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="http://127.0.0.1:8888/USK@ABR8mm2t1L1G8cBG70cDy4PHFO6LPV~LrA-RIZxgOGI,pnGWUxb7k8~5-ywwqnBakTXx5ZFw6QzzZj7H~45NgE8,AQACAAE/binholic/-1/"><span class="icon icon--freenet"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="79.12"
+   height="52.64">
+  <defs/>
+  <g
+     transform="translate(-47.495719,-111.30691)">
+    <path
+       d="M 80.03,122.66 C 94.49,107.06 104.32,113.99 87.53,124.89 C 82.19,128.36 83.58,129.37 87.17,128.82 C 92.24,128.05 95.01,129.02 96.24,129.98 C 99.18,132.28 100.65,130.57 101.64,128.82 C 103.61,125.35 110.25,129.12 105.39,132.75 C 101.59,135.58 102.12,138.77 105.57,140.61 C 111.96,144.01 126.30,150.75 124.14,157.93 C 123.26,160.86 121.67,163.62 118.07,159.89 C 111.32,152.92 106.83,146.97 91.28,144.54 C 81.24,142.96 71.15,140.33 61.46,145.25 C 56.90,147.67 51.16,149.23 49.94,146.37 C 48.35,142.64 56.47,139.57 64.32,138.82 C 69.42,138.33 73.99,134.99 67.00,133.29 C 58.39,130.64 68.28,123.09 74.50,124.89 C 78.55,126.07 78.95,123.83 80.03,122.66 z"
+       style="fill:#ffffff;stroke:#356ace;stroke-width:1.5;" />
+  </g>
+</svg>
+</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

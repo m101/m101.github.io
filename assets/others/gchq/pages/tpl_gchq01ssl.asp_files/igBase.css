@@ -1,0 +1,1554 @@
+/*
+-------------------------------------------------------------------------------
+Title: New base stylesheet for i-GRasp front ends
+Default filename: igBase.css
+
+Description:
+
+Please read the internal documentation for full information on how to use this
+file. Validates up to CSS version 2.1 with no errors or warnings.
+
+Original concept and initial work: Nick Fedorowicz and Ben Warner (Sept 2007)
+
+Work picked up by: Rob Watts
+Last modified: 22nd August 2008
+-------------------------------------------------------------------------------
+*/
+
+/* Generic page title 1, used on most pages */
+
+div.igPageTitle
+{
+	font-weight: bold;
+	margin: 0 0 10px 0
+}
+
+/* Generic page title 2, used on the Job Desc, Pre-App Application
+Questions, and several other pages. */
+
+div.header
+{
+	font-weight: bold
+}
+
+/*
+Generic grey <table> - used in:
+
+1. The Job Alerts registration box on the *old* Search Results page,
+2. The General Application box on the same page, and...
+3. The table used to hold the Equal Opps page.
+
+No unique CSS ID is available for 1 and 2, but for 3 you can set styles by
+using the ID "equalopstable".
+*/
+
+table.greytable
+{
+	background-color: #f0f0f0;
+	border: 1px solid #ccc
+}
+
+/*
+Generic grey <div> - used in:
+
+1. The Job Alerts registration box on the *new* Search Results page, and...
+2. The General Application box on the same page.
+
+To style item 1, use the CSS ID igsearchresultsalertregsub.
+To style item 2, use the CSS ID igsearchresultsgeneralapp.
+*/
+
+div.greydiv
+{
+	background-color: #f0f0f0;
+	margin: 10px 0;
+	padding: 5px
+}
+
+div.greydiv label
+{
+	display: block;
+	float: left;
+	margin: 2px 0;
+	width: 100px
+}
+
+/* Generic styling for all submit buttons */
+
+input.submitbutton
+{
+	margin: 5px 0;
+	text-align: center;
+	width: auto
+}
+
+/* Generic classes used in tables */
+
+table.list
+{
+	width: 100%
+}
+
+table.list th
+{
+	background-color: #f0f0f0;
+	color: #000
+}
+
+th.listheading
+{
+	background-color: #f0f0f0;
+	font-weight: bold
+}
+
+td.listbody
+{
+	font-size: 0.85em;
+	padding: 2px
+}
+
+/* Generic styles for coloured banners, which nudges the text over to the
+right to give a bit more spacing - set the padding to 0 in igChanges if you
+have set the colour of these banners to be transparent. */
+
+table#login2 span.general_bold,
+tr#maindetailsloginbanner span.general_bold,
+tr#maindetailsbanner span.general_bold,
+td#newappbar,
+td#existingappbar,
+table.applytable span.general_bold,
+span#logindetails span.general_bold,
+table#igEventsLogin2  span.general_bold
+{
+	padding: 0 0 0 3px
+}
+
+/* Generic table seperator */
+
+.tableseperator
+{
+	height: 10px;
+	width: 1px
+}
+
+/* Generic styles for the day, month and year drop down boxes */
+
+.feday
+{
+	width: 55px
+}
+
+.femonth
+{
+	width: 100px
+}
+
+.feyear
+{
+	width: 70px
+}
+
+/* Spacing out DoB fields on Exp Hire, Volume Registration and Vol App
+main details pages */
+
+table.applytable .feday,
+.applytable .femonth,
+.applytable .feyear,
+span#volumemaindetails .feday,
+#volumemaindetails .femonth,
+#volumemaindetails .feyear,
+span#personregister .feday,
+#personregister .femonth,
+#personregister .feyear
+{
+	margin: 3px 5px 3px 0
+}
+
+/* Generic spacer object used on the Work Exp and Qualifications pages */
+
+div.spacer
+{
+	padding: 10px 0 0 0
+}
+
+/* Generic bold and italic text objects */
+
+span.general_bold
+{
+	font-weight: bold
+}
+
+span.general_italic
+{
+	font-style: italic
+}
+
+/* Generic warnings that display when you submit a form without filling in
+all mandatory fields. */
+
+span.general_font_red
+{
+	color: red;
+	padding: 0 10px 0 0
+}
+
+.errormsg
+{
+	color: red;
+	display: block;
+	padding: 0 10px 0 0
+}
+
+div.igDivErrMsg
+{
+	color: red;
+	display: none
+}
+
+ div.igDivErrMsgShow
+{
+	color: red
+}
+
+/* National Insurance (NI) Number fields, set to display in uppercase */
+
+#NINUMBER
+{
+	text-transform: uppercase
+}
+
+/* Postcode input fields on various pages, set to display in uppercase */
+
+#searchpostcode, #POSTCODE
+{
+	text-transform: uppercase
+}
+
+/* Main i-GRasp front end container, used in the example template */
+
+div#igContainer
+{
+
+}
+
+/* Search criteria page */
+
+div#searchcriteria_container
+{
+	margin: 10px 0 0 0
+}
+
+div.searchpair
+{
+	margin: 3px 0
+}
+
+.searchpair label
+{
+	float: left;
+	padding: 4px 0 0 0;
+	width: 150px
+}
+
+.searchpair input.searchcriteria,
+.searchpair input.postcode
+{
+	margin: 2px 0;
+	width: 240px
+}
+
+.searchpair select.searchcriteria
+{
+	margin: 2px 0;
+	width: 245px
+}
+
+div#searchsubmit
+{
+	margin: 10px 0 0 0
+}
+
+/* Multiple select search field - single drop down element */
+
+div.singledropdown
+{
+	margin: -2px 0
+}
+
+.singledropdown label
+{
+	float: left;
+	padding: 6px 0 0 0;
+	width: 150px
+}
+
+.singledropdown select.searchcriteria
+{
+	margin: 5px 0;
+	width: 245px
+}
+
+a.multipleselect
+{
+	padding: 0 0 0 5px;
+	vertical-align: 3px
+}
+
+/* Multiple select search field - multiple value selection container */
+
+div.controlbar
+{
+	background-color: #BDC5DE;
+	border: 1px solid #7F9DB9;
+	border-bottom: none;
+	margin: 5px 0 0 0;
+	width: 508px /* This attribute MUST be set to a fixed width! */
+}
+
+div.controltitle
+{
+	float: left;
+	font-weight: bold;
+	padding: 2px 0 0 5px;
+}
+
+div.controlclose
+{
+	text-align: right
+}
+
+div.multiselectbox
+{
+	background-color: #fff;
+	border: 1px solid #7F9DB9;
+	display: none;
+	margin: 0 0 5px 0;
+	overflow: auto;
+	padding: 5px 0 5px 8px;
+	position: absolute; /* New default positioning */
+	width: 500px /* This attribute MUST be set to a fixed width! */
+}
+
+span.expanditem
+{
+	float: left;
+	padding: 1px 0;
+	width: 250px
+}
+
+input.multiselectcheckbox
+{
+	margin: 0 5px 3px 0;
+	padding: 0
+}
+
+/* Job Alerts section -> Add alerts criteria sub-section */
+
+div#currentsearchcriteria
+{
+	padding: 10px 0 20px 0
+}
+
+input#formsubmit1394
+{
+	margin: 10px 0 0 0
+}
+
+/* Job Alerts section -> Alerts registration sub-section */
+
+div#alertregdiv input#USESMS
+{
+	height: 16px;
+	width: 16px
+}
+
+#alertregdiv .reginput
+{
+	margin: 3px
+}
+
+#alertregdiv .igDivErrMsg
+{
+	margin: 5px 0
+}
+
+div.igInputPair
+{
+	clear: left
+}
+
+div.igDivLabel
+{
+	float: left;
+	padding: 2px;
+	width: 150px
+}
+
+div#alertregpassworderror
+{
+	color: red
+}
+
+div#igpasswordpolicy
+{
+	margin: 30px 0 10px 0
+}
+
+/* Container used when the Search Criteria is shown on the
+Search Results page */
+
+.igraspsearchcriteria
+{
+	padding: 10px 0
+}
+
+/* Search results page */
+
+table#searchresultslist
+{
+	margin: 10px 0 0 0
+}
+
+tr#igSortBarRow
+{
+	text-align: left
+}
+
+#igSortBarRow a.SortBar
+{
+	background-color: transparent;
+	color: #000
+}
+
+th.igSortBarHeader
+{
+	padding: 2px 0
+}
+
+th#igSortBartitle
+{
+	padding: 0 0 0 3px
+}
+
+/* Padding for the Title, Sound Byte and First Line of Job Desc cells */
+
+td.igsearchresultstitle,
+td.searchresultssoundbites,
+td.searchresultstopofjobdesc
+{
+	padding: 0 0 0 2px
+}
+
+/* Icon that appears beside new jobs */
+
+div.newjob
+{
+	float: left;
+	width: 40px
+}
+
+/* New search link */
+
+div#igsearchresultsnewsearch
+{
+	padding: 10px 0 0 0
+}
+
+/*
+
+To widen the search results columns, use these two styles, and remember to
+change "location" for the required code list name.
+
+table#searchresultslist th#igSortBarlocation,
+table#searchresultslist td.igsearchresultslocation
+{
+	width: 27%
+}
+
+*/
+
+span.ResultsItemsPerPage
+{
+	display: block;
+	margin: 0;
+	padding: 2px 0
+}
+
+/* Search results page - email / SMS alerts setup box */
+
+div#igsearchresultsalertregsub
+{
+	background-color: #f0f0f0;
+	border: none;
+	color: #000;
+	padding: 4px
+}
+
+#igsearchresultsalertregsub label
+{
+	margin: 5px 0 0 0;
+	padding: 0;
+	width: 110px
+}
+
+#igsearchresultsalertregsub .inputobjects
+{
+	margin: 3px 0;
+	vertical-align: middle;
+	width: 170px
+}
+
+#igsearchresultsalertregsub .submitbutton
+{
+	margin: 0 0 0 10px;
+	vertical-align: middle
+}
+
+/* Job description page */
+
+table#igWriteJob div.header
+{
+	font-weight: bold;
+	margin: 10px 0 0 0
+}
+
+
+#igWriteJob td#jobapplylink
+{
+	padding: 20px 0 0 0
+}
+
+/* Email a friend page -> Job title style */
+
+table.emailtable td.emailinputjobtitle
+{
+	font-weight: bold;
+	padding: 0 0 10px 0
+}
+
+/* Email a friend page -> Main styles */
+
+.emailtable label
+{
+	font-weight: bold
+}
+
+.emailtable input.emailinputobjects
+{
+	margin: 2px 0 8px 0;
+	width: 220px
+}
+
+.emailtable textarea
+{
+	height: 150px;
+	margin: 2px 0 10px 0;
+	width: 300px
+}
+
+.emailtable .submitbutton
+{
+	margin: 10px 0
+}
+
+/* Update my details page */
+
+table#login2 #formsubmit107
+{
+	margin: 10px 0
+}
+
+#login2 img
+{
+	padding: 10px 0 0 0
+}
+
+table#login3 .iglabel
+{
+	width: 120px
+}
+
+#login3 .logininput
+{
+	margin: 3px 0;
+	width: 200px
+}
+
+/* Events section -> Event search sub-section */
+
+table#searchevents
+{
+	text-align: left
+}
+
+#searchevents .feday,
+#searchevents .femonth
+{
+	margin: 5px 5px 5px 0
+}
+
+#searchevents .feyear
+{
+	margin: 5px 0
+}
+
+#searchevents #eventplaceid,
+#searchevents #eventtypeid
+{
+	margin: 3px 0
+}
+
+/* Events section -> Event search results sub-section */
+
+table#igEventDetail
+{
+	text-align: left
+}
+
+/* Events section -> Login or register sub-section */
+
+table#igEventsLogin2 .inputobjects
+{
+	width: 200px
+}
+
+/* Events section -> Event registration form */
+
+table#igEventReg1 input
+{
+	margin: 3px 0
+}
+
+table#igEventReg3 font
+{
+	padding: 0 0 0 3px
+}
+
+/* Pre-app Application Questions section */
+
+table#igAppQuestion2 textarea
+{
+	height: 120px;
+	margin: 0;
+	width: 360px
+}
+
+/* Pre-app Branching Questions section */
+
+span.defaultbqquestion
+{
+	display: block
+}
+
+/* Pre-app Branching Questions section - styles for Multi Choice questions */
+
+div.defaultbqchoices { }
+
+div.defaultbqchoice
+{
+	margin: 2px 0
+}
+
+.defaultbqchoice label { }
+
+/* Pre-app details / Employee referral page */
+
+table#preappdetails input.reginput
+{
+	margin: 3px 10px 3px 5px;
+	width: 200px
+}
+
+#preappdetails select.reginput
+{
+	margin: 3px 10px 3px 5px
+}
+
+/* Choose which application to complete page. */
+
+table#igChooseApp
+{
+}
+
+td.igChooseAppBar
+{
+	background-color: #F0F0F0;
+	font-weight: bold
+}
+
+td#igChooseAppIntro
+{
+}
+
+input.igRadio
+{
+	margin: 7px 0
+}
+
+td#igChooseAppSubmit
+{
+	padding: 20px 0 0 0
+}
+
+/* Incomplete application page */
+
+table#IncompleteApp
+{
+
+}
+
+/* Existing app login / New app registration page */
+
+table#applicationlogin_inner .inputobjects
+{
+	margin: 3px 0;
+	width: 220px
+}
+
+#applicationlogin_inner td#forgottonpasswordtxt,
+#applicationlogin_inner td#newapplink
+{
+	padding: 5px 0
+}
+
+/* Password reminder page */
+
+table.password_reminder td.iglabel
+{
+	padding: 5px 5px 5px 0
+}
+
+div#forgotpasswordsubmit
+{
+	float: left;
+	width: 200px
+}
+
+div#forgotpasswordcancel
+{
+	float: right;
+	width: 200px
+}
+
+/* Experienced hire form */
+
+table.applytable span.general_bold p
+{
+	font-weight: normal
+}
+
+.applytable input.reginput
+{
+	margin: 3px 5px 3px 0;
+	width: 200px
+}
+
+.applytable select.reginput
+{
+	margin: 3px 5px 3px 0;
+	width: 205px
+}
+
+.applytable #HOMEPHONENO,
+.applytable #WORKPHONENO,
+.applytable #MOBILEPHONENO
+{
+	width: 140px
+}
+
+.applytable input.igfilename
+{
+	margin: 7px 0 3px 0;
+	width: 220px
+}
+
+.applytable #formsubmit64
+{
+	margin: 10px 0 0 0
+}
+
+/* Volume application registration form */
+
+span#personregister input.inputobjects
+{
+	margin: 3px 5px 3px 0;
+	width: 200px
+}
+
+span#personregister select.inputobjects
+{
+	margin: 3px 5px 3px 0;
+	width: 205px
+}
+
+/* Preferred phone inputs */
+
+input.preferredphone
+{
+	margin: 0 5px 0 0;
+	padding: 0
+}
+
+.preferredphone label
+{
+	margin: 0 5px 3px 0;
+	padding: 0
+}
+
+/* Application summary page -> Candidate status box */
+
+table.status
+{
+	background-color: #fff;
+	border: solid 1px #000;
+	padding: 4px;
+	width: 100%
+}
+
+.status td
+{
+	padding: 0 5px 5px 5px
+}
+
+.status td.statuslabel
+{
+	font-weight: bold;
+	padding: 5px 0 0 0;
+	margin: 0;
+	text-align: right;
+	width: 45%
+}
+
+.status td.statusvalue
+{
+	padding: 5px 0 0 10px;
+	margin: 0;
+	text-align: left
+}
+
+.status .igselectedlink
+{
+	color: red;
+	font-weight: bold
+}
+
+/* Application summary page -> Table of application form sections */
+
+table#appsections
+{
+	background-color: transparent;
+	padding: 2px 0;
+	width: 100%
+}
+
+#appsections td.sectionlink
+{
+	padding: 5px 0 0 6px
+}
+
+/*	Volume application -> Main details sub-section */
+
+span#volumemaindetails input.reginput
+{
+	margin: 3px 5px 3px 0;
+	width: 200px
+}
+
+span#volumemaindetails select.reginput
+{
+	margin: 3px 5px 3px 0;
+	width: 205px
+}
+
+#volumemaindetails #HOMEPHONENO,
+#volumemaindetails #WORKPHONENO,
+#volumemaindetails #MOBILEPHONENO
+{
+	width: 140px
+}
+
+/* Volume application -> Main details sub-section:
+
+Sets the person username under the "Login Details" heading to bold type */
+
+table#personlist th#personusername
+{
+	font-weight: bold
+}
+
+/* Volume application -> Change login details sub-section (accessed from
+Main details section) -> */
+
+span#logindetails .reginput
+{
+	margin: 3px 5px 3px 0
+}
+
+/* Spacer item (blank image within a table cell), only used on the
+Main Details section of a Volume Application form. */
+
+td.address_seperator
+{
+	height: 5px
+}
+
+/* Education section */
+
+span#igedu .eduheader
+{
+
+}
+
+#igedu .feday
+{
+	width: 50px
+}
+
+#igedu .femonth
+{
+	margin: 5px 0px;
+	width: 45px
+}
+
+#igedu .feyear
+{
+	margin: 5px 0px
+}
+
+#igedu .eduother,
+#igedu .eduselect
+{
+	margin: 5px 0 0 5px
+}
+
+/* Qualifications section -> Main section (select a qualification type)*/
+
+input#formsubmit632,
+input#formsubmit699
+{
+	margin: 5px 0 0 0
+}
+
+/* Qualifications section -> Styles for the single qualification entry page
+(uses a standard table layout with grey headings) */
+
+table#qualtable input
+{
+	margin: 3px 0 3px 3px;
+	width: 280px
+}
+
+#qualtable select
+{
+	margin: 3px 0 3px 3px;
+	width: 285px
+}
+
+#qualtable td.qualcol1
+{
+	padding: 0 20px 0 0
+}
+
+#qualtable td.qualcol2
+{
+	width: 200px
+}
+
+#qualtable .qualisexpected
+{
+	margin: 0 20px 0 5px;
+	width: auto
+}
+
+#qualtable select#qualificationmonth1
+{
+	width: 50px
+}
+
+#qualtable select#qualificationyear1
+{
+	width: 70px
+}
+
+/* Qualifications section -> Styles for the mutliple qualification entry page
+(uses a reconfigurable layout, so only minimal styling is possible) */
+
+.qualdegreesubject,
+.qualsubject,
+.qualresult,
+.qualdegreetype
+{
+	margin: 3px
+}
+
+/* Work experience section -> Main section (list of current work experience) */
+
+table#workexplist td.listheading,
+#workexplist td.listbody
+{
+	padding: 0 5px
+}
+
+/* Work experience section -> Add work experience sub-section */
+
+table#workexp .reginput
+{
+	margin: 3px 5px;
+	width: auto
+}
+
+#workexp .feday
+{
+	margin: 3px 5px
+}
+
+#workexp .femonth,
+#workexp .feyear
+{
+	margin: 3px 5px 3px 0
+}
+
+#workexp textarea
+{
+	height: 150px;
+	margin: 10px 0 0 0;
+	width: 400px
+}
+
+/* Courses section */
+
+table#igEditCourse .reginput
+{
+	margin: 3px 5px;
+	width: auto
+}
+
+#igEditCourse .feday
+{
+	margin: 3px 5px
+}
+
+#igEditCourse .femonth,
+#igEditCourse .feyear
+{
+	margin: 3px 5px 3px 0
+}
+
+#igEditCourse textarea
+{
+	height: 150px;
+	margin: 3px 5px;
+	width: 400px
+}
+
+/* Languages section */
+
+table#languageskills th.listheading
+{
+	background-color: #fff;
+	padding: 0 0 0 3px
+}
+
+#languageskills select.formselect
+{
+	margin: 5px 5px 5px 0
+}
+
+/* References section -> Add a referee page */
+
+table#addreferee .inputobjects
+{
+	margin: 3px 5px
+}
+
+/* Volume application questions section */
+
+table#volumeapp
+{
+	padding: 5px 0
+}
+
+#volumeapp td#volumeappcnt
+{
+	font-weight: bold;
+	padding: 5px 10px 0 0
+}
+
+#volumeapp td#volumeappquestion
+{
+	padding: 4px 10px 2px 2px
+}
+
+/* This only appears once the question has been answered. */
+#volumeapp td#volumeappanswer
+{
+	font-weight: bold;
+	padding: 0 10px 10px 20px
+}
+
+#volumeapp #volumeappanswer div.ListCellDivTextarea
+{
+	width: 90%
+}
+
+/* Volume application questions section -> Question and Answer sub-section */
+
+table#appquestiontable td#appquestion
+{
+	font-weight: bold;
+	padding: 0 10px 0 0
+}
+
+#appquestiontable #appquestion span.appquestiontitle
+{
+	display: block;
+	font-weight: normal;
+	padding: 15px 0 5px 0
+}
+
+#appquestiontable textarea#appquestion
+{
+	height: 120px;
+	width: 360px
+}
+
+/* CV Upload section */
+
+td#writedocsfilename input
+{
+	height: 20px
+}
+
+td#writedocsupload input
+{
+	margin: 1px 0 0 20px
+}
+
+select#clientdoctypeid
+{
+	margin: 0 5px 5px 0
+}
+
+.igfilename
+{
+	width: 250px
+}
+
+/* CV Upload section -> Select previous CV files sub-section. */
+
+span.PrevDocsTitle
+{
+	font-weight: bold
+}
+
+/* Equal opportunities section */
+
+table#equalopstable div.text2bold /* Style for the page title */
+{
+	font-weight: bold
+}
+
+#equalopstable input.inputobjects
+{
+	width: 200px
+}
+
+#equalopstable select.inputobjects
+{
+	width: 205px
+}
+
+#equalopstable textarea
+{
+	height: 150px;
+	width: 300px
+}
+
+/* Styles for the "Tick here to mark this section as complete" checkbox */
+
+div#completedcheckbox
+{
+	margin: 10px 0 0 0
+}
+
+input#isDone
+{
+	margin: 0 0 0 15px
+}
+
+/* Styles for the "Click here to submit your application" link */
+
+.statussubmit
+{
+	color: red;
+	font-weight: bold
+}
+
+/* Withdrawal reason page */
+
+table.withdrawlist .inputobjects
+{
+	margin: 3px 5px
+}
+
+/* Interviews section */
+
+span#intconfirmation
+{
+
+}
+
+#interviewtypedesc
+{
+	font-weight: bold
+}
+
+/* Offers section -> Main section */
+
+div#offerfieldlist
+{
+	clear: right;
+	padding: 0 0 10px 0;
+	width: 100%
+}
+
+div#offermain
+{
+	padding: 0
+}
+
+div#offertypeinfosectionname
+{
+	font-weight: bold
+}
+
+div#offertypeinfosection
+{
+	background-color: #f0f0f0;
+	border: 1px solid #000;
+	margin: 10px 0 0 0;
+	padding: 2px 0 2px 4px;
+}
+
+div#offertypeinfopagelink
+{
+	margin: 3px 0 0 20px
+}
+
+/* Offers section -> NI number and DoB sub-section */
+
+div#offerdetails input.inputfield
+{
+	margin: 3px 5px 3px 0;
+	width: 230px
+}
+
+#offerdetails .feday
+{
+	margin: 3px 3px 3px 0
+}
+
+#offerdetails .femonth,
+#offerdetails .feyear
+{
+	margin: 3px
+}
+
+/* Offers section -> Accept an offer sub-section */
+
+div#offeraccept .iglabel
+{
+	width: 150px
+}
+
+#offeraccept div#accept,
+#offeraccept div#decline
+{
+	margin: 3px 0
+}
+
+#offeraccept .feday
+{
+	margin: 3px 3px 3px 0
+}
+
+#offeraccept .femonth,
+#offeraccept .feyear
+{
+	margin: 3px
+}
+
+#offeraccept input.logininput
+{
+	margin: 3px 5px 3px 0
+}
+
+/* Ref Check section -> Main section */
+
+div#iscurrentmsg
+{
+	margin: 0 0 10px 0
+}
+
+span.gapmsg
+{
+	color: red;
+	padding: 4px 0 0 0
+}
+
+/* Ref check section -> Add a record sub-section */
+
+table#RefCheck .reginput
+{
+	margin: 3px 5px 3px 0;
+	width: 300px
+}
+
+table#RefCheck .reginputdate
+{
+	margin: 3px 5px 3px 0;
+	width: 90px
+}
+
+table#RefCheck #notes
+{
+	height: 100px;
+	margin: 3px 5px 3px 0;
+	width: 250px
+}
+
+table#RefCheck input#homephoneno,
+#RefCheck #workphoneno,
+#RefCheck #mobilephoneno,
+#RefCheck #POSTCODE
+{
+	width: 135px
+}
+
+table.list input.inputfield
+{
+	margin: 3px 5px 3px 0
+}
+
+/* Main section -> Submit ref check box */
+
+div#refchecksubmit
+{
+	border: 1px solid red;
+	padding: 5px 0 5px 8px
+}
+
+/* Your emails section */
+
+span#emaillist th.listheading
+{
+	text-align: left
+}
+
+/* Person messaging section -> Main section (list of all messages) */
+
+table#igMessageList th.listheading
+{
+	text-align: left
+}
+
+/* Person messaging section -> Message details sub-section */
+
+table#igPersonalMessages
+{
+	width: 100%
+}
+
+td.igPersonMessagesLabel
+{
+	font-weight: bold;
+	width: 20%
+}
+
+td#igPersonMessagesText
+{
+	padding: 10px 0 0 0;
+	text-align: justify
+}
+
+table#igMessageFiles
+{
+	background-color: #EEE;
+	text-align: left;
+	width: 70%
+}
+
+table#igMessageFiles td,
+th.igMessageFilesHeader
+{
+	padding: 2px
+}
+
+th#igMessageFilesTitle
+{
+	background-color: #CCC;
+	padding: 2px
+}
+
+td.igMessageFilesDownloadLink
+{
+	text-align: right
+}
+
+div#igMessageReplyButtonContainer
+{
+	padding: 10px 0 0 0
+}
+
+/* Person messaging section -> Reply to message sub-section */
+
+table#igMessageReply .inputobjects
+{
+	margin: 3px 5px 3px 0;
+	width: 300px
+}
+
+/* This code changes the colour of the bar surrounding the "Submit" button on
+the application questions, branching questions and pre-app details section -
+this is set to transparent to match the page background colour. */
+
+tr#AppQuestionLinkBar td,
+table#preappdetailssubmit td,
+tr#branchingquestionlinkbar td
+{
+	background-color: transparent
+}
+
+/* Call Centre portal pages:
+
+Login page */
+
+div.gslogin input.logininput
+{
+	margin: 3px 0 3px 10px
+}
+
+/* Person Search page */
+
+table#personsearch .inputobjects
+{
+	margin: 3px 0 3px 10px
+}
+
+#personsearch .feday
+{
+	margin: 3px 0 3px 10px
+}
+
+#personsearch .femonth,
+#personsearch .feyear
+{
+	margin: 3px 0 3px 5px
+}
+
+/* Person Search Results page */
+
+div.pagecontrol
+{
+	padding: 8px 0
+}
+
+table#personlist th#personusername
+{
+	font-weight: bold
+}
+
+#personlist a.personsortlink
+{
+	color: #000
+}
+
+/* Styles used in the Print Job Description window */
+
+.print16
+{
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.4em;
+	text-decoration: none
+}
+
+.print11
+{
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.1em;
+	text-decoration: none
+}
+
+/* Unused items */
+
+#alerttablereg
+{
+	padding: 3px 0 0 3px
+}
+
+textarea#comments
+{
+	height: 80px;
+	width: 226px
+}
+
+.notshown
+{
+	display: none
+}
+
+span#searchpage
+{
+	padding: 5px 0
+}
+
+.searchbuttonrow
+{
+	text-align: right
+}
+
+#candid
+{
+	float: left;
+	font-weight: bold;
+	width: 130px
+}
+
+.defaultbqanswer
+{
+	height: 100px;
+	width: 300px
+}
+
+td.listbodyright
+{
+	background-color: #00ff00;
+	font-size: 8pt;
+	padding: 0 2px 2px 2px;
+	text-align: right
+}
+
+.postcodelookup
+{
+	margin: 5px 0
+}
+
+span.fieldlabel
+{
+	clear: left;
+	float: left;
+	width: 150px
+}
+
+.sectioncomplete
+{
+	margin: 15px 0 10px
+}
+
+
+#workexptext_error
+{
+color:#ff0000;
+}

