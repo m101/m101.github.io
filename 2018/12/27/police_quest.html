@@ -133,31 +133,31 @@ All the shown code has been reversed and symbolicated manually, you’ll have to
 .text:000000000000281B var_4           = dword ptr -4
 .text:000000000000281B
 .text:000000000000281B ; __unwind {
-.text:000000000000281B                 push    rbp
-.text:000000000000281C                 mov     rbp, rsp
-.text:000000000000281F                 sub     rsp, 20h
-.text:0000000000002823                 mov     [rbp+var_4], edi
-.text:0000000000002826                 mov     [rbp+var_10], rsi
-.text:000000000000282A                 mov     [rbp+var_18], rdx
-.text:000000000000282E                 mov     rax, cs:stdout_ptr
-.text:0000000000002835                 mov     rax, [rax]
-.text:0000000000002838                 mov     esi, 0          ; buf
-.text:000000000000283D                 mov     rdi, rax        ; stream
-.text:0000000000002840                 call    _setbuf                      ; 1
-.text:0000000000002845                 mov     eax, 0
-.text:000000000000284A                 call    setup                        ; 2
-.text:000000000000284F                 mov     eax, 0
-.text:0000000000002854                 call    welcome                      ; 3
+.text:000000000000281B            push    rbp
+.text:000000000000281C            mov     rbp, rsp
+.text:000000000000281F            sub     rsp, 20h
+.text:0000000000002823            mov     [rbp+var_4], edi
+.text:0000000000002826            mov     [rbp+var_10], rsi
+.text:000000000000282A            mov     [rbp+var_18], rdx
+.text:000000000000282E            mov     rax, cs:stdout_ptr
+.text:0000000000002835            mov     rax, [rax]
+.text:0000000000002838            mov     esi, 0          ; buf
+.text:000000000000283D            mov     rdi, rax        ; stream
+.text:0000000000002840            call    _setbuf                      ; 1
+.text:0000000000002845            mov     eax, 0
+.text:000000000000284A            call    setup                        ; 2
+.text:000000000000284F            mov     eax, 0
+.text:0000000000002854            call    welcome                      ; 3
 .text:0000000000002859
 .text:0000000000002859 loc_2859:                               ; CODE XREF: main+4A↓j
-.text:0000000000002859                 mov     eax, 0
-.text:000000000000285E                 call    run_turn                     ; 4
-.text:0000000000002863                 test    eax, eax
-.text:0000000000002865                 jnz     short loc_2859               ; 5
-.text:0000000000002867                 lea     rdi, aSonnyIReallyDo ; "\nSonny, I really do appreciate you nai"...
-.text:000000000000286E                 call    _puts                        ; 6
-.text:0000000000002873                 mov     edi, 0FFFFFFFFh ; status
-.text:0000000000002878                 call    _exit
+.text:0000000000002859            mov     eax, 0
+.text:000000000000285E            call    run_turn                     ; 4
+.text:0000000000002863            test    eax, eax
+.text:0000000000002865            jnz     short loc_2859               ; 5
+.text:0000000000002867            lea     rdi, aSonnyIReallyDo ; "\nSonny, I really do appreciate you nai"...
+.text:000000000000286E            call    _puts                        ; 6
+.text:0000000000002873            mov     edi, 0FFFFFFFFh ; status
+.text:0000000000002878            call    _exit
 .text:0000000000002878 ; } // starts at 281B
 .text:0000000000002878 main            endp</code></pre></figure>
 
@@ -398,15 +398,15 @@ Each room has an object.</p>
 <p>Command LOOK or INVENTORY have the same code, only some offsets change.</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">.text:000000000000272F loc_272F:                               ; CODE XREF: run_turn+1BD↑j
-.text:000000000000272F                 lea     rax, [rbp+user_input]
-.text:0000000000002736                 mov     rsi, rax        ; s2
-.text:0000000000002739                 lea     rdi, aInventory ; "INVENTORY"    ; 1
-.text:0000000000002740                 call    _strcmp
-.text:0000000000002745                 test    eax, eax
-.text:0000000000002747                 jnz     short loc_2758
-.text:0000000000002749                 mov     eax, 0
-.text:000000000000274E                 call    action_inventory
-.text:0000000000002753                 jmp     loc_2805</code></pre></figure>
+.text:000000000000272F           lea     rax, [rbp+user_input]
+.text:0000000000002736           mov     rsi, rax        ; s2
+.text:0000000000002739           lea     rdi, aInventory ; "INVENTORY"    ; 1
+.text:0000000000002740           call    _strcmp
+.text:0000000000002745           test    eax, eax
+.text:0000000000002747           jnz     short loc_2758
+.text:0000000000002749           mov     eax, 0
+.text:000000000000274E           call    action_inventory
+.text:0000000000002753           jmp     loc_2805</code></pre></figure>
 
 <p>This is equivalent to:</p>
 
@@ -424,18 +424,18 @@ Each room has an object.</p>
 <p>MOVE, GET and USE have the same code as well but offsets.</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">.text:0000000000002758 loc_2758:                               ; CODE XREF: run_turn+1E6↑j
-.text:0000000000002758                 lea     rax, [rbp+user_input]
-.text:000000000000275F                 mov     edx, 5          ; n          ; 1
-.text:0000000000002764                 mov     rsi, rax        ; s2
-.text:0000000000002767                 lea     rdi, aMove      ; "MOVE "    ; 2
-.text:000000000000276E                 call    _strncmp
-.text:0000000000002773                 test    eax, eax
-.text:0000000000002775                 jnz     short loc_278C
-.text:0000000000002777                 lea     rax, [rbp+user_input]
-.text:000000000000277E                 add     rax, 5                       ; 3
-.text:0000000000002782                 mov     rdi, rax
-.text:0000000000002785                 call    action_move
-.text:000000000000278A                 jmp     short loc_2805</code></pre></figure>
+.text:0000000000002758          lea     rax, [rbp+user_input]
+.text:000000000000275F          mov     edx, 5          ; n          ; 1
+.text:0000000000002764          mov     rsi, rax        ; s2
+.text:0000000000002767          lea     rdi, aMove      ; "MOVE "    ; 2
+.text:000000000000276E          call    _strncmp
+.text:0000000000002773          test    eax, eax
+.text:0000000000002775          jnz     short loc_278C
+.text:0000000000002777          lea     rax, [rbp+user_input]
+.text:000000000000277E          add     rax, 5                       ; 3
+.text:0000000000002782          mov     rdi, rax
+.text:0000000000002785          call    action_move
+.text:000000000000278A          jmp     short loc_2805</code></pre></figure>
 
 <p>You can see the differences between USE, GET and MOVE at 1 (length), 2 (string pointer) and 3 (length again).</p>
 
@@ -1429,52 +1429,52 @@ Each iteration generates 2 bytes to generate 1 collided byte. It returns the bin
 44
 45
 46
-</pre></td><td class="code"><pre>    <span class="k">def</span> <span class="nf">collide_hash</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="n">to_collide</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="nb">ValueError</span> <span class="p">(</span><span class="s">"Object Description doesn't exist"</span><span class="p">)</span>
+</pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">collide_hash</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="n">to_collide</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">ValueError</span> <span class="p">(</span><span class="s">"Object Description doesn't exist"</span><span class="p">)</span>
 
-        <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
-        <span class="c1"># allows to set the hash to 0
-</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">initial_hash</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
+    <span class="c1"># allows to set the hash to 0
+</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">initial_hash</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
 
-        <span class="c1">#print 'initial_hash : 0x%x' % initial_hash
+    <span class="c1">#print 'initial_hash : 0x%x' % initial_hash
 </span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">to_collide</span>
-        <span class="n">hashed</span> <span class="o">=</span> <span class="n">initial_hash</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">to_collide</span>
+    <span class="n">hashed</span> <span class="o">=</span> <span class="n">initial_hash</span>
 
-        <span class="n">idx_hash</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">to_append</span> <span class="o">=</span> <span class="s">''</span>
-        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">quartet0</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span>
-            <span class="n">quartet1</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
-            <span class="n">idx_hash</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">idx_hash</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">to_append</span> <span class="o">=</span> <span class="s">''</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">quartet0</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span>
+        <span class="n">quartet1</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
+        <span class="n">idx_hash</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="n">quartet2</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span>
-            <span class="n">quartet3</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
-            <span class="n">idx_hash</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">quartet2</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span>
+        <span class="n">quartet3</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
+        <span class="n">idx_hash</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="n">q0</span> <span class="o">=</span> <span class="p">(</span><span class="n">get_byte</span> <span class="p">(</span><span class="n">to_collide</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
-            <span class="n">q1</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">to_collide</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
+        <span class="n">q0</span> <span class="o">=</span> <span class="p">(</span><span class="n">get_byte</span> <span class="p">(</span><span class="n">to_collide</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+        <span class="n">q1</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">to_collide</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
 
-            <span class="c1"># compute quartets to write
-</span>            <span class="n">byte0</span> <span class="o">=</span> <span class="n">quartet0</span> <span class="o">|</span> <span class="p">(</span><span class="n">q0</span> <span class="o">^</span> <span class="n">quartet1</span><span class="p">)</span>
-            <span class="n">byte1</span> <span class="o">=</span> <span class="n">quartet2</span> <span class="o">|</span> <span class="p">(</span><span class="n">q1</span> <span class="o">^</span> <span class="n">quartet3</span><span class="p">)</span>
+        <span class="c1"># compute quartets to write
+</span>        <span class="n">byte0</span> <span class="o">=</span> <span class="n">quartet0</span> <span class="o">|</span> <span class="p">(</span><span class="n">q0</span> <span class="o">^</span> <span class="n">quartet1</span><span class="p">)</span>
+        <span class="n">byte1</span> <span class="o">=</span> <span class="n">quartet2</span> <span class="o">|</span> <span class="p">(</span><span class="n">q1</span> <span class="o">^</span> <span class="n">quartet3</span><span class="p">)</span>
 
-            <span class="n">to_append</span> <span class="o">+=</span> <span class="nb">chr</span> <span class="p">(</span><span class="n">byte0</span><span class="p">)</span>
-            <span class="n">to_append</span> <span class="o">+=</span> <span class="nb">chr</span> <span class="p">(</span><span class="n">byte1</span><span class="p">)</span>
+        <span class="n">to_append</span> <span class="o">+=</span> <span class="nb">chr</span> <span class="p">(</span><span class="n">byte0</span><span class="p">)</span>
+        <span class="n">to_append</span> <span class="o">+=</span> <span class="nb">chr</span> <span class="p">(</span><span class="n">byte1</span><span class="p">)</span>
 
-        <span class="n">data</span> <span class="o">+=</span> <span class="n">to_append</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">to_append</span>
 
-        <span class="s">'''
-        print "Let's check collision!"
-        hashed = create_hash (obj_desc, data)
-        if hashed == to_collide:
-            print 'Successfully collided hash : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">to_collide
-        else:
-            print 'tocollide : 0x</span><span class="si">%</span><span class="s">x hashed : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">(to_collide, hashed)
-        '''</span>
+    <span class="s">'''
+    print "Let's check collision!"
+    hashed = create_hash (obj_desc, data)
+    if hashed == to_collide:
+        print 'Successfully collided hash : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">to_collide
+    else:
+        print 'tocollide : 0x</span><span class="si">%</span><span class="s">x hashed : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">(to_collide, hashed)
+    '''</span>
 
-        <span class="k">return</span> <span class="n">data</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="k">return</span> <span class="n">data</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <h2 id="type-confusion">Type Confusion</h2>
 
