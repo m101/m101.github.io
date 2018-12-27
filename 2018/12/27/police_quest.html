@@ -2025,7 +2025,7 @@ This can be improved but it should be good enough for a challenge.</p>
 
 <ol>
   <li>statistics on where the format string parameters most commonly land, this will avoid crashes due to junked pointers or important values</li>
-  <li>use the format string to inject the address to leak, luckily since the bullet serial is used as the address where to write : we can write anywhere</li>
+  <li>use the format string to inject the address to leak, the address of the parameter to inject must not have bad chars</li>
   <li>there is the possibility to inject the bad char 0xa and write a primitive to inject any value in this challenge</li>
   <li>Possibly other techniques but this wasn’t researched</li>
 </ol>
