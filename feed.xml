@@ -8,9 +8,25 @@
     <link>http://binholic.com/binholic/</link>
     <atom:link href="http://binholic.com/binholic/feed.xml" rel="self" type="application/rss+xml"/>
     
-    <pubDate>Tue, 23 Oct 2018 23:53:47 +0200</pubDate>
-    <lastBuildDate>Tue, 23 Oct 2018 23:53:47 +0200</lastBuildDate>
+    <pubDate>Thu, 27 Dec 2018 19:49:52 +0100</pubDate>
+    <lastBuildDate>Thu, 27 Dec 2018 19:49:52 +0100</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>Police Quest</title>
+        
+        <pubDate>Thu, 27 Dec 2018 18:50:00 +0100</pubDate>
+        
+        <link>http://binholic.com/binholic/2018/12/27/police_quest.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2018/12/27/police_quest.html</guid>
+        
+        
+        <category>challenge</category>
+        
+        <category>exploit</category>
+        
+        
+      </item>
     
       <item>
         <title>Windows Kernel Exploitation : Token stealing payload with the reference counter updated</title>
@@ -131,18 +147,6 @@
         
         <link>http://binholic.com/binholic/2013/12/13/lfi-exploitation-basics-code-execution.html</link>
         <guid isPermaLink="true">http://binholic.com/binholic/2013/12/13/lfi-exploitation-basics-code-execution.html</guid>
-        
-        
-        
-      </item>
-    
-      <item>
-        <title>[Root-Me] Remote Binary 2 - An advanced remote format string example</title>
-        
-        <pubDate>Tue, 20 Aug 2013 21:10:00 +0200</pubDate>
-        
-        <link>http://binholic.com/binholic/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</link>
-        <guid isPermaLink="true">http://binholic.com/binholic/2013/08/20/root-me-remote-binary-2-advanced-format-string.html</guid>
         
         
         
