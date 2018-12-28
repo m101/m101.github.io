@@ -8,8 +8,8 @@
     <link>http://binholic.com/</link>
     <atom:link href="http://binholic.com/feed.xml" rel="self" type="application/rss+xml"/>
     
-    <pubDate>Sat, 29 Dec 2018 00:35:43 +0100</pubDate>
-    <lastBuildDate>Sat, 29 Dec 2018 00:35:43 +0100</lastBuildDate>
+    <pubDate>Sat, 29 Dec 2018 00:55:33 +0100</pubDate>
+    <lastBuildDate>Sat, 29 Dec 2018 00:55:33 +0100</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -17,14 +17,16 @@
         
         <pubDate>Thu, 27 Dec 2018 18:50:00 +0100</pubDate>
         
-        <link>http://binholic.com/2018/12/27/police_quest.html</link>
-        <guid isPermaLink="true">http://binholic.com/2018/12/27/police_quest.html</guid>
+        <link>http://binholic.com/binholic/2018/12/27/police_quest.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2018/12/27/police_quest.html</guid>
         
         
         <category>challenge</category>
         
         <category>exploit</category>
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -33,10 +35,12 @@
         
         <pubDate>Sat, 28 Apr 2018 11:33:00 +0200</pubDate>
         
-        <link>http://binholic.com/2018/04/28/windows-kernel-exploitation-token.html</link>
-        <guid isPermaLink="true">http://binholic.com/2018/04/28/windows-kernel-exploitation-token.html</guid>
+        <link>http://binholic.com/binholic/2018/04/28/windows-kernel-exploitation-token.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2018/04/28/windows-kernel-exploitation-token.html</guid>
         
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -45,10 +49,12 @@
         
         <pubDate>Sat, 28 Apr 2018 11:20:00 +0200</pubDate>
         
-        <link>http://binholic.com/2018/04/28/yet-another-osce-review.html</link>
-        <guid isPermaLink="true">http://binholic.com/2018/04/28/yet-another-osce-review.html</guid>
+        <link>http://binholic.com/binholic/2018/04/28/yet-another-osce-review.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2018/04/28/yet-another-osce-review.html</guid>
         
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -57,14 +63,16 @@
         
         <pubDate>Thu, 12 Oct 2017 01:39:00 +0200</pubDate>
         
-        <link>http://binholic.com/2017/10/12/vulnhub-c0m80-boot2root.html</link>
-        <guid isPermaLink="true">http://binholic.com/2017/10/12/vulnhub-c0m80-boot2root.html</guid>
+        <link>http://binholic.com/binholic/2017/10/12/vulnhub-c0m80-boot2root.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2017/10/12/vulnhub-c0m80-boot2root.html</guid>
         
         
         <category>challenge</category>
         
         <category>exploit</category>
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -73,14 +81,16 @@
         
         <pubDate>Wed, 30 Aug 2017 00:06:00 +0200</pubDate>
         
-        <link>http://binholic.com/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</link>
-        <guid isPermaLink="true">http://binholic.com/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</guid>
+        <link>http://binholic.com/binholic/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2017/08/30/rhme3-qualifier-heap-exploitaiton.html</guid>
         
         
         <category>challenge</category>
         
         <category>exploit</category>
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -89,12 +99,14 @@
         
         <pubDate>Sat, 20 May 2017 23:08:00 +0200</pubDate>
         
-        <link>http://binholic.com/2017/05/20/notes-on-abusing-exit-handlers.html</link>
-        <guid isPermaLink="true">http://binholic.com/2017/05/20/notes-on-abusing-exit-handlers.html</guid>
+        <link>http://binholic.com/binholic/2017/05/20/notes-on-abusing-exit-handlers.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2017/05/20/notes-on-abusing-exit-handlers.html</guid>
         
         
         <category>exploit</category>
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -103,10 +115,12 @@
         
         <pubDate>Fri, 31 Mar 2017 13:55:00 +0200</pubDate>
         
-        <link>http://binholic.com/2017/03/31/yet-another-oscp-review.html</link>
-        <guid isPermaLink="true">http://binholic.com/2017/03/31/yet-another-oscp-review.html</guid>
+        <link>http://binholic.com/binholic/2017/03/31/yet-another-oscp-review.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2017/03/31/yet-another-oscp-review.html</guid>
         
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -115,8 +129,8 @@
         
         <pubDate>Fri, 27 Dec 2013 15:27:00 +0100</pubDate>
         
-        <link>http://binholic.com/2013/12/27/ivans-amenra-level-1.html</link>
-        <guid isPermaLink="true">http://binholic.com/2013/12/27/ivans-amenra-level-1.html</guid>
+        <link>http://binholic.com/binholic/2013/12/27/ivans-amenra-level-1.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2013/12/27/ivans-amenra-level-1.html</guid>
         
         
         <category>challenge</category>
@@ -126,6 +140,8 @@
         <category>wargame</category>
         
         
+        <category>binholic</category>
+        
       </item>
     
       <item>
@@ -133,10 +149,12 @@
         
         <pubDate>Wed, 18 Dec 2013 19:09:00 +0100</pubDate>
         
-        <link>http://binholic.com/2013/12/18/december-hzv-meet-linux-kernel.html</link>
-        <guid isPermaLink="true">http://binholic.com/2013/12/18/december-hzv-meet-linux-kernel.html</guid>
+        <link>http://binholic.com/binholic/2013/12/18/december-hzv-meet-linux-kernel.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2013/12/18/december-hzv-meet-linux-kernel.html</guid>
         
         
+        
+        <category>binholic</category>
         
       </item>
     
@@ -145,10 +163,12 @@
         
         <pubDate>Fri, 13 Dec 2013 23:06:00 +0100</pubDate>
         
-        <link>http://binholic.com/2013/12/13/lfi-exploitation-basics-code-execution.html</link>
-        <guid isPermaLink="true">http://binholic.com/2013/12/13/lfi-exploitation-basics-code-execution.html</guid>
+        <link>http://binholic.com/binholic/2013/12/13/lfi-exploitation-basics-code-execution.html</link>
+        <guid isPermaLink="true">http://binholic.com/binholic/2013/12/13/lfi-exploitation-basics-code-execution.html</guid>
         
         
+        
+        <category>binholic</category>
         
       </item>
     
