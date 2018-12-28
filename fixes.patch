@@ -1,0 +1,11 @@
+--- _config.yml	2018-12-28 17:23:36.175449917 +0100
++++ _config_github.yml	2018-12-28 17:25:29.015426493 +0100
+@@ -11,7 +11,7 @@
+ description: > # this means to ignore newlines until "baseurl:"
+   A blog about hacking, software, programming, some books or anything
+   fun that I want to talk about. All the opinions on the website are my  own.
+-baseurl: "" # the subpath of your site, e.g. /blog
++baseurl: "/binholic" # the subpath of your site, e.g. /blog
+ # freenet freesite link
+ freesite: "http://127.0.0.1:8888/USK@ABR8mm2t1L1G8cBG70cDy4PHFO6LPV~LrA-RIZxgOGI,pnGWUxb7k8~5-ywwqnBakTXx5ZFw6QzzZj7H~45NgE8,AQACAAE/binholic/-1/"
+ url: "http://binholic.com" # the base hostname & protocol for your site

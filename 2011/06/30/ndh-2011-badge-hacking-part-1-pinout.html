@@ -9,9 +9,9 @@
   <title>[EN] NDH 2011 badge hacking part 1 : Pinout reversing</title>
   <meta name="description" content="* UPDATED (6 July 2011) *:- Fixed links (ATMEL documentation)- Added section on full pinout">
 
-  <link rel="stylesheet" href="/assets/css/main.css">
-  <link rel="canonical" href="/2011/06/30/ndh-2011-badge-hacking-part-1-pinout.html">
-  <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
+  <link rel="stylesheet" href="//assets/css/main.css">
+  <link rel="canonical" href="//2011/06/30/ndh-2011-badge-hacking-part-1-pinout.html">
+  <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="//feed.xml">
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -41,7 +41,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Binary World for Binary People :)</a>
+    <a class="site-title" href="//">Binary World for Binary People :)</a>
 
     <!--
     <h2 class="site-subtitle">
@@ -64,7 +64,7 @@
       <div class="trigger">
         
           
-          <a class="page-link" href="/about/">About</a>
+          <a class="page-link" href="//about/">About</a>
           
         
           
@@ -89,7 +89,7 @@
         
           
         
-        <a class="page-link" href="/blog/">Blog</a>
+        <a class="page-link" href="//blog/">Blog</a>
       </div>
       
     </nav>
@@ -125,37 +125,37 @@ I do not have any real knowledge in electronics but it should be enough to pawn 
 <p>First of all, I could not not find the pinout on <a href="http://www.tixlegeek.com/">Tix’s Le Geek blog</a> so I had to “reverse” it.
 It is because I have <a href="http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&amp;item=200460739146&amp;ssPageName=STRK:MEWNX:IT">the following programmer</a> (a version of <a href="http://www.fischl.de/usbasp/">USBasp</a>):</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_usbasp.jpg" alt="NDH2011 Badge Hacking Part 1 - USBAsp" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_usbasp.jpg" alt="NDH2011 Badge Hacking Part 1 - USBAsp" /></p>
 
 <p>So the cable is a 2x5 pin ICSP AVR.</p>
 
 <p>We want to have something clean so we are going to use a BUS cable:</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_bus_cable.jpg" alt="NDH2011 Badge Hacking Part 1 - BUS Cable" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_bus_cable.jpg" alt="NDH2011 Badge Hacking Part 1 - BUS Cable" /></p>
 
 <p>As well as small clips:</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_clips.jpg" alt="NDH2011 Badge Hacking Part 1 - Clips" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_clips.jpg" alt="NDH2011 Badge Hacking Part 1 - Clips" /></p>
 
 <p>To plug it into a small socket:</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_socket.jpg" alt="NDH2011 Badge Hacking Part 1 - Socket" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_socket.jpg" alt="NDH2011 Badge Hacking Part 1 - Socket" /></p>
 
 <p>To set up the clips, you need to use a flat-nosed plier like this:</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_plier.jpg" alt="NDH2011 Badge Hacking Part 1 - Plier" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_plier.jpg" alt="NDH2011 Badge Hacking Part 1 - Plier" /></p>
 
 <p>For reversing the pinout you could also use wires and a breadboard (I don’t have a breadboard … or any electronic stuffs ^^”):</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_wires.jpg" alt="NDH2011 Badge Hacking Part 1 - Wires" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_wires.jpg" alt="NDH2011 Badge Hacking Part 1 - Wires" /></p>
 
 <p>Don’t forget your NDH badge!</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_badge.jpg" alt="NDH2011 Badge Hacking Part 1 - Badge" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_badge.jpg" alt="NDH2011 Badge Hacking Part 1 - Badge" /></p>
 
 <p>In the end you should have all those:</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_all.jpg" alt="NDH2011 Badge Hacking Part 1 - All" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_all.jpg" alt="NDH2011 Badge Hacking Part 1 - All" /></p>
 
 <h1 id="reversing-the-pinout">Reversing the pinout</h1>
 
@@ -163,15 +163,15 @@ It is because I have <a href="http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&amp;
 
 <p>But here what was my idea with the wires :</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_pinch.jpg" alt="NDH2011 Badge Hacking Part 1 - Pinching" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_pinch.jpg" alt="NDH2011 Badge Hacking Part 1 - Pinching" /></p>
 
 <p>Yeah, try to craft kind of a hook or something and plug the other part to a breadboard and test it.</p>
 
 <p>Luckily there is another way to find out about the pinout:</p>
 
-<p><img src="/assets/img/ndh2011_badge_hacking_part1_pinout.jpg" alt="NDH2011 Badge Hacking Part 1 - Pinout" /></p>
+<p><img src="//assets/img/ndh2011_badge_hacking_part1_pinout.jpg" alt="NDH2011 Badge Hacking Part 1 - Pinout" /></p>
 
-<p>Yes just looking at <a href="/assets/others/docs/atmel/doc2543.pdf">the chip documentation</a> you could find the pinout.
+<p>Yes just looking at <a href="//assets/others/docs/atmel/doc2543.pdf">the chip documentation</a> you could find the pinout.
 Anyway for the chip, looking close enough you could see its reference:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
@@ -273,7 +273,7 @@ Just have to make the cable ;).</p>
 |   PINA2   |   RESET   |
 -------------------------</pre></td></tr></tbody></table></code></pre></figure>
 
-<p>It is evident that you need to read the documentation to understand that table: <a href="/assets/others/docs/atmel/doc2543.pdf">the chip documentation</a>.</p>
+<p>It is evident that you need to read the documentation to understand that table: <a href="//assets/others/docs/atmel/doc2543.pdf">the chip documentation</a>.</p>
 
 <h1 id="conclusion">Conclusion</h1>
 
@@ -290,18 +290,18 @@ As I miscounted  the AVR ICSP pinout … my cable is not right, so the software 
   <li><a href="http://www.tixlegeek.com/?2011/06/17/311--ndh2k11-badges-hackable-nui-du-hack-2011-hack-carte-visite-programmable-avr-attiny">[NDH2K11] Badges hackable!</a></li>
   <li><a href="http://www.tixlegeek.com/?2011/06/21/312-ndh2k11-s-badge-spec-hack-hacker-nuit-du-2011-2k11">NDH2K11’s Badge: Spec. &amp; hackz</a></li>
   <li><a href="http://www.tixlegeek.com/?2011/06/23/313-ndh2k11-s-badge-spec-hackz-programmation-avrdude-avr-gcc-c-compilation">NDH2K11’s Badge: PROGRAMMATIONNNNNN!!!!</a></li>
-  <li><a href="/assets/others/docs/atmel/doc2543.pdf">ATTiny2313 documentation</a></li>
+  <li><a href="//assets/others/docs/atmel/doc2543.pdf">ATTiny2313 documentation</a></li>
 </ul>
 
   </div>
 
   <div class="post-navigation">
     
-    <a class="post-prev" href="/2011/06/29/brainfuck-get-ready-to-get-your-brain-crushed.html">Previous : Brainfuck: Get ready to get your brain crushed!</a>
+    <a class="post-prev" href="//2011/06/29/brainfuck-get-ready-to-get-your-brain-crushed.html">Previous : Brainfuck: Get ready to get your brain crushed!</a>
     
 
     
-    <a class="post-next" href="/2011/07/06/ndh-2011-badge-hacking-part-2-what.html">Next : [EN] NDH 2011 badge hacking part 2 : What is the message?</a>
+    <a class="post-next" href="//2011/07/06/ndh-2011-badge-hacking-part-2-what.html">Next : [EN] NDH 2011 badge hacking part 2 : What is the message?</a>
     
   </div>
 
