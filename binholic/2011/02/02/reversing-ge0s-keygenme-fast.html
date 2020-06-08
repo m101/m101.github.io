@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/02/02/reversing-ge0s-keygenme-fast.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -135,7 +115,8 @@ http://venom630.free.fr/keygenmefast/verifkeygenmefast.php?solution=sha1.</p>
 <p>Pour vérifier ces hypothèses, c’est somme toute assez simple, on va faire usage de diff et hexdump comme ci-dessous:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>diff <span class="nt">-u</span> &lt;<span class="o">(</span>hexdump <span class="nt">-C</span> ./keygenmefast1<span class="o">)</span> &lt;<span class="o">(</span>hexdump <span class="nt">-C</span> ./keygenmefast2<span class="o">)</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>diff <span class="nt">-u</span> &lt;<span class="o">(</span>hexdump <span class="nt">-C</span> ./keygenmefast1<span class="o">)</span> &lt;<span class="o">(</span>hexdump <span class="nt">-C</span> ./keygenmefast2<span class="o">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-diff" data-lang="diff"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
@@ -190,8 +171,8 @@ http://venom630.free.fr/keygenmefast/verifkeygenmefast.php?solution=sha1.</p>
 51
 </pre></td><td class="code"><pre><span class="gd">--- /dev/fd/63 2011-02-02 16:50:47.833079643 +0100
 </span><span class="gi">+++ /dev/fd/62 2011-02-02 16:50:47.833079643 +0100
-</span><span class="gu">@@ -91,25 +91,25 @@
-</span> 000005a0  00 00 bb 42 a0 04 08 01  c3 8a 13 8b 7c 24 08 81  |...B........|$..|
+</span><span class="p">@@ -91,25 +91,25 @@</span>
+ 000005a0  00 00 bb 42 a0 04 08 01  c3 8a 13 8b 7c 24 08 81  |...B........|$..|
  000005b0  c7 05 00 00 00 8a 37 38  f2 0f 85 ba fe ff ff 68  |......78.......h|
  000005c0  83 a0 04 08 e8 a7 fd ff  ff 31 c0 c9 c3 55 89 e5  |.........1...U..|
 <span class="gd">-000005d0  8b 45 08 25 ff 00 00 00  34 49 25 3f 00 00 00 c9  |.E.%....4I%?....|
@@ -222,8 +203,8 @@ http://venom630.free.fr/keygenmefast/verifkeygenmefast.php?solution=sha1.</p>
 </span> 00000700  3f 00 00 00 c9 c2 04 00  55 89 e5 8b 4d 0c b8 01  |?.......U...M...|
  00000710  00 00 00 81 f9 00 00 00  00 74 0f 8b 5d 08 f7 e3  |.........t..]...|
  00000720  e9 02 00 00 00 f7 e3 49  75 fb c9 c2 08 00 90 90  |.......Iu.......|
-<span class="gu">@@ -145,11 +145,11 @@
-</span> 00001010  76 83 04 08 86 83 04 08  00 00 00 00 00 00 00 00  |v...............|
+<span class="p">@@ -145,11 +145,11 @@</span>
+ 00001010  76 83 04 08 86 83 04 08  00 00 00 00 00 00 00 00  |v...............|
  00001020  55 74 69 6c 69 73 61 74  69 6f 6e 20 3a 20 25 73  |Utilisation : %s|
  00001030  20 3c 70 73 65 75 64 6f  3e 20 3c 63 6c 65 66 3e  | &lt;pseudo&gt; &lt;clef&gt;|
 <span class="gd">-00001040  0a 00 52 76 6e 64 35 56  78 4b 4e 44 45 6b 70 5a  |..Rvnd5VxKNDEkpZ|
@@ -238,7 +219,8 @@ http://venom630.free.fr/keygenmefast/verifkeygenmefast.php?solution=sha1.</p>
 +00001080  51 41 00 42 72 61 76 6f  20 21 21 0a 00 00 00 00  |QA.Bravo !!.....|
 </span> 00001090  47 43 43 3a 20 28 55 62  75 6e 74 75 2f 4c 69 6e  |GCC: (Ubuntu/Lin|
  000010a0  61 72 6f 20 34 2e 34 2e  34 2d 31 34 75 62 75 6e  |aro 4.4.4-14ubun|
- 000010b0  74 75 35 29 20 34 2e 34  2e 35 00 00 2e 73 68 73  |tu5) 4.4.5...shs|</pre></td></tr></tbody></table></code></pre></figure>
+ 000010b0  74 75 35 29 20 34 2e 34  2e 35 00 00 2e 73 68 73  |tu5) 4.4.5...shs|
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ainsi on remarque qu’on a 6 octets qui changent et une chaîne de 64 caractères aussi qui est générée. Ca n’a pas l’air d’être de la base64 (ne finit pas par des =).</p>
 
@@ -387,137 +369,138 @@ Et les valeurs correspondantes:</li>
 129
 130
 131
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span> <span class="c">; =============== S U B R O U T I N E =======================================</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span> <span class="c">; Attributes: bp-based frame</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span> <span class="n">main</span>            <span class="n">proc</span> <span class="n">near</span>               <span class="c">; DATA XREF: start+17 o</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span> <span class="n">argc</span>            <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span> <span class="n">argv</span>            <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">0</span><span class="n">Ch</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048450</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048451</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048453</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">argc</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048456</span>                 <span class="k">cmp</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804845</span><span class="n">B</span>                 <span class="k">jnb</span>     <span class="n">short</span> <span class="n">loc_8048485</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804845</span><span class="n">D</span>                 <span class="k">mov</span>     <span class="n">esi</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">argv</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048460</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="p">[esi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048462</span>                 <span class="k">sub</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048468</span>                 <span class="k">mov</span>     <span class="n">esi</span><span class="p">,</span> <span class="n">offset</span> <span class="n">format</span> <span class="c">; "Utilisation : %s &lt;pseudo&gt; &lt;clef&gt;\n"</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804846</span><span class="n">D</span>                 <span class="k">mov</span>     <span class="p">[esp],</span> <span class="n">esi</span>      <span class="c">; s</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048470</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span><span class="p">,</span> <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048474</span>                 <span class="k">call</span>    <span class="n">_printf</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048479</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048479</span> <span class="n">main_exit</span><span class="o">:</span>                              <span class="c">; CODE XREF: main+6F j</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048479</span>                                         <span class="c">; main+9B j ...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048479</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">1</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804847</span><span class="n">E</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="mi">1</span>          <span class="c">; status</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048483</span>                 <span class="k">int</span>     <span class="mi">80</span><span class="n">h</span>             <span class="c">; LINUX - sys_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048485</span> <span class="c">; ---------------------------------------------------------------------------</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048485</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048485</span> <span class="n">loc_8048485</span><span class="o">:</span>                            <span class="c">; CODE XREF: main+B j</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048485</span>                 <span class="k">sub</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">0</span><span class="n">Ch</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804848</span><span class="n">B</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">argv</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804848</span><span class="n">E</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048490</span>                 <span class="k">add</span>     <span class="n">edx</span><span class="p">,</span> <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048496</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="p">[edx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048498</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span><span class="p">,</span> <span class="n">edx</span>    <span class="c">; argv[1] &lt;=&gt; username</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804849</span><span class="n">C</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804849</span><span class="n">E</span>                 <span class="k">add</span>     <span class="n">edx</span><span class="p">,</span> <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">A4</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="p">[edx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">A6</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">AA</span>                 <span class="k">mov</span>     <span class="n">esi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>    <span class="c">; argv[2] &lt;=&gt; usersserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">AE</span>                 <span class="k">push</span>    <span class="n">esi</span>             <span class="c">; userserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">AF</span>                 <span class="k">call</span>    <span class="n">_strlen</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">B4</span>                 <span class="k">add</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">BA</span>                 <span class="k">cmp</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">6</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">BF</span>                 <span class="k">jnz</span>     <span class="n">short</span> <span class="n">main_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">C1</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">C5</span>                 <span class="k">push</span>    <span class="n">edi</span>             <span class="c">; username</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">C6</span>                 <span class="k">call</span>    <span class="n">_strlen</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">CB</span>                 <span class="k">add</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">D1</span>                 <span class="k">mov</span>     <span class="p">[esp],</span> <span class="n">eax</span>      <span class="c">; szUsername</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">D4</span>                 <span class="k">push</span>    <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">D5</span>                 <span class="k">call</span>    <span class="n">get_offset0</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">DA</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">offset</span> <span class="n">hash</span> <span class="c">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">DF</span>                 <span class="k">add</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">E1</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[ebx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">E3</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>    <span class="c">; argv[2] &lt;=&gt; userserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">E7</span>                 <span class="k">mov</span>     <span class="n">dh</span><span class="p">,</span> <span class="p">[edi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">E9</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="n">dh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">EB</span>                 <span class="k">jnz</span>     <span class="n">short</span> <span class="n">main_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">ED</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="p">[esp]</span>      <span class="c">; szUsername</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">F0</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">F1</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>    <span class="c">; argv[2] &lt;=&gt; userserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">F5</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">F6</span>                 <span class="k">call</span>    <span class="n">get_offset1</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080484</span><span class="n">FB</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">offset</span> <span class="n">hash</span> <span class="c">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048500</span>                 <span class="k">add</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048502</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[ebx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048504</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048508</span>                 <span class="k">inc</span>     <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048509</span>                 <span class="k">mov</span>     <span class="n">dh</span><span class="p">,</span> <span class="p">[edi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804850</span><span class="n">B</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="n">dh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804850</span><span class="n">D</span>                 <span class="k">jnz</span>     <span class="n">main_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048513</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="p">[esp]</span>      <span class="c">; szUsername</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048516</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048517</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>    <span class="c">; argv[2] &lt;=&gt; userserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804851</span><span class="n">B</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804851</span><span class="n">C</span>                 <span class="k">call</span>    <span class="n">get_offset2</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048521</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">offset</span> <span class="n">hash</span> <span class="c">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048526</span>                 <span class="k">add</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048528</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[ebx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804852</span><span class="n">A</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804852</span><span class="n">E</span>                 <span class="k">add</span>     <span class="n">edi</span><span class="p">,</span> <span class="mi">2</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048534</span>                 <span class="k">mov</span>     <span class="n">dh</span><span class="p">,</span> <span class="p">[edi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048536</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="n">dh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048538</span>                 <span class="k">jnz</span>     <span class="n">main_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804853</span><span class="n">E</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="p">[esp]</span>      <span class="c">; szUsername</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048541</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048542</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>    <span class="c">; argv[2] &lt;=&gt; userserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048546</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048547</span>                 <span class="k">call</span>    <span class="n">get_offset3</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804854</span><span class="n">C</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">offset</span> <span class="n">hash</span> <span class="c">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048551</span>                 <span class="k">add</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048553</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[ebx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048555</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048559</span>                 <span class="k">add</span>     <span class="n">edi</span><span class="p">,</span> <span class="mi">3</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804855</span><span class="n">F</span>                 <span class="k">mov</span>     <span class="n">dh</span><span class="p">,</span> <span class="p">[edi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048561</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="n">dh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048563</span>                 <span class="k">jnz</span>     <span class="n">main_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048569</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="p">[esp]</span>      <span class="c">; szUsername</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804856</span><span class="n">C</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804856</span><span class="n">D</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>    <span class="c">; argv[2] &lt;=&gt; userserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048571</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048572</span>                 <span class="k">call</span>    <span class="n">get_offset4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048577</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">offset</span> <span class="n">hash</span> <span class="c">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804857</span><span class="n">C</span>                 <span class="k">add</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804857</span><span class="n">E</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[ebx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048580</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>    <span class="c">; argv[2] &lt;=&gt; userserial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048584</span>                 <span class="k">add</span>     <span class="n">edi</span><span class="p">,</span> <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804858</span><span class="n">A</span>                 <span class="k">mov</span>     <span class="n">dh</span><span class="p">,</span> <span class="p">[edi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804858</span><span class="n">C</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="n">dh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804858</span><span class="n">E</span>                 <span class="k">jnz</span>     <span class="n">main_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048594</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span>    <span class="c">; argv[1] &lt;=&gt; username</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048598</span>                 <span class="k">xor</span>     <span class="n">edx</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804859</span><span class="n">A</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[edi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804859</span><span class="n">C</span>                 <span class="k">push</span>    <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804859</span><span class="n">D</span>                 <span class="k">call</span>    <span class="n">get_offset5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">A2</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">offset</span> <span class="n">hash</span> <span class="c">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">A7</span>                 <span class="k">add</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">A9</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[ebx]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">AB</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">AF</span>                 <span class="k">add</span>     <span class="n">edi</span><span class="p">,</span> <span class="mi">5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">B5</span>                 <span class="k">mov</span>     <span class="n">dh</span><span class="p">,</span> <span class="p">[edi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">B7</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="n">dh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">B9</span>                 <span class="k">jnz</span>     <span class="n">main_exit</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">BF</span>                 <span class="k">push</span>    <span class="n">offset</span> <span class="n">aBravo</span>   <span class="c">; "Bravo !!\n"</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">C4</span>                 <span class="k">call</span>    <span class="n">_printf</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">C9</span>                 <span class="k">xor</span>     <span class="n">eax</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">CB</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">CC</span>                 <span class="k">retn</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">CC</span> <span class="n">main</span>            <span class="n">endp</span> <span class="c">; sp-analysis failed</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">08048450</span> <span class="c1">; =============== S U B R O U T I N E =======================================</span>
+<span class="nl">.text:</span><span class="err">08048450</span>
+<span class="nl">.text:</span><span class="err">08048450</span> <span class="c1">; Attributes: bp-based frame</span>
+<span class="nl">.text:</span><span class="err">08048450</span>
+<span class="nl">.text:</span><span class="err">08048450</span> <span class="nf">main</span>            <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; DATA XREF: start+17 o</span>
+<span class="nl">.text:</span><span class="err">08048450</span>
+<span class="nl">.text:</span><span class="err">08048450</span> <span class="nf">argc</span>            <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">08048450</span> <span class="nf">argv</span>            <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mh">0Ch</span>
+<span class="nl">.text:</span><span class="err">08048450</span>
+<span class="nl">.text:</span><span class="err">08048450</span>                 <span class="nf">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">08048451</span>                 <span class="nf">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">08048453</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">argc</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048456</span>                 <span class="nf">cmp</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">3</span>
+<span class="nl">.text:</span><span class="err">0804845</span><span class="nf">B</span>                 <span class="nv">jnb</span>     <span class="nv">short</span> <span class="nv">loc_8048485</span>
+<span class="nl">.text:</span><span class="err">0804845</span><span class="nf">D</span>                 <span class="nv">mov</span>     <span class="nb">esi</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">argv</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048460</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048462</span>                 <span class="nf">sub</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">08048468</span>                 <span class="nf">mov</span>     <span class="nb">esi</span><span class="p">,</span> <span class="nv">offset</span> <span class="nv">format</span> <span class="c1">; "Utilisation : %s &lt;pseudo&gt; &lt;clef&gt;\n"</span>
+<span class="nl">.text:</span><span class="err">0804846</span><span class="nf">D</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="p">],</span> <span class="nb">esi</span>      <span class="c1">; s</span>
+<span class="nl">.text:</span><span class="err">08048470</span>                 <span class="nf">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span> <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">08048474</span>                 <span class="nf">call</span>    <span class="nv">_printf</span>
+<span class="nl">.text:</span><span class="err">08048479</span>
+<span class="nl">.text:</span><span class="err">08048479</span> <span class="nl">main_exit:</span>                              <span class="c1">; CODE XREF: main+6F j</span>
+<span class="nl">.text:</span><span class="err">08048479</span>                                         <span class="c1">; main+9B j ...</span>
+<span class="nl">.text:</span><span class="err">08048479</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">1</span>
+<span class="nl">.text:</span><span class="err">0804847</span><span class="nf">E</span>                 <span class="nv">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="mi">1</span>          <span class="c1">; status</span>
+<span class="nl">.text:</span><span class="err">08048483</span>                 <span class="nf">int</span>     <span class="mh">80h</span>             <span class="c1">; LINUX - sys_exit</span>
+<span class="nl">.text:</span><span class="err">08048485</span> <span class="c1">; ---------------------------------------------------------------------------</span>
+<span class="nl">.text:</span><span class="err">08048485</span>
+<span class="nl">.text:</span><span class="err">08048485</span> <span class="nl">loc_8048485:</span>                            <span class="c1">; CODE XREF: main+B j</span>
+<span class="nl">.text:</span><span class="err">08048485</span>                 <span class="nf">sub</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mh">0Ch</span>
+<span class="nl">.text:</span><span class="err">0804848</span><span class="nf">B</span>                 <span class="nv">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">argv</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804848</span><span class="nf">E</span>                 <span class="nv">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">08048490</span>                 <span class="nf">add</span>     <span class="nb">edx</span><span class="p">,</span> <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">08048496</span>                 <span class="nf">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="p">[</span><span class="nb">edx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048498</span>                 <span class="nf">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span> <span class="nb">edx</span>    <span class="c1">; argv[1] &lt;=&gt; username</span>
+<span class="nl">.text:</span><span class="err">0804849</span><span class="nf">C</span>                 <span class="nv">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">0804849</span><span class="nf">E</span>                 <span class="nv">add</span>     <span class="nb">edx</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">A4</span>                 <span class="nv">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="p">[</span><span class="nb">edx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">A6</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">],</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">AA</span>                 <span class="nv">mov</span>     <span class="nb">esi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>    <span class="c1">; argv[2] &lt;=&gt; usersserial</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">AE</span>                 <span class="nv">push</span>    <span class="nb">esi</span>             <span class="c1">; userserial</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">AF</span>                 <span class="nv">call</span>    <span class="nv">_strlen</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">B4</span>                 <span class="nv">add</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">BA</span>                 <span class="nv">cmp</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">6</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">BF</span>                 <span class="nv">jnz</span>     <span class="nv">short</span> <span class="nv">main_exit</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">C1</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">C5</span>                 <span class="nv">push</span>    <span class="nb">edi</span>             <span class="c1">; username</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">C6</span>                 <span class="nv">call</span>    <span class="nv">_strlen</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">CB</span>                 <span class="nv">add</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">D1</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="p">],</span> <span class="nb">eax</span>      <span class="c1">; szUsername</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">D4</span>                 <span class="nv">push</span>    <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">D5</span>                 <span class="nv">call</span>    <span class="nv">get_offset0</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">DA</span>                 <span class="nv">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nv">offset</span> <span class="nv">hash</span> <span class="c1">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">DF</span>                 <span class="nv">add</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">E1</span>                 <span class="nv">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">E3</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>    <span class="c1">; argv[2] &lt;=&gt; userserial</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">E7</span>                 <span class="nv">mov</span>     <span class="nb">dh</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">E9</span>                 <span class="nv">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="nb">dh</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">EB</span>                 <span class="nv">jnz</span>     <span class="nv">short</span> <span class="nv">main_exit</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">ED</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="p">]</span>      <span class="c1">; szUsername</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">F0</span>                 <span class="nv">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">F1</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>    <span class="c1">; argv[2] &lt;=&gt; userserial</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">F5</span>                 <span class="nv">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">F6</span>                 <span class="nv">call</span>    <span class="nv">get_offset1</span>
+<span class="nl">.text:</span><span class="err">080484</span><span class="nf">FB</span>                 <span class="nv">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nv">offset</span> <span class="nv">hash</span> <span class="c1">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
+<span class="nl">.text:</span><span class="err">08048500</span>                 <span class="nf">add</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048502</span>                 <span class="nf">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048504</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048508</span>                 <span class="nf">inc</span>     <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">08048509</span>                 <span class="nf">mov</span>     <span class="nb">dh</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804850</span><span class="nf">B</span>                 <span class="nv">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="nb">dh</span>
+<span class="nl">.text:</span><span class="err">0804850</span><span class="nf">D</span>                 <span class="nv">jnz</span>     <span class="nv">main_exit</span>
+<span class="nl">.text:</span><span class="err">08048513</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="p">]</span>      <span class="c1">; szUsername</span>
+<span class="nl">.text:</span><span class="err">08048516</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">08048517</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>    <span class="c1">; argv[2] &lt;=&gt; userserial</span>
+<span class="nl">.text:</span><span class="err">0804851</span><span class="nf">B</span>                 <span class="nv">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">0804851</span><span class="nf">C</span>                 <span class="nv">call</span>    <span class="nv">get_offset2</span>
+<span class="nl">.text:</span><span class="err">08048521</span>                 <span class="nf">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nv">offset</span> <span class="nv">hash</span> <span class="c1">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
+<span class="nl">.text:</span><span class="err">08048526</span>                 <span class="nf">add</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048528</span>                 <span class="nf">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804852</span><span class="nf">A</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804852</span><span class="nf">E</span>                 <span class="nv">add</span>     <span class="nb">edi</span><span class="p">,</span> <span class="mi">2</span>
+<span class="nl">.text:</span><span class="err">08048534</span>                 <span class="nf">mov</span>     <span class="nb">dh</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048536</span>                 <span class="nf">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="nb">dh</span>
+<span class="nl">.text:</span><span class="err">08048538</span>                 <span class="nf">jnz</span>     <span class="nv">main_exit</span>
+<span class="nl">.text:</span><span class="err">0804853</span><span class="nf">E</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="p">]</span>      <span class="c1">; szUsername</span>
+<span class="nl">.text:</span><span class="err">08048541</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">08048542</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>    <span class="c1">; argv[2] &lt;=&gt; userserial</span>
+<span class="nl">.text:</span><span class="err">08048546</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">08048547</span>                 <span class="nf">call</span>    <span class="nv">get_offset3</span>
+<span class="nl">.text:</span><span class="err">0804854</span><span class="nf">C</span>                 <span class="nv">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nv">offset</span> <span class="nv">hash</span> <span class="c1">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
+<span class="nl">.text:</span><span class="err">08048551</span>                 <span class="nf">add</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048553</span>                 <span class="nf">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048555</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048559</span>                 <span class="nf">add</span>     <span class="nb">edi</span><span class="p">,</span> <span class="mi">3</span>
+<span class="nl">.text:</span><span class="err">0804855</span><span class="nf">F</span>                 <span class="nv">mov</span>     <span class="nb">dh</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048561</span>                 <span class="nf">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="nb">dh</span>
+<span class="nl">.text:</span><span class="err">08048563</span>                 <span class="nf">jnz</span>     <span class="nv">main_exit</span>
+<span class="nl">.text:</span><span class="err">08048569</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="p">]</span>      <span class="c1">; szUsername</span>
+<span class="nl">.text:</span><span class="err">0804856</span><span class="nf">C</span>                 <span class="nv">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">0804856</span><span class="nf">D</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>    <span class="c1">; argv[2] &lt;=&gt; userserial</span>
+<span class="nl">.text:</span><span class="err">08048571</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">08048572</span>                 <span class="nf">call</span>    <span class="nv">get_offset4</span>
+<span class="nl">.text:</span><span class="err">08048577</span>                 <span class="nf">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nv">offset</span> <span class="nv">hash</span> <span class="c1">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
+<span class="nl">.text:</span><span class="err">0804857</span><span class="nf">C</span>                 <span class="nv">add</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">0804857</span><span class="nf">E</span>                 <span class="nv">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048580</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>    <span class="c1">; argv[2] &lt;=&gt; userserial</span>
+<span class="nl">.text:</span><span class="err">08048584</span>                 <span class="nf">add</span>     <span class="nb">edi</span><span class="p">,</span> <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">0804858</span><span class="nf">A</span>                 <span class="nv">mov</span>     <span class="nb">dh</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804858</span><span class="nf">C</span>                 <span class="nv">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="nb">dh</span>
+<span class="nl">.text:</span><span class="err">0804858</span><span class="nf">E</span>                 <span class="nv">jnz</span>     <span class="nv">main_exit</span>
+<span class="nl">.text:</span><span class="err">08048594</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>    <span class="c1">; argv[1] &lt;=&gt; username</span>
+<span class="nl">.text:</span><span class="err">08048598</span>                 <span class="nf">xor</span>     <span class="nb">edx</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">0804859</span><span class="nf">A</span>                 <span class="nv">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804859</span><span class="nf">C</span>                 <span class="nv">push</span>    <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">0804859</span><span class="nf">D</span>                 <span class="nv">call</span>    <span class="nv">get_offset5</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">A2</span>                 <span class="nv">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nv">offset</span> <span class="nv">hash</span> <span class="c1">; "1hi+YBeVaNL3DJMEXz2ltPZ-xm4oGSuvqwIUfyC"...</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">A7</span>                 <span class="nv">add</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">A9</span>                 <span class="nv">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebx</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">AB</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">AF</span>                 <span class="nv">add</span>     <span class="nb">edi</span><span class="p">,</span> <span class="mi">5</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">B5</span>                 <span class="nv">mov</span>     <span class="nb">dh</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">B7</span>                 <span class="nv">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="nb">dh</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">B9</span>                 <span class="nv">jnz</span>     <span class="nv">main_exit</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">BF</span>                 <span class="nv">push</span>    <span class="nv">offset</span> <span class="nv">aBravo</span>   <span class="c1">; "Bravo !!\n"</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">C4</span>                 <span class="nv">call</span>    <span class="nv">_printf</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">C9</span>                 <span class="nv">xor</span>     <span class="nb">eax</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">CB</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">CC</span>                 <span class="nv">retn</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">CC</span> <span class="nv">main</span>            <span class="nv">endp</span> <span class="c1">; sp-analysis failed</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On remarque que des blocs ont le même pattern:</p>
 
@@ -539,11 +522,12 @@ Et les valeurs correspondantes:</li>
 3
 4
 5
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">D8</span>                 <span class="k">xor</span>     <span class="n">al</span><span class="p">,</span> <span class="mi">13</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">DA</span>                 <span class="k">and</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span><span class="n">Fh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">DF</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">E0</span>                 <span class="k">retn</span>    <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080485</span><span class="n">E0</span> <span class="n">get_offset0</span>     <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">080485</span><span class="nf">D8</span>                 <span class="nv">xor</span>     <span class="nb">al</span><span class="p">,</span> <span class="mh">13h</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">DA</span>                 <span class="nv">and</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">3Fh</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">DF</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">E0</span>                 <span class="nv">retn</span>    <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">080485</span><span class="nf">E0</span> <span class="nv">get_offset0</span>     <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>get_offset1:</p>
 
@@ -552,11 +536,12 @@ Et les valeurs correspondantes:</li>
 3
 4
 5
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804860</span><span class="n">F</span>                 <span class="k">xor</span>     <span class="n">al</span><span class="p">,</span> <span class="mi">84</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048611</span>                 <span class="k">and</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span><span class="n">Fh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048616</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048617</span>                 <span class="k">retn</span>    <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048617</span> <span class="n">get_offset1</span>     <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">0804860</span><span class="nf">F</span>                 <span class="nv">xor</span>     <span class="nb">al</span><span class="p">,</span> <span class="mh">84h</span>
+<span class="nl">.text:</span><span class="err">08048611</span>                 <span class="nf">and</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">3Fh</span>
+<span class="nl">.text:</span><span class="err">08048616</span>                 <span class="nf">leave</span>
+<span class="nl">.text:</span><span class="err">08048617</span>                 <span class="nf">retn</span>    <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">08048617</span> <span class="nf">get_offset1</span>     <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>get_offset2:</p>
 
@@ -565,11 +550,12 @@ Et les valeurs correspondantes:</li>
 3
 4
 5
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048645</span>                 <span class="k">xor</span>     <span class="n">al</span><span class="p">,</span> <span class="mi">2</span><span class="n">Fh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048647</span>                 <span class="k">and</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span><span class="n">Fh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804864</span><span class="n">C</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804864</span><span class="n">D</span>                 <span class="k">retn</span>    <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804864</span><span class="n">D</span> <span class="n">get_offset2</span>     <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">08048645</span>                 <span class="nf">xor</span>     <span class="nb">al</span><span class="p">,</span> <span class="mh">2Fh</span>
+<span class="nl">.text:</span><span class="err">08048647</span>                 <span class="nf">and</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">3Fh</span>
+<span class="nl">.text:</span><span class="err">0804864</span><span class="nf">C</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">0804864</span><span class="nf">D</span>                 <span class="nv">retn</span>    <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">0804864</span><span class="nf">D</span> <span class="nv">get_offset2</span>     <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>get_offset3:</p>
 
@@ -581,14 +567,15 @@ Et les valeurs correspondantes:</li>
 6
 7
 8
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048678</span>                 <span class="k">xor</span>     <span class="n">al</span><span class="p">,</span> <span class="mi">0</span><span class="n">EDh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804867</span><span class="n">A</span>                 <span class="k">push</span>    <span class="n">eax</span>             <span class="c">; seed</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804867</span><span class="n">B</span>                 <span class="k">call</span>    <span class="n">_srand</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048680</span>                 <span class="k">call</span>    <span class="n">_rand</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048685</span>                 <span class="k">and</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span><span class="n">Fh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804868</span><span class="n">A</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804868</span><span class="n">B</span>                 <span class="k">retn</span>    <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804868</span><span class="n">B</span> <span class="n">get_offset3</span>     <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">08048678</span>                 <span class="nf">xor</span>     <span class="nb">al</span><span class="p">,</span> <span class="mh">0EDh</span>
+<span class="nl">.text:</span><span class="err">0804867</span><span class="nf">A</span>                 <span class="nv">push</span>    <span class="nb">eax</span>             <span class="c1">; seed</span>
+<span class="nl">.text:</span><span class="err">0804867</span><span class="nf">B</span>                 <span class="nv">call</span>    <span class="nv">_srand</span>
+<span class="nl">.text:</span><span class="err">08048680</span>                 <span class="nf">call</span>    <span class="nv">_rand</span>
+<span class="nl">.text:</span><span class="err">08048685</span>                 <span class="nf">and</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">3Fh</span>
+<span class="nl">.text:</span><span class="err">0804868</span><span class="nf">A</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">0804868</span><span class="nf">B</span>                 <span class="nv">retn</span>    <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">0804868</span><span class="nf">B</span> <span class="nv">get_offset3</span>     <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>get_offset4:</p>
 
@@ -597,11 +584,12 @@ Et les valeurs correspondantes:</li>
 3
 4
 5
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080486</span><span class="n">C6</span>                 <span class="k">xor</span>     <span class="n">al</span><span class="p">,</span> <span class="mi">77</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080486</span><span class="n">C8</span>                 <span class="k">and</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span><span class="n">Fh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080486</span><span class="n">CD</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080486</span><span class="n">CE</span>                 <span class="k">retn</span>    <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080486</span><span class="n">CE</span> <span class="n">get_offset4</span>     <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">080486</span><span class="nf">C6</span>                 <span class="nv">xor</span>     <span class="nb">al</span><span class="p">,</span> <span class="mh">77h</span>
+<span class="nl">.text:</span><span class="err">080486</span><span class="nf">C8</span>                 <span class="nv">and</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">3Fh</span>
+<span class="nl">.text:</span><span class="err">080486</span><span class="nf">CD</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">080486</span><span class="nf">CE</span>                 <span class="nv">retn</span>    <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">080486</span><span class="nf">CE</span> <span class="nv">get_offset4</span>     <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>get_offset5:</p>
 
@@ -609,10 +597,11 @@ Et les valeurs correspondantes:</li>
 2
 3
 4
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080486</span><span class="n">FF</span>                 <span class="k">and</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span><span class="n">Fh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048704</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048705</span>                 <span class="k">retn</span>    <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048705</span> <span class="n">get_offset5</span>     <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">080486</span><span class="nf">FF</span>                 <span class="nv">and</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">3Fh</span>
+<span class="nl">.text:</span><span class="err">08048704</span>                 <span class="nf">leave</span>
+<span class="nl">.text:</span><span class="err">08048705</span>                 <span class="nf">retn</span>    <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">08048705</span> <span class="nf">get_offset5</span>     <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Vous vous souvenez de nos 6 octets “changeant”?</p>
 
@@ -752,6 +741,26 @@ Je suis parti dans l’idée d’utiliser l’username pour générer le serial.
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

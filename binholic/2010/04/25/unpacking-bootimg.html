@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/04/25/unpacking-bootimg.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -171,7 +151,8 @@ In facts, my theory was the following : we only need su to get root.</p>
 ** 5. r0 = 0, r1 = MACHINE_TYPE, r2 = tags_addr
 ** 6. if second_size != 0: jump to second_addr
 **    else: jump to kernel_addr
-*/</span></pre></td></tr></tbody></table></code></pre></figure>
+*/</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>With this, we can code a decent unpacker.
 The packer would be about using mkbootimg but i don’t need it for now.</p>
@@ -212,33 +193,34 @@ What I saw is the following :</p>
 </pre></td><td class="code"><pre><span class="gh">diff -ru original/default.prop rooted/default.prop
 </span><span class="gd">--- original/default.prop 2010-04-25 11:58:52.143574246 +0200
 </span><span class="gi">+++ rooted/default.prop 2010-04-25 11:59:12.373574922 +0200
-</span><span class="gu">@@ -1,7 +1,7 @@
-</span>#
+</span><span class="p">@@ -1,7 +1,7 @@</span>
+<span class="err">#</span>
 # ADDITIONAL_DEFAULT_PROPERTIES
-#
-<span class="gd">-ro.secure=1
-</span><span class="gi">+ro.secure=0
-</span>ro.allow.mock.location=0
-<span class="gd">-ro.debuggable=0
+<span class="err">#</span>
+-ro.secure=1
+<span class="gi">+ro.secure=0
+</span><span class="p">ro.allow.mock.location=0
+</span><span class="gd">-ro.debuggable=0
 -persist.service.adb.enable=0
 </span><span class="gi">+ro.debuggable=1
 +persist.service.adb.enable=1
 </span><span class="gh">diff -ru original/init.rc rooted/init.rc
 </span><span class="gd">--- original/init.rc 2010-04-25 11:58:52.163574413 +0200
 </span><span class="gi">+++ rooted/init.rc 2010-04-25 11:59:12.393586264 +0200
-</span><span class="gu">@@ -230,6 +230,11 @@
-</span>
+</span><span class="p">@@ -230,6 +230,11 @@</span>
+
 ## Daemon processes to be run by init.
-##
-<span class="gi">+service superboot /system/bin/sh /superboot/superboot.sh
-+    user root
+<span class="err">##</span>
++service superboot /system/bin/sh /superboot/superboot.sh
+<span class="gi">+    user root
 +    group root
 +    oneshot
 +
-</span>service console /system/bin/sh
+</span><span class="p">service console /system/bin/sh
 console
-
-Only in rooted/: superboot</pre></td></tr></tbody></table></code></pre></figure>
+</span>
+Only in rooted/: superboot
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Well, we can clearly see that some property are there to unlock a security and enable permanent USB Debugging mode.</p>
 
@@ -366,6 +348,26 @@ Only in rooted/: superboot</pre></td></tr></tbody></table></code></pre></figure>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

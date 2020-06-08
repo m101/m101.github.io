@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/04/04/prequals-ndh2011-rce200-android.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -139,7 +119,8 @@ C’était la première fois que je jouais avec de l’Android, seems fun :).</p
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>dex2jar.sh RCE200.apk
-jd-gui RCE200.apk.dex2jar.jar</pre></td></tr></tbody></table></code></pre></figure>
+jd-gui RCE200.apk.dex2jar.jar
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Et le deuxième tool pour ajouter mon texte et patcher une condition afin de montrer un hash tous le temps (normalement il doit y avoir un affichage que lorsque le bon mot est prononcé).</p>
 
@@ -156,7 +137,8 @@ jd-gui RCE200.apk.dex2jar.jar</pre></td></tr></tbody></table></code></pre></figu
 
 <span class="nb">cd </span>apktool
 java <span class="nt">-jar</span> apktool.jar d ../<span class="nv">$1</span>
-<span class="nb">mv</span> <span class="sb">`</span><span class="nb">echo</span> <span class="nv">$1</span> | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">'.'</span> <span class="nt">-f</span> 1<span class="sb">`</span> ../</pre></td></tr></tbody></table></code></pre></figure>
+<span class="nb">mv</span> <span class="sb">`</span><span class="nb">echo</span> <span class="nv">$1</span> | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">'.'</span> <span class="nt">-f</span> 1<span class="sb">`</span> ../
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>pack.sh</p>
 
@@ -203,7 +185,8 @@ java <span class="nt">-jar</span> apktool.jar b ../<span class="nv">$1</span>
 jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/keystore-android <span class="nv">$1</span>/dist/<span class="nv">$1</span>.apk rce200
 <span class="nb">cp</span> <span class="nv">$1</span>/dist/<span class="nv">$1</span>.apk ./<span class="nv">$1</span>.rebuilt.apk
 ./zipalign <span class="nt">-v</span> 4 <span class="nv">$1</span>.rebuilt.apk <span class="nv">$1</span>.aligned.apk
-<span class="nb">rm</span> <span class="nv">$1</span>.rebuilt.apk</pre></td></tr></tbody></table></code></pre></figure>
+<span class="nb">rm</span> <span class="nv">$1</span>.rebuilt.apk
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="lets-reverse-it">Let’s reverse it!</h1>
 
@@ -267,7 +250,7 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
 54
 55
 56
-</pre></td><td class="code"><pre><span class="kn">package</span> <span class="n">ndh</span><span class="o">.</span><span class="na">prequals</span><span class="o">.</span><span class="na">rce</span><span class="o">;</span>
+</pre></td><td class="code"><pre><span class="kn">package</span> <span class="nn">ndh.prequals.rce</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
@@ -279,40 +262,40 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
 <span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReverseMe</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReverseMe</span> <span class="kd">extends</span> <span class="nc">Activity</span>
 <span class="o">{</span>
   <span class="kd">private</span> <span class="n">a</span> <span class="n">a</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-  <span class="kd">private</span> <span class="n">TextView</span> <span class="n">b</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="nc">TextView</span> <span class="n">b</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">paramInt1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">paramInt2</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">paramIntent</span><span class="o">)</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">paramInt1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">paramInt2</span><span class="o">,</span> <span class="nc">Intent</span> <span class="n">paramIntent</span><span class="o">)</span>
   <span class="o">{</span>
     <span class="k">if</span> <span class="o">((</span><span class="n">paramInt1</span> <span class="o">==</span> <span class="mi">1234</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">paramInt2</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">))</span>
     <span class="o">{</span>
-      <span class="n">ArrayList</span> <span class="n">localArrayList</span> <span class="o">=</span> <span class="n">paramIntent</span><span class="o">.</span><span class="na">getStringArrayListExtra</span><span class="o">(</span><span class="s">"android.speech.extra.RESULTS"</span><span class="o">);</span>
-      <span class="k">if</span> <span class="o">((!</span><span class="n">localArrayList</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">b</span><span class="o">((</span><span class="n">String</span><span class="o">)</span><span class="n">localArrayList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">))))</span>
+      <span class="nc">ArrayList</span> <span class="n">localArrayList</span> <span class="o">=</span> <span class="n">paramIntent</span><span class="o">.</span><span class="na">getStringArrayListExtra</span><span class="o">(</span><span class="s">"android.speech.extra.RESULTS"</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">((!</span><span class="n">localArrayList</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">b</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">localArrayList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">))))</span>
       <span class="o">{</span>
-        <span class="n">TextView</span> <span class="n">localTextView</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">b</span><span class="o">;</span>
-        <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">a</span><span class="o">((</span><span class="n">String</span><span class="o">)</span><span class="n">localArrayList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+        <span class="nc">TextView</span> <span class="n">localTextView</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">b</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">a</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">localArrayList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
         <span class="n">localTextView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
       <span class="o">}</span>
     <span class="o">}</span>
     <span class="kd">super</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">paramInt1</span><span class="o">,</span> <span class="n">paramInt2</span><span class="o">,</span> <span class="n">paramIntent</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">paramBundle</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nc">Bundle</span> <span class="n">paramBundle</span><span class="o">)</span>
   <span class="o">{</span>
     <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">paramBundle</span><span class="o">);</span>
     <span class="n">setContentView</span><span class="o">(</span><span class="mi">2130903040</span><span class="o">);</span>
-    <span class="n">Button</span> <span class="n">localButton</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="mi">2131034114</span><span class="o">);</span>
-    <span class="n">TextView</span> <span class="n">localTextView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="mi">2131034113</span><span class="o">);</span>
+    <span class="nc">Button</span> <span class="n">localButton</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Button</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="mi">2131034114</span><span class="o">);</span>
+    <span class="nc">TextView</span> <span class="n">localTextView</span> <span class="o">=</span> <span class="o">(</span><span class="nc">TextView</span><span class="o">)</span><span class="n">findViewById</span><span class="o">(</span><span class="mi">2131034113</span><span class="o">);</span>
     <span class="k">this</span><span class="o">.</span><span class="na">b</span> <span class="o">=</span> <span class="n">localTextView</span><span class="o">;</span>
-    <span class="n">PackageManager</span> <span class="n">localPackageManager</span> <span class="o">=</span> <span class="n">getPackageManager</span><span class="o">();</span>
-    <span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">d</span><span class="o">();</span>
-    <span class="n">Intent</span> <span class="n">localIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">str1</span><span class="o">);</span>
+    <span class="nc">PackageManager</span> <span class="n">localPackageManager</span> <span class="o">=</span> <span class="n">getPackageManager</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">d</span><span class="o">();</span>
+    <span class="nc">Intent</span> <span class="n">localIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Intent</span><span class="o">(</span><span class="n">str1</span><span class="o">);</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">localPackageManager</span><span class="o">.</span><span class="na">queryIntentActivities</span><span class="o">(</span><span class="n">localIntent</span><span class="o">,</span> <span class="mi">0</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span>
     <span class="o">{</span>
-      <span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">b</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">str3</span> <span class="o">=</span> <span class="n">Build</span><span class="o">.</span><span class="na">PRODUCT</span><span class="o">;</span>
+      <span class="nc">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">b</span><span class="o">();</span>
+      <span class="nc">String</span> <span class="n">str3</span> <span class="o">=</span> <span class="nc">Build</span><span class="o">.</span><span class="na">PRODUCT</span><span class="o">;</span>
       <span class="k">if</span> <span class="o">(!</span><span class="n">str2</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">str3</span><span class="o">))</span>
       <span class="o">{</span>
         <span class="n">b</span> <span class="n">localb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">b</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
@@ -322,7 +305,8 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
     <span class="n">a</span> <span class="n">locala</span> <span class="o">=</span> <span class="k">new</span> <span class="n">a</span><span class="o">();</span>
     <span class="k">this</span><span class="o">.</span><span class="na">a</span> <span class="o">=</span> <span class="n">locala</span><span class="o">;</span>
   <span class="o">}</span>
-<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>onCreate() va mettre en place les différents éléments de l’application à sa création comme l’image, le texte et le button.</p>
 
@@ -414,7 +398,7 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
 82
 83
 84
-</pre></td><td class="code"><pre><span class="kn">package</span> <span class="n">ndh</span><span class="o">.</span><span class="na">prequals</span><span class="o">.</span><span class="na">rce</span><span class="o">;</span>
+</pre></td><td class="code"><pre><span class="kn">package</span> <span class="nn">ndh.prequals.rce</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">android.os.Build</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.security.MessageDigest</span><span class="o">;</span>
@@ -422,15 +406,15 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
 
 <span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">a</span>
 <span class="o">{</span>
-  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">a</span><span class="o">(</span><span class="n">String</span> <span class="n">paramString</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">a</span><span class="o">(</span><span class="nc">String</span> <span class="n">paramString</span><span class="o">)</span>
   <span class="o">{</span>
     <span class="k">try</span>
     <span class="o">{</span>
-      <span class="n">MessageDigest</span> <span class="n">localMessageDigest</span> <span class="o">=</span> <span class="n">MessageDigest</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">e</span><span class="o">());</span>
+      <span class="nc">MessageDigest</span> <span class="n">localMessageDigest</span> <span class="o">=</span> <span class="nc">MessageDigest</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">e</span><span class="o">());</span>
       <span class="kt">byte</span><span class="o">[]</span> <span class="n">arrayOfByte</span> <span class="o">=</span> <span class="n">paramString</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
       <span class="n">localMessageDigest</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">arrayOfByte</span><span class="o">);</span>
       <span class="n">localObject1</span> <span class="o">=</span> <span class="n">localMessageDigest</span><span class="o">.</span><span class="na">digest</span><span class="o">();</span>
-      <span class="n">StringBuffer</span> <span class="n">localStringBuffer1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+      <span class="nc">StringBuffer</span> <span class="n">localStringBuffer1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuffer</span><span class="o">();</span>
       <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
       <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">localObject1</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
       <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="o">)</span>
@@ -438,66 +422,67 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
         <span class="n">localObject1</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
         <span class="k">return</span> <span class="n">localObject1</span><span class="o">;</span>
       <span class="o">}</span>
-      <span class="n">String</span> <span class="n">str</span><span class="o">;</span>
-      <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">localObject2</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">localObject1</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">);</span> <span class="o">;</span> <span class="n">localObject2</span> <span class="o">=</span> <span class="n">str</span><span class="o">)</span>
+      <span class="nc">String</span> <span class="n">str</span><span class="o">;</span>
+      <span class="k">for</span> <span class="o">(</span><span class="nc">Object</span> <span class="n">localObject2</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">localObject1</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">);</span> <span class="o">;</span> <span class="n">localObject2</span> <span class="o">=</span> <span class="n">str</span><span class="o">)</span>
       <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(((</span><span class="n">String</span><span class="o">)</span><span class="n">localObject2</span><span class="o">).</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(((</span><span class="nc">String</span><span class="o">)</span><span class="n">localObject2</span><span class="o">).</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">)</span>
         <span class="o">{</span>
-          <span class="n">StringBuffer</span> <span class="n">localStringBuffer2</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="n">String</span><span class="o">)</span><span class="n">localObject2</span><span class="o">);</span>
+          <span class="nc">StringBuffer</span> <span class="n">localStringBuffer2</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">localObject2</span><span class="o">);</span>
           <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
           <span class="k">break</span><span class="o">;</span>
         <span class="o">}</span>
-        <span class="n">str</span> <span class="o">=</span> <span class="s">"0"</span> <span class="o">+</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span><span class="n">localObject2</span><span class="o">;</span>
+        <span class="n">str</span> <span class="o">=</span> <span class="s">"0"</span> <span class="o">+</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">localObject2</span><span class="o">;</span>
       <span class="o">}</span>
     <span class="o">}</span>
-    <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchAlgorithmException</span> <span class="n">localNoSuchAlgorithmException</span><span class="o">)</span>
+    <span class="k">catch</span> <span class="o">(</span><span class="nc">NoSuchAlgorithmException</span> <span class="n">localNoSuchAlgorithmException</span><span class="o">)</span>
     <span class="o">{</span>
       <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span>
-        <span class="n">Object</span> <span class="n">localObject1</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="nc">Object</span> <span class="n">localObject1</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
     <span class="o">}</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">b</span><span class="o">(</span><span class="n">String</span> <span class="n">paramString</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">b</span><span class="o">(</span><span class="nc">String</span> <span class="n">paramString</span><span class="o">)</span>
   <span class="o">{</span>
     <span class="k">try</span>
     <span class="o">{</span>
-      <span class="n">MessageDigest</span> <span class="n">localMessageDigest</span> <span class="o">=</span> <span class="n">MessageDigest</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">c</span><span class="o">());</span>
+      <span class="nc">MessageDigest</span> <span class="n">localMessageDigest</span> <span class="o">=</span> <span class="nc">MessageDigest</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">c</span><span class="o">());</span>
       <span class="kt">byte</span><span class="o">[]</span> <span class="n">arrayOfByte1</span> <span class="o">=</span> <span class="n">paramString</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
       <span class="n">localMessageDigest</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">arrayOfByte1</span><span class="o">);</span>
       <span class="kt">byte</span><span class="o">[]</span> <span class="n">arrayOfByte2</span> <span class="o">=</span> <span class="n">localMessageDigest</span><span class="o">.</span><span class="na">digest</span><span class="o">();</span>
-      <span class="n">StringBuffer</span> <span class="n">localStringBuffer1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">b</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="n">Build</span><span class="o">.</span><span class="na">PRODUCT</span><span class="o">;</span>
+      <span class="nc">StringBuffer</span> <span class="n">localStringBuffer1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuffer</span><span class="o">();</span>
+      <span class="nc">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">b</span><span class="o">();</span>
+      <span class="nc">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="nc">Build</span><span class="o">.</span><span class="na">PRODUCT</span><span class="o">;</span>
       <span class="k">if</span> <span class="o">(</span><span class="n">str1</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">str2</span><span class="o">))</span>
-        <span class="n">StringBuffer</span> <span class="n">localStringBuffer2</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="mi">65</span><span class="o">);</span>
+        <span class="nc">StringBuffer</span> <span class="n">localStringBuffer2</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="mi">65</span><span class="o">);</span>
       <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
       <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">arrayOfByte2</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
       <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="o">)</span>
       <span class="o">{</span>
-        <span class="n">String</span> <span class="n">str3</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
-        <span class="n">String</span> <span class="n">str4</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">a</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">str3</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">str4</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">a</span><span class="o">();</span>
         <span class="n">bool</span> <span class="o">=</span> <span class="n">str3</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">str4</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">bool</span><span class="o">;</span>
       <span class="o">}</span>
-      <span class="n">String</span> <span class="n">str5</span><span class="o">;</span>
-      <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">localObject</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">bool</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">);</span> <span class="o">;</span> <span class="n">localObject</span> <span class="o">=</span> <span class="n">str5</span><span class="o">)</span>
+      <span class="nc">String</span> <span class="n">str5</span><span class="o">;</span>
+      <span class="k">for</span> <span class="o">(</span><span class="nc">Object</span> <span class="n">localObject</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="n">bool</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">);</span> <span class="o">;</span> <span class="n">localObject</span> <span class="o">=</span> <span class="n">str5</span><span class="o">)</span>
       <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(((</span><span class="n">String</span><span class="o">)</span><span class="n">localObject</span><span class="o">).</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">)</span>
+        <span class="k">if</span> <span class="o">(((</span><span class="nc">String</span><span class="o">)</span><span class="n">localObject</span><span class="o">).</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="o">)</span>
         <span class="o">{</span>
-          <span class="n">StringBuffer</span> <span class="n">localStringBuffer3</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="n">String</span><span class="o">)</span><span class="n">localObject</span><span class="o">);</span>
+          <span class="nc">StringBuffer</span> <span class="n">localStringBuffer3</span> <span class="o">=</span> <span class="n">localStringBuffer1</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">localObject</span><span class="o">);</span>
           <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
           <span class="k">break</span><span class="o">;</span>
         <span class="o">}</span>
-        <span class="n">str5</span> <span class="o">=</span> <span class="s">"0"</span> <span class="o">+</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span><span class="n">localObject</span><span class="o">;</span>
+        <span class="n">str5</span> <span class="o">=</span> <span class="s">"0"</span> <span class="o">+</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">localObject</span><span class="o">;</span>
       <span class="o">}</span>
     <span class="o">}</span>
-    <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchAlgorithmException</span> <span class="n">localNoSuchAlgorithmException</span><span class="o">)</span>
+    <span class="k">catch</span> <span class="o">(</span><span class="nc">NoSuchAlgorithmException</span> <span class="n">localNoSuchAlgorithmException</span><span class="o">)</span>
     <span class="o">{</span>
       <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span>
         <span class="kt">boolean</span> <span class="n">bool</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
     <span class="o">}</span>
   <span class="o">}</span>
-<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>La méthode a() nous renvoi le hash sha1 de la chaine qu’on met en paramètre et b() nous renvoi un hash MD5.</p>
 
@@ -529,32 +514,33 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
 24
 25
 26
-</pre></td><td class="code"><pre><span class="kn">package</span> <span class="n">ndh</span><span class="o">.</span><span class="na">prequals</span><span class="o">.</span><span class="na">rce</span><span class="o">;</span>
+</pre></td><td class="code"><pre><span class="kn">package</span> <span class="nn">ndh.prequals.rce</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">android.view.View</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">android.view.View.OnClickListener</span><span class="o">;</span>
 
 <span class="kd">final</span> <span class="kd">class</span> <span class="nc">b</span>
-  <span class="kd">implements</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span>
+  <span class="kd">implements</span> <span class="nc">View</span><span class="o">.</span><span class="na">OnClickListener</span>
 <span class="o">{</span>
-  <span class="n">b</span><span class="o">(</span><span class="n">ReverseMe</span> <span class="n">paramReverseMe</span><span class="o">)</span>
+  <span class="n">b</span><span class="o">(</span><span class="nc">ReverseMe</span> <span class="n">paramReverseMe</span><span class="o">)</span>
   <span class="o">{</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">paramView</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="nc">View</span> <span class="n">paramView</span><span class="o">)</span>
   <span class="o">{</span>
-    <span class="n">ReverseMe</span> <span class="n">localReverseMe</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">a</span><span class="o">;</span>
+    <span class="nc">ReverseMe</span> <span class="n">localReverseMe</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">a</span><span class="o">;</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">paramView</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="o">==</span> <span class="mi">2131034114</span><span class="o">)</span>
     <span class="o">{</span>
-      <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">d</span><span class="o">();</span>
-      <span class="n">Intent</span> <span class="n">localIntent1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
-      <span class="n">Intent</span> <span class="n">localIntent2</span> <span class="o">=</span> <span class="n">localIntent1</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">"android.speech.extra.LANGUAGE_MODEL"</span><span class="o">,</span> <span class="s">"free_form"</span><span class="o">);</span>
-      <span class="n">Intent</span> <span class="n">localIntent3</span> <span class="o">=</span> <span class="n">localIntent1</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">"android.speech.extra.PROMPT"</span><span class="o">,</span> <span class="s">"Enter password"</span><span class="o">);</span>
+      <span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">d</span><span class="o">();</span>
+      <span class="nc">Intent</span> <span class="n">localIntent1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Intent</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+      <span class="nc">Intent</span> <span class="n">localIntent2</span> <span class="o">=</span> <span class="n">localIntent1</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">"android.speech.extra.LANGUAGE_MODEL"</span><span class="o">,</span> <span class="s">"free_form"</span><span class="o">);</span>
+      <span class="nc">Intent</span> <span class="n">localIntent3</span> <span class="o">=</span> <span class="n">localIntent1</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">"android.speech.extra.PROMPT"</span><span class="o">,</span> <span class="s">"Enter password"</span><span class="o">);</span>
       <span class="n">localReverseMe</span><span class="o">.</span><span class="na">startActivityForResult</span><span class="o">(</span><span class="n">localIntent1</span><span class="o">,</span> <span class="mi">1234</span><span class="o">);</span>
     <span class="o">}</span>
   <span class="o">}</span>
-<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Cette classe a une unique méthode qui va lancer la boîte de dialogue de reconnaissance vocale.</p>
 
@@ -610,7 +596,7 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
 48
 49
 50
-</pre></td><td class="code"><pre><span class="kn">package</span> <span class="n">ndh</span><span class="o">.</span><span class="na">prequals</span><span class="o">.</span><span class="na">rce</span><span class="o">;</span>
+</pre></td><td class="code"><pre><span class="kn">package</span> <span class="nn">ndh.prequals.rce</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">c</span>
 <span class="o">{</span>
@@ -620,12 +606,12 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
   <span class="kd">private</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">d</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">93</span><span class="o">,</span> <span class="mi">82</span><span class="o">,</span> <span class="mi">88</span><span class="o">,</span> <span class="mi">78</span><span class="o">,</span> <span class="mi">83</span><span class="o">,</span> <span class="mi">85</span><span class="o">,</span> <span class="mi">88</span><span class="o">,</span> <span class="mi">18</span><span class="o">,</span> <span class="mi">79</span><span class="o">,</span> <span class="mi">76</span><span class="o">,</span> <span class="mi">89</span><span class="o">,</span> <span class="mi">89</span><span class="o">,</span> <span class="mi">95</span><span class="o">,</span> <span class="mi">84</span><span class="o">,</span> <span class="mi">18</span><span class="o">,</span> <span class="mi">93</span><span class="o">,</span> <span class="mi">95</span><span class="o">,</span> <span class="mi">72</span><span class="o">,</span> <span class="mi">85</span><span class="o">,</span> <span class="mi">83</span><span class="o">,</span> <span class="mi">82</span><span class="o">,</span> <span class="mi">18</span><span class="o">,</span> <span class="mi">110</span><span class="o">,</span> <span class="mi">121</span><span class="o">,</span> <span class="mi">127</span><span class="o">,</span> <span class="mi">115</span><span class="o">,</span> <span class="mi">123</span><span class="o">,</span> <span class="mi">114</span><span class="o">,</span> <span class="mi">117</span><span class="o">,</span> <span class="mi">102</span><span class="o">,</span> <span class="mi">121</span><span class="o">,</span> <span class="mi">99</span><span class="o">,</span> <span class="mi">111</span><span class="o">,</span> <span class="mi">108</span><span class="o">,</span> <span class="mi">121</span><span class="o">,</span> <span class="mi">121</span><span class="o">,</span> <span class="mi">127</span><span class="o">,</span> <span class="mi">116</span> <span class="o">};</span>
   <span class="kd">private</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">e</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">111</span><span class="o">,</span> <span class="mi">116</span><span class="o">,</span> <span class="mi">125</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">13</span> <span class="o">};</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">a</span><span class="o">()</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">a</span><span class="o">()</span>
   <span class="o">{</span>
     <span class="k">return</span> <span class="nf">a</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">a</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">paramArrayOfByte</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">a</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">paramArrayOfByte</span><span class="o">)</span>
   <span class="o">{</span>
     <span class="kt">byte</span><span class="o">[]</span> <span class="n">arrayOfByte</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">paramArrayOfByte</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
@@ -640,26 +626,27 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
     <span class="o">}</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">b</span><span class="o">()</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">b</span><span class="o">()</span>
   <span class="o">{</span>
     <span class="k">return</span> <span class="nf">a</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">c</span><span class="o">()</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">c</span><span class="o">()</span>
   <span class="o">{</span>
     <span class="k">return</span> <span class="nf">a</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">d</span><span class="o">()</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">d</span><span class="o">()</span>
   <span class="o">{</span>
     <span class="k">return</span> <span class="nf">a</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">e</span><span class="o">()</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">e</span><span class="o">()</span>
   <span class="o">{</span>
     <span class="k">return</span> <span class="nf">a</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
   <span class="o">}</span>
-<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ici nous avons affaire à plusieurs chaînes de caractères obfusquée par un XORing avec une clé de 0x3C.</p>
 
@@ -762,7 +749,8 @@ jarsigner <span class="nt">-verbose</span> <span class="nt">-keystore</span> ~/k
 
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Vous obtenez ceci:</p>
 
@@ -777,7 +765,8 @@ Decrypted: <span class="s1">'f9dd11ff6857af73ac9a944dfc52f41b'</span>
 Decrypted: <span class="s1">'google_sdk|'</span>
 Decrypted: <span class="s1">'MD5'</span>
 Decrypted: <span class="s1">'android.speech.action.RECOGNIZE_SPEECH'</span>
-Decrypted: <span class="s1">'SHA-1'</span></pre></td></tr></tbody></table></code></pre></figure>
+Decrypted: <span class="s1">'SHA-1'</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On trouve un hash MD5, tiens tiens …
 Une petite recherche google nous donne ceci:
@@ -789,7 +778,8 @@ Je n’ai pas réussi à l’obtenir par ce biais, mais nous savons que c’est 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="nv">$ </span><span class="nb">printf</span> <span class="s2">"salope"</span> | openssl dgst <span class="nt">-sha1</span>
-913beccad686975f8c686d9b3b1ee6bb97c22d6f</pre></td></tr></tbody></table></code></pre></figure>
+913beccad686975f8c686d9b3b1ee6bb97c22d6f
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Et voilà, done :).</p>
 
@@ -917,6 +907,26 @@ J’ai mis plus de doc en lien si vous voulez approfondir ;).</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

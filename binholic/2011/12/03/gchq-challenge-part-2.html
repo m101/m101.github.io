@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/12/03/gchq-challenge-part-2.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -401,7 +381,7 @@
     <span class="c1">// jmpe r1</span>
     <span class="c1">//   =&gt; if (fl == 0) jmp r1</span>
     <span class="c1">//      else nop</span>
-    <span class="k">throw</span> <span class="s2">"VM.exec not yet implemented"</span><span class="p">;</span>
+    <span class="k">throw</span> <span class="dl">"</span><span class="s2">VM.exec not yet implemented</span><span class="dl">"</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">};</span>
 
@@ -413,10 +393,11 @@
 <span class="p">}</span>
 <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="nx">alert</span><span class="p">(</span><span class="s1">'</span><span class="err">\</span><span class="s1">nError: '</span> <span class="o">+</span> <span class="nx">e</span> <span class="o">+</span> <span class="s1">'</span><span class="err">\</span><span class="s1">n'</span><span class="p">);</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="se">\n</span><span class="s1">Error: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">e</span> <span class="o">+</span> <span class="dl">'</span><span class="se">\n</span><span class="dl">'</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="c1">//--------------------------------------------------------------------------------------------------</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="c1">//--------------------------------------------------------------------------------------------------</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Okay, the challenge consist in implementing a virtual CPU that will be able to execute the bytecode and decrypt the parts that interest us.</p>
 
@@ -530,7 +511,8 @@ Thus I coded my VM in C, it is included in the archive at the end of the post (6
 0x0122: invalid
 0x0123: invalid
 0x0124: invalid
-0x0125: invalid</pre></td></tr></tbody></table></code></pre></figure>
+0x0125: invalid
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As you can see you have a first loop from address 0x0 to 0x16.
 The second loop is completely junk as we have invalid instructions.</p>
@@ -676,7 +658,8 @@ We basically decoded a second payload.</p>
 0x0145: jmp r0
 0x0146: jmp r0
 0x0147: jmp r0
-0x0148: jmp r0</pre></td></tr></tbody></table></code></pre></figure>
+0x0148: jmp r0
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now at offset 0x100, we can see our decoded payload.
 It is a second decoding loop ;).
@@ -724,7 +707,8 @@ It stop decoding as soon as it reaches the end of the decoded string: ‘\0’.<
  44 : 0x2c0 : e7 c0 eb ff e9 a3 bf a1 ab 8b bb 9e 9e 8c a0 c1 | ................
  45 : 0x2d0 : 9b 5a 2f 2f 4e 4e 00 00 00 00 00 00 00 00 00 00 | .Z//NN..........
  46 : 0x2e0 : 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................
- 47 : 0x2f0 : 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................</pre></td></tr></tbody></table></code></pre></figure>
+ 47 : 0x2f0 : 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So you can see our decoded string is GET …</p>
 
@@ -735,7 +719,8 @@ It stop decoding as soon as it reaches the end of the decoded string: ‘\0’.<
 </pre></td><td class="code"><pre>[+] Initializing VM CPU
 [+] Executing bytecode
 [+] Finished executing bytecode
-[+] Answer: 'GET /da75370fe15c4148bd4ceec861fbdaa5.exe HTTP/1.0'</pre></td></tr></tbody></table></code></pre></figure>
+[+] Answer: 'GET /da75370fe15c4148bd4ceec861fbdaa5.exe HTTP/1.0'
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>But after the GET, we have 256+ bytes that has not been modified in any way …
 Someone found what it is? (and no it does not seem to be a valid 7zip file :().</p>
@@ -859,6 +844,26 @@ Any person who did some “Computer Science” should thus be able to solve this
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/04/04/prequals-ndh2011-forensic-1-windows.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -139,7 +119,8 @@ We were offered a memory dump to analyze.</p>
               Image Type: Service Pack 2
                  VM Type: pae
                      DTB: 0xae2000
-                Datetime: Thu Mar 10 14:28:56 2011</pre></td></tr></tbody></table></code></pre></figure>
+                Datetime: Thu Mar 10 14:28:56 2011
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ok the dump is recognized to be a Windows XP SP2 RAM dump (you can check it using strings ;)).</p>
 
@@ -186,7 +167,8 @@ alg.exe              500    684    6      104    Thu Mar 10 13:02:58 2011
 wscntfy.exe          532    1020   1      36     Thu Mar 10 13:02:59 2011  
 winvnc4.exe          1696   684    3      67     Thu Mar 10 13:09:47 2011  
 mmc.exe              1512   1580   7      241    Thu Mar 10 13:28:14 2011  
-wmiprvse.exe         1460   860    13     204    Thu Mar 10 13:28:33 2011</pre></td></tr></tbody></table></code></pre></figure>
+wmiprvse.exe         1460   860    13     204    Thu Mar 10 13:28:33 2011
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We now know that WinVNC 4 was used, at this point we can dump the memory of the process and the executable itself. But no point, we need to know the registry key under which the password might be stored:</p>
 
@@ -197,7 +179,8 @@ wmiprvse.exe         1460   860    13     204    Thu Mar 10 13:28:33 2011</pre><
 </pre></td><td class="code"><pre><span class="nv">$ </span>strings <span class="nt">-e</span> l ../Desktop/dump.raw | <span class="nb">grep</span> <span class="nt">-i</span> vnc | <span class="nb">grep</span> <span class="nt">-i</span> hkey
 Poste de travail<span class="se">\H</span>KEY_LOCAL_MACHINE<span class="se">\S</span>OFTWARE<span class="se">\R</span>ealVNC<span class="se">\W</span>inVNC4
 Poste de travail<span class="se">\H</span>KEY_LOCAL_MACHINE<span class="se">\S</span>OFTWARE<span class="se">\R</span>ealVNC<span class="se">\W</span>inVNC4
-Poste de travail<span class="se">\H</span>KEY_LOCAL_MACHINE<span class="se">\S</span>OFTWARE<span class="se">\R</span>ealVNC<span class="se">\W</span>inVNC4</pre></td></tr></tbody></table></code></pre></figure>
+Poste de travail<span class="se">\H</span>KEY_LOCAL_MACHINE<span class="se">\S</span>OFTWARE<span class="se">\R</span>ealVNC<span class="se">\W</span>inVNC4
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now on with the registry analysis, we run hivescan to get hive offsets.</p>
 
@@ -228,7 +211,8 @@ Poste de travail<span class="se">\H</span>KEY_LOCAL_MACHINE<span class="se">\S</
 144967512       0x8a40758      
 145000296       0x8a48768      
 146788360       0x8bfd008      
-167239688       0x9f7e008      </pre></td></tr></tbody></table></code></pre></figure>
+167239688       0x9f7e008      
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We use the first offset with hivelist to show where hives are located at.</p>
 
@@ -261,7 +245,8 @@ Address      Name
 0xe14e4758   <span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32<span class="se">\c</span>onfig<span class="se">\S</span>ECURITY
 0xe12e8288   <span class="o">[</span>no name]
 0xe1035b60   <span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32<span class="se">\c</span>onfig<span class="se">\s</span>ystem
-0xe102e008   <span class="o">[</span>no name]</pre></td></tr></tbody></table></code></pre></figure>
+0xe102e008   <span class="o">[</span>no name]
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Since we know that we are interested by “HKEY_LOCAL_MACHINE\SOFTWARE\RealVNC\WinVNC4”, we are going to work directly with the SOFTWARE hive.</p>
 
@@ -292,7 +277,8 @@ REG_BINARY Password   :
 REG_SZ    SecurityTypes : VncAuth <span class="o">(</span>Stable<span class="o">)</span>
 REG_SZ    ReverseSecurityTypes : None <span class="o">(</span>Stable<span class="o">)</span>
 REG_DWORD QueryConnect : 0 <span class="o">(</span>Stable<span class="o">)</span>
-REG_DWORD QueryOnlyIfLoggedOn : 0 <span class="o">(</span>Stable<span class="o">)</span></pre></td></tr></tbody></table></code></pre></figure>
+REG_DWORD QueryOnlyIfLoggedOn : 0 <span class="o">(</span>Stable<span class="o">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Here we are, we got the encrypted form of the password, now is time to decrypt it using vncpwdump:</p>
 
@@ -305,7 +291,8 @@ REG_DWORD QueryOnlyIfLoggedOn : 0 <span class="o">(</span>Stable<span class="o">
 
 VNCPwdump v.1.0.6 by patrik@cqure.net
 <span class="nt">-------------------------------------</span>
-Password: secretpq</pre></td></tr></tbody></table></code></pre></figure>
+Password: secretpq
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As a bonus, we can also decrypt it using Cain&amp;Abel:</p>
 
@@ -427,6 +414,26 @@ Password: secretpq</pre></td></tr></tbody></table></code></pre></figure>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2013/03/06/hes-2011-abraxas-wargame-level-4.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -120,7 +100,8 @@
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="nv">$ </span><span class="nb">cat</span> /etc/cron.d/workpackagebuilder 
-<span class="k">*</span>/5 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>    level4 /home/level4/bin/make_random_input.sh <span class="o">&amp;&amp;</span> /home/level4/bin/workpackagebuilder.pl &amp;&gt; /dev/null</pre></td></tr></tbody></table></code></pre></figure>
+<span class="k">*</span>/5 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>    level4 /home/level4/bin/make_random_input.sh <span class="o">&amp;&amp;</span> /home/level4/bin/workpackagebuilder.pl &amp;&gt; /dev/null
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>It runs every 5 minutes.</p>
 
@@ -205,79 +186,80 @@
 75
 </pre></td><td class="code"><pre><span class="c1">#!/usr/bin/perl</span>
 
-<span class="nv">$inputdir</span><span class="o">=</span><span class="s">"/opt/workpackagebuilder/input/"</span><span class="p">;</span>
-<span class="nv">$templatedir</span><span class="o">=</span><span class="s">"/opt/workpackagebuilder/templates/"</span><span class="p">;</span> 
-<span class="nv">$outputdir</span><span class="o">=</span><span class="s">"/opt/workpackagebuilder/output"</span><span class="p">;</span> 
-<span class="nv">$workdir</span><span class="o">=</span><span class="s">"/opt/workpackagebuilder/work"</span><span class="p">;</span> 
+<span class="nv">$inputdir</span><span class="o">=</span><span class="p">"</span><span class="s2">/opt/workpackagebuilder/input/</span><span class="p">";</span>
+<span class="nv">$templatedir</span><span class="o">=</span><span class="p">"</span><span class="s2">/opt/workpackagebuilder/templates/</span><span class="p">";</span> 
+<span class="nv">$outputdir</span><span class="o">=</span><span class="p">"</span><span class="s2">/opt/workpackagebuilder/output</span><span class="p">";</span> 
+<span class="nv">$workdir</span><span class="o">=</span><span class="p">"</span><span class="s2">/opt/workpackagebuilder/work</span><span class="p">";</span> 
 
 <span class="nv">$rnd</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">));</span>
-<span class="nv">$tmpfile</span><span class="o">=</span><span class="s">"$workdir/tmpfile$rnd"</span><span class="p">;</span>
-<span class="nv">$outputfile</span><span class="o">=</span><span class="s">"$outputdir/workpackage$rnd.bin"</span><span class="p">;</span>
+<span class="nv">$tmpfile</span><span class="o">=</span><span class="p">"</span><span class="si">$workdir</span><span class="s2">/tmpfile</span><span class="si">$rnd</span><span class="p">";</span>
+<span class="nv">$outputfile</span><span class="o">=</span><span class="p">"</span><span class="si">$outputdir</span><span class="s2">/workpackage</span><span class="si">$rnd</span><span class="s2">.bin</span><span class="p">";</span>
 
 <span class="k">sub </span><span class="nf">readfile</span><span class="p">($)</span> <span class="p">{</span>
   <span class="nb">local</span> <span class="p">(</span><span class="nv">$fn</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
   <span class="nb">local</span> <span class="vg">$/</span><span class="o">=</span><span class="nb">undef</span><span class="p">;</span>
-  <span class="nb">open</span> <span class="nv">FILE</span><span class="p">,</span> <span class="nv">$fn</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">"Couldn't open file: $!"</span><span class="p">;</span>
+  <span class="nb">open</span> <span class="nv">FILE</span><span class="p">,</span> <span class="nv">$fn</span> <span class="ow">or</span> <span class="nb">die</span> <span class="p">"</span><span class="s2">Couldn't open file: $!</span><span class="p">";</span>
   <span class="nb">binmode</span> <span class="nv">FILE</span><span class="p">;</span>
   <span class="nb">local</span> <span class="nv">$string</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nv">FILE</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="nb">close</span> <span class="nv">FILE</span><span class="p">;</span>
   <span class="k">return</span> <span class="nv">$string</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">print</span> <span class="s">"Cleaning up $tmpfile\n"</span><span class="p">;</span>
-<span class="nb">system</span> <span class="s">"rm -rf $workdir/*"</span><span class="p">;</span>
+<span class="k">print</span> <span class="p">"</span><span class="s2">Cleaning up </span><span class="si">$tmpfile</span><span class="se">\n</span><span class="p">";</span>
+<span class="nb">system</span> <span class="p">"</span><span class="s2">rm -rf </span><span class="si">$workdir</span><span class="s2">/*</span><span class="p">";</span>
 
-<span class="k">print</span> <span class="s">"Waiting for $tmpfile to be gone ...\n"</span><span class="p">;</span>
+<span class="k">print</span> <span class="p">"</span><span class="s2">Waiting for </span><span class="si">$tmpfile</span><span class="s2"> to be gone ...</span><span class="se">\n</span><span class="p">";</span>
 <span class="nb">sleep</span> <span class="mi">30</span><span class="p">;</span>
 
 <span class="c1"># make sure nothing dirty remains</span>
-<span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="nv">l</span> <span class="s">"$tmpfile"</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="nv">l</span> <span class="p">"</span><span class="si">$tmpfile</span><span class="p">")</span> <span class="p">{</span>
     <span class="nb">exit</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="nv">d</span> <span class="s">"$tmpfile"</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="nv">d</span> <span class="p">"</span><span class="si">$tmpfile</span><span class="p">")</span> <span class="p">{</span>
     <span class="nb">exit</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">print</span> <span class="s">"Reading input directory $inputdir\n"</span><span class="p">;</span>
+<span class="k">print</span> <span class="p">"</span><span class="s2">Reading input directory </span><span class="si">$inputdir</span><span class="se">\n</span><span class="p">";</span>
 
 <span class="c1"># list all codes in the input dir and write them to a temporary file</span>
 <span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$inputdir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span><span class="p">;</span>
-<span class="nb">open</span> <span class="nv">OUT</span><span class="p">,</span> <span class="s">"&gt;$tmpfile"</span><span class="p">;</span>
+<span class="nb">open</span> <span class="nv">OUT</span><span class="p">,</span> <span class="p">"</span><span class="s2">&gt;</span><span class="si">$tmpfile</span><span class="p">";</span>
 <span class="k">while</span><span class="p">(</span><span class="nv">$f</span> <span class="o">=</span> <span class="nb">readdir</span> <span class="nv">$dh</span><span class="p">)</span> <span class="p">{</span>
  <span class="k">if</span><span class="p">(</span><span class="nv">$f</span> <span class="o">=~</span> <span class="sr">/(\d+)_(\S+)/</span><span class="p">)</span> <span class="p">{</span>
      <span class="nv">$code</span> <span class="o">=</span> <span class="nv">$2</span><span class="p">;</span>
-     <span class="k">print</span> <span class="nv">OUT</span> <span class="s">"$code\n"</span><span class="p">;</span>
+     <span class="k">print</span> <span class="nv">OUT</span> <span class="p">"</span><span class="si">$code</span><span class="se">\n</span><span class="p">";</span>
  <span class="p">}</span>
 <span class="p">}</span>
 <span class="nb">close</span> <span class="nv">OUT</span><span class="p">;</span>
 <span class="nb">closedir</span> <span class="nv">$dh</span><span class="p">;</span>
 
-<span class="k">print</span> <span class="s">"Done reading input directory, creating workpackage\n"</span><span class="p">;</span>
+<span class="k">print</span> <span class="p">"</span><span class="s2">Done reading input directory, creating workpackage</span><span class="se">\n</span><span class="p">";</span>
 
 <span class="c1"># read the list of input codes, and find their matching template</span>
-<span class="nb">open</span> <span class="nv">OUT</span><span class="p">,</span><span class="s">"&gt;$outputfile"</span><span class="p">;</span>
-<span class="nb">open</span> <span class="nv">IN</span><span class="p">,</span> <span class="s">"&lt;$tmpfile"</span><span class="p">;</span>
+<span class="nb">open</span> <span class="nv">OUT</span><span class="p">,"</span><span class="s2">&gt;</span><span class="si">$outputfile</span><span class="p">";</span>
+<span class="nb">open</span> <span class="nv">IN</span><span class="p">,</span> <span class="p">"</span><span class="s2">&lt;</span><span class="si">$tmpfile</span><span class="p">";</span>
 <span class="k">while</span><span class="p">(</span><span class="nv">$code</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nv">IN</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
     <span class="nb">chomp</span> <span class="nv">$code</span><span class="p">;</span>
 <span class="c1"># if the template exists, use it</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="nv">e</span> <span class="s">"$templatedir/$code.bin"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">print</span> <span class="s">"Using template for $code\n"</span><span class="p">;</span>
-    <span class="k">print</span> <span class="nv">OUT</span> <span class="nv">readfile</span><span class="p">(</span><span class="s">"$templatedir/$code.bin"</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="nv">e</span> <span class="p">"</span><span class="si">$templatedir</span><span class="s2">/</span><span class="si">$code</span><span class="s2">.bin</span><span class="p">")</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="p">"</span><span class="s2">Using template for </span><span class="si">$code</span><span class="se">\n</span><span class="p">";</span>
+    <span class="k">print</span> <span class="nv">OUT</span> <span class="nv">readfile</span><span class="p">("</span><span class="si">$templatedir</span><span class="s2">/</span><span class="si">$code</span><span class="s2">.bin</span><span class="p">");</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 <span class="c1"># otherwise, flag an error</span>
-    <span class="k">print</span> <span class="s">"ERROR for $code\n"</span><span class="p">;</span>
-    <span class="k">print</span> <span class="nv">OUT</span> <span class="nv">readfile</span><span class="p">(</span><span class="s">"$templatedir/ERROR.bin"</span><span class="p">);</span>
+    <span class="k">print</span> <span class="p">"</span><span class="s2">ERROR for </span><span class="si">$code</span><span class="se">\n</span><span class="p">";</span>
+    <span class="k">print</span> <span class="nv">OUT</span> <span class="nv">readfile</span><span class="p">("</span><span class="si">$templatedir</span><span class="s2">/ERROR.bin</span><span class="p">");</span>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="nb">close</span> <span class="nv">IN</span><span class="p">;</span>
 <span class="nb">close</span> <span class="nv">OUT</span><span class="p">;</span>
 
 <span class="c1"># make sure all files get backed up</span>
-<span class="nb">system</span> <span class="s">"touch $outputdir/*"</span><span class="p">;</span>
-<span class="nb">system</span> <span class="s">"rm -rf $workdir/*"</span><span class="p">;</span>
+<span class="nb">system</span> <span class="p">"</span><span class="s2">touch </span><span class="si">$outputdir</span><span class="s2">/*</span><span class="p">";</span>
+<span class="nb">system</span> <span class="p">"</span><span class="s2">rm -rf </span><span class="si">$workdir</span><span class="s2">/*</span><span class="p">";</span>
 
-<span class="nb">exit</span> <span class="mi">0</span><span class="p">;</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="nb">exit</span> <span class="mi">0</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So basically, it picks a random number between 0 and 20 to create a tmpfile and an output file.</p>
 
@@ -303,7 +285,8 @@ total 24K
 4.0K drwxr-x--- 2 level4 level3 4.0K 2013-03-06 12:20 input
 4.0K drwxr-x--- 2 level4 level3 4.0K 2013-03-06 12:20 output
 4.0K drwxr-x--- 2 level4 level3 4.0K 2011-04-05 00:07 templates
-4.0K drwxrwx--- 2 level4 level3 4.0K 2013-03-06 12:20 work</pre></td></tr></tbody></table></code></pre></figure>
+4.0K drwxrwx--- 2 level4 level3 4.0K 2013-03-06 12:20 work
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ok we can write to work/ folder (which is where tmpfiles are stored).
 We can basically control data in tmpfile.</p>
@@ -315,7 +298,8 @@ We can basically control data in tmpfile.</p>
 <p>But it doesn’t really matter, we have an arbitrary file read through $code control:</p>
 
 <figure class="highlight"><pre><code class="language-perl" data-lang="perl"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="k">print</span> <span class="nv">OUT</span> <span class="nv">readfile</span><span class="p">(</span><span class="s">"$templatedir/$code.bin"</span><span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="k">print</span> <span class="nv">OUT</span> <span class="nv">readfile</span><span class="p">("</span><span class="si">$templatedir</span><span class="s2">/</span><span class="si">$code</span><span class="s2">.bin</span><span class="p">");</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We control $code and readfile() just get the content of the file given in parameter =&gt; arbitrary read.
 Since it has to finish with .bin extension, we use a symlink to redirect to /etc/pass/level4</p>
@@ -323,7 +307,8 @@ Since it has to finish with .bin extension, we use a symlink to redirect to /etc
 <p>The thing is … tmpfile gets rewritten at some point in the script, just after following comment:</p>
 
 <figure class="highlight"><pre><code class="language-perl" data-lang="perl"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="c1"># list all codes in the input dir and write them to a temporary file</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="c1"># list all codes in the input dir and write them to a temporary file</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We ought to remove any write capabilities from other users then.</p>
 
@@ -364,7 +349,8 @@ Since it has to finish with .bin extension, we use a symlink to redirect to /etc
         <span class="nb">chmod </span>u+rxw <span class="s2">"/opt/workpackagebuilder/work/tmpfile</span><span class="nv">$idx</span><span class="s2">"</span>
     <span class="k">done
 
-done</span></pre></td></tr></tbody></table></code></pre></figure>
+done</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You just gotta wait every 5 minutes and get the password in the corresponding output file ;).</p>
 
@@ -475,6 +461,26 @@ done</span></pre></td></tr></tbody></table></code></pre></figure>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

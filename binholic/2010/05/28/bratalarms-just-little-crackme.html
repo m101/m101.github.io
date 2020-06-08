@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/05/28/bratalarms-just-little-crackme.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -161,27 +141,29 @@
 14
 15
 16
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401129</span>                 <span class="k">mov</span>     <span class="n">serial_part1_real</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040112</span><span class="n">E</span>                 <span class="k">add</span>     <span class="n">edi</span><span class="p">,</span> <span class="mi">9</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401131</span>                 <span class="k">mov</span>     <span class="n">byte</span> <span class="n">ptr</span> <span class="err">[</span><span class="n">edi</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="mi">0</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401135</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401136</span>                 <span class="k">call</span>    <span class="n">str2num</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040113</span><span class="n">B</span>                 <span class="k">mov</span>     <span class="n">serial_part1_imaginary</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401140</span>                 <span class="k">add</span>     <span class="n">edi</span><span class="p">,</span> <span class="mi">9</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401143</span>                 <span class="k">mov</span>     <span class="n">byte</span> <span class="n">ptr</span> <span class="err">[</span><span class="n">edi</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="mi">0</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401147</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401148</span>                 <span class="k">call</span>    <span class="n">str2num</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040114</span><span class="n">D</span>                 <span class="k">mov</span>     <span class="n">serial_part2_real</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401152</span>                 <span class="k">add</span>     <span class="n">edi</span><span class="p">,</span> <span class="mi">9</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401155</span>                 <span class="k">mov</span>     <span class="n">byte</span> <span class="n">ptr</span> <span class="err">[</span><span class="n">edi</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="mi">0</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401159</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040115</span><span class="n">A</span>                 <span class="k">call</span>    <span class="n">str2num</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040115</span><span class="n">F</span>                 <span class="k">mov</span>     <span class="n">serial_part2_imaginary</span><span class="p">,</span> <span class="n">eax</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">00401129</span>                 <span class="nf">mov</span>     <span class="nv">serial_part1_real</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">0040112</span><span class="nf">E</span>                 <span class="nv">add</span>     <span class="nb">edi</span><span class="p">,</span> <span class="mi">9</span>
+<span class="nl">.text:</span><span class="err">00401131</span>                 <span class="nf">mov</span>     <span class="kt">byte</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">edi</span><span class="o">+</span><span class="mi">8</span><span class="p">],</span> <span class="mi">0</span>
+<span class="nl">.text:</span><span class="err">00401135</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">00401136</span>                 <span class="nf">call</span>    <span class="nv">str2num</span>
+<span class="nl">.text:</span><span class="err">0040113</span><span class="nf">B</span>                 <span class="nv">mov</span>     <span class="nv">serial_part1_imaginary</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">00401140</span>                 <span class="nf">add</span>     <span class="nb">edi</span><span class="p">,</span> <span class="mi">9</span>
+<span class="nl">.text:</span><span class="err">00401143</span>                 <span class="nf">mov</span>     <span class="kt">byte</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">edi</span><span class="o">+</span><span class="mi">8</span><span class="p">],</span> <span class="mi">0</span>
+<span class="nl">.text:</span><span class="err">00401147</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">00401148</span>                 <span class="nf">call</span>    <span class="nv">str2num</span>
+<span class="nl">.text:</span><span class="err">0040114</span><span class="nf">D</span>                 <span class="nv">mov</span>     <span class="nv">serial_part2_real</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">00401152</span>                 <span class="nf">add</span>     <span class="nb">edi</span><span class="p">,</span> <span class="mi">9</span>
+<span class="nl">.text:</span><span class="err">00401155</span>                 <span class="nf">mov</span>     <span class="kt">byte</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">edi</span><span class="o">+</span><span class="mi">8</span><span class="p">],</span> <span class="mi">0</span>
+<span class="nl">.text:</span><span class="err">00401159</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">0040115</span><span class="nf">A</span>                 <span class="nv">call</span>    <span class="nv">str2num</span>
+<span class="nl">.text:</span><span class="err">0040115</span><span class="nf">F</span>                 <span class="nv">mov</span>     <span class="nv">serial_part2_imaginary</span><span class="p">,</span> <span class="nb">eax</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We can safely say that the serial is of some form like that :</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>AAAAAAAA-BBBBBBBB-CCCCCCCC-DDDDDDDD</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>AAAAAAAA-BBBBBBBB-CCCCCCCC-DDDDDDDD
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The serial is generated in many parts :</p>
 
@@ -212,12 +194,13 @@
 4
 5
 6
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">B5</span> <span class="n">strsum</span><span class="o">:</span>                                 <span class="c">; CODE XREF: DialogFunc+91</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">B5</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[esi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">B7</span>                 <span class="k">add</span>     <span class="n">eax</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">B9</span>                 <span class="k">inc</span>     <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">BA</span>                 <span class="k">test</span>    <span class="n">edx</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">BC</span>                 <span class="k">jnz</span>     <span class="n">short</span> <span class="n">strsum</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">004010</span><span class="nf">B5</span> <span class="nv">strsum</span><span class="p">:</span>                                 <span class="c1">; CODE XREF: DialogFunc+91</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">B5</span>                 <span class="nv">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">B7</span>                 <span class="nv">add</span>     <span class="nb">eax</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">B9</span>                 <span class="nv">inc</span>     <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">BA</span>                 <span class="nv">test</span>    <span class="nb">edx</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">BC</span>                 <span class="nv">jnz</span>     <span class="nv">short</span> <span class="nv">strsum</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The generation of first number C1 :</p>
 
@@ -225,10 +208,11 @@
 2
 3
 4
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">BE</span>                 <span class="k">mov</span>     <span class="n">ComplexNumber1_real</span><span class="p">,</span> <span class="n">eax</span> <span class="c">; Re(C1)</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">C3</span>                 <span class="k">dec</span>     <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">C4</span>                 <span class="k">imul</span>    <span class="n">eax</span><span class="p">,</span> <span class="mi">3</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">C7</span>                 <span class="k">mov</span>     <span class="n">ComplexNumber1_imaginary</span><span class="p">,</span> <span class="n">eax</span> <span class="c">; Im(C1)</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">004010</span><span class="nf">BE</span>                 <span class="nv">mov</span>     <span class="nv">ComplexNumber1_real</span><span class="p">,</span> <span class="nb">eax</span> <span class="c1">; Re(C1)</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">C3</span>                 <span class="nv">dec</span>     <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">C4</span>                 <span class="nv">imul</span>    <span class="nb">eax</span><span class="p">,</span> <span class="mi">3</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">C7</span>                 <span class="nv">mov</span>     <span class="nv">ComplexNumber1_imaginary</span><span class="p">,</span> <span class="nb">eax</span> <span class="c1">; Im(C1)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Magic happens!</p>
 
@@ -239,13 +223,14 @@
 5
 6
 7
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">D8</span> <span class="n">gen_magic2</span><span class="o">:</span>                             <span class="c">; CODE XREF: DialogFunc+B7 j</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">D8</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[esi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">DA</span>                 <span class="k">xor</span>     <span class="n">eax</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">DC</span>                 <span class="k">rol</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">DF</span>                 <span class="k">inc</span>     <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">E0</span>                 <span class="k">test</span>    <span class="n">edx</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">E2</span>                 <span class="k">jnz</span>     <span class="n">short</span> <span class="n">gen_magic2</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">004010</span><span class="nf">D8</span> <span class="nv">gen_magic2</span><span class="p">:</span>                             <span class="c1">; CODE XREF: DialogFunc+B7 j</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">D8</span>                 <span class="nv">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">DA</span>                 <span class="nv">xor</span>     <span class="nb">eax</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">DC</span>                 <span class="nv">rol</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">5</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">DF</span>                 <span class="nv">inc</span>     <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">E0</span>                 <span class="nv">test</span>    <span class="nb">edx</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">E2</span>                 <span class="nv">jnz</span>     <span class="nv">short</span> <span class="nv">gen_magic2</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Generation of C2 :</p>
 
@@ -255,12 +240,13 @@
 4
 5
 6
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">E4</span>                 <span class="k">xor</span>     <span class="n">edx</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">E6</span>                 <span class="k">mov</span>     <span class="n">ecx</span><span class="p">,</span> <span class="mi">7</span><span class="n">A69h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">EB</span>                 <span class="k">div</span>     <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">ED</span>                 <span class="k">mov</span>     <span class="n">ComplexNumber2_real</span><span class="p">,</span> <span class="n">edx</span> <span class="c">; Re(C2)</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">F3</span>                 <span class="k">and</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">0</span><span class="n">FFFh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">F8</span>                 <span class="k">mov</span>     <span class="n">ComplexNumber2_imaginary</span><span class="p">,</span> <span class="n">eax</span> <span class="c">; Im(C2)</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">004010</span><span class="nf">E4</span>                 <span class="nv">xor</span>     <span class="nb">edx</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">E6</span>                 <span class="nv">mov</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="mh">7A69h</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">EB</span>                 <span class="nb">di</span><span class="nv">v</span>     <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">ED</span>                 <span class="nv">mov</span>     <span class="nv">ComplexNumber2_real</span><span class="p">,</span> <span class="nb">edx</span> <span class="c1">; Re(C2)</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">F3</span>                 <span class="nv">and</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">0FFFh</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">F8</span>                 <span class="nv">mov</span>     <span class="nv">ComplexNumber2_imaginary</span><span class="p">,</span> <span class="nb">eax</span> <span class="c1">; Im(C2)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>str2num()</p>
 
@@ -300,42 +286,43 @@
 34
 35
 36
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C5</span> <span class="n">str2num</span>         <span class="n">proc</span> <span class="n">near</span>               <span class="c">; CODE XREF: DialogFunc+F9 p</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C5</span>                                         <span class="c">; DialogFunc+10B p ...</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C5</span> <span class="n">arg_0</span>           <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C5</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C6</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C8</span>                 <span class="k">pusha</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">C9</span>                 <span class="k">xor</span>     <span class="n">eax</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">CB</span>                 <span class="k">xor</span>     <span class="n">edx</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">CD</span>                 <span class="k">mov</span>     <span class="n">ecx</span><span class="p">,</span> <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">D2</span>                 <span class="k">mov</span>     <span class="n">esi</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">arg_0</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">D5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">D5</span> <span class="n">loc_4012D5</span><span class="o">:</span>                             <span class="c">; CODE XREF: str2num+28 j</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">D5</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[esi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">D7</span>                 <span class="k">test</span>    <span class="n">dl</span><span class="p">,</span> <span class="n">dl</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">D9</span>                 <span class="k">jz</span>      <span class="n">short</span> <span class="n">loc_4012EF</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="kt">DB</span>                 <span class="k">sub</span>     <span class="n">dl</span><span class="p">,</span> <span class="mi">30</span><span class="n">h</span> <span class="c">; '0'</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">DE</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="mi">0</span><span class="n">Ah</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">E1</span>                 <span class="k">jb</span>      <span class="n">short</span> <span class="n">loc_4012E6</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">E3</span>                 <span class="k">sub</span>     <span class="n">dl</span><span class="p">,</span> <span class="mi">7</span>           <span class="c">; hex digit part</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">E6</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">E6</span> <span class="n">loc_4012E6</span><span class="o">:</span>                             <span class="c">; CODE XREF: str2num+1C j</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">E6</span>                 <span class="k">shl</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">E9</span>                 <span class="k">or</span>      <span class="n">eax</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">EB</span>                 <span class="k">inc</span>     <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">EC</span>                 <span class="k">dec</span>     <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">ED</span>                 <span class="k">jnz</span>     <span class="n">short</span> <span class="n">loc_4012D5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">EF</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">EF</span> <span class="n">loc_4012EF</span><span class="o">:</span>                             <span class="c">; CODE XREF: str2num+14 j</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">EF</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">arg_0</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">F2</span>                 <span class="k">popa</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">F3</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">arg_0</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">F6</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">F7</span>                 <span class="k">retn</span>    <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004012</span><span class="n">F7</span> <span class="n">str2num</span>         <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">004012</span><span class="nf">C5</span> <span class="nv">str2num</span>         <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; CODE XREF: DialogFunc+F9 p</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C5</span>                                         <span class="c1">; DialogFunc+10B p ...</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C5</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C5</span> <span class="nv">arg_0</span>           <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C5</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C5</span>                 <span class="nv">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C6</span>                 <span class="nv">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C8</span>                 <span class="nv">pusha</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">C9</span>                 <span class="nv">xor</span>     <span class="nb">eax</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">CB</span>                 <span class="nv">xor</span>     <span class="nb">edx</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">CD</span>                 <span class="nv">mov</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">D2</span>                 <span class="nv">mov</span>     <span class="nb">esi</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">arg_0</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">D5</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">D5</span> <span class="nv">loc_4012D5</span><span class="p">:</span>                             <span class="c1">; CODE XREF: str2num+28 j</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">D5</span>                 <span class="nv">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">D7</span>                 <span class="nv">test</span>    <span class="nb">dl</span><span class="p">,</span> <span class="nb">dl</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">D9</span>                 <span class="nv">jz</span>      <span class="nv">short</span> <span class="nv">loc_4012EF</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="kd">DB</span>                 <span class="nv">sub</span>     <span class="nb">dl</span><span class="p">,</span> <span class="mh">30h</span> <span class="c1">; '0'</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">DE</span>                 <span class="nv">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="mh">0Ah</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">E1</span>                 <span class="nv">jb</span>      <span class="nv">short</span> <span class="nv">loc_4012E6</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">E3</span>                 <span class="nv">sub</span>     <span class="nb">dl</span><span class="p">,</span> <span class="mi">7</span>           <span class="c1">; hex digit part</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">E6</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">E6</span> <span class="nv">loc_4012E6</span><span class="p">:</span>                             <span class="c1">; CODE XREF: str2num+1C j</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">E6</span>                 <span class="nv">shl</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">E9</span>                 <span class="nv">or</span>      <span class="nb">eax</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">EB</span>                 <span class="nv">inc</span>     <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">EC</span>                 <span class="nv">dec</span>     <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">ED</span>                 <span class="nv">jnz</span>     <span class="nv">short</span> <span class="nv">loc_4012D5</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">EF</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">EF</span> <span class="nv">loc_4012EF</span><span class="p">:</span>                             <span class="c1">; CODE XREF: str2num+14 j</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">EF</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">arg_0</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">F2</span>                 <span class="nv">popa</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">F3</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">arg_0</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">F6</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">F7</span>                 <span class="nv">retn</span>    <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">004012</span><span class="nf">F7</span> <span class="nv">str2num</span>         <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now going to check the serial generation part.</p>
 
@@ -380,41 +367,42 @@
 33
 34
 35
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span> <span class="n">gen_serial_part1</span> <span class="n">proc</span> <span class="n">near</span>              <span class="c">; CODE XREF: DialogFunc+15C</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span> <span class="n">ComplexResult2</span>  <span class="o">=</span> <span class="n">byte</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">10</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span> <span class="n">ComplexResult1</span>  <span class="o">=</span> <span class="n">byte</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span> <span class="n">ComplexResult</span>   <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span> <span class="n">ComplexNumber</span>   <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">0</span><span class="n">Ch</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F1</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F2</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F4</span>                 <span class="k">add</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">0</span><span class="n">FFFFFFF0h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F7</span>                 <span class="k">pusha</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">F8</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexResult</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">FB</span>                 <span class="k">mov</span>     <span class="n">esi</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexNumber</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004011</span><span class="n">FE</span>                 <span class="k">lea</span>     <span class="n">ebx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexResult1</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401201</span>                 <span class="k">lea</span>     <span class="n">ecx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexResult2</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401204</span>                 <span class="k">push</span>    <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401205</span>                 <span class="k">push</span>    <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401206</span>                 <span class="k">push</span>    <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401207</span>                 <span class="k">call</span>    <span class="n">complex_multiply</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040120</span><span class="n">C</span>                 <span class="k">push</span>    <span class="n">offset</span> <span class="n">serial_part1_real</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401211</span>                 <span class="k">push</span>    <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401212</span>                 <span class="k">push</span>    <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401213</span>                 <span class="k">call</span>    <span class="n">complex_multiply</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401218</span>                 <span class="k">push</span>    <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401219</span>                 <span class="k">push</span>    <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040121</span><span class="n">A</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040121</span><span class="n">B</span>                 <span class="k">call</span>    <span class="n">complex_add</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401220</span>                 <span class="k">push</span>    <span class="n">offset</span> <span class="n">serial_part2_real</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401225</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401226</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401227</span>                 <span class="k">call</span>    <span class="n">complex_add</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">C</span>                 <span class="k">popa</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">D</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">E</span>                 <span class="k">retn</span>    <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">E</span> <span class="n">gen_serial_part1</span> <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span> <span class="nv">gen_serial_part1</span> <span class="nv">proc</span> <span class="nv">near</span>              <span class="c1">; CODE XREF: DialogFunc+15C</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span> <span class="nv">ComplexResult2</span>  <span class="err">=</span> <span class="kt">byte</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mh">10h</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span> <span class="nv">ComplexResult1</span>  <span class="err">=</span> <span class="kt">byte</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span> <span class="nv">ComplexResult</span>   <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span> <span class="nv">ComplexNumber</span>   <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mh">0Ch</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F1</span>                 <span class="nv">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F2</span>                 <span class="nv">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F4</span>                 <span class="nv">add</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mh">0FFFFFFF0h</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F7</span>                 <span class="nv">pusha</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">F8</span>                 <span class="nv">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexResult</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">FB</span>                 <span class="nv">mov</span>     <span class="nb">esi</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexNumber</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">004011</span><span class="nf">FE</span>                 <span class="nv">lea</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexResult1</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">00401201</span>                 <span class="nf">lea</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexResult2</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">00401204</span>                 <span class="nf">push</span>    <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">00401205</span>                 <span class="nf">push</span>    <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">00401206</span>                 <span class="nf">push</span>    <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">00401207</span>                 <span class="nf">call</span>    <span class="nv">complex_multiply</span>
+<span class="nl">.text:</span><span class="err">0040120</span><span class="nf">C</span>                 <span class="nv">push</span>    <span class="nv">offset</span> <span class="nv">serial_part1_real</span>
+<span class="nl">.text:</span><span class="err">00401211</span>                 <span class="nf">push</span>    <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">00401212</span>                 <span class="nf">push</span>    <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">00401213</span>                 <span class="nf">call</span>    <span class="nv">complex_multiply</span>
+<span class="nl">.text:</span><span class="err">00401218</span>                 <span class="nf">push</span>    <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">00401219</span>                 <span class="nf">push</span>    <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">0040121</span><span class="nf">A</span>                 <span class="nv">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">0040121</span><span class="nf">B</span>                 <span class="nv">call</span>    <span class="nv">complex_add</span>
+<span class="nl">.text:</span><span class="err">00401220</span>                 <span class="nf">push</span>    <span class="nv">offset</span> <span class="nv">serial_part2_real</span>
+<span class="nl">.text:</span><span class="err">00401225</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">00401226</span>                 <span class="nf">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">00401227</span>                 <span class="nf">call</span>    <span class="nv">complex_add</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">C</span>                 <span class="nv">popa</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">D</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">E</span>                 <span class="nv">retn</span>    <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">E</span> <span class="nv">gen_serial_part1</span> <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So we have this :
 Za = SP2 + C3 * SP1 + C3 * C3</p>
@@ -454,42 +442,44 @@ Za = SP2 + C3 * SP1 + C3 * C3</p>
 29
 30
 31
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span> <span class="n">gen_serial_part2</span> <span class="n">proc</span> <span class="n">near</span>              <span class="c">; CODE XREF: DialogFunc+16B</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span> <span class="n">ComplexResult2</span>  <span class="o">=</span> <span class="n">byte</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">10</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span> <span class="n">ComplexResult1</span>  <span class="o">=</span> <span class="n">byte</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span> <span class="n">ComplexResult</span>   <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span> <span class="n">ComplexNumber</span>   <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">0</span><span class="n">Ch</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401231</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401232</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401234</span>                 <span class="k">add</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">0</span><span class="n">FFFFFFF0h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401237</span>                 <span class="k">pusha</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401238</span>                 <span class="k">mov</span>     <span class="n">edi</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexResult</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040123</span><span class="n">B</span>                 <span class="k">mov</span>     <span class="n">esi</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexNumber</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040123</span><span class="n">E</span>                 <span class="k">lea</span>     <span class="n">ebx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexResult1</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401241</span>                 <span class="k">lea</span>     <span class="n">ecx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">ComplexResult2</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401244</span>                 <span class="k">push</span>    <span class="n">offset</span> <span class="n">ComplexNumber1_real</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401249</span>                 <span class="k">push</span>    <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040124</span><span class="n">A</span>                 <span class="k">push</span>    <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040124</span><span class="n">B</span>                 <span class="k">call</span>    <span class="n">complex_add</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401250</span>                 <span class="k">push</span>    <span class="n">offset</span> <span class="n">ComplexNumber2_real</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401255</span>                 <span class="k">push</span>    <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401256</span>                 <span class="k">push</span>    <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401257</span>                 <span class="k">call</span>    <span class="n">complex_add</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040125</span><span class="n">C</span>                 <span class="k">push</span>    <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040125</span><span class="n">D</span>                 <span class="k">push</span>    <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040125</span><span class="n">E</span>                 <span class="k">push</span>    <span class="n">edi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040125</span><span class="n">F</span>                 <span class="k">call</span>    <span class="n">complex_multiply</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401264</span>                 <span class="k">popa</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401265</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401266</span>                 <span class="k">retn</span>    <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401266</span> <span class="n">gen_serial_part2</span> <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">00401231</span> <span class="nf">gen_serial_part2</span> <span class="nv">proc</span> <span class="nv">near</span>              <span class="c1">; CODE XREF: DialogFunc+16B</span>
+<span class="nl">.text:</span><span class="err">00401231</span>
+<span class="nl">.text:</span><span class="err">00401231</span> <span class="nf">ComplexResult2</span>  <span class="err">=</span> <span class="kt">byte</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mh">10h</span>
+<span class="nl">.text:</span><span class="err">00401231</span> <span class="nf">ComplexResult1</span>  <span class="err">=</span> <span class="kt">byte</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">00401231</span> <span class="nf">ComplexResult</span>   <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">00401231</span> <span class="nf">ComplexNumber</span>   <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mh">0Ch</span>
+<span class="nl">.text:</span><span class="err">00401231</span>
+<span class="nl">.text:</span><span class="err">00401231</span>                 <span class="nf">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">00401232</span>                 <span class="nf">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">00401234</span>                 <span class="nf">add</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mh">0FFFFFFF0h</span>
+<span class="nl">.text:</span><span class="err">00401237</span>                 <span class="nf">pusha</span>
+<span class="nl">.text:</span><span class="err">00401238</span>                 <span class="nf">mov</span>     <span class="nb">edi</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexResult</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0040123</span><span class="nf">B</span>                 <span class="nv">mov</span>     <span class="nb">esi</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexNumber</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0040123</span><span class="nf">E</span>                 <span class="nv">lea</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexResult1</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">00401241</span>                 <span class="nf">lea</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">ComplexResult2</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">00401244</span>                 <span class="nf">push</span>    <span class="nv">offset</span> <span class="nv">ComplexNumber1_real</span>
+<span class="nl">.text:</span><span class="err">00401249</span>                 <span class="nf">push</span>    <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">0040124</span><span class="nf">A</span>                 <span class="nv">push</span>    <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">0040124</span><span class="nf">B</span>                 <span class="nv">call</span>    <span class="nv">complex_add</span>
+<span class="nl">.text:</span><span class="err">00401250</span>                 <span class="nf">push</span>    <span class="nv">offset</span> <span class="nv">ComplexNumber2_real</span>
+<span class="nl">.text:</span><span class="err">00401255</span>                 <span class="nf">push</span>    <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">00401256</span>                 <span class="nf">push</span>    <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">00401257</span>                 <span class="nf">call</span>    <span class="nv">complex_add</span>
+<span class="nl">.text:</span><span class="err">0040125</span><span class="nf">C</span>                 <span class="nv">push</span>    <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">0040125</span><span class="nf">D</span>                 <span class="nv">push</span>    <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">0040125</span><span class="nf">E</span>                 <span class="nv">push</span>    <span class="nb">edi</span>
+<span class="nl">.text:</span><span class="err">0040125</span><span class="nf">F</span>                 <span class="nv">call</span>    <span class="nv">complex_multiply</span>
+<span class="nl">.text:</span><span class="err">00401264</span>                 <span class="nf">popa</span>
+<span class="nl">.text:</span><span class="err">00401265</span>                 <span class="nf">leave</span>
+<span class="nl">.text:</span><span class="err">00401266</span>                 <span class="nf">retn</span>    <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">00401266</span> <span class="nf">gen_serial_part2</span> <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We obtain this :</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>Zb = (C1 + C3)*(C2 + C3)</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>Zb = (C1 + C3)*(C2 + C3)
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Next the serial is checked as followed :</p>
 
@@ -502,14 +492,16 @@ Za = SP2 + C3 * SP1 + C3 * C3</p>
 SP2 + C3 * SP1 + C3 * C3 = (C1 + C3)*(C2 + C3)
 SP2 + C3 * SP1 + C3 * C3 = C1 * C2 + C1 * C3 + C3 * C2 + C3 * C3
 SP2 + C3 * SP1 + C3 * C3 = C1 * C2 + C3 * (C1 + C2) + C3 * C3
-SP2 + C3 * SP1 = C1 * C2 + C3 * (C1 + C2)</pre></td></tr></tbody></table></code></pre></figure>
+SP2 + C3 * SP1 = C1 * C2 + C3 * (C1 + C2)
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Using identification, we can see that :</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>SP1 = C1 + C2
-SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
+SP2 = C1 * C2
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Here is the C source for the keygen :</p>
 
@@ -653,7 +645,7 @@ SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
 </pre></td><td class="code"><pre><span class="cp">#include &lt;stdlib.h&gt;
 #include &lt;stdio.h&gt;
 </span>
-<span class="k">struct</span> <span class="n">complex_t</span> <span class="p">{</span>
+<span class="k">struct</span> <span class="nc">complex_t</span> <span class="p">{</span>
     <span class="c1">// real part</span>
     <span class="kt">int</span> <span class="n">real</span><span class="p">;</span>
     <span class="c1">// imaginary part</span>
@@ -661,9 +653,9 @@ SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
 <span class="p">};</span>
 
 <span class="c1">// complex number multiplication</span>
-<span class="k">struct</span> <span class="n">complex_t</span><span class="o">*</span> <span class="nf">complex_multiply</span> <span class="p">(</span><span class="k">struct</span> <span class="n">complex_t</span> <span class="o">**</span><span class="n">result</span><span class="p">,</span>
-                                    <span class="k">struct</span> <span class="n">complex_t</span> <span class="o">*</span><span class="n">complex1</span><span class="p">,</span>
-                                    <span class="k">struct</span> <span class="n">complex_t</span> <span class="o">*</span><span class="n">complex2</span><span class="p">)</span>
+<span class="k">struct</span> <span class="nc">complex_t</span><span class="o">*</span> <span class="nf">complex_multiply</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">complex_t</span> <span class="o">**</span><span class="n">result</span><span class="p">,</span>
+                                    <span class="k">struct</span> <span class="nc">complex_t</span> <span class="o">*</span><span class="n">complex1</span><span class="p">,</span>
+                                    <span class="k">struct</span> <span class="nc">complex_t</span> <span class="o">*</span><span class="n">complex2</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// check pointer validity</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">result</span> <span class="o">||</span> <span class="o">!</span><span class="n">complex1</span> <span class="o">||</span> <span class="o">!</span><span class="n">complex2</span><span class="p">)</span>
@@ -684,9 +676,9 @@ SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
 <span class="p">}</span>
 
 <span class="c1">// complex number addition</span>
-<span class="k">struct</span> <span class="n">complex_t</span><span class="o">*</span> <span class="nf">complex_add</span> <span class="p">(</span><span class="k">struct</span> <span class="n">complex_t</span> <span class="o">**</span><span class="n">result</span><span class="p">,</span>
-                               <span class="k">struct</span> <span class="n">complex_t</span> <span class="o">*</span><span class="n">complex1</span><span class="p">,</span>
-                               <span class="k">struct</span> <span class="n">complex_t</span> <span class="o">*</span><span class="n">complex2</span><span class="p">)</span>
+<span class="k">struct</span> <span class="nc">complex_t</span><span class="o">*</span> <span class="nf">complex_add</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">complex_t</span> <span class="o">**</span><span class="n">result</span><span class="p">,</span>
+                               <span class="k">struct</span> <span class="nc">complex_t</span> <span class="o">*</span><span class="n">complex1</span><span class="p">,</span>
+                               <span class="k">struct</span> <span class="nc">complex_t</span> <span class="o">*</span><span class="n">complex2</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// check pointer validity</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">result</span> <span class="o">||</span> <span class="o">!</span><span class="n">complex1</span> <span class="o">||</span> <span class="o">!</span><span class="n">complex2</span><span class="p">)</span>
@@ -745,10 +737,10 @@ SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
     <span class="k">return</span> <span class="n">magic</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">struct</span> <span class="n">complex_t</span><span class="o">**</span> <span class="nf">keygen</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">struct</span> <span class="nc">complex_t</span><span class="o">**</span> <span class="nf">keygen</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">magic</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="n">complex_t</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="n">complex_t</span> <span class="o">*</span><span class="n">s1</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">s2</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">**</span><span class="n">serial</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">complex_t</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">complex_t</span> <span class="o">*</span><span class="n">s1</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">s2</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">**</span><span class="n">serial</span><span class="p">;</span>
 
     <span class="c1">// compute Za and Zb</span>
     <span class="n">c1</span><span class="p">.</span><span class="n">real</span> <span class="o">=</span> <span class="n">strsum</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
@@ -786,7 +778,8 @@ SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
     <span class="n">keygen</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
     
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We don’t need to reconstruct source code from keygenme but here it is for those who didn’t follow :</p>
 
@@ -861,7 +854,8 @@ SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
     <span class="n">serial_part2</span> <span class="o">=</span> <span class="n">complex_multiply</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">serial_part2</span><span class="p">,</span> <span class="n">ctmp2</span><span class="p">,</span> <span class="n">ctmp1</span><span class="p">);</span>
     
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Hope you enjoyed reading this small tutorial.</p>
 
@@ -978,6 +972,26 @@ SP2 = C1 * C2</pre></td></tr></tbody></table></code></pre></figure>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2013/12/18/december-hzv-meet-linux-kernel.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -218,7 +198,8 @@ include/linux/sched.h
     <span class="k">struct</span> <span class="n">user_struct</span> <span class="o">*</span><span class="n">user</span><span class="p">;</span>
 
 <span class="cm">/* ... */</span>
-<span class="p">};</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As you can see, uid, euid and suid will generally have the same value.
 So if you set thos values to 0, your process basically has root privileges.
@@ -267,7 +248,8 @@ This heuristic is good enough as there is little chance that you will have 3 dwo
         <span class="p">}</span>
         <span class="n">cred</span><span class="o">++</span><span class="p">;</span>        
     <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="root-in-3-big-steps">Root in 3 big steps</h1>
 
@@ -361,7 +343,8 @@ Basically, what happens is that tun is dereferenced before checking that tun is 
     <span class="cm">/* ... */</span>
 
     <span class="k">return</span> <span class="n">mask</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So the NULL check doesn’t exist and tun is NULL.
 So we can map the NULL page and we thus control tun-&gt;sk.
@@ -434,7 +417,8 @@ And that it’s, you’ve escalated your privileges.</p>
         <span class="n">fput</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
 <span class="nl">out:</span>
     <span class="k">return</span> <span class="n">error</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>If you go down do_mmap_pgoff(), you end up finding this code:</p>
 
@@ -455,7 +439,8 @@ And that it’s, you’ve escalated your privileges.</p>
                 <span class="k">return</span> <span class="o">-</span><span class="n">ENODEV</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
 
-<span class="cm">/* ... */</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="cm">/* ... */</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So here it is, if mmap() is NULL, it doesn’t get called.
 That is why it sets the mmap() pointer to 1.</p>
@@ -618,6 +603,26 @@ For instance, in kernel-land, not initializing a structure fully can have severe
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

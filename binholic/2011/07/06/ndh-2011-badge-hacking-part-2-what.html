@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/07/06/ndh-2011-badge-hacking-part-2-what.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -205,7 +185,8 @@ avrdude&gt; dump flash 0 512
 01e0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
 01f0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
 
-avrdude&gt;</pre></td></tr></tbody></table></code></pre></figure>
+avrdude&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We don’t see any “clear” interesting string for our purpose. Maybe it is obfuscated.</p>
 
@@ -346,7 +327,8 @@ avrdude: safemode: hfuse reads as DF
 avrdude: safemode: efuse reads as FF
 avrdude: safemode: Fuses OK
 
-avrdude done.  Thank you.</pre></td></tr></tbody></table></code></pre></figure>
+avrdude done.  Thank you.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now we dumped the flash.</p>
 
@@ -630,7 +612,8 @@ avrdude done.  Thank you.</pre></td></tr></tbody></table></code></pre></figure>
     <span class="n">bf_xor</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">strlen</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span> 
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As you could see, for caesar I did not bother to do a rotating scheme as usual but a stupid and simple shifting.</p>
 
@@ -639,7 +622,8 @@ avrdude done.  Thank you.</pre></td></tr></tbody></table></code></pre></figure>
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>Hello\nWorld\nFor\nNDH
-hELLO*wORLD*FOR*ndh</pre></td></tr></tbody></table></code></pre></figure>
+hELLO*wORLD*FOR*ndh
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Done.</p>
 
@@ -768,6 +752,26 @@ I did not want to do that so I did not do it … have fun for the courageous one
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

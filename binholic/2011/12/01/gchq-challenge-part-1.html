@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/12/01/gchq-challenge-part-1.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -142,7 +122,8 @@ GCHQ is basically part of the UK’s Secret Service.</p>
 <p>First of all, we need to get those “hex digits” down to binary form and hell yeah … we’re lazy:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>gocr cyber.png</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>gocr cyber.png
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You get most of the digits but you have to fix it to get this:</p>
 
@@ -165,7 +146,8 @@ OO 5c 58 3d 41 41 41 41  75 43 58 3d 42 42 42 42
 d1 89 df 29 cf 31 cO 31  db 31 d2 fe cO 02 1c 06
 8a 14 06 8a 34 1e 88 34  06 88 14 1e OO f2 30 f6
 8a 1c 16 8a 17 30 da 88  17 47 49 75 de 31 db 89
-d8 fe cO cd 80 9O 9O e8  9d ff ff ff 41 41 41 41</pre></td></tr></tbody></table></code></pre></figure>
+d8 fe cO cd 80 9O 9O e8  9d ff ff ff 41 41 41 41
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Okay, let’s check the raw data we have:</p>
 
@@ -190,7 +172,8 @@ d8 fe cO cd 80 9O 9O e8  9d ff ff ff 41 41 41 41</pre></td></tr></tbody></table>
 00000060  d1 89 <span class="nb">df </span>29 cf 31 c0 31  db 31 d2 fe c0 02 1c 06  |...<span class="o">)</span>.1.1.1......|
 00000070  8a 14 06 8a 34 1e 88 34  06 88 14 1e 00 f2 30 f6  |....4..4......0.|
 00000080  8a 1c 16 8a 17 30 da 88  17 47 49 75 de 31 db 89  |.....0...GIu.1..|
-00000090  d8 fe c0 <span class="nb">cd </span>80 90 90 e8  9d ff ff ff 41 41 41 41  |............AAAA|</pre></td></tr></tbody></table></code></pre></figure>
+00000090  d8 fe c0 <span class="nb">cd </span>80 90 90 e8  9d ff ff ff 41 41 41 41  |............AAAA|
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>I do not recognize any particular magic header value (no MZ or ELF or any executable related.
 Let’s go on our second hypothesis.</p>
@@ -212,16 +195,17 @@ Let’s go on our second hypothesis.</p>
 8
 9
 10
-</pre></td><td class="code"><pre><span class="k">jmp</span> <span class="n">savepc</span>
+</pre></td><td class="code"><pre><span class="nf">jmp</span> <span class="nv">savepc</span>
 
-<span class="n">getpc</span><span class="o">:</span>
-     <span class="k">pop</span> <span class="n">pc</span>
-     <span class="k">jmp</span> <span class="n">payload</span>
+<span class="nl">getpc:</span>
+     <span class="nf">pop</span> <span class="nv">pc</span>
+     <span class="nf">jmp</span> <span class="nv">payload</span>
 
-<span class="n">savepc</span><span class="o">:</span>
-     <span class="k">call</span> <span class="n">getpc</span>
+<span class="nl">savepc:</span>
+     <span class="nf">call</span> <span class="nv">getpc</span>
 
-<span class="n">payload</span><span class="o">:</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="nl">payload:</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>For disassembling the file, I used <strong>ndisasm</strong> and cleaned a bit with some custom tools and <strong>vim</strong>.</p>
 
@@ -328,107 +312,108 @@ Let’s go on our second hypothesis.</p>
 99
 100
 101
-</pre></td><td class="code"><pre><span class="n">bits</span> <span class="mi">32</span>
+</pre></td><td class="code"><pre><span class="nf">bits</span> <span class="mi">32</span>
 
-<span class="kr">section</span> <span class="p">.</span><span class="n">text</span>
-    <span class="kr">global</span> <span class="n">main</span>
+<span class="nf">section</span> <span class="nv">.text</span>
+    <span class="nf">global</span> <span class="nv">main</span>
 
-<span class="n">main</span><span class="o">:</span>
-    <span class="k">jmp</span> <span class="n">short</span> <span class="n">begin</span>
+<span class="nl">main:</span>
+    <span class="nf">jmp</span> <span class="nv">short</span> <span class="nv">begin</span>
 
-<span class="n">key0</span><span class="o">:</span> <span class="kt">dd</span> <span class="mh">0xa3bfc2af</span>
+<span class="nl">key0:</span> <span class="kd">dd</span> <span class="mh">0xa3bfc2af</span>
 
-<span class="c">; let's make some space for our buffer!</span>
-<span class="n">begin</span><span class="o">:</span>
-    <span class="k">sub</span> <span class="n">esp</span><span class="p">,</span> <span class="mh">0x100</span>
+<span class="c1">; let's make some space for our buffer!</span>
+<span class="nl">begin:</span>
+    <span class="nf">sub</span> <span class="nb">esp</span><span class="p">,</span> <span class="mh">0x100</span>
 
-<span class="c">; we init our buffer with value from 0 to 255</span>
-<span class="k">xor</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">ecx</span>
-<span class="n">init_array</span><span class="o">:</span>
-    <span class="k">mov</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="n">ecx</span><span class="err">]</span><span class="p">,</span> <span class="n">cl</span>
-    <span class="k">inc</span> <span class="n">cl</span>
-    <span class="k">jnz</span> <span class="n">init_array</span>
+<span class="c1">; we init our buffer with value from 0 to 255</span>
+<span class="nf">xor</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">ecx</span>
+<span class="nl">init_array:</span>
+    <span class="nf">mov</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="nb">ecx</span><span class="p">],</span> <span class="nb">cl</span>
+    <span class="nf">inc</span> <span class="nb">cl</span>
+    <span class="nf">jnz</span> <span class="nv">init_array</span>
 
-<span class="c">; shuffle values in the array</span>
-<span class="k">xor</span> <span class="n">eax</span><span class="p">,</span> <span class="n">eax</span>
-<span class="k">mov</span> <span class="n">edx</span><span class="p">,</span> <span class="mh">0xdeadbeef</span>
-<span class="n">shuffle</span><span class="o">:</span>
-    <span class="k">add</span> <span class="n">al</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="n">ecx</span><span class="err">]</span>   <span class="c">; al += array[ecx]</span>
-    <span class="k">add</span> <span class="n">al</span><span class="p">,</span> <span class="n">dl</span>          <span class="c">; index = al + dl</span>
-    <span class="k">ror</span> <span class="n">edx</span><span class="p">,</span> <span class="mh">0x8</span>        <span class="c">; every 4 rotations we get our original value ;)</span>
-    <span class="c">; we swap values</span>
-    <span class="k">mov</span> <span class="n">bl</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="n">ecx</span><span class="err">]</span>   <span class="c">; bl = array[ecx]</span>
-    <span class="k">mov</span> <span class="n">bh</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="n">eax</span><span class="err">]</span>   <span class="c">; bh = array[ecx]</span>
-    <span class="k">mov</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="n">eax</span><span class="err">]</span><span class="p">,</span> <span class="n">bl</span>   <span class="c">; array[eax] = bl</span>
-    <span class="k">mov</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="n">ecx</span><span class="err">]</span><span class="p">,</span> <span class="n">bh</span>   <span class="c">; array[ecx] = bh</span>
-    <span class="k">inc</span> <span class="n">cl</span>              <span class="c">; go forward in our array</span>
-    <span class="k">jnz</span> <span class="n">shuffle</span>
+<span class="c1">; shuffle values in the array</span>
+<span class="nf">xor</span> <span class="nb">eax</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nf">mov</span> <span class="nb">edx</span><span class="p">,</span> <span class="mh">0xdeadbeef</span>
+<span class="nl">shuffle:</span>
+    <span class="nf">add</span> <span class="nb">al</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="nb">ecx</span><span class="p">]</span>   <span class="c1">; al += array[ecx]</span>
+    <span class="nf">add</span> <span class="nb">al</span><span class="p">,</span> <span class="nb">dl</span>          <span class="c1">; index = al + dl</span>
+    <span class="nf">ror</span> <span class="nb">edx</span><span class="p">,</span> <span class="mh">0x8</span>        <span class="c1">; every 4 rotations we get our original value ;)</span>
+    <span class="c1">; we swap values</span>
+    <span class="nf">mov</span> <span class="nb">bl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="nb">ecx</span><span class="p">]</span>   <span class="c1">; bl = array[ecx]</span>
+    <span class="nf">mov</span> <span class="nb">bh</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="nb">eax</span><span class="p">]</span>   <span class="c1">; bh = array[ecx]</span>
+    <span class="nf">mov</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="nb">eax</span><span class="p">],</span> <span class="nb">bl</span>   <span class="c1">; array[eax] = bl</span>
+    <span class="nf">mov</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="nb">ecx</span><span class="p">],</span> <span class="nb">bh</span>   <span class="c1">; array[ecx] = bh</span>
+    <span class="nf">inc</span> <span class="nb">cl</span>              <span class="c1">; go forward in our array</span>
+    <span class="nf">jnz</span> <span class="nv">shuffle</span>
 
-    <span class="k">jmp</span> <span class="n">dword</span> <span class="n">save_pc</span>
+    <span class="nf">jmp</span> <span class="kt">dword</span> <span class="nv">save_pc</span>
 
-<span class="n">get_encoded</span><span class="o">:</span>
-    <span class="k">mov</span> <span class="n">ebx</span><span class="p">,</span> <span class="n">esp</span>                <span class="c">; pointer ebx to ret address on stack</span>
-    <span class="k">add</span> <span class="n">ebx</span><span class="p">,</span> <span class="n">strict</span> <span class="n">dword</span> <span class="mh">0x4</span>   <span class="c">; address of array (ignoring the ret address on the stack ;))</span>
-    <span class="k">pop</span> <span class="n">esp</span>                     <span class="c">; esp = program counter (point after the call to get_encoded)</span>
-    <span class="k">pop</span> <span class="n">eax</span>                     <span class="c">; first 4 bytes after the call</span>
-    <span class="k">cmp</span> <span class="n">eax</span><span class="p">,</span> <span class="mh">0x41414141</span>
-    <span class="k">jnz</span> <span class="n">exit</span>
+<span class="nl">get_encoded:</span>
+    <span class="nf">mov</span> <span class="nb">ebx</span><span class="p">,</span> <span class="nb">esp</span>                <span class="c1">; pointer ebx to ret address on stack</span>
+    <span class="nf">add</span> <span class="nb">ebx</span><span class="p">,</span> <span class="ow">strict</span> <span class="kt">dword</span> <span class="mh">0x4</span>   <span class="c1">; address of array (ignoring the ret address on the stack ;))</span>
+    <span class="nf">pop</span> <span class="nb">esp</span>                     <span class="c1">; esp = program counter (point after the call to get_encoded)</span>
+    <span class="nf">pop</span> <span class="nb">eax</span>                     <span class="c1">; first 4 bytes after the call</span>
+    <span class="nf">cmp</span> <span class="nb">eax</span><span class="p">,</span> <span class="mh">0x41414141</span>
+    <span class="nf">jnz</span> <span class="nv">exit</span>
 
-    <span class="k">pop</span> <span class="n">eax</span>                     <span class="c">; next 4 bytes after the call</span>
-    <span class="k">cmp</span> <span class="n">eax</span><span class="p">,</span> <span class="mh">0x42424242</span>
-    <span class="k">jnz</span> <span class="n">exit</span>
+    <span class="nf">pop</span> <span class="nb">eax</span>                     <span class="c1">; next 4 bytes after the call</span>
+    <span class="nf">cmp</span> <span class="nb">eax</span><span class="p">,</span> <span class="mh">0x42424242</span>
+    <span class="nf">jnz</span> <span class="nv">exit</span>
 
-    <span class="c">; copy message to buffer in stack</span>
-    <span class="k">pop</span> <span class="n">edx</span>         <span class="c">; get length of message </span>
-    <span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">edx</span>    <span class="c">; ecx = len(msg)</span>
-    <span class="k">mov</span> <span class="n">esi</span><span class="p">,</span> <span class="n">esp</span>    <span class="c">; esi = &amp;msg</span>
-    <span class="k">mov</span> <span class="n">edi</span><span class="p">,</span> <span class="n">ebx</span>    <span class="c">; edi = address of array</span>
-    <span class="k">sub</span> <span class="n">edi</span><span class="p">,</span> <span class="n">ecx</span>    <span class="c">; edi = ebx - len(msg) = start of dest area</span>
-    <span class="kr">rep</span> <span class="k">movsb</span>       <span class="c">; copying the message to the stack (writing over array)</span>
+    <span class="c1">; copy message to buffer in stack</span>
+    <span class="nf">pop</span> <span class="nb">edx</span>         <span class="c1">; get length of message </span>
+    <span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">edx</span>    <span class="c1">; ecx = len(msg)</span>
+    <span class="nf">mov</span> <span class="nb">esi</span><span class="p">,</span> <span class="nb">esp</span>    <span class="c1">; esi = &amp;msg</span>
+    <span class="nf">mov</span> <span class="nb">edi</span><span class="p">,</span> <span class="nb">ebx</span>    <span class="c1">; edi = address of array</span>
+    <span class="nf">sub</span> <span class="nb">edi</span><span class="p">,</span> <span class="nb">ecx</span>    <span class="c1">; edi = ebx - len(msg) = start of dest area</span>
+    <span class="nf">rep</span> <span class="nv">movsb</span>       <span class="c1">; copying the message to the stack (writing over array)</span>
 
-<span class="c">; init for decoding encoded message</span>
-    <span class="k">mov</span> <span class="n">esi</span><span class="p">,</span> <span class="n">ebx</span>    <span class="c">; esi = &amp;buffer</span>
-    <span class="k">mov</span> <span class="n">ecx</span><span class="p">,</span> <span class="n">edx</span>    <span class="c">; ecx = len(msg)</span>
-    <span class="k">mov</span> <span class="n">edi</span><span class="p">,</span> <span class="n">ebx</span>    <span class="c">; edi = &amp;buffer</span>
-    <span class="k">sub</span> <span class="n">edi</span><span class="p">,</span> <span class="n">ecx</span>    <span class="c">; edi = ebx - len(msg) = start of dest area</span>
-    <span class="k">xor</span> <span class="n">eax</span><span class="p">,</span> <span class="n">eax</span>
-    <span class="k">xor</span> <span class="n">ebx</span><span class="p">,</span> <span class="n">ebx</span>
-    <span class="k">xor</span> <span class="n">edx</span><span class="p">,</span> <span class="n">edx</span>
+<span class="c1">; init for decoding encoded message</span>
+    <span class="nf">mov</span> <span class="nb">esi</span><span class="p">,</span> <span class="nb">ebx</span>    <span class="c1">; esi = &amp;buffer</span>
+    <span class="nf">mov</span> <span class="nb">ecx</span><span class="p">,</span> <span class="nb">edx</span>    <span class="c1">; ecx = len(msg)</span>
+    <span class="nf">mov</span> <span class="nb">edi</span><span class="p">,</span> <span class="nb">ebx</span>    <span class="c1">; edi = &amp;buffer</span>
+    <span class="nf">sub</span> <span class="nb">edi</span><span class="p">,</span> <span class="nb">ecx</span>    <span class="c1">; edi = ebx - len(msg) = start of dest area</span>
+    <span class="nf">xor</span> <span class="nb">eax</span><span class="p">,</span> <span class="nb">eax</span>
+    <span class="nf">xor</span> <span class="nb">ebx</span><span class="p">,</span> <span class="nb">ebx</span>
+    <span class="nf">xor</span> <span class="nb">edx</span><span class="p">,</span> <span class="nb">edx</span>
 
-<span class="c">; loop for decoding the secret message</span>
-<span class="n">decode</span><span class="o">:</span>
-    <span class="k">inc</span> <span class="n">al</span>
-    <span class="k">add</span> <span class="n">bl</span><span class="p">,</span> <span class="err">[</span><span class="n">esi</span><span class="o">+</span><span class="n">eax</span><span class="err">]</span>   <span class="c">; get one byte of encoded message</span>
-    <span class="k">mov</span> <span class="n">dl</span><span class="p">,</span> <span class="err">[</span><span class="n">esi</span><span class="o">+</span><span class="n">eax</span><span class="err">]</span>   <span class="c">; get one byte of encoded message</span>
-    <span class="k">mov</span> <span class="n">dh</span><span class="p">,</span> <span class="err">[</span><span class="n">esi</span><span class="o">+</span><span class="n">ebx</span><span class="err">]</span>   <span class="c">; get one byte of encoded message</span>
-    <span class="c">; swap values back</span>
-    <span class="k">mov</span> <span class="err">[</span><span class="n">esi</span><span class="o">+</span><span class="n">eax</span><span class="err">]</span><span class="p">,</span> <span class="n">dh</span>
-    <span class="k">mov</span> <span class="err">[</span><span class="n">esi</span><span class="o">+</span><span class="n">ebx</span><span class="err">]</span><span class="p">,</span> <span class="n">dl</span>
-    <span class="k">add</span> <span class="n">dl</span><span class="p">,</span> <span class="n">dh</span>          <span class="c">; get index</span>
-    <span class="c">; decode byte</span>
-    <span class="k">xor</span> <span class="n">dh</span><span class="p">,</span> <span class="n">dh</span>          
-    <span class="k">mov</span> <span class="n">bl</span><span class="p">,</span> <span class="err">[</span><span class="n">esi</span><span class="o">+</span><span class="n">edx</span><span class="err">]</span>   <span class="c">; get key</span>
-    <span class="k">mov</span> <span class="n">dl</span><span class="p">,</span> <span class="p">[edi]</span>       <span class="c">; get encoded byte</span>
-    <span class="k">xor</span> <span class="n">dl</span><span class="p">,</span> <span class="n">bl</span>          <span class="c">; decode byte</span>
-    <span class="c">; save byte</span>
-    <span class="k">mov</span> <span class="p">[edi],</span> <span class="n">dl</span>
-    <span class="c">; loop</span>
-    <span class="k">inc</span> <span class="n">edi</span>
-    <span class="k">dec</span> <span class="n">ecx</span>
-    <span class="k">jnz</span> <span class="n">decode</span>
+<span class="c1">; loop for decoding the secret message</span>
+<span class="nl">decode:</span>
+    <span class="nf">inc</span> <span class="nb">al</span>
+    <span class="nf">add</span> <span class="nb">bl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="o">+</span><span class="nb">eax</span><span class="p">]</span>   <span class="c1">; get one byte of encoded message</span>
+    <span class="nf">mov</span> <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="o">+</span><span class="nb">eax</span><span class="p">]</span>   <span class="c1">; get one byte of encoded message</span>
+    <span class="nf">mov</span> <span class="nb">dh</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="o">+</span><span class="nb">ebx</span><span class="p">]</span>   <span class="c1">; get one byte of encoded message</span>
+    <span class="c1">; swap values back</span>
+    <span class="nf">mov</span> <span class="p">[</span><span class="nb">esi</span><span class="o">+</span><span class="nb">eax</span><span class="p">],</span> <span class="nb">dh</span>
+    <span class="nf">mov</span> <span class="p">[</span><span class="nb">esi</span><span class="o">+</span><span class="nb">ebx</span><span class="p">],</span> <span class="nb">dl</span>
+    <span class="nf">add</span> <span class="nb">dl</span><span class="p">,</span> <span class="nb">dh</span>          <span class="c1">; get index</span>
+    <span class="c1">; decode byte</span>
+    <span class="nf">xor</span> <span class="nb">dh</span><span class="p">,</span> <span class="nb">dh</span>          
+    <span class="nf">mov</span> <span class="nb">bl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="o">+</span><span class="nb">edx</span><span class="p">]</span>   <span class="c1">; get key</span>
+    <span class="nf">mov</span> <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">edi</span><span class="p">]</span>       <span class="c1">; get encoded byte</span>
+    <span class="nf">xor</span> <span class="nb">dl</span><span class="p">,</span> <span class="nb">bl</span>          <span class="c1">; decode byte</span>
+    <span class="c1">; save byte</span>
+    <span class="nf">mov</span> <span class="p">[</span><span class="nb">edi</span><span class="p">],</span> <span class="nb">dl</span>
+    <span class="c1">; loop</span>
+    <span class="nf">inc</span> <span class="nb">edi</span>
+    <span class="nf">dec</span> <span class="nb">ecx</span>
+    <span class="nf">jnz</span> <span class="nv">decode</span>
 
-<span class="n">exit</span><span class="o">:</span>
-    <span class="k">xor</span> <span class="n">ebx</span><span class="p">,</span> <span class="n">ebx</span>
-    <span class="k">mov</span> <span class="n">eax</span><span class="p">,</span> <span class="n">ebx</span>
-    <span class="k">inc</span> <span class="n">al</span>
-    <span class="k">int</span> <span class="mh">0x80</span>
+<span class="nl">exit:</span>
+    <span class="nf">xor</span> <span class="nb">ebx</span><span class="p">,</span> <span class="nb">ebx</span>
+    <span class="nf">mov</span> <span class="nb">eax</span><span class="p">,</span> <span class="nb">ebx</span>
+    <span class="nf">inc</span> <span class="nb">al</span>
+    <span class="nf">int</span> <span class="mh">0x80</span>
 
-<span class="n">save_pc</span><span class="o">:</span>
-    <span class="k">nop</span>
-    <span class="k">nop</span>
-    <span class="k">call</span> <span class="n">dword</span> <span class="n">get_encoded</span>
+<span class="nl">save_pc:</span>
+    <span class="nf">nop</span>
+    <span class="nf">nop</span>
+    <span class="nf">call</span> <span class="kt">dword</span> <span class="nv">get_encoded</span>
 
-<span class="n">junk1</span><span class="o">:</span> <span class="kt">dd</span> <span class="mh">0x41414141</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="nl">junk1:</span> <span class="kd">dd</span> <span class="mh">0x41414141</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The first part (init_array and shuffle) looks like some RC4 variant.
 Then we decode it using our RC4 variant … but wait … there is data missing!
@@ -461,21 +446,24 @@ Where is the encoded message?</p>
 00000090  51 43 2b 74 64 33 74 46  51 34 71 78 38 4f 34 34  |QC+td3tFQ4qx8O44|
 000000a0  37 54 44 65 75 5a 77 35  50 2b 30 53 73 62 45 63  |7TDeuZw5P+0SsbEc|
 000000b0  59 52 0a 37 38 6a 4b 4c  77 3d 3d 32 ca be f1 00  |YR.78jKLw==2....|
-000000c0  00 20 00 49 44 41 54 78  da ec bd 79 74 1c d5 b5  |. .IDATx...yt...|</pre></td></tr></tbody></table></code></pre></figure>
+000000c0  00 20 00 49 44 41 54 78  da ec bd 79 74 1c d5 b5  |. .IDATx...yt...|
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The base64 string “QkJCQjIAAACR2PFtcCA6q2eaC8SR+8dmD/zNzLQC+td3tFQ4qx8O447TDeuZw5P+0SsbEcYR78jKLw=” decodes to the following:</p>
 
 <figure class="highlight"><pre><code class="language-nasm" data-lang="nasm"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="code"><pre><span class="n">junk2</span><span class="o">:</span> <span class="kt">dd</span> <span class="mh">0x42424242</span>
-<span class="n">msg_length</span><span class="o">:</span> <span class="kt">dd</span> <span class="mh">0x00000032</span>
-<span class="n">msg_encoded</span><span class="o">:</span> <span class="kt">db</span> <span class="err">`\</span><span class="n">x91</span><span class="err">\</span><span class="n">xd8</span><span class="err">\</span><span class="n">xf1</span><span class="err">\</span><span class="n">x6d</span><span class="err">\</span><span class="n">x70</span><span class="err">\</span><span class="n">x20</span><span class="err">\</span><span class="n">x3a</span><span class="err">\</span><span class="n">xab</span><span class="err">\</span><span class="n">x67</span><span class="err">\</span><span class="n">x9a</span><span class="err">\</span><span class="n">x0b</span><span class="err">\</span><span class="n">xc4</span><span class="err">\</span><span class="n">x91</span><span class="err">\</span><span class="n">xfb</span><span class="err">\</span><span class="n">xc7</span><span class="err">\</span><span class="n">x66</span><span class="err">\</span><span class="n">x0f</span><span class="err">\</span><span class="n">xfc</span><span class="err">\</span><span class="n">xcd</span><span class="err">\</span><span class="n">xcc</span><span class="err">\</span><span class="n">xb4</span><span class="err">\</span><span class="n">x02</span><span class="err">\</span><span class="n">xfa</span><span class="err">\</span><span class="n">xd7</span><span class="err">\</span><span class="n">x77</span><span class="err">\</span><span class="n">xb4</span><span class="err">\</span><span class="n">x54</span><span class="err">\</span><span class="n">x38</span><span class="err">\</span><span class="n">xab</span><span class="err">\</span><span class="n">x1f</span><span class="err">\</span><span class="n">x0e</span><span class="err">\</span><span class="n">xe3</span><span class="err">\</span><span class="n">x8e</span><span class="err">\</span><span class="n">xd3</span><span class="err">\</span><span class="n">x0d</span><span class="err">\</span><span class="n">xeb</span><span class="err">\</span><span class="n">x99</span><span class="err">\</span><span class="n">xc3</span><span class="err">\</span><span class="n">x93</span><span class="err">\</span><span class="n">xfe</span><span class="err">\</span><span class="n">xd1</span><span class="err">\</span><span class="n">x2b</span><span class="err">\</span><span class="n">x1b</span><span class="err">\</span><span class="n">x11</span><span class="err">\</span><span class="n">xc6</span><span class="err">\</span><span class="n">x11</span><span class="err">\</span><span class="n">xef</span><span class="err">\</span><span class="n">xc8</span><span class="err">\</span><span class="n">xca</span><span class="err">\</span><span class="n">x2f</span><span class="err">`</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">junk2:</span> <span class="kd">dd</span> <span class="mh">0x42424242</span>
+<span class="nl">msg_length:</span> <span class="kd">dd</span> <span class="mh">0x00000032</span>
+<span class="nl">msg_encoded:</span> <span class="kd">db</span> <span class="err">`\</span><span class="nv">x91</span><span class="err">\</span><span class="nv">xd8</span><span class="err">\</span><span class="nv">xf1</span><span class="err">\</span><span class="nv">x6d</span><span class="err">\</span><span class="nv">x70</span><span class="err">\</span><span class="nv">x20</span><span class="err">\</span><span class="nv">x3a</span><span class="err">\</span><span class="nv">xab</span><span class="err">\</span><span class="nv">x67</span><span class="err">\</span><span class="nv">x9a</span><span class="err">\</span><span class="nv">x0b</span><span class="err">\</span><span class="nv">xc4</span><span class="err">\</span><span class="nv">x91</span><span class="err">\</span><span class="nv">xfb</span><span class="err">\</span><span class="nv">xc7</span><span class="err">\</span><span class="nv">x66</span><span class="err">\</span><span class="nv">x0f</span><span class="err">\</span><span class="nv">xfc</span><span class="err">\</span><span class="nv">xcd</span><span class="err">\</span><span class="nv">xcc</span><span class="err">\</span><span class="nv">xb4</span><span class="err">\</span><span class="nv">x02</span><span class="err">\</span><span class="nv">xfa</span><span class="err">\</span><span class="nv">xd7</span><span class="err">\</span><span class="nv">x77</span><span class="err">\</span><span class="nv">xb4</span><span class="err">\</span><span class="nv">x54</span><span class="err">\</span><span class="nv">x38</span><span class="err">\</span><span class="nv">xab</span><span class="err">\</span><span class="nv">x1f</span><span class="err">\</span><span class="nv">x0e</span><span class="err">\</span><span class="nv">xe3</span><span class="err">\</span><span class="nv">x8e</span><span class="err">\</span><span class="nv">xd3</span><span class="err">\</span><span class="nv">x0d</span><span class="err">\</span><span class="nv">xeb</span><span class="err">\</span><span class="nv">x99</span><span class="err">\</span><span class="nv">xc3</span><span class="err">\</span><span class="nv">x93</span><span class="err">\</span><span class="nv">xfe</span><span class="err">\</span><span class="nv">xd1</span><span class="err">\</span><span class="nv">x2b</span><span class="err">\</span><span class="nv">x1b</span><span class="err">\</span><span class="nv">x11</span><span class="err">\</span><span class="nv">xc6</span><span class="err">\</span><span class="nv">x11</span><span class="err">\</span><span class="nv">xef</span><span class="err">\</span><span class="nv">xc8</span><span class="err">\</span><span class="nv">xca</span><span class="err">\</span><span class="nv">x2f</span><span class="err">`</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>It is a NASM source which correspond bit to bit to the original gchq.bin ;).:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>nasm gchq.asm</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>nasm gchq.asm
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So the first challenge basically consist in executing the code and dumping the decoded string.</p>
 
@@ -833,12 +821,14 @@ Instead, I chose to write a “launcher” and ptrace our gchq code :).</p>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now compile it using this command line:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>gcc <span class="nt">-m32</span> <span class="nt">-g</span> <span class="nt">-o</span> launcher launcher.c</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>gcc <span class="nt">-m32</span> <span class="nt">-g</span> <span class="nt">-o</span> launcher launcher.c
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You can now launch it:</p>
 
@@ -849,7 +839,8 @@ Instead, I chose to write a “launcher” and ptrace our gchq code :).</p>
 </pre></td><td class="code"><pre><span class="nv">$ </span>./launcher ./gchq 
 <span class="o">[</span>+] File size: 218
 <span class="o">[</span>+] Executing code at address 0x832f000
-<span class="o">[</span>+] Decoded string: <span class="s1">'GET /15b436de1f9107f3778aad525e5d0b20.js HTTP/1.1'</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">[</span>+] Decoded string: <span class="s1">'GET /15b436de1f9107f3778aad525e5d0b20.js HTTP/1.1'</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Pawned :).</p>
 
@@ -970,6 +961,26 @@ Instead, I chose to write a “launcher” and ptrace our gchq code :).</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

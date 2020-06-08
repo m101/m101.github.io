@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/10/03/wargame-blackbox-at-smashthestackorg_03.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -164,7 +144,8 @@
  <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
 
  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ici en regardant la commande executée on aurait tendance à penser à une injection de commande Unix de manière directe. Mais plus haut on voit un filtre contre celà. Il nous reste la possibilitée de faire usage de la faille system(), en effet, sous les Unixoides, l’emplacement des exécutables est défini grâce à la variable PATH. Il nous suffit de modifier cette variable et y mettre un script ou programme avec le nom qui va bien.</p>
 
@@ -175,7 +156,8 @@
 3
 </pre></td><td class="code"><pre><span class="c">#!/bin/sh</span>
 
-<span class="nb">cat</span> /home/level4/password</pre></td></tr></tbody></table></code></pre></figure>
+<span class="nb">cat</span> /home/level4/password
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Il n’y a plus qu’à modifier la variable PATH comme il faut ;).</p>
 
@@ -284,6 +266,26 @@
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

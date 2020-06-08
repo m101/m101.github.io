@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/06/02/bukog-keygenme-1.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -128,10 +108,11 @@ After that, stumble upon an interesting routine :</p>
 2
 3
 4
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">FB</span> <span class="n">serial_check_wrapper</span> <span class="n">proc</span> <span class="n">near</span>          <span class="c">; CODE XREF: DialogFunc+93</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">004010</span><span class="n">FB</span>                 <span class="k">call</span>    <span class="n">serial_check</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401100</span>                 <span class="k">retn</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401100</span> <span class="n">serial_check_wrapper</span> <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">004010</span><span class="nf">FB</span> <span class="nv">serial_check_wrapper</span> <span class="nv">proc</span> <span class="nv">near</span>          <span class="c1">; CODE XREF: DialogFunc+93</span>
+<span class="nl">.text:</span><span class="err">004010</span><span class="nf">FB</span>                 <span class="nv">call</span>    <span class="nv">serial_check</span>
+<span class="nl">.text:</span><span class="err">00401100</span>                 <span class="nf">retn</span>
+<span class="nl">.text:</span><span class="err">00401100</span> <span class="nf">serial_check_wrapper</span> <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As we can see, it’s wrapping a call to some routine, which is in fact the serial checking routine.
 Why is this wrapped? We’ll see that later ;) .
@@ -149,18 +130,19 @@ Anyway, the serial checking routine is as followed :</p>
 10
 11
 12
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401200</span> <span class="n">serial_check</span>    <span class="n">proc</span> <span class="n">near</span>               <span class="c">; CODE XREF: serial_check_wrapper</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401200</span>                 <span class="k">push</span>    <span class="n">offset</span> <span class="n">username</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401205</span>                 <span class="k">call</span>    <span class="n">hash</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040120</span><span class="n">A</span>                 <span class="k">push</span>    <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040120</span><span class="n">B</span>                 <span class="k">push</span>    <span class="n">offset</span> <span class="n">serial</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401210</span>                 <span class="k">call</span>    <span class="n">hash</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401215</span>                 <span class="k">pop</span>     <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401216</span>                 <span class="k">sub</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401218</span>                 <span class="k">mov</span>     <span class="err">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">8</span><span class="err">]</span><span class="p">,</span> <span class="n">bl</span>     <span class="c">; change return address</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040121</span><span class="n">B</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">0</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401220</span>                 <span class="k">retn</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401220</span> <span class="n">serial_check</span>    <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">00401200</span> <span class="nf">serial_check</span>    <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; CODE XREF: serial_check_wrapper</span>
+<span class="nl">.text:</span><span class="err">00401200</span>                 <span class="nf">push</span>    <span class="nv">offset</span> <span class="nv">username</span>
+<span class="nl">.text:</span><span class="err">00401205</span>                 <span class="nf">call</span>    <span class="nv">hash</span>
+<span class="nl">.text:</span><span class="err">0040120</span><span class="nf">A</span>                 <span class="nv">push</span>    <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">0040120</span><span class="nf">B</span>                 <span class="nv">push</span>    <span class="nv">offset</span> <span class="nv">serial</span>
+<span class="nl">.text:</span><span class="err">00401210</span>                 <span class="nf">call</span>    <span class="nv">hash</span>
+<span class="nl">.text:</span><span class="err">00401215</span>                 <span class="nf">pop</span>     <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">00401216</span>                 <span class="nf">sub</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">00401218</span>                 <span class="nf">mov</span>     <span class="p">[</span><span class="nb">ebp</span><span class="o">-</span><span class="mi">8</span><span class="p">],</span> <span class="nb">bl</span>     <span class="c1">; change return address</span>
+<span class="nl">.text:</span><span class="err">0040121</span><span class="nf">B</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">0</span>
+<span class="nl">.text:</span><span class="err">00401220</span>                 <span class="nf">retn</span>
+<span class="nl">.text:</span><span class="err">00401220</span> <span class="nf">serial_check</span>    <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Having identified the username and serial buffers previously, it’s get a lot easier.
 We see that the return address depend on the last byte of the following operation : hash(username) - hash(serial) .
@@ -208,37 +190,38 @@ Before making the keygen, we need to analyse the hash() function.</p>
 29
 30
 31
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401247</span> <span class="n">hash</span>            <span class="n">proc</span> <span class="n">near</span>               <span class="c">; CODE XREF: serial_check+5</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401247</span>                                         <span class="c">; serial_check+10</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401247</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401247</span> <span class="k">str</span>             <span class="o">=</span> <span class="n">dword</span> <span class="n">ptr</span>  <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401247</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401247</span>                 <span class="k">push</span>    <span class="n">ebp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401248</span>                 <span class="k">mov</span>     <span class="n">ebp</span><span class="p">,</span> <span class="n">esp</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040124</span><span class="n">A</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">0</span><span class="n">FFFFFFFFh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040124</span><span class="n">F</span>                 <span class="k">mov</span>     <span class="n">esi</span><span class="p">,</span> <span class="err">[</span><span class="n">ebp</span><span class="o">+</span><span class="k">str</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401252</span>                 <span class="k">xor</span>     <span class="n">edx</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401254</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401254</span> <span class="n">loc_401254</span><span class="o">:</span>                             <span class="c">; CODE XREF: hash+2D</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401254</span>                 <span class="k">mov</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401256</span>                 <span class="k">shr</span>     <span class="n">ebx</span><span class="p">,</span> <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401259</span>                 <span class="k">mov</span>     <span class="n">ecx</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040125</span><span class="n">B</span>                 <span class="k">and</span>     <span class="n">ecx</span><span class="p">,</span> <span class="mi">0</span><span class="n">FFh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401261</span>                 <span class="k">mov</span>     <span class="n">dl</span><span class="p">,</span> <span class="p">[esi]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401263</span>                 <span class="k">cmp</span>     <span class="n">dl</span><span class="p">,</span> <span class="mi">0</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401266</span>                 <span class="k">jz</span>      <span class="n">short</span> <span class="n">loc_401276</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401268</span>                 <span class="k">xor</span>     <span class="n">edx</span><span class="p">,</span> <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040126</span><span class="n">A</span>                 <span class="k">xor</span>     <span class="n">ebx</span><span class="p">,</span> <span class="n">dword_4030CC</span><span class="err">[</span><span class="n">edx</span><span class="o">*</span><span class="mi">4</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401271</span>                 <span class="k">mov</span>     <span class="n">eax</span><span class="p">,</span> <span class="n">ebx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401273</span>                 <span class="k">inc</span>     <span class="n">esi</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401274</span>                 <span class="k">jmp</span>     <span class="n">short</span> <span class="n">loc_401254</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401276</span> <span class="c">; ---------------------------------------------------------------------------</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401276</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401276</span> <span class="n">loc_401276</span><span class="o">:</span>                             <span class="c">; CODE XREF: hash+1F</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401276</span>                 <span class="k">xor</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">0</span><span class="n">FFFFFFFFh</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401279</span>                 <span class="k">leave</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040127</span><span class="n">A</span>                 <span class="k">retn</span>    <span class="mi">4</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040127</span><span class="n">A</span> <span class="n">hash</span>            <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">00401247</span> <span class="nf">hash</span>            <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; CODE XREF: serial_check+5</span>
+<span class="nl">.text:</span><span class="err">00401247</span>                                         <span class="c1">; serial_check+10</span>
+<span class="nl">.text:</span><span class="err">00401247</span>
+<span class="nl">.text:</span><span class="err">00401247</span> <span class="nf">str</span>             <span class="err">=</span> <span class="kt">dword</span> <span class="nv">ptr</span>  <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">00401247</span>
+<span class="nl">.text:</span><span class="err">00401247</span>                 <span class="nf">push</span>    <span class="nb">ebp</span>
+<span class="nl">.text:</span><span class="err">00401248</span>                 <span class="nf">mov</span>     <span class="nb">ebp</span><span class="p">,</span> <span class="nb">esp</span>
+<span class="nl">.text:</span><span class="err">0040124</span><span class="nf">A</span>                 <span class="nv">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">0FFFFFFFFh</span>
+<span class="nl">.text:</span><span class="err">0040124</span><span class="nf">F</span>                 <span class="nv">mov</span>     <span class="nb">esi</span><span class="p">,</span> <span class="p">[</span><span class="nb">ebp</span><span class="o">+</span><span class="nv">str</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">00401252</span>                 <span class="nf">xor</span>     <span class="nb">edx</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">00401254</span>
+<span class="nl">.text:</span><span class="err">00401254</span> <span class="nl">loc_401254:</span>                             <span class="c1">; CODE XREF: hash+2D</span>
+<span class="nl">.text:</span><span class="err">00401254</span>                 <span class="nf">mov</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">00401256</span>                 <span class="nf">shr</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">00401259</span>                 <span class="nf">mov</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">0040125</span><span class="nf">B</span>                 <span class="nv">and</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="mh">0FFh</span>
+<span class="nl">.text:</span><span class="err">00401261</span>                 <span class="nf">mov</span>     <span class="nb">dl</span><span class="p">,</span> <span class="p">[</span><span class="nb">esi</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">00401263</span>                 <span class="nf">cmp</span>     <span class="nb">dl</span><span class="p">,</span> <span class="mi">0</span>
+<span class="nl">.text:</span><span class="err">00401266</span>                 <span class="nf">jz</span>      <span class="nv">short</span> <span class="nv">loc_401276</span>
+<span class="nl">.text:</span><span class="err">00401268</span>                 <span class="nf">xor</span>     <span class="nb">edx</span><span class="p">,</span> <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">0040126</span><span class="nf">A</span>                 <span class="nv">xor</span>     <span class="nb">ebx</span><span class="p">,</span> <span class="kt">dword</span><span class="nv">_4030CC</span><span class="p">[</span><span class="nb">edx</span><span class="o">*</span><span class="mi">4</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">00401271</span>                 <span class="nf">mov</span>     <span class="nb">eax</span><span class="p">,</span> <span class="nb">ebx</span>
+<span class="nl">.text:</span><span class="err">00401273</span>                 <span class="nf">inc</span>     <span class="nb">esi</span>
+<span class="nl">.text:</span><span class="err">00401274</span>                 <span class="nf">jmp</span>     <span class="nv">short</span> <span class="nv">loc_401254</span>
+<span class="nl">.text:</span><span class="err">00401276</span> <span class="c1">; ---------------------------------------------------------------------------</span>
+<span class="nl">.text:</span><span class="err">00401276</span>
+<span class="nl">.text:</span><span class="err">00401276</span> <span class="nl">loc_401276:</span>                             <span class="c1">; CODE XREF: hash+1F</span>
+<span class="nl">.text:</span><span class="err">00401276</span>                 <span class="nf">xor</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mh">0FFFFFFFFh</span>
+<span class="nl">.text:</span><span class="err">00401279</span>                 <span class="nf">leave</span>
+<span class="nl">.text:</span><span class="err">0040127</span><span class="nf">A</span>                 <span class="nv">retn</span>    <span class="mi">4</span>
+<span class="nl">.text:</span><span class="err">0040127</span><span class="nf">A</span> <span class="nv">hash</span>            <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We can see here that it’s using some array.
 Where is it generated?
@@ -267,27 +250,28 @@ Cross referencing it, happens to land us in a CRC32 802.3 routine :</p>
 19
 20
 21
-</pre></td><td class="code"><pre><span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401221</span> <span class="n">crc32_ieee8023</span>  <span class="n">proc</span> <span class="n">near</span>               <span class="c">; CODE XREF: start</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401221</span>                 <span class="k">mov</span>     <span class="n">ecx</span><span class="p">,</span> <span class="mi">100</span><span class="n">h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401226</span>                 <span class="k">mov</span>     <span class="n">edx</span><span class="p">,</span> <span class="mi">0</span><span class="n">EDB88320h</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">B</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">B</span> <span class="n">loc_40122B</span><span class="o">:</span>                             <span class="c">; CODE XREF: crc32_ieee8023+23</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">B</span>                 <span class="k">lea</span>     <span class="n">eax</span><span class="p">,</span> <span class="err">[</span><span class="n">ecx</span><span class="o">-</span><span class="mi">1</span><span class="err">]</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">E</span>                 <span class="k">push</span>    <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040122</span><span class="n">F</span>                 <span class="k">mov</span>     <span class="n">ecx</span><span class="p">,</span> <span class="mi">8</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401234</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401234</span> <span class="n">loc_401234</span><span class="o">:</span>                             <span class="c">; CODE XREF: crc32_ieee8023:loc_40123A</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401234</span>                 <span class="k">shr</span>     <span class="n">eax</span><span class="p">,</span> <span class="mi">1</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401236</span>                 <span class="k">jnb</span>     <span class="n">short</span> <span class="n">loc_40123A</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401238</span>                 <span class="k">xor</span>     <span class="n">eax</span><span class="p">,</span> <span class="n">edx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040123</span><span class="n">A</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040123</span><span class="n">A</span> <span class="n">loc_40123A</span><span class="o">:</span>                             <span class="c">; CODE XREF: crc32_ieee8023+15</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040123</span><span class="n">A</span>                 <span class="k">loop</span>    <span class="n">loc_401234</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040123</span><span class="n">C</span>                 <span class="k">pop</span>     <span class="n">ecx</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">0040123</span><span class="n">D</span>                 <span class="k">mov</span>     <span class="n">hInstance</span><span class="err">[</span><span class="n">ecx</span><span class="o">*</span><span class="mi">4</span><span class="err">]</span><span class="p">,</span> <span class="n">eax</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401244</span>                 <span class="k">loop</span>    <span class="n">loc_40122B</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401246</span>                 <span class="k">retn</span>
-<span class="p">.</span><span class="n">text</span><span class="o">:</span><span class="mi">00401246</span> <span class="n">crc32_ieee8023</span>  <span class="n">endp</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nl">.text:</span><span class="err">00401221</span> <span class="nf">crc32_ieee8023</span>  <span class="nv">proc</span> <span class="nv">near</span>               <span class="c1">; CODE XREF: start</span>
+<span class="nl">.text:</span><span class="err">00401221</span>                 <span class="nf">mov</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="mh">100h</span>
+<span class="nl">.text:</span><span class="err">00401226</span>                 <span class="nf">mov</span>     <span class="nb">edx</span><span class="p">,</span> <span class="mh">0EDB88320h</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">B</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">B</span> <span class="nv">loc_40122B</span><span class="p">:</span>                             <span class="c1">; CODE XREF: crc32_ieee8023+23</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">B</span>                 <span class="nv">lea</span>     <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nb">ecx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">E</span>                 <span class="nv">push</span>    <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">0040122</span><span class="nf">F</span>                 <span class="nv">mov</span>     <span class="nb">ecx</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nl">.text:</span><span class="err">00401234</span>
+<span class="nl">.text:</span><span class="err">00401234</span> <span class="nl">loc_401234:</span>                             <span class="c1">; CODE XREF: crc32_ieee8023:loc_40123A</span>
+<span class="nl">.text:</span><span class="err">00401234</span>                 <span class="nf">shr</span>     <span class="nb">eax</span><span class="p">,</span> <span class="mi">1</span>
+<span class="nl">.text:</span><span class="err">00401236</span>                 <span class="nf">jnb</span>     <span class="nv">short</span> <span class="nv">loc_40123A</span>
+<span class="nl">.text:</span><span class="err">00401238</span>                 <span class="nf">xor</span>     <span class="nb">eax</span><span class="p">,</span> <span class="nb">edx</span>
+<span class="nl">.text:</span><span class="err">0040123</span><span class="nf">A</span>
+<span class="nl">.text:</span><span class="err">0040123</span><span class="nf">A</span> <span class="nv">loc_40123A</span><span class="p">:</span>                             <span class="c1">; CODE XREF: crc32_ieee8023+15</span>
+<span class="nl">.text:</span><span class="err">0040123</span><span class="nf">A</span>                 <span class="nv">loop</span>    <span class="nv">loc_401234</span>
+<span class="nl">.text:</span><span class="err">0040123</span><span class="nf">C</span>                 <span class="nv">pop</span>     <span class="nb">ecx</span>
+<span class="nl">.text:</span><span class="err">0040123</span><span class="nf">D</span>                 <span class="nv">mov</span>     <span class="nv">hInstance</span><span class="p">[</span><span class="nb">ecx</span><span class="o">*</span><span class="mi">4</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">.text:</span><span class="err">00401244</span>                 <span class="nf">loop</span>    <span class="nv">loc_40122B</span>
+<span class="nl">.text:</span><span class="err">00401246</span>                 <span class="nf">retn</span>
+<span class="nl">.text:</span><span class="err">00401246</span> <span class="nf">crc32_ieee8023</span>  <span class="nv">endp</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The idenfitication process of this function went through reversing and searching about that magic number : 0x0EDB88320.</p>
 
@@ -490,7 +474,8 @@ Here is the keygen :</p>
         <span class="n">printf</span><span class="p">(</span><span class="s">"No serial found</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Hope you enjoyed this small snack :) .</p>
 
@@ -605,6 +590,26 @@ Here is the keygen :</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

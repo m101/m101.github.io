@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2010/11/20/tips-and-tools-for-linux-and-windows.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -160,7 +140,8 @@ section .text\
 _start:
 
 s/([0-9A-F]+\s+){2}/    /g
-'</span></pre></td></tr></tbody></table></code></pre></figure>
+'</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Le second à passer en unicode les payload unicode en ASCII :</p>
 
@@ -193,7 +174,8 @@ case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">
     unicode2ascii<span class="p">)</span>
         <span class="nb">sed</span> <span class="nt">-r</span> <span class="s1">'s/(\w)\x00/\1/g'</span>
     <span class="p">;;</span>
-<span class="k">esac</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="k">esac</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Le dernier sert juste à me sortir n’importe quel fichier en hex escaped.</p>
 
@@ -225,24 +207,25 @@ case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">struct</span>
 
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="s">'-'</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s">'-'</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">fp</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">fp</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="c1"># let's form the shellcode in C form
-</span><span class="n">escaped</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span> <span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">%02</span><span class="s">x"</span> <span class="o">%</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
+</span><span class="n">escaped</span> <span class="o">=</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span> <span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">x%02x"</span> <span class="o">%</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
 <span class="n">shellcode</span> <span class="o">=</span> <span class="s">'char shellcode[] = "'</span> <span class="o">+</span> <span class="n">escaped</span> <span class="o">+</span> <span class="s">'"'</span>
 
-<span class="k">print</span> <span class="s">"shellcode size : </span><span class="si">%</span><span class="s">i"</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">shellcode</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="k">print</span> <span class="s">"shellcode size : %i"</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">shellcode</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Ainsi en utilisant la ligne de commande on est mine de rien assez versatile :</p>
 
@@ -269,13 +252,15 @@ _start:
     add <span class="o">[</span>ebx+0x0],al
 m_101@m_101-laptop <span class="nv">$ </span><span class="nb">printf</span> <span class="s2">"JUNK"</span> | ./shellcode2arrayopt.py -
 shellcode size : 4
-char shellcode[] <span class="o">=</span> <span class="s2">"</span><span class="se">\x</span><span class="s2">4a</span><span class="se">\x</span><span class="s2">55</span><span class="se">\x</span><span class="s2">4e</span><span class="se">\x</span><span class="s2">4b"</span></pre></td></tr></tbody></table></code></pre></figure>
+char shellcode[] <span class="o">=</span> <span class="s2">"</span><span class="se">\x</span><span class="s2">4a</span><span class="se">\x</span><span class="s2">55</span><span class="se">\x</span><span class="s2">4e</span><span class="se">\x</span><span class="s2">4b"</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>On peut instrumenter GDB avec Python : <a href="http://sourceware.org/gdb/wiki/PythonGdb">PythonGDB</a>.
 Au pire il suffit de créer un fichier de commande GDB et de le lancer comme ça :</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nv">$ </span>gdb <span class="nt">-ex</span> <span class="s1">'source cmds.gdb'</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nv">$ </span>gdb <span class="nt">-ex</span> <span class="s1">'source cmds.gdb'</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>C’est la méthode que j’utilise pour dumper par exemple :</p>
 
@@ -402,8 +387,8 @@ Au pire il suffit de créer un fichier de commande GDB et de le lancer comme ça
     <span class="n">dump_file</span> <span class="o">=</span> <span class="s">'dump_'</span> <span class="o">+</span> <span class="n">proc_name</span> <span class="o">+</span> <span class="s">'_'</span> <span class="o">+</span> <span class="n">mem_section</span>
 
 <span class="c1"># process information
-</span><span class="n">proc_ps_line</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">'ps aux | grep '</span> <span class="o">+</span> <span class="n">proc_name</span> <span class="o">+</span> <span class="s">' | grep -Ev</span><span class="err">
-</span><span class="s">"(grep|'</span> <span class="o">+</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">')"'</span><span class="p">)</span>
+</span><span class="n">proc_ps_line</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">'ps aux | grep '</span> <span class="o">+</span> <span class="n">proc_name</span> <span class="o">+</span> <span class="s">' | grep -Ev
+"(grep|'</span> <span class="o">+</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">')"'</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">proc_ps_line</span> <span class="o">==</span> <span class="s">''</span><span class="p">:</span>
     <span class="k">print</span> <span class="s">'Process '</span> <span class="o">+</span> <span class="n">proc_name</span> <span class="o">+</span> <span class="s">" doesn't exist"</span>
     <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -439,12 +424,12 @@ Au pire il suffit de créer un fichier de commande GDB et de le lancer comme ça
 # we delete it afterward
 </span><span class="k">if</span> <span class="n">cmds_file_existed</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
     <span class="n">gdb_cmds_file</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="s">'cmds.gdb'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
-    <span class="n">gdb_cmds_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'attach '</span> <span class="o">+</span> <span class="n">proc_id</span> <span class="o">+</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-    <span class="n">gdb_cmds_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'dump mem '</span> <span class="o">+</span> <span class="n">dump_file</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">mem_start</span> <span class="o">+</span> <span class="s">'</span><span class="err">
-</span><span class="s">'</span> <span class="o">+</span> <span class="n">mem_end</span> <span class="o">+</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-    <span class="n">gdb_cmds_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'detach</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-    <span class="n">gdb_cmds_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'quit</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-    <span class="n">gdb_cmds_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">gdb_cmds_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'attach '</span> <span class="o">+</span> <span class="n">proc_id</span> <span class="o">+</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">gdb_cmds_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'dump mem '</span> <span class="o">+</span> <span class="n">dump_file</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">mem_start</span> <span class="o">+</span> <span class="s">'
+'</span> <span class="o">+</span> <span class="n">mem_end</span> <span class="o">+</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">gdb_cmds_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'detach</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">gdb_cmds_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'quit</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">gdb_cmds_file</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="c1"># we execute gdb cmds for dumping targeted memory
 </span><span class="n">gdb_dump_mem</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="s">"gdb -ex 'source cmds.gdb'"</span><span class="p">)</span>
@@ -454,7 +439,8 @@ Au pire il suffit de créer un fichier de commande GDB et de le lancer comme ça
     <span class="n">unlink</span><span class="p">(</span><span class="s">'cmds.gdb'</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="s">'[+] '</span> <span class="o">+</span> <span class="n">proc_name</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">mem_section</span> <span class="o">+</span> <span class="s">' was dumped'</span>
-<span class="k">print</span> <span class="s">'[+] Bye bye ;)'</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="k">print</span> <span class="s">'[+] Bye bye ;)'</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="sous-windows">Sous Windows?</h1>
 
@@ -628,6 +614,26 @@ En terme de patching engine, le meilleur que j’ai trouvé est <a href="http://
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

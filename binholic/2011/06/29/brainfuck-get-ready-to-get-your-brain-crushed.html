@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/06/29/brainfuck-get-ready-to-get-your-brain-crushed.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -142,7 +122,8 @@
 .     putchar(*ptr);
 ,     *ptr=getchar();
 [     while (*ptr) {
-]     }</pre></td></tr></tbody></table></code></pre></figure>
+]     }
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>That’s all you basically get :).</p>
 
@@ -159,7 +140,8 @@
 <p>This is done using loops, I generally do it using the following pattern:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>counter = value; (power of 2: 2, 4, 8)</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>counter = value; (power of 2: 2, 4, 8)
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
@@ -172,20 +154,23 @@
     <span class="n">counter</span><span class="o">--</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">odd</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>It basically is equivalent to:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>odd: value * n + 1
-even: value * n</pre></td></tr></tbody></table></code></pre></figure>
+even: value * n
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>For H we have the ASCII value of 72, this value is divisible by 8 (and 9).
 counter = 8 and n = 9. It gives the following brainfuck code:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>&gt;++++++++[&lt;+++++++++++++&gt;-]&lt;+&gt;</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>&gt;++++++++[&lt;+++++++++++++&gt;-]&lt;+&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Here is my code for “Hello World!”:</p>
 
@@ -216,7 +201,8 @@ counter = 8 and n = 9. It gives the following brainfuck code:</p>
 &gt;++++[&lt;+++++++++++++++++++++++++&gt;-]
 &gt;++++++++[&lt;++++&gt;-]&lt;+&gt;
 &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
-.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;</pre></td></tr></tbody></table></code></pre></figure>
+.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;.&gt;
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Yeah it is complicated :).
 Basically I first construct my whole string in memory then I go back to the beginning of the string and print it all.</p>
@@ -265,7 +251,8 @@ put your code here
 put another code here
 
 &gt;        end the loop
-]</pre></td></tr></tbody></table></code></pre></figure>
+]
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Try it with a different prepend such as nothing, ++++, ++++—-, etc.</p>
 
@@ -276,12 +263,14 @@ put another code here
 <p>We would have the following brainfuck code for 3:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>+++</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>+++
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>And for 1:</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre>+</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre>+
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Basically the idea is to decrement one of the cells and add it to the other using a loop.</p>
 
@@ -306,7 +295,8 @@ put another code here
 -              --cell[0]
 &gt;+          cell++; ++cell[1]
 &lt;             go back to cell 0
-]          }</pre></td></tr></tbody></table></code></pre></figure>
+]          }
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>And here it is, we have 4 in cell 1.</p>
 
@@ -648,7 +638,8 @@ Here is my brainfuck code generator for printing messages if you want to play wi
     <span class="p">}</span>        
 
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>It certainly does not generate optimized brainfuck code but at least it works :). Moreover, I digged out most of the important bugs so it should mostly be bug free … should you find any bugs … don’t hesitate to tell me/contribute :p.</p>
 
@@ -776,6 +767,26 @@ Here is my brainfuck code generator for printing messages if you want to play wi
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

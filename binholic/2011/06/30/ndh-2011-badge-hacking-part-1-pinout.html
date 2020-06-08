@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2011/06/30/ndh-2011-badge-hacking-part-1-pinout.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -177,7 +157,8 @@ Anyway for the chip, looking close enough you could see its reference:</p>
 <figure class="highlight"><pre><code class="language-text" data-lang="text"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre>ATMEL 1114
-ATTINY2313V-10SU</pre></td></tr></tbody></table></code></pre></figure>
+ATTINY2313V-10SU
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Done we have the pinout.
 Just have to make the cable ;).</p>
@@ -191,7 +172,8 @@ Just have to make the cable ;).</p>
 3
 </pre></td><td class="code"><pre>-------------------------------------------------
     |       |       |       |       |       |
-   RST    MOSI    MISO     SCK     VCC      GND</pre></td></tr></tbody></table></code></pre></figure>
+   RST    MOSI    MISO     SCK     VCC      GND
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Port 2x5 ping AVR ICSP</p>
 
@@ -208,7 +190,8 @@ Just have to make the cable ;).</p>
 ---------------------------------------------------------
 |   VCC     |   GND |   GND     |   GND     |   GND     |
 ---------------------------------------------------------
-    2           4         6           8          10</pre></td></tr></tbody></table></code></pre></figure>
+    2           4         6           8          10
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Do the pinout and then we’re in business :).</p>
 
@@ -271,7 +254,8 @@ Just have to make the cable ;).</p>
 |   PINA0   |   NC      |
 |   PINA1   |   NC      |
 |   PINA2   |   RESET   |
--------------------------</pre></td></tr></tbody></table></code></pre></figure>
+-------------------------
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>It is evident that you need to read the documentation to understand that table: <a href="/assets/others/docs/atmel/doc2543.pdf">the chip documentation</a>.</p>
 
@@ -396,6 +380,26 @@ As I miscounted  the AVR ICSP pinout … my cable is not right, so the software 
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>

